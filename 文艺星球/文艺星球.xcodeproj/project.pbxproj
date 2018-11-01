@@ -12,6 +12,10 @@
 		5A2D89922175D22F003411DC /* KGHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2D89912175D22F003411DC /* KGHUD.m */; };
 		5A2D89982175EDFA003411DC /* KGDatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2D89972175EDFA003411DC /* KGDatingView.m */; };
 		5A4A53B4218A9B0700ABC7C9 /* KGSquare.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A4A53B3218A9B0700ABC7C9 /* KGSquare.xcassets */; };
+		5A4A53B7218AAB7500ABC7C9 /* KGReleaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4A53B6218AAB7500ABC7C9 /* KGReleaseVC.m */; };
+		5A4A53BA218AE15800ABC7C9 /* KGChooseYourLocationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4A53B9218AE15800ABC7C9 /* KGChooseYourLocationVC.m */; };
+		5A4A53BF218AE32200ABC7C9 /* KGLocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4A53BD218AE32200ABC7C9 /* KGLocationCell.m */; };
+		5A4A53C0218AE32200ABC7C9 /* KGLocationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A4A53BE218AE32200ABC7C9 /* KGLocationCell.xib */; };
 		5A4C3F20217F0D8800A7B01F /* KGAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4C3F1F217F0D8800A7B01F /* KGAlertView.m */; };
 		5A4F5EDF217DB29D005C6A14 /* KGLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4F5EDE217DB29D005C6A14 /* KGLoginVC.m */; };
 		5A4F5EE1217DB44E005C6A14 /* KGTabbar.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A4F5EE0217DB44E005C6A14 /* KGTabbar.xcassets */; };
@@ -112,6 +116,13 @@
 		5A2D89972175EDFA003411DC /* KGDatingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGDatingView.m; sourceTree = "<group>"; };
 		5A337821217EC4AC008EDDB6 /* KGThirdHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGThirdHeader.h; sourceTree = "<group>"; };
 		5A4A53B3218A9B0700ABC7C9 /* KGSquare.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = KGSquare.xcassets; sourceTree = "<group>"; };
+		5A4A53B5218AAB7500ABC7C9 /* KGReleaseVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGReleaseVC.h; sourceTree = "<group>"; };
+		5A4A53B6218AAB7500ABC7C9 /* KGReleaseVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGReleaseVC.m; sourceTree = "<group>"; };
+		5A4A53B8218AE15800ABC7C9 /* KGChooseYourLocationVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGChooseYourLocationVC.h; sourceTree = "<group>"; };
+		5A4A53B9218AE15800ABC7C9 /* KGChooseYourLocationVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGChooseYourLocationVC.m; sourceTree = "<group>"; };
+		5A4A53BC218AE32200ABC7C9 /* KGLocationCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGLocationCell.h; sourceTree = "<group>"; };
+		5A4A53BD218AE32200ABC7C9 /* KGLocationCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGLocationCell.m; sourceTree = "<group>"; };
+		5A4A53BE218AE32200ABC7C9 /* KGLocationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGLocationCell.xib; sourceTree = "<group>"; };
 		5A4C3F1E217F0D8800A7B01F /* KGAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGAlertView.h; sourceTree = "<group>"; };
 		5A4C3F1F217F0D8800A7B01F /* KGAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGAlertView.m; sourceTree = "<group>"; };
 		5A4F5EDD217DB29D005C6A14 /* KGLoginVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGLoginVC.h; sourceTree = "<group>"; };
@@ -296,6 +307,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5A4A53BB218AE30C00ABC7C9 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				5A4A53BC218AE32200ABC7C9 /* KGLocationCell.h */,
+				5A4A53BD218AE32200ABC7C9 /* KGLocationCell.m */,
+				5A4A53BE218AE32200ABC7C9 /* KGLocationCell.xib */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
 		5A4C3F1D217F0D6700A7B01F /* 提示图片 */ = {
 			isa = PBXGroup;
 			children = (
@@ -343,8 +364,13 @@
 		5A4F5EDA217DB25B005C6A14 /* 广场 */ = {
 			isa = PBXGroup;
 			children = (
+				5A4A53BB218AE30C00ABC7C9 /* view */,
 				5A5631DC21800E1F0007127C /* KGSquareVC.h */,
 				5A5631DD21800E1F0007127C /* KGSquareVC.m */,
+				5A4A53B5218AAB7500ABC7C9 /* KGReleaseVC.h */,
+				5A4A53B6218AAB7500ABC7C9 /* KGReleaseVC.m */,
+				5A4A53B8218AE15800ABC7C9 /* KGChooseYourLocationVC.h */,
+				5A4A53B9218AE15800ABC7C9 /* KGChooseYourLocationVC.m */,
 				5A4A53B3218A9B0700ABC7C9 /* KGSquare.xcassets */,
 			);
 			path = "广场";
@@ -747,6 +773,7 @@
 				5A81D946217F14FB009B7517 /* KGRegisterVC.xib in Resources */,
 				5A79E40021815FFE0015AC91 /* KGIntegralTableViewCell.xib in Resources */,
 				5A548B3621789A440065744E /* PhotosCell.xib in Resources */,
+				5A4A53C0218AE32200ABC7C9 /* KGLocationCell.xib in Resources */,
 				5A5631E921801DCA0007127C /* KGMine.xcassets in Resources */,
 				5A8FA6382189A1C600498307 /* KGSqureCell.xib in Resources */,
 				5A563204218067380007127C /* KGIntegralVC.xib in Resources */,
@@ -859,6 +886,7 @@
 				5A5631DB21800DA30007127C /* KGCommunityVC.m in Sources */,
 				5A5631EC2180487A0007127C /* KGUserInfo.m in Sources */,
 				5A563203218067380007127C /* KGIntegralVC.m in Sources */,
+				5A4A53B7218AAB7500ABC7C9 /* KGReleaseVC.m in Sources */,
 				5A79E40E2181C73E0015AC91 /* KGAboutOurVC.m in Sources */,
 				5A5631E421800E460007127C /* KGMineVC.m in Sources */,
 				5A7814B521880FBD001A14D5 /* KGHomeTownListViewCell.m in Sources */,
@@ -867,10 +895,12 @@
 				5A5631F621804AF90007127C /* KGMineDoubleCell.m in Sources */,
 				5A54A1282179BE87005709F3 /* KGLabel.m in Sources */,
 				5ABB9D52215B9A7C00C612B2 /* AppDelegate.m in Sources */,
+				5A4A53BA218AE15800ABC7C9 /* KGChooseYourLocationVC.m in Sources */,
 				5A9AECB1217EF4680003478E /* KGWYXQUserAgreementVC.m in Sources */,
 				5A2D898C2175B2AC003411DC /* KGImageView.m in Sources */,
 				5A8FA6372189A1C600498307 /* KGSqureCell.m in Sources */,
 				5A6E86402182B40A00937450 /* KGWriteTalentVC.m in Sources */,
+				5A4A53BF218AE32200ABC7C9 /* KGLocationCell.m in Sources */,
 				5A79E40B21816F530015AC91 /* KGSetUpAdviceVC.m in Sources */,
 				5A548B2F217882E10065744E /* KGEditPhotoView.m in Sources */,
 				5AA248BE2189ACB400AE908B /* KGArticleInterviewCell.m in Sources */,
@@ -1031,7 +1061,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5Q96NM8J95;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/AtrStar/Desktop/Literarystar/文艺星球/文艺星球/Third-partyTools/头文件管理/KGPCH.pch";
+				GCC_PREFIX_HEADER = "$(SRCROOT)/文艺星球/Third-partyTools/头文件管理/KGPCH.pch";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "文艺星球/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1070,7 +1100,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5Q96NM8J95;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/AtrStar/Desktop/Literarystar/文艺星球/文艺星球/Third-partyTools/头文件管理/KGPCH.pch";
+				GCC_PREFIX_HEADER = "$(SRCROOT)/文艺星球/Third-partyTools/头文件管理/KGPCH.pch";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "文艺星球/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;

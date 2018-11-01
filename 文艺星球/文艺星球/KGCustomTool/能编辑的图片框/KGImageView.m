@@ -72,8 +72,9 @@
             if (self.isZoom == NO) {
                 /** 做一个过渡动画，增加用户体验度 */
                 [UIView animateWithDuration:0.7 animations:^{
+                    UIView *back = [self supViewController].view;
                     CGSize size = [UIScreen mainScreen].bounds.size;
-                    self.frame = CGRectMake(0, 0, size.width, size.height);
+                    self.frame = CGRectMake(back.frame.origin.x, back.frame.origin.y, size.width, size.height);
                     self.backImageView.frame = CGRectMake(0, 0, size.width, size.width/self.image.size.width*self.image.size.height);
                     self.backImageView.center = self.center;
                 }completion:^(BOOL finished) {
@@ -114,6 +115,9 @@
                 self.backImageView.image = self.placeholderImage;
                 break;
             case DeleteImageWithStateView:
+                if (self.selectDeleteBtuDeleteUIImage) {
+                    self.selectDeleteBtuDeleteUIImage(self.image);
+                }
                 [self removeFromSuperview];
                 break;
             default:

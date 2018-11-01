@@ -7,6 +7,7 @@
 //
 
 #import "KGSquareVC.h"
+#import "KGReleaseVC.h"
 
 @interface KGSquareVC ()
 
@@ -23,24 +24,27 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    /** 定制左侧返回按钮 */
-    [self setLeftNavItemWithFrame:CGRectZero title:nil image:[UIImage imageNamed:@"fanhui"] font:nil color:nil select:@selector(leftNavAction)];
-    /** 定制z右侧返回按钮 */
-    [self setRightNavItemWithFrame:CGRectZero title:@"预览" image:nil font:KGFontSHRegular(13) color:KGGrayColor select:@selector(rightNavAction)];
     /** 导航栏标题 */
-    self.title = @"编辑资料";
+    self.title = @"广场";
     self.view.backgroundColor = KGAreaGrayColor;
-    self.rightNavItem.userInteractionEnabled = NO;
     
+    [self releaseBtu];
 }
-/** 导航栏左侧点击事件 */
-- (void)leftNavAction{
-    [self.navigationController popViewControllerAnimated:YES];
+/** 发布按钮 */
+- (void)releaseBtu{
+    UIButton *releaseBtu = [UIButton buttonWithType:UIButtonTypeCustom];
+    releaseBtu.frame = CGRectMake(KGScreenWidth - 40, KGScreenHeight - KGRectTabbarHeight - 100, 40, 40);
+    [releaseBtu setImage:[UIImage imageNamed:@"fabu"] forState:UIControlStateNormal];
+    [releaseBtu addTarget:self action:@selector(releaseAction:) forControlEvents:UIControlEventTouchUpInside];
+    releaseBtu.layer.cornerRadius = 20;
+    releaseBtu.layer.masksToBounds = YES;
+    [self.view insertSubview:releaseBtu atIndex:99];
 }
-/** 导航栏右侧点击事件 */
-- (void)rightNavAction{
-    [self.navigationController popViewControllerAnimated:YES];
+/** 发布按钮点击事件 */
+- (void)releaseAction:(UIButton *)sender{
+    [self pushHideenTabbarViewController:[[KGReleaseVC alloc]init] animted:YES];
 }
+
 
 /*
 #pragma mark - Navigation

@@ -227,6 +227,14 @@
     }
     self.hidden = YES;
 }
+/** 刷新相册 */
+- (void)setHidden:(BOOL)hidden{
+    [super setHidden:hidden];
+    if (hidden == NO) {
+        [self.chooseArr removeAllObjects];
+        [self.photoList reloadData];
+    }
+}
 
 /*
 // Only override drawRect: if you perform custom drawing.

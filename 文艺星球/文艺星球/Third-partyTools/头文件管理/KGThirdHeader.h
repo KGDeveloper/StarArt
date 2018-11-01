@@ -18,6 +18,7 @@
 #import "UIImageView+WebCache.h"
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import <AMapSearchKit/AMapSearchKit.h>
+#import <AMapLocationKit/AMapLocationKit.h>
 
 /** 自定义部分 */
 #import "KGAlertView.h"
