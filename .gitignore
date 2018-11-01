@@ -61,3 +61,22 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+文艺星球/文艺星球/KGCustomTool/KGTabbar.xcassets/选中/dituselect.imageset/Contents.json
+文艺星球/文艺星球/KGCustomTool/KGTabbar.xcassets/选中/Contents.json
+文艺星球/文艺星球/KGCustomTool/KGTabbar.xcassets/未选中/wode.imageset/wode@3x.png
+文艺星球/文艺星球/KGCustomTool/KGTabbar.xcassets/未选中/wode.imageset/wode@2x.png
+文艺星球/文艺星球/KGCustomTool/KGTabbar.xcassets/未选中/wode.imageset/wode.png
+文艺星球/文艺星球/KGCustomTool/KGTabbar.xcassets/未选中/wode.imageset/Contents.json
+文艺星球/文艺星球/KGCustomTool/KGTabbar.xcassets/未选中/tongxunlu.imageset/tongxunlu@3x.png
+文艺星球/文艺星球/KGCustomTool/KGTabbar.xcassets/未选中/tongxunlu.imageset/tongxunlu@2x.png
+文艺星球/文艺星球/KGCustomTool/KGTabbar.xcassets/未选中/tongxunlu.imageset/tongxunlu.png
+文艺星球/文艺星球/KGCustomTool/KGTabbar.xcassets/未选中/tongxunlu.imageset/Contents.json
+文艺星球/文艺星球/KGCustomTool/KGTabbar.xcassets/未选中/shequ.imageset/shequ@3x.png
+文艺星球/文艺星球/KGCustomTool/KGTabbar.xcassets/未选中/shequ.imageset/shequ@2x.png
+文艺星球/文艺星球/KGCustomTool/KGTabbar.xcassets/未选中/shequ.imageset/shequ.png
+文艺星球/文艺星球/KGCustomTool/KGTabbar.xcassets/未选中/shequ.imageset/Contents.json
+文艺星球/文艺星球/KGCustomTool/KGTabbar.xcassets/未选中/guangchang.imageset/guangchang@3x.png
+文艺星球/文艺星球/KGCustomTool/KGTabbar.xcassets/未选中/guangchang.imageset/guangchang@2x.png
+文艺星球/文艺星球/KGCustomTool/KGTabbar.xcassets/未选中/guangchang.imageset/guangchang.png
+*.png
+*.json
