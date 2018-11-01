@@ -1,0 +1,81 @@
+PODS:
+  - AFNetworking (3.2.1):
+    - AFNetworking/NSURLSession (= 3.2.1)
+    - AFNetworking/Reachability (= 3.2.1)
+    - AFNetworking/Security (= 3.2.1)
+    - AFNetworking/Serialization (= 3.2.1)
+    - AFNetworking/UIKit (= 3.2.1)
+  - AFNetworking/NSURLSession (3.2.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.2.1)
+  - AFNetworking/Security (3.2.1)
+  - AFNetworking/Serialization (3.2.1)
+  - AFNetworking/UIKit (3.2.1):
+    - AFNetworking/NSURLSession
+  - AMap3DMap (6.5.0):
+    - AMapFoundation (~> 1.5)
+  - AMapFoundation (1.5.5)
+  - AMapLocation (2.6.1):
+    - AMapFoundation (~> 1.4)
+  - AMapNavi (6.4.0):
+    - AMap3DMap (~> 6.4)
+    - AMapFoundation (~> 1.5)
+  - AMapSearch (6.5.0):
+    - AMapFoundation (~> 1.4)
+  - DZNEmptyDataSet (1.8.1)
+  - IQKeyboardManager (6.2.0)
+  - MJRefresh (3.1.15.7)
+  - SDAutoLayout (2.2.1)
+  - SDWebImage (4.4.2):
+    - SDWebImage/Core (= 4.4.2)
+  - SDWebImage/Core (4.4.2)
+  - YYKit (1.0.9):
+    - YYKit/no-arc (= 1.0.9)
+  - YYKit/no-arc (1.0.9)
+
+DEPENDENCIES:
+  - AFNetworking
+  - AMapLocation
+  - AMapNavi
+  - AMapSearch
+  - DZNEmptyDataSet
+  - IQKeyboardManager
+  - MJRefresh
+  - SDAutoLayout
+  - SDWebImage
+  - YYKit
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AFNetworking
+    - AMap3DMap
+    - AMapFoundation
+    - AMapLocation
+    - AMapNavi
+    - AMapSearch
+    - DZNEmptyDataSet
+    - IQKeyboardManager
+    - MJRefresh
+    - SDAutoLayout
+    - SDWebImage
+    - YYKit
+
+SPEC CHECKSUMS:
+  AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
+  AMap3DMap: cbe10cc4302ac3f2817ef4221e1259d7e18d1c2f
+  AMapFoundation: 652bd70ba579f48a98bdf0c74d6e62a89a06ca58
+  AMapLocation: cf024b53dc03663efb4ea4bcce27d4cce58bb97a
+  AMapNavi: 2bc469d0523c2f66a5fcacb6947c7eb745ce9e64
+  AMapSearch: c22d8c98e04aad30615834e567781ec1367c4f36
+  DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
+  IQKeyboardManager: 6194101620b73af5e67900b8f89707a99de0b804
+  MJRefresh: 697f8ec75ebdbe9207767bb682cf0f51b0d8a41f
+  SDAutoLayout: 8bf6b3bbc8b01f775d4defbb4fda2ace805461be
+  SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
+  YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
+
+PODFILE CHECKSUM: b90a55e19b5ce77e04d954e15cd5d62c4c528968
+
+COCOAPODS: 1.5.3

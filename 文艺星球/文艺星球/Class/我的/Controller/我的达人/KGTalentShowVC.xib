@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceHanSansCN-Regular.otf">
+            <string>SourceHanSansCN-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KGTalentShowVC">
+            <connections>
+                <outlet property="talentView" destination="r72-Yx-stk" id="J3G-sa-3pV"/>
+                <outlet property="topDistance" destination="qJL-qL-vCx" id="ckf-KT-dwT"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r72-Yx-stk">
+                    <rect key="frame" x="0.0" y="30" width="375" height="50"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="darenrenzheng" translatesAutoresizingMaskIntoConstraints="NO" id="3hT-QW-YNA">
+                            <rect key="frame" x="15" y="16" width="15" height="18"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="18" id="X1A-xf-fdG"/>
+                                <constraint firstAttribute="width" constant="15" id="qEH-R1-fV4"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="达人认证" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="api-4B-khx">
+                            <rect key="frame" x="45" y="0.0" width="150" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="150" id="jvB-Mg-S1H"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SourceHanSansCN-Regular" family="Source Han Sans CN" pointSize="14"/>
+                            <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dakai" translatesAutoresizingMaskIntoConstraints="NO" id="mBe-1s-UhZ">
+                            <rect key="frame" x="350" y="20" width="10" height="10"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="10" id="Esx-ih-AKB"/>
+                                <constraint firstAttribute="height" constant="10" id="dCz-nN-YJU"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="api-4B-khx" firstAttribute="centerY" secondItem="r72-Yx-stk" secondAttribute="centerY" id="5Ug-V5-xuY"/>
+                        <constraint firstAttribute="bottom" secondItem="api-4B-khx" secondAttribute="bottom" id="6Q3-Y4-qtn"/>
+                        <constraint firstAttribute="trailing" secondItem="mBe-1s-UhZ" secondAttribute="trailing" constant="15" id="8uu-wR-e3a"/>
+                        <constraint firstItem="api-4B-khx" firstAttribute="top" secondItem="r72-Yx-stk" secondAttribute="top" id="Dd6-4S-Ez4"/>
+                        <constraint firstItem="3hT-QW-YNA" firstAttribute="leading" secondItem="r72-Yx-stk" secondAttribute="leading" constant="15" id="HVP-G5-nhV"/>
+                        <constraint firstItem="api-4B-khx" firstAttribute="leading" secondItem="3hT-QW-YNA" secondAttribute="trailing" constant="15" id="ahC-5L-8UA"/>
+                        <constraint firstItem="mBe-1s-UhZ" firstAttribute="centerY" secondItem="r72-Yx-stk" secondAttribute="centerY" id="f0c-bF-GS5"/>
+                        <constraint firstItem="3hT-QW-YNA" firstAttribute="centerY" secondItem="r72-Yx-stk" secondAttribute="centerY" id="hur-F8-B9v"/>
+                        <constraint firstAttribute="height" constant="50" id="qdh-f6-n8K"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="r72-Yx-stk" secondAttribute="trailing" id="adJ-Hl-mU6"/>
+                <constraint firstItem="r72-Yx-stk" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="f6N-wH-o0p"/>
+                <constraint firstItem="r72-Yx-stk" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="10" id="qJL-qL-vCx"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+            <point key="canvasLocation" x="138.40000000000001" y="154.27286356821591"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="dakai" width="6" height="11"/>
+        <image name="darenrenzheng" width="15" height="17"/>
+    </resources>
+</document>

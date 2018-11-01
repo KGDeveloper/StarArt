@@ -1,0 +1,19 @@
+
+ platform :ios, '9.0'
+
+target '文艺星球' do
+  
+pod 'IQKeyboardManager'
+pod 'AFNetworking'
+pod 'SDAutoLayout'
+pod 'SDWebImage'
+pod 'MJRefresh'
+pod 'DZNEmptyDataSet'
+pod 'YYKit'
+pod 'AMapSearch'
+pod 'AMapLocation'
+pod 'AMapNavi'
+
+  use_frameworks!
+  
+end
