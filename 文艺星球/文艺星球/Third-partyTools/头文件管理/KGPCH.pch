@@ -1,0 +1,19 @@
+//
+//  KGPCH.pch
+//  文艺星球
+//
+//  Created by 文艺星球 on 2018/10/22.
+//  Copyright © 2018年 KG丿轩帝. All rights reserved.
+//
+
+#ifndef KGPCH_pch
+#define KGPCH_pch
+
+/** 宏定义管理 */
+#import "KGDefineHeader.h"
+/** 三方库头文件管理 */
+#import "KGThirdHeader.h"
+/** 请求地址管理 */
+#import "KGRequestHeader.h"
+
+#endif /* KGPCH_pch */
