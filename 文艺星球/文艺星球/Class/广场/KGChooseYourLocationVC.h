@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface KGChooseYourLocationVC : KGBaseViewController
+/** 传送选择地址 */
+@property (nonatomic,copy) void(^sendLocation)(NSString *name);
 
 @end
 

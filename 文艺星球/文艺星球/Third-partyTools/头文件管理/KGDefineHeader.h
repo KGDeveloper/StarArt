@@ -48,8 +48,10 @@
 /** 设置方正字体 */
 #define KGFontFZ(font) [UIFont fontWithName:@"FZYingXueS-R-GB" size:font]
 /** 获取状态栏加导航栏高度 */
-#define KGRectNavAndStatusHight  self.navigationController.navigationBar.frame.size.height+[[UIApplication sharedApplication] statusBarFrame].size.height
+//#define KGRectNavAndStatusHight  self.navigationController.navigationBar.frame.size.height+[[UIApplication sharedApplication] statusBarFrame].size.height
 /** 获取tabbar高度 */
 #define KGRectTabbarHeight self.tabBarController.tabBar.bounds.size.height
 
 #endif /* KGDefineHeader_h */
+//获取导航栏+状态栏的高度
+#define KGRectNavAndStatusHight ({CGRect rectStatus = [[UIApplication sharedApplication] statusBarFrame];CGRect rectNav = self.navigationController.navigationBar.frame;(rectStatus.size.height+ rectNav.size.height);})

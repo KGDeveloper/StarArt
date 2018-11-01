@@ -22,6 +22,8 @@
 @property (nonatomic,strong) MBProgressHUD *hud;
 /** 选择 */
 @property (nonatomic,assign) NSInteger chooseIndex;
+/** 当前选择地址 */
+@property (nonatomic,copy) NSString *chooseName;
 
 @end
 
@@ -55,6 +57,9 @@
 }
 /** 导航栏右侧点击事件 */
 - (void)rightNavAction{
+    if (self.sendLocation) {
+        self.sendLocation(self.chooseName);
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 /** 显示位置 */
@@ -111,6 +116,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     self.chooseIndex = indexPath.row;
     [self.listView reloadData];
+    NSDictionary *dic = self.locationArr[indexPath.row];
+    self.chooseName = dic[@"name"];
+    self.rightNavItem.userInteractionEnabled = YES;
+    [self.rightNavItem setTitleColor:KGBlueColor forState:UIControlStateNormal];
 }
 /** 获取POI数据 */
 - (void)requestPOIDataWithCLLocationCoordinate2D:(CLLocationCoordinate2D)coordinate{
@@ -137,6 +146,36 @@
     [self.hud hideAnimated:YES];
     [self.listView reloadData];
 }
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    return [UIImage imageNamed:@"404"];
+}
+- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+    NSString *text = @"可能因为网络原因加载失败，请点击刷新";
+    
+    NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
+    paragraph.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraph.alignment = NSTextAlignmentCenter;
+    
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont systemFontOfSize:14.0f],
+                                 NSForegroundColorAttributeName:[UIColor lightGrayColor],
+                                 NSParagraphStyleAttributeName:paragraph
+                                 };
+    
+    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+    // 设置按钮标题
+    NSString *buttonTitle = @"重新加载";
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont boldSystemFontOfSize:14.0f],NSForegroundColorAttributeName:KGBlueColor
+                                 };
+    return [[NSAttributedString alloc] initWithString:buttonTitle attributes:attributes];
+}
+- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
+    [self mapApi];
+}
+
 
 /*
 #pragma mark - Navigation

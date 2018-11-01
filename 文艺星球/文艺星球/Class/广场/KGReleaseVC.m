@@ -80,7 +80,7 @@
     [self.view addSubview:self.chooseBtu];
     /** 选择地点 */
     self.locationBtu = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.locationBtu.frame = CGRectMake(15,KGRectNavAndStatusHight + 260, 75, 75);
+    self.locationBtu.frame = CGRectMake(15,KGRectNavAndStatusHight + 260, KGScreenWidth - 30, 75);
     [self.locationBtu setImage:[UIImage imageNamed:@"shouyedingwei"] forState:UIControlStateNormal];
     [self.locationBtu setTitle:@"你在哪里？" forState:UIControlStateNormal];
     [self.locationBtu setTitleColor:KGGrayColor forState:UIControlStateNormal];
@@ -88,6 +88,7 @@
     self.locationBtu.titleEdgeInsets = UIEdgeInsetsMake(0, self.locationBtu.imageView.bounds.size.width + 10, 0, 0);
     self.locationBtu.layer.cornerRadius = 5;
     self.locationBtu.layer.masksToBounds = YES;
+    self.locationBtu.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [self.locationBtu addTarget:self action:@selector(locationAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.locationBtu];
     
@@ -98,7 +99,13 @@
 }
 /** 选择位置点击事件 */
 - (void)locationAction:(UIButton *)sender{
-    [self pushHideenTabbarViewController:[[KGChooseYourLocationVC alloc]init] animted:YES];
+    KGChooseYourLocationVC *vc = [[KGChooseYourLocationVC alloc]init];
+    __weak typeof(self) weakSelf = self;
+    vc.sendLocation = ^(NSString * _Nonnull name) {
+        [weakSelf.locationBtu setTitle:name forState:UIControlStateNormal];
+        [weakSelf.locationBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
+    };
+    [self pushHideenTabbarViewController:vc animted:YES];
 }
 /** 相册 */
 - (PhotosLibraryView *)photoAlbm{
@@ -147,9 +154,12 @@
     if (self.photosArr.count < 9) {
         self.chooseBtu.frame = CGRectMake(width, height, 75, 75);
         self.chooseBtu.hidden = NO;
+        self.locationBtu.frame = CGRectMake(15,height + 100, KGScreenWidth - 30, 75);
     }else{
         self.chooseBtu.hidden = YES;
+        self.locationBtu.frame = CGRectMake(15,height + 25, KGScreenWidth - 30, 75);
     }
+    
 }
 /** KGImageViewDelegate */
 - (DeleteImageWithState)deleteUIImage{
