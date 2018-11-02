@@ -31,6 +31,8 @@
 @property (nonatomic,strong) UIView *countBack;
 /** 图片数目 */
 @property (nonatomic,strong) UILabel *countLab;
+/** 底部线 */
+@property (nonatomic,strong) UIView *line;
 
 @end
 
@@ -56,8 +58,9 @@
     self.commentsBtu = [UIButton buttonWithType:UIButtonTypeCustom];
     self.countBack = [UIView new];
     self.countLab = [UILabel new];
+    self.line = [UIView new];
     
-    [self.contentView sd_addSubviews:@[self.headerImage,self.nameLab,self.timeLab,self.labView,self.photoView,self.locationBtu,self.markImage,self.zansBtu,self.commentsBtu,self.countBack,self.countLab]];
+    [self.contentView sd_addSubviews:@[self.headerImage,self.nameLab,self.timeLab,self.labView,self.photoView,self.locationBtu,self.markImage,self.zansBtu,self.commentsBtu,self.countBack,self.countLab,self.line]];
     /** 头像 */
     self.headerImage.layer.cornerRadius = 17.5;
     self.headerImage.contentMode = UIViewContentModeScaleAspectFill;
@@ -80,6 +83,15 @@
     self.photoView.contentMode = UIViewContentModeScaleAspectFill;
     self.photoView.backgroundColor = KGLineColor;
     self.photoView.sd_layout.leftEqualToView(self.labView).rightEqualToView(self.labView).topSpaceToView(self.labView, 15).heightIs((KGScreenWidth - 30)/69*46);
+    /** 显示照片书view */
+    self.countBack.backgroundColor = [KGBlackColor colorWithAlphaComponent:0.2];
+    self.countBack.sd_layout.rightSpaceToView(self.contentView, 15).bottomEqualToView(self.photoView).widthIs(30).heightIs(15);
+    /** 数目 */
+    self.countLab.text = @"1/9";
+    self.countLab.textColor = KGWhiteColor;
+    self.countLab.font = KGFontSHRegular(14);
+    self.countLab.textAlignment = NSTextAlignmentCenter;
+    self.countLab.sd_layout.rightEqualToView(self.countBack).bottomEqualToView(self.countBack).widthIs(30).heightIs(15);
     /** 位置 */
     [self.locationBtu setImage:[UIImage imageNamed:@"dingwei"] forState:UIControlStateNormal];
     [self.locationBtu setTitle:@"北京798艺术区" forState:UIControlStateNormal];
@@ -93,6 +105,35 @@
     self.markImage.image = [UIImage imageNamed:@"shoucang (2)"];
     self.markImage.contentMode = UIViewContentModeScaleAspectFit;
     self.markImage.sd_layout.leftEqualToView(self.locationBtu).topSpaceToView(self.locationBtu, 15).widthIs(11).heightIs(14);
+    /** 评论 */
+    [self.commentsBtu setTitle:@"232" forState:UIControlStateNormal];
+    [self.commentsBtu setTitleColor:KGGrayColor forState:UIControlStateNormal];
+    [self.commentsBtu setImage:[UIImage imageNamed:@"pinglun"] forState:UIControlStateNormal];
+    self.commentsBtu.titleLabel.font = KGFontSHRegular(13);
+    self.commentsBtu.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    self.commentsBtu.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
+    self.commentsBtu.userInteractionEnabled = NO;
+    self.commentsBtu.sd_layout.rightSpaceToView(self.contentView, 15).topSpaceToView(self.locationBtu, 15).widthIs(50).heightIs(15);
+    /** 点赞 */
+    [self.zansBtu setTitle:@"232" forState:UIControlStateNormal];
+    [self.zansBtu setTitleColor:KGGrayColor forState:UIControlStateNormal];
+    [self.zansBtu setImage:[UIImage imageNamed:@"dianzan (2)"] forState:UIControlStateNormal];
+    self.zansBtu.titleLabel.font = KGFontSHRegular(13);
+    self.zansBtu.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    self.zansBtu.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
+    [self.zansBtu addTarget:self action:@selector(zansAction:) forControlEvents:UIControlEventTouchUpInside];
+    self.zansBtu.sd_layout.rightSpaceToView(self.commentsBtu, 15).topSpaceToView(self.locationBtu, 15).widthIs(50).heightIs(15);
+    /** 底部直线 */
+    self.line.backgroundColor = KGLineColor;
+    self.line.sd_layout.leftSpaceToView(self.contentView, 0).rightSpaceToView(self.contentView, 0).bottomSpaceToView(self.contentView, 0).heightIs(10);
+}
+/** 点赞 */
+- (void)zansAction:(UIButton *)sender{
+    if ([sender.currentImage isEqual:[UIImage imageNamed:@"dianzan (2)"]]) {
+        [sender setImage:[UIImage imageNamed:@"dianzan"] forState:UIControlStateNormal];
+    }else{
+        [sender setImage:[UIImage imageNamed:@"dianzan (2)"] forState:UIControlStateNormal];
+    }
 }
 
 - (void)awakeFromNib {
