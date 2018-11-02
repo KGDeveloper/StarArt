@@ -38,6 +38,10 @@
 		5A563203218067380007127C /* KGIntegralVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A563201218067380007127C /* KGIntegralVC.m */; };
 		5A563204218067380007127C /* KGIntegralVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A563202218067380007127C /* KGIntegralVC.xib */; };
 		5A563207218077770007127C /* KGIntegralDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A563206218077770007127C /* KGIntegralDetailVC.m */; };
+		5A5A7283218BEC590081F173 /* KGPreviewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5A7282218BEC590081F173 /* KGPreviewVC.m */; };
+		5A5A7286218BFF9E0081F173 /* KGPreviewHorizontalTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5A7285218BFF9E0081F173 /* KGPreviewHorizontalTextView.m */; };
+		5A5A7289218C2BA50081F173 /* KGPreviewKGPreviewRoundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5A7288218C2BA50081F173 /* KGPreviewKGPreviewRoundView.m */; };
+		5A5A728C218C2EF00081F173 /* KGPreviewVerticalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5A728B218C2EF00081F173 /* KGPreviewVerticalView.m */; };
 		5A6E86402182B40A00937450 /* KGWriteTalentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A6E863E2182B40A00937450 /* KGWriteTalentVC.m */; };
 		5A6E86412182B40A00937450 /* KGWriteTalentVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A6E863F2182B40A00937450 /* KGWriteTalentVC.xib */; };
 		5A6E86442182BA7A00937450 /* KGChooseIDCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A6E86432182BA7A00937450 /* KGChooseIDCardView.m */; };
@@ -163,6 +167,14 @@
 		5A563202218067380007127C /* KGIntegralVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGIntegralVC.xib; sourceTree = "<group>"; };
 		5A563205218077770007127C /* KGIntegralDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGIntegralDetailVC.h; sourceTree = "<group>"; };
 		5A563206218077770007127C /* KGIntegralDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGIntegralDetailVC.m; sourceTree = "<group>"; };
+		5A5A7281218BEC590081F173 /* KGPreviewVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGPreviewVC.h; sourceTree = "<group>"; };
+		5A5A7282218BEC590081F173 /* KGPreviewVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGPreviewVC.m; sourceTree = "<group>"; };
+		5A5A7284218BFF9E0081F173 /* KGPreviewHorizontalTextView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGPreviewHorizontalTextView.h; sourceTree = "<group>"; };
+		5A5A7285218BFF9E0081F173 /* KGPreviewHorizontalTextView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGPreviewHorizontalTextView.m; sourceTree = "<group>"; };
+		5A5A7287218C2BA50081F173 /* KGPreviewKGPreviewRoundView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGPreviewKGPreviewRoundView.h; sourceTree = "<group>"; };
+		5A5A7288218C2BA50081F173 /* KGPreviewKGPreviewRoundView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGPreviewKGPreviewRoundView.m; sourceTree = "<group>"; };
+		5A5A728A218C2EF00081F173 /* KGPreviewVerticalView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGPreviewVerticalView.h; sourceTree = "<group>"; };
+		5A5A728B218C2EF00081F173 /* KGPreviewVerticalView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGPreviewVerticalView.m; sourceTree = "<group>"; };
 		5A6E863D2182B40A00937450 /* KGWriteTalentVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGWriteTalentVC.h; sourceTree = "<group>"; };
 		5A6E863E2182B40A00937450 /* KGWriteTalentVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGWriteTalentVC.m; sourceTree = "<group>"; };
 		5A6E863F2182B40A00937450 /* KGWriteTalentVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGWriteTalentVC.xib; sourceTree = "<group>"; };
@@ -313,6 +325,12 @@
 				5A4A53BC218AE32200ABC7C9 /* KGLocationCell.h */,
 				5A4A53BD218AE32200ABC7C9 /* KGLocationCell.m */,
 				5A4A53BE218AE32200ABC7C9 /* KGLocationCell.xib */,
+				5A5A7284218BFF9E0081F173 /* KGPreviewHorizontalTextView.h */,
+				5A5A7285218BFF9E0081F173 /* KGPreviewHorizontalTextView.m */,
+				5A5A7287218C2BA50081F173 /* KGPreviewKGPreviewRoundView.h */,
+				5A5A7288218C2BA50081F173 /* KGPreviewKGPreviewRoundView.m */,
+				5A5A728A218C2EF00081F173 /* KGPreviewVerticalView.h */,
+				5A5A728B218C2EF00081F173 /* KGPreviewVerticalView.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -371,6 +389,8 @@
 				5A4A53B6218AAB7500ABC7C9 /* KGReleaseVC.m */,
 				5A4A53B8218AE15800ABC7C9 /* KGChooseYourLocationVC.h */,
 				5A4A53B9218AE15800ABC7C9 /* KGChooseYourLocationVC.m */,
+				5A5A7281218BEC590081F173 /* KGPreviewVC.h */,
+				5A5A7282218BEC590081F173 /* KGPreviewVC.m */,
 				5A4A53B3218A9B0700ABC7C9 /* KGSquare.xcassets */,
 			);
 			path = "广场";
@@ -885,6 +905,7 @@
 				5A563207218077770007127C /* KGIntegralDetailVC.m in Sources */,
 				5A5631DB21800DA30007127C /* KGCommunityVC.m in Sources */,
 				5A5631EC2180487A0007127C /* KGUserInfo.m in Sources */,
+				5A5A7283218BEC590081F173 /* KGPreviewVC.m in Sources */,
 				5A563203218067380007127C /* KGIntegralVC.m in Sources */,
 				5A4A53B7218AAB7500ABC7C9 /* KGReleaseVC.m in Sources */,
 				5A79E40E2181C73E0015AC91 /* KGAboutOurVC.m in Sources */,
@@ -897,6 +918,7 @@
 				5ABB9D52215B9A7C00C612B2 /* AppDelegate.m in Sources */,
 				5A4A53BA218AE15800ABC7C9 /* KGChooseYourLocationVC.m in Sources */,
 				5A9AECB1217EF4680003478E /* KGWYXQUserAgreementVC.m in Sources */,
+				5A5A7289218C2BA50081F173 /* KGPreviewKGPreviewRoundView.m in Sources */,
 				5A2D898C2175B2AC003411DC /* KGImageView.m in Sources */,
 				5A8FA6372189A1C600498307 /* KGSqureCell.m in Sources */,
 				5A6E86402182B40A00937450 /* KGWriteTalentVC.m in Sources */,
@@ -909,12 +931,14 @@
 				5A81D945217F14FB009B7517 /* KGRegisterVC.m in Sources */,
 				5A79E3FF21815FFE0015AC91 /* KGIntegralTableViewCell.m in Sources */,
 				5A5631D821800D7B0007127C /* KGMapVC.m in Sources */,
+				5A5A728C218C2EF00081F173 /* KGPreviewVerticalView.m in Sources */,
 				5A6E86542182F81800937450 /* KGEditSelfVC.m in Sources */,
 				5A6E86572183128500937450 /* KGWriteSignatureVC.m in Sources */,
 				5A7814AE2187FCC1001A14D5 /* KGHometownVC.m in Sources */,
 				5A79E4122181CBFA0015AC91 /* KGTalentShowVC.m in Sources */,
 				5AA248C32189B1B900AE908B /* KGBookCell.m in Sources */,
 				5A2D89922175D22F003411DC /* KGHUD.m in Sources */,
+				5A5A7286218BFF9E0081F173 /* KGPreviewHorizontalTextView.m in Sources */,
 				5AF6563D215C781400B8FC07 /* KGBaseViewController.m in Sources */,
 				5AA248B92189A85A00AE908B /* KGArticleCell.m in Sources */,
 				5A6E86442182BA7A00937450 /* KGChooseIDCardView.m in Sources */,

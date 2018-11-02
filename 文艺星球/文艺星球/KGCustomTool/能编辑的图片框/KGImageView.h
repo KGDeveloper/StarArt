@@ -39,6 +39,8 @@ typedef NS_ENUM(NSInteger,DeleteImageWithState){
 @property (nonatomic,copy) void(^choosePhotoFromPhotoAlbum)(void);
 /** 代理方法 */
 @property (nonatomic,weak) id<KGImageViewDelegate>delegate;
+/** 删除图片按钮 */
+@property (nonatomic,strong) UIButton *deleteBtu;
 
 @end
 

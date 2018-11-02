@@ -13,8 +13,6 @@
 @interface KGImageView ()
 /** 展示图片 */
 @property (nonatomic,strong) UIImageView *backImageView;
-/** 删除图片按钮 */
-@property (nonatomic,strong) UIButton *deleteBtu;
 /** 是否开始缩放 */
 @property (nonatomic,assign) BOOL isZoom;
 /** 初始位置 */
