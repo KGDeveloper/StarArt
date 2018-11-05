@@ -7,13 +7,13 @@
 //
 
 #import "KGSquareVC.h"
-#import "KGReleaseVC.h"
 #import "KGSquareRoundCell.h"
 #import "KGSquareVerticalCell.h"
 #import "KGQuareHorizontalCell.h"
 #import "KGSquareMessageVC.h"
 #import "KGFoundInterestAreaVC.h"
 #import "KGSquareDetailVC.h"
+#import "KGReleaseChooseVC.h"
 
 @interface KGSquareVC ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 /** 消息 */
@@ -104,7 +104,7 @@
 }
 /** 发布按钮点击事件 */
 - (void)releaseAction:(UIButton *)sender{
-    [self pushHideenTabbarViewController:[[KGReleaseVC alloc]init] animted:YES];
+    [self pushHideenTabbarViewController:[[KGReleaseChooseVC alloc]init] animted:YES];
 }
 /** 创建消息列表 */
 - (void)setUpListView{

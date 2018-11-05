@@ -15,6 +15,9 @@
 		5A2620E9219028EB0047A319 /* KGSquareDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2620E7219028EB0047A319 /* KGSquareDetailCell.m */; };
 		5A2620EA219028EB0047A319 /* KGSquareDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A2620E8219028EB0047A319 /* KGSquareDetailCell.xib */; };
 		5A2620ED219043B80047A319 /* KGReleaseTF.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2620EC219043B80047A319 /* KGReleaseTF.m */; };
+		5A2620F7219050140047A319 /* KGReleaseChooseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2620F6219050140047A319 /* KGReleaseChooseVC.m */; };
+		5A2620FB219052730047A319 /* KGFoundReleaseHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2620F9219052730047A319 /* KGFoundReleaseHomeVC.m */; };
+		5A2620FC219052730047A319 /* KGFoundReleaseHomeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A2620FA219052730047A319 /* KGFoundReleaseHomeVC.xib */; };
 		5A2D898C2175B2AC003411DC /* KGImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2D898B2175B2AC003411DC /* KGImageView.m */; };
 		5A2D898F2175CB19003411DC /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2D898E2175CB19003411DC /* MBProgressHUD.m */; };
 		5A2D89922175D22F003411DC /* KGHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2D89912175D22F003411DC /* KGHUD.m */; };
@@ -135,6 +138,11 @@
 		5A2620E8219028EB0047A319 /* KGSquareDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGSquareDetailCell.xib; sourceTree = "<group>"; };
 		5A2620EB219043B80047A319 /* KGReleaseTF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGReleaseTF.h; sourceTree = "<group>"; };
 		5A2620EC219043B80047A319 /* KGReleaseTF.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGReleaseTF.m; sourceTree = "<group>"; };
+		5A2620F5219050140047A319 /* KGReleaseChooseVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGReleaseChooseVC.h; sourceTree = "<group>"; };
+		5A2620F6219050140047A319 /* KGReleaseChooseVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGReleaseChooseVC.m; sourceTree = "<group>"; };
+		5A2620F8219052730047A319 /* KGFoundReleaseHomeVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGFoundReleaseHomeVC.h; sourceTree = "<group>"; };
+		5A2620F9219052730047A319 /* KGFoundReleaseHomeVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGFoundReleaseHomeVC.m; sourceTree = "<group>"; };
+		5A2620FA219052730047A319 /* KGFoundReleaseHomeVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGFoundReleaseHomeVC.xib; sourceTree = "<group>"; };
 		5A2D898A2175B2AC003411DC /* KGImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGImageView.h; sourceTree = "<group>"; };
 		5A2D898B2175B2AC003411DC /* KGImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KGImageView.m; sourceTree = "<group>"; };
 		5A2D898D2175CB19003411DC /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
@@ -350,6 +358,48 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5A2620EE21904ED90047A319 /* 广场 */ = {
+			isa = PBXGroup;
+			children = (
+				5A2620E021900F2E0047A319 /* KGSquareDetailVC.h */,
+				5A2620E121900F2E0047A319 /* KGSquareDetailVC.m */,
+				5A2620D8218FF0BA0047A319 /* KGSquareMessageVC.h */,
+				5A2620D9218FF0BA0047A319 /* KGSquareMessageVC.m */,
+			);
+			path = "广场";
+			sourceTree = "<group>";
+		};
+		5A2620EF21904EFD0047A319 /* 发布广场 */ = {
+			isa = PBXGroup;
+			children = (
+				5A4A53B5218AAB7500ABC7C9 /* KGReleaseVC.h */,
+				5A4A53B6218AAB7500ABC7C9 /* KGReleaseVC.m */,
+				5A4A53B8218AE15800ABC7C9 /* KGChooseYourLocationVC.h */,
+				5A4A53B9218AE15800ABC7C9 /* KGChooseYourLocationVC.m */,
+				5A5A7281218BEC590081F173 /* KGPreviewVC.h */,
+				5A5A7282218BEC590081F173 /* KGPreviewVC.m */,
+			);
+			path = "发布广场";
+			sourceTree = "<group>";
+		};
+		5A2620F021904F1B0047A319 /* 发现好去处 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "发现好去处";
+			path = "好去处";
+			sourceTree = "<group>";
+		};
+		5A2620F121904F240047A319 /* 发布发现好去处 */ = {
+			isa = PBXGroup;
+			children = (
+				5A2620F8219052730047A319 /* KGFoundReleaseHomeVC.h */,
+				5A2620F9219052730047A319 /* KGFoundReleaseHomeVC.m */,
+				5A2620FA219052730047A319 /* KGFoundReleaseHomeVC.xib */,
+			);
+			path = "发布发现好去处";
+			sourceTree = "<group>";
+		};
 		5A4A53BB218AE30C00ABC7C9 /* view */ = {
 			isa = PBXGroup;
 			children = (
@@ -432,16 +482,12 @@
 				5A5631DD21800E1F0007127C /* KGSquareVC.m */,
 				5A2620E321901AFC0047A319 /* KGFoundInterestAreaVC.h */,
 				5A2620E421901AFC0047A319 /* KGFoundInterestAreaVC.m */,
-				5A4A53B5218AAB7500ABC7C9 /* KGReleaseVC.h */,
-				5A4A53B6218AAB7500ABC7C9 /* KGReleaseVC.m */,
-				5A4A53B8218AE15800ABC7C9 /* KGChooseYourLocationVC.h */,
-				5A4A53B9218AE15800ABC7C9 /* KGChooseYourLocationVC.m */,
-				5A5A7281218BEC590081F173 /* KGPreviewVC.h */,
-				5A5A7282218BEC590081F173 /* KGPreviewVC.m */,
-				5A2620D8218FF0BA0047A319 /* KGSquareMessageVC.h */,
-				5A2620D9218FF0BA0047A319 /* KGSquareMessageVC.m */,
-				5A2620E021900F2E0047A319 /* KGSquareDetailVC.h */,
-				5A2620E121900F2E0047A319 /* KGSquareDetailVC.m */,
+				5A2620F5219050140047A319 /* KGReleaseChooseVC.h */,
+				5A2620F6219050140047A319 /* KGReleaseChooseVC.m */,
+				5A2620EE21904ED90047A319 /* 广场 */,
+				5A2620EF21904EFD0047A319 /* 发布广场 */,
+				5A2620F121904F240047A319 /* 发布发现好去处 */,
+				5A2620F021904F1B0047A319 /* 发现好去处 */,
 				5A4A53B3218A9B0700ABC7C9 /* KGSquare.xcassets */,
 			);
 			path = "广场";
@@ -835,6 +881,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5AA248BA2189A85A00AE908B /* KGArticleCell.xib in Resources */,
+				5A2620FC219052730047A319 /* KGFoundReleaseHomeVC.xib in Resources */,
 				5AA248BF2189ACB400AE908B /* KGArticleInterviewCell.xib in Resources */,
 				5A4F5EE3217DB481005C6A14 /* KGLogin.xcassets in Resources */,
 				5ABB9D5D215B9A8500C612B2 /* LaunchScreen.storyboard in Resources */,
@@ -989,6 +1036,7 @@
 				5A2D89982175EDFA003411DC /* KGDatingView.m in Sources */,
 				5A6E865A21831B4B00937450 /* KGMyLabelVC.m in Sources */,
 				5A81D945217F14FB009B7517 /* KGRegisterVC.m in Sources */,
+				5A2620FB219052730047A319 /* KGFoundReleaseHomeVC.m in Sources */,
 				5A79E3FF21815FFE0015AC91 /* KGIntegralTableViewCell.m in Sources */,
 				5A5631D821800D7B0007127C /* KGMapVC.m in Sources */,
 				5A2620E9219028EB0047A319 /* KGSquareDetailCell.m in Sources */,
@@ -1010,6 +1058,7 @@
 				5A7814B1218800B9001A14D5 /* KGHomeTownTF.m in Sources */,
 				5A548B3521789A440065744E /* PhotosLibraryView.m in Sources */,
 				5A2D898F2175CB19003411DC /* MBProgressHUD.m in Sources */,
+				5A2620F7219050140047A319 /* KGReleaseChooseVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
