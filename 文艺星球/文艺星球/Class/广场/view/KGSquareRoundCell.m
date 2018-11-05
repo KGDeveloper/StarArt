@@ -137,7 +137,14 @@
         [sender setImage:[UIImage imageNamed:@"dianzan (2)"] forState:UIControlStateNormal];
     }
 }
-
+/** 获取cell高度 */
+- (CGFloat)rowHeightWithDictionary:(NSDictionary *)dic{
+    return 500;
+}
+/** 设置内容 */
+- (void)cellDataWithDictionary:(NSDictionary *)dic{
+    
+}
 
 - (void)awakeFromNib {
     [super awakeFromNib];

@@ -37,7 +37,7 @@
     /** 设置登录按钮圆角 */
     self.loginBtu.layer.cornerRadius = 17.5;
     self.loginBtu.layer.masksToBounds = YES;
-    self.loginBtu.userInteractionEnabled = NO;
+    self.loginBtu.userInteractionEnabled = YES;
     /** 背景view设置阴影以及圆角 */
     self.backView.layer.cornerRadius = 10;
     self.backView.layer.masksToBounds = NO;
@@ -60,27 +60,27 @@
     [self.manBtu setImage:[UIImage imageNamed:@"xuanzhongyuan"] forState:UIControlStateNormal];
     [self.manBtu setTitleColor:KGBlueColor forState:UIControlStateNormal];
     [self.womanBtu setImage:[UIImage imageNamed:@"yuan"] forState:UIControlStateNormal];
-    [self.womanBtu setTitleColor:KGBlueColor forState:UIControlStateNormal];
+    [self.womanBtu setTitleColor:KGGrayColor forState:UIControlStateNormal];
     [self.knowBtu setImage:[UIImage imageNamed:@"yuan"] forState:UIControlStateNormal];
-    [self.knowBtu setTitleColor:KGBlueColor forState:UIControlStateNormal];
+    [self.knowBtu setTitleColor:KGGrayColor forState:UIControlStateNormal];
 }
 /** 选择女 */
 - (IBAction)chooseWoman:(UIButton *)sender {
     [self.womanBtu setImage:[UIImage imageNamed:@"xuanzhongyuan"] forState:UIControlStateNormal];
     [self.womanBtu setTitleColor:KGBlueColor forState:UIControlStateNormal];
     [self.manBtu setImage:[UIImage imageNamed:@"yuan"] forState:UIControlStateNormal];
-    [self.manBtu setTitleColor:KGBlueColor forState:UIControlStateNormal];
+    [self.manBtu setTitleColor:KGGrayColor forState:UIControlStateNormal];
     [self.knowBtu setImage:[UIImage imageNamed:@"yuan"] forState:UIControlStateNormal];
-    [self.knowBtu setTitleColor:KGBlueColor forState:UIControlStateNormal];
+    [self.knowBtu setTitleColor:KGGrayColor forState:UIControlStateNormal];
 }
 /** 选择保密 */
 - (IBAction)chooseKnow:(UIButton *)sender {
     [self.knowBtu setImage:[UIImage imageNamed:@"xuanzhongyuan"] forState:UIControlStateNormal];
     [self.knowBtu setTitleColor:KGBlueColor forState:UIControlStateNormal];
     [self.womanBtu setImage:[UIImage imageNamed:@"yuan"] forState:UIControlStateNormal];
-    [self.womanBtu setTitleColor:KGBlueColor forState:UIControlStateNormal];
+    [self.womanBtu setTitleColor:KGGrayColor forState:UIControlStateNormal];
     [self.manBtu setImage:[UIImage imageNamed:@"yuan"] forState:UIControlStateNormal];
-    [self.manBtu setTitleColor:KGBlueColor forState:UIControlStateNormal];
+    [self.manBtu setTitleColor:KGGrayColor forState:UIControlStateNormal];
 }
 /** 登录 */
 - (IBAction)loginAction:(UIButton *)sender {

@@ -29,7 +29,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self changeNavBackColor:[UIColor clearColor] controller:self];
-    [self changeNavTitleColor:KGWhiteColor font:KGFontSHRegular(15) controller:self];
+    [self changeNavTitleColor:KGWhiteColor font:KGFontSHBold(15) controller:self];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];

@@ -19,7 +19,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     /** 导航栏标题颜色 */
-    [self changeNavTitleColor:KGBlackColor font:KGFontSHRegular(15) controller:self];
+    [self changeNavTitleColor:KGBlackColor font:KGFontSHBold(15) controller:self];
     [self changeNavBackColor:KGWhiteColor controller:self];
 }
 - (void)viewDidLoad {

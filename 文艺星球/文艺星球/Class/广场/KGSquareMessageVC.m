@@ -20,7 +20,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     /** 导航栏标题颜色 */
-    [self changeNavTitleColor:KGBlackColor font:KGFontSHRegular(15) controller:self];
+    [self changeNavTitleColor:KGBlackColor font:KGFontSHBold(15) controller:self];
     [self changeNavBackColor:KGWhiteColor controller:self];
 }
 - (void)viewDidLoad {
@@ -53,6 +53,8 @@
     self.listView.emptyDataSetDelegate = self;
     self.listView.tableFooterView = [UIView new];
     self.listView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.listView.showsVerticalScrollIndicator = NO;
+    self.listView.showsHorizontalScrollIndicator = NO;
     [self.view addSubview:self.listView];
     
     [self.listView registerNib:[UINib nibWithNibName:@"KGSquareMessageCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"KGSquareMessageCell"];
@@ -77,15 +79,16 @@
     
 }
 - (void)alertView{
+    
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *clearAction = [UIAlertAction actionWithTitle:@"清空所有消息" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
     }];
-    [clearAction setValuesForKeysWithDictionary:@{@"titleFont":KGFontSHRegular(14),@"titleTextColor":[UIColor colorWithHexString:@"#ff6666"]}];
+    [clearAction setValuesForKeysWithDictionary:@{@"titleTextColor":[UIColor colorWithHexString:@"#ff6666"]}];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         
     }];
-    [cancelAction setValuesForKeysWithDictionary:@{@"titleFont":KGFontSHRegular(13),@"titleTextColor":[UIColor colorWithHexString:@"#333333"]}];
+    [cancelAction setValuesForKeysWithDictionary:@{@"titleTextColor":[UIColor colorWithHexString:@"#333333"]}];
     
     [alert addAction:clearAction];
     [alert addAction:cancelAction];

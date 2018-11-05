@@ -65,6 +65,10 @@
 - (void)changeNavBackColor:(UIColor *)color controller:(UIViewController *)controller;
 /** 设置导航栏标题颜色字体 */
 - (void)changeNavTitleColor:(UIColor *)color font:(UIFont *)font controller:(UIViewController *)controller;
+/** 获得所有属性 */
+- (NSArray *)getAllProperty:(id)object;
+/** kvc 获取所有key值 */
+- (NSArray *)getAllIvar:(id)object;
 
 @end
 

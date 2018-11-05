@@ -11,6 +11,9 @@
 #import "KGSquareRoundCell.h"
 #import "KGSquareVerticalCell.h"
 #import "KGQuareHorizontalCell.h"
+#import "KGSquareMessageVC.h"
+#import "KGFoundInterestAreaVC.h"
+#import "KGSquareDetailVC.h"
 
 @interface KGSquareVC ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 /** 消息 */
@@ -19,6 +22,12 @@
 @property (nonatomic,strong) UIView *headerView;
 /** 点击消息 */
 @property (nonatomic,strong) UIButton *contextBtu;
+/** 发现好去处 */
+@property (nonatomic,strong) KGFoundInterestAreaVC *foundVC;
+/** 导航左侧 */
+@property (nonatomic,strong) UIButton *leftBtu;
+/** 导航右侧 */
+@property (nonatomic,strong) UIButton *rightBtu;
 
 @end
 
@@ -27,7 +36,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     /** 导航栏标题颜色 */
-    [self changeNavTitleColor:KGBlackColor font:KGFontSHRegular(15) controller:self];
+    [self changeNavTitleColor:KGBlackColor font:KGFontSHBold(15) controller:self];
     [self changeNavBackColor:KGWhiteColor controller:self];
 }
 - (void)viewDidLoad {
@@ -37,13 +46,56 @@
     self.title = @"广场";
     self.view.backgroundColor = KGAreaGrayColor;
     
+    [self setNavCenterView];
     [self setUpListView];
     [self releaseBtu];
+}
+/** 导航栏设置 */
+- (void)setNavCenterView{
+    UIView *centerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 30)];
+    self.navigationItem.titleView = centerView;
+    
+    self.leftBtu = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.leftBtu.frame = CGRectMake(0, 0, 100, 30);
+    [self.leftBtu setTitle:@"广场" forState:UIControlStateNormal];
+    [self.leftBtu setTitleColor:KGBlueColor forState:UIControlStateNormal];
+    self.leftBtu.titleLabel.font = KGFontSHBold(15);
+    [self.leftBtu addTarget:self action:@selector(leftAction:) forControlEvents:UIControlEventTouchUpInside];
+    [centerView addSubview:self.leftBtu];
+    
+    self.rightBtu = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.rightBtu.frame = CGRectMake(100, 0, 100, 30);
+    [self.rightBtu setTitle:@"发现好去处" forState:UIControlStateNormal];
+    [self.rightBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
+    self.rightBtu.titleLabel.font = KGFontSHBold(15);
+    [self.rightBtu addTarget:self action:@selector(rightAction:) forControlEvents:UIControlEventTouchUpInside];
+    [centerView addSubview:self.rightBtu];
+    
+}
+/** 左侧按钮 */
+- (void)leftAction:(UIButton *)leftBtu{
+    [self.leftBtu setTitleColor:KGBlueColor forState:UIControlStateNormal];
+    [self.rightBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
+    [self.foundVC.view removeFromSuperview];
+}
+/** 右侧按钮 */
+- (void)rightAction:(UIButton *)leftBtu{
+    [self.leftBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
+    [self.rightBtu setTitleColor:KGBlueColor forState:UIControlStateNormal];
+    [self.view addSubview:self.foundVC.view];
+}
+/** 发现好去处 */
+- (KGFoundInterestAreaVC *)foundVC{
+    if (!_foundVC) {
+        _foundVC = [[KGFoundInterestAreaVC alloc]init];
+        [self.view addSubview:_foundVC.view];
+    }
+    return _foundVC;
 }
 /** 发布按钮 */
 - (void)releaseBtu{
     UIButton *releaseBtu = [UIButton buttonWithType:UIButtonTypeCustom];
-    releaseBtu.frame = CGRectMake(KGScreenWidth - 40, KGScreenHeight - KGRectTabbarHeight - 100, 40, 40);
+    releaseBtu.frame = CGRectMake(KGScreenWidth - 55, KGScreenHeight - KGRectTabbarHeight - 100, 40, 40);
     [releaseBtu setImage:[UIImage imageNamed:@"fabu"] forState:UIControlStateNormal];
     [releaseBtu addTarget:self action:@selector(releaseAction:) forControlEvents:UIControlEventTouchUpInside];
     releaseBtu.layer.cornerRadius = 20;
@@ -92,7 +144,7 @@
 }
 /** 点击查看消息 */
 - (void)lockMeeagesAction:(UIButton *)sender{
-    
+    [self pushHideenTabbarViewController:[[KGSquareMessageVC alloc]init] animted:YES];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 3;
@@ -111,6 +163,9 @@
         KGSquareVerticalCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGSquareVerticalCell"];
         return cell;
     }
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self pushHideenTabbarViewController:[[KGSquareDetailVC alloc]init] animted:YES];
 }
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView{
     return [UIImage imageNamed:@"kongyemian"];
