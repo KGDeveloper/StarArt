@@ -11,6 +11,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface KGSquareVerticalCell : UITableViewCell
+/** 根据数据计算cell高度 */
+- (CGFloat)rowHeightWithDictionary:(NSDictionary *)dic;
+/** 根据数据填充cell */
+- (void)cellDataWithDictionary:(NSDictionary *)dic;
 
 @end
 
