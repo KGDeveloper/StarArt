@@ -7,6 +7,7 @@
 //
 
 #import "KGFoundDetailVC.h"
+#import "KGFoundDetailCell.h"
 
 @interface KGFoundDetailVC ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
 /** 详情 */
@@ -33,6 +34,8 @@
 @property (nonatomic,strong) UILabel *commentLab;
 /** 头视图 */
 @property (nonatomic,strong) UIView *header;
+/** 评论 */
+@property (nonatomic,strong) UIButton *commentBtu;
 
 @end
 
@@ -53,6 +56,7 @@
     self.view.backgroundColor = KGWhiteColor;
     
     [self setUI];
+    [self setUpCommentView];
 }
 /** 左侧点击事件 */
 - (void)leftNavAction{
@@ -70,7 +74,10 @@
     self.listView.tableHeaderView = [self headerView];
     self.listView.showsVerticalScrollIndicator = NO;
     self.listView.showsHorizontalScrollIndicator = NO;
+    self.listView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.listView];
+    
+    [self.listView registerClass:[KGFoundDetailCell class] forCellReuseIdentifier:@"KGFoundDetailCell"];
 }
 - (UIView *)headerView{
     self.header = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, KGScreenWidth/764*479 + 145)];
@@ -167,7 +174,7 @@
     self.header.frame = CGRectMake(0, 0, KGScreenWidth, height + 140);
     
     /** 评论数 */
-    self.commentLab = [[UILabel alloc]initWithFrame:CGRectMake(45, height + 20, KGScreenWidth - 60, 14)];
+    self.commentLab = [[UILabel alloc]initWithFrame:CGRectMake(15, height + 20, KGScreenWidth - 30, 14)];
     self.commentLab.text = @"全部评论（300）";
     self.commentLab.textColor = KGBlackColor;
     self.commentLab.font = KGFontSHBold(15);
@@ -182,13 +189,10 @@
     return 10;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 100;
+    return [self.listView cellHeightForIndexPath:indexPath cellContentViewWidth:KGScreenWidth tableView:self.listView];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
-    }
+    KGFoundDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGFoundDetailCell"];
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -217,7 +221,19 @@
     NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc]initWithString:string attributes:@{NSParagraphStyleAttributeName:par}];
     return attributeString;
 }
+/** 评论按钮 */
+- (void)setUpCommentView{
+    self.commentBtu = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.commentBtu.frame = CGRectMake(KGScreenWidth - 55, KGScreenHeight - 140, 40, 40);
+    [self.commentBtu setImage:[UIImage imageNamed:@"duihua"] forState:UIControlStateNormal];
+    [self.commentBtu addTarget:self action:@selector(commentAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view insertSubview:self.commentBtu atIndex:99];
+}
+/** 点击事件 */
+- (void)commentAction{
     
+    
+}
 
 /*
 #pragma mark - Navigation
