@@ -8,6 +8,8 @@
 
 #import "KGFoundInterestAreaVC.h"
 #import "KGFoundInterestAreaCell.h"
+#import "KGFoundCell.h"
+#import "KGFoundDetailVC.h"
 
 @interface KGFoundInterestAreaVC ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 /** 地点展示 */
@@ -65,6 +67,8 @@
     self.listView.showsHorizontalScrollIndicator = NO;
     self.listView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.listView];
+    
+    [self.listView registerNib:[UINib nibWithNibName:@"KGFoundCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"KGFoundCell"];
 }
 /** 创建头部筛选 */
 - (UIView *)setHeaderView{
@@ -114,7 +118,7 @@
         [self.sortBtu setImage:[UIImage imageNamed:@"liwozuijin"] forState:UIControlStateNormal];
         self.isLeft = YES;
         self.screenView.hidden = NO;
-        self.screenArr = [NSMutableArray arrayWithArray:@[@"餐厅",@"咖啡",@"茗茶",@"糕点面包",@"酒店名宿",@"书店",@"夜蒲",@"影像音乐",@"展览艺术"]];
+        self.screenArr = [NSMutableArray arrayWithArray:@[@"美术",@"音乐",@"书店",@"设计",@"戏剧",@"摄影",@"美食",@"咖啡",@"茗茶",@"糕点面包",@"集成店",@"电影",@"剧院"]];
         [self.screenView reloadData];
     }
 }
@@ -161,17 +165,14 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.listView) {
-        return 300;
+        return KGScreenWidth/750*332 + 170;
     }else{
         return 50;
     }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.listView) {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-        if (!cell) {
-            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
-        }
+        KGFoundCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGFoundCell"];
         return cell;
     }else{
         KGFoundInterestAreaCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGFoundInterestAreaCell"];
@@ -190,7 +191,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.listView) {
-        
+        [self pushHideenTabbarViewController:[[KGFoundDetailVC alloc]init] animted:YES];
     }else{
         self.selectIndexRow = indexPath.row;
         [self.screenView reloadData];

@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		5A25210A21913978006D642B /* KGFoundInterestAreaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25210821913978006D642B /* KGFoundInterestAreaCell.m */; };
 		5A25210B21913978006D642B /* KGFoundInterestAreaCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A25210921913978006D642B /* KGFoundInterestAreaCell.xib */; };
+		5A25210F21914A0C006D642B /* KGFoundCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25210D21914A0C006D642B /* KGFoundCell.m */; };
+		5A25211021914A0C006D642B /* KGFoundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A25210E21914A0C006D642B /* KGFoundCell.xib */; };
+		5A25211321916468006D642B /* KGFoundDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25211221916468006D642B /* KGFoundDetailVC.m */; };
+		5A25211621919956006D642B /* KGFoundDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25211521919956006D642B /* KGFoundDetailCell.m */; };
 		5A2620DA218FF0BA0047A319 /* KGSquareMessageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2620D9218FF0BA0047A319 /* KGSquareMessageVC.m */; };
 		5A2620DE218FF2AF0047A319 /* KGSquareMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2620DC218FF2AF0047A319 /* KGSquareMessageCell.m */; };
 		5A2620DF218FF2AF0047A319 /* KGSquareMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A2620DD218FF2AF0047A319 /* KGSquareMessageCell.xib */; };
@@ -129,6 +133,13 @@
 		5A25210721913978006D642B /* KGFoundInterestAreaCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGFoundInterestAreaCell.h; sourceTree = "<group>"; };
 		5A25210821913978006D642B /* KGFoundInterestAreaCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGFoundInterestAreaCell.m; sourceTree = "<group>"; };
 		5A25210921913978006D642B /* KGFoundInterestAreaCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGFoundInterestAreaCell.xib; sourceTree = "<group>"; };
+		5A25210C21914A0C006D642B /* KGFoundCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGFoundCell.h; sourceTree = "<group>"; };
+		5A25210D21914A0C006D642B /* KGFoundCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGFoundCell.m; sourceTree = "<group>"; };
+		5A25210E21914A0C006D642B /* KGFoundCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGFoundCell.xib; sourceTree = "<group>"; };
+		5A25211121916468006D642B /* KGFoundDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGFoundDetailVC.h; sourceTree = "<group>"; };
+		5A25211221916468006D642B /* KGFoundDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGFoundDetailVC.m; sourceTree = "<group>"; };
+		5A25211421919956006D642B /* KGFoundDetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGFoundDetailCell.h; sourceTree = "<group>"; };
+		5A25211521919956006D642B /* KGFoundDetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGFoundDetailCell.m; sourceTree = "<group>"; };
 		5A2620D8218FF0BA0047A319 /* KGSquareMessageVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGSquareMessageVC.h; sourceTree = "<group>"; };
 		5A2620D9218FF0BA0047A319 /* KGSquareMessageVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGSquareMessageVC.m; sourceTree = "<group>"; };
 		5A2620DB218FF2AF0047A319 /* KGSquareMessageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGSquareMessageCell.h; sourceTree = "<group>"; };
@@ -390,6 +401,8 @@
 		5A2620F021904F1B0047A319 /* 发现好去处 */ = {
 			isa = PBXGroup;
 			children = (
+				5A25211121916468006D642B /* KGFoundDetailVC.h */,
+				5A25211221916468006D642B /* KGFoundDetailVC.m */,
 			);
 			name = "发现好去处";
 			path = "好去处";
@@ -434,6 +447,11 @@
 				5A25210721913978006D642B /* KGFoundInterestAreaCell.h */,
 				5A25210821913978006D642B /* KGFoundInterestAreaCell.m */,
 				5A25210921913978006D642B /* KGFoundInterestAreaCell.xib */,
+				5A25210C21914A0C006D642B /* KGFoundCell.h */,
+				5A25210D21914A0C006D642B /* KGFoundCell.m */,
+				5A25210E21914A0C006D642B /* KGFoundCell.xib */,
+				5A25211421919956006D642B /* KGFoundDetailCell.h */,
+				5A25211521919956006D642B /* KGFoundDetailCell.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -897,6 +915,7 @@
 				5A8FA62E2189813700498307 /* KGCollectionInstituteCell.xib in Resources */,
 				5A79E4182181D2820015AC91 /* KGTalentPrivilegeVC.xib in Resources */,
 				5A81D946217F14FB009B7517 /* KGRegisterVC.xib in Resources */,
+				5A25211021914A0C006D642B /* KGFoundCell.xib in Resources */,
 				5A25210B21913978006D642B /* KGFoundInterestAreaCell.xib in Resources */,
 				5A79E40021815FFE0015AC91 /* KGIntegralTableViewCell.xib in Resources */,
 				5A548B3621789A440065744E /* PhotosCell.xib in Resources */,
@@ -1005,6 +1024,7 @@
 				5A4C3F20217F0D8800A7B01F /* KGAlertView.m in Sources */,
 				5A6E86482182EBD200937450 /* KGWriteTalentInfoVC.m in Sources */,
 				5A9AECB8217EF61E0003478E /* KGWYXQPrivacyAgreementVC.m in Sources */,
+				5A25211321916468006D642B /* KGFoundDetailVC.m in Sources */,
 				5A5A7292218C40D10081F173 /* KGSquareVerticalCell.m in Sources */,
 				5A79E4172181D2820015AC91 /* KGTalentPrivilegeVC.m in Sources */,
 				5A8FA62D2189813700498307 /* KGCollectionInstituteCell.m in Sources */,
@@ -1030,6 +1050,7 @@
 				5A8FA63221899BB300498307 /* KGExhibitionCell.m in Sources */,
 				5A5631F621804AF90007127C /* KGMineDoubleCell.m in Sources */,
 				5A54A1282179BE87005709F3 /* KGLabel.m in Sources */,
+				5A25211621919956006D642B /* KGFoundDetailCell.m in Sources */,
 				5A2620E221900F2E0047A319 /* KGSquareDetailVC.m in Sources */,
 				5ABB9D52215B9A7C00C612B2 /* AppDelegate.m in Sources */,
 				5A4A53BA218AE15800ABC7C9 /* KGChooseYourLocationVC.m in Sources */,
@@ -1053,6 +1074,7 @@
 				5A5A728C218C2EF00081F173 /* KGPreviewVerticalView.m in Sources */,
 				5A2620DE218FF2AF0047A319 /* KGSquareMessageCell.m in Sources */,
 				5A6E86542182F81800937450 /* KGEditSelfVC.m in Sources */,
+				5A25210F21914A0C006D642B /* KGFoundCell.m in Sources */,
 				5A6E86572183128500937450 /* KGWriteSignatureVC.m in Sources */,
 				5A7814AE2187FCC1001A14D5 /* KGHometownVC.m in Sources */,
 				5A79E4122181CBFA0015AC91 /* KGTalentShowVC.m in Sources */,

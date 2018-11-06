@@ -19,18 +19,15 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     /** 导航栏标题颜色 */
-    [self changeNavTitleColor:KGBlackColor font:KGFontSHBold(15) controller:self];
-    [self changeNavBackColor:KGWhiteColor controller:self];
+    [self changeNavBackColor:[UIColor clearColor] controller:self];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     /** 定制左侧返回按钮 */
-    [self setLeftNavItemWithFrame:CGRectZero title:nil image:[UIImage imageNamed:@"fanhui"] font:nil color:nil select:@selector(leftNavAction)];
-    /** 导航栏标题 */
-    self.title = @"发布";
+    [self setLeftNavItemWithFrame:CGRectZero title:nil image:[UIImage imageNamed:@"fanhuibai"] font:nil color:nil select:@selector(leftNavAction)];
+    
     self.view.backgroundColor = KGWhiteColor;
-    self.rightNavItem.userInteractionEnabled = YES;
     
     [self setUI];
 }
@@ -39,21 +36,43 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)setUI{
+    
+    UIImageView *backImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, KGScreenHeight)];
+    backImage.image = [UIImage imageNamed:@"beijingtu"];
+    backImage.contentMode = UIViewContentModeScaleToFill;
+    [self.view addSubview:backImage];
+    
     UIButton *foundBtu = [UIButton buttonWithType:UIButtonTypeCustom];
     foundBtu.frame = CGRectMake(50, 400, 50, 50);
-    foundBtu.backgroundColor = KGLineColor;
+    foundBtu.center = CGPointMake(KGScreenWidth/4, KGScreenHeight - 350);
+    [foundBtu setImage:[UIImage imageNamed:@"haoquchu"] forState:UIControlStateNormal];
     foundBtu.layer.cornerRadius = 25;
     foundBtu.layer.masksToBounds = YES;
     [foundBtu addTarget:self action:@selector(foundAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:foundBtu];
     
+    UILabel *leftLab = [[UILabel alloc]initWithFrame:CGRectMake(0, KGScreenHeight - 310, KGScreenWidth/2, 14)];
+    leftLab.text = @"发现好去处";
+    leftLab.textColor = KGWhiteColor;
+    leftLab.font = KGFontSHRegular(14);
+    leftLab.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:leftLab];
+    
     UIButton *releaseBtu = [UIButton buttonWithType:UIButtonTypeCustom];
     releaseBtu.frame = CGRectMake(KGScreenWidth - 100, 400, 50, 50);
-    releaseBtu.backgroundColor = KGLineColor;
+    releaseBtu.center = CGPointMake(KGScreenWidth/4*3, KGScreenHeight - 350);
+    [releaseBtu setImage:[UIImage imageNamed:@"fabuguangchang"] forState:UIControlStateNormal];
     releaseBtu.layer.cornerRadius = 25;
     releaseBtu.layer.masksToBounds = YES;
     [releaseBtu addTarget:self action:@selector(releaseAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:releaseBtu];
+    
+    UILabel *rightLab = [[UILabel alloc]initWithFrame:CGRectMake(KGScreenWidth/2, KGScreenHeight - 310, KGScreenWidth/2, 14)];
+    rightLab.text = @"发布广场";
+    rightLab.textColor = KGWhiteColor;
+    rightLab.font = KGFontSHRegular(14);
+    rightLab.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:rightLab];
 }
 - (void)foundAction{
     [self pushHideenTabbarViewController:[[KGFoundReleaseHomeVC alloc]initWithNibName:@"KGFoundReleaseHomeVC" bundle:[NSBundle mainBundle]] animted:YES];
