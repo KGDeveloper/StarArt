@@ -34,6 +34,9 @@
 - (void)leftNavAction{
     [self.navigationController popViewControllerAnimated:YES];
 }
+- (IBAction)addAction:(UIButton *)sender {
+    
+}
 
 /*
 #pragma mark - Navigation

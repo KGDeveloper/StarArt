@@ -88,7 +88,7 @@
 - (KGFoundInterestAreaVC *)foundVC{
     if (!_foundVC) {
         _foundVC = [[KGFoundInterestAreaVC alloc]init];
-        [self.view addSubview:_foundVC.view];
+        [self addChildViewController:_foundVC];
     }
     return _foundVC;
 }

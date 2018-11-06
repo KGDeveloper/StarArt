@@ -70,6 +70,57 @@
                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                     </userDefinedRuntimeAttributes>
                 </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OKZ-mz-auE">
+                    <rect key="frame" x="15" y="152" width="345" height="170"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="添加店铺详细信息" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YtX-N8-9b0">
+                            <rect key="frame" x="0.0" y="57" width="345" height="13"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="13" id="7ht-8s-QfL"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SourceHanSansCN-Regular" family="Source Han Sans CN" pointSize="13"/>
+                            <color key="textColor" red="0.97773437500000004" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="一经收录，可获得100积分" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eAp-La-mnM">
+                            <rect key="frame" x="0.0" y="84" width="345" height="13"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="13" id="Ffo-FF-QcT"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SourceHanSansCN-Regular" family="Source Han Sans CN" pointSize="13"/>
+                            <color key="textColor" red="0.97773437500000004" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xn5-bY-ROO">
+                            <rect key="frame" x="0.0" y="112" width="345" height="58"/>
+                            <fontDescription key="fontDescription" name="SourceHanSansCN-Regular" family="Source Han Sans CN" pointSize="13"/>
+                            <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="点击开始添加" image="jiaxiangdingwei"/>
+                            <connections>
+                                <action selector="addAction:" destination="-1" eventType="touchUpInside" id="enj-ms-YvI"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.19550506161971831" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="YtX-N8-9b0" firstAttribute="leading" secondItem="OKZ-mz-auE" secondAttribute="leading" id="41o-K8-Io9"/>
+                        <constraint firstItem="eAp-La-mnM" firstAttribute="top" secondItem="YtX-N8-9b0" secondAttribute="bottom" constant="14" id="H4b-AL-qpF"/>
+                        <constraint firstItem="Xn5-bY-ROO" firstAttribute="top" secondItem="eAp-La-mnM" secondAttribute="bottom" constant="15" id="JCL-6i-f8w"/>
+                        <constraint firstAttribute="bottom" secondItem="Xn5-bY-ROO" secondAttribute="bottom" id="KOg-nx-17X"/>
+                        <constraint firstAttribute="trailing" secondItem="Xn5-bY-ROO" secondAttribute="trailing" id="SVW-Jv-nBy"/>
+                        <constraint firstItem="Xn5-bY-ROO" firstAttribute="leading" secondItem="OKZ-mz-auE" secondAttribute="leading" id="T45-J3-9SF"/>
+                        <constraint firstAttribute="trailing" secondItem="YtX-N8-9b0" secondAttribute="trailing" id="WuG-oy-ie3"/>
+                        <constraint firstItem="YtX-N8-9b0" firstAttribute="top" secondItem="OKZ-mz-auE" secondAttribute="top" constant="57" id="b80-1l-0hS"/>
+                        <constraint firstAttribute="trailing" secondItem="eAp-La-mnM" secondAttribute="trailing" id="iA3-Ej-McN"/>
+                        <constraint firstItem="eAp-La-mnM" firstAttribute="leading" secondItem="OKZ-mz-auE" secondAttribute="leading" id="qUf-uX-LPd"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -82,9 +133,13 @@
                 <constraint firstItem="ZAQ-zP-hRF" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" id="P0U-c6-OpU"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="9w6-rU-ckA" secondAttribute="trailing" constant="15" id="QX8-Wu-xQe"/>
                 <constraint firstItem="eRa-FC-bkY" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="15" id="U6n-Cg-JfN"/>
+                <constraint firstItem="OKZ-mz-auE" firstAttribute="top" secondItem="eRa-FC-bkY" secondAttribute="top" id="Uzc-K9-1i1"/>
                 <constraint firstItem="ZAQ-zP-hRF" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="15" id="bbJ-vK-I3U"/>
                 <constraint firstItem="9w6-rU-ckA" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="15" id="dPl-ul-Yy9"/>
+                <constraint firstItem="OKZ-mz-auE" firstAttribute="height" secondItem="eRa-FC-bkY" secondAttribute="height" id="g8u-WP-igr"/>
                 <constraint firstItem="0bj-S4-ZqA" firstAttribute="top" secondItem="9w6-rU-ckA" secondAttribute="bottom" id="gYS-EU-BGm"/>
+                <constraint firstItem="OKZ-mz-auE" firstAttribute="leading" secondItem="eRa-FC-bkY" secondAttribute="leading" id="hm7-wR-DUV"/>
+                <constraint firstItem="OKZ-mz-auE" firstAttribute="width" secondItem="eRa-FC-bkY" secondAttribute="width" id="hrs-A0-pXH"/>
                 <constraint firstItem="pcv-Ng-TKr" firstAttribute="top" secondItem="ZAQ-zP-hRF" secondAttribute="bottom" id="kQB-F9-rcc"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="pcv-Ng-TKr" secondAttribute="trailing" constant="15" id="q4U-Jo-HQG"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="ZAQ-zP-hRF" secondAttribute="trailing" constant="15" id="rru-Gk-5gq"/>
@@ -92,4 +147,7 @@
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
         </view>
     </objects>
+    <resources>
+        <image name="jiaxiangdingwei" width="12" height="15"/>
+    </resources>
 </document>

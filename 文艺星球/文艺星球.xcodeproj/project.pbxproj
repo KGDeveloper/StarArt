@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A25210A21913978006D642B /* KGFoundInterestAreaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25210821913978006D642B /* KGFoundInterestAreaCell.m */; };
+		5A25210B21913978006D642B /* KGFoundInterestAreaCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A25210921913978006D642B /* KGFoundInterestAreaCell.xib */; };
 		5A2620DA218FF0BA0047A319 /* KGSquareMessageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2620D9218FF0BA0047A319 /* KGSquareMessageVC.m */; };
 		5A2620DE218FF2AF0047A319 /* KGSquareMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2620DC218FF2AF0047A319 /* KGSquareMessageCell.m */; };
 		5A2620DF218FF2AF0047A319 /* KGSquareMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A2620DD218FF2AF0047A319 /* KGSquareMessageCell.xib */; };
@@ -124,6 +126,9 @@
 /* Begin PBXFileReference section */
 		3F634D71E78A2CA014864263 /* Pods-文艺星球.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-文艺星球.debug.xcconfig"; path = "Pods/Target Support Files/Pods-文艺星球/Pods-文艺星球.debug.xcconfig"; sourceTree = "<group>"; };
 		4428EAE3FEDAF43CBC67972E /* Pods-文艺星球.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-文艺星球.release.xcconfig"; path = "Pods/Target Support Files/Pods-文艺星球/Pods-文艺星球.release.xcconfig"; sourceTree = "<group>"; };
+		5A25210721913978006D642B /* KGFoundInterestAreaCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGFoundInterestAreaCell.h; sourceTree = "<group>"; };
+		5A25210821913978006D642B /* KGFoundInterestAreaCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGFoundInterestAreaCell.m; sourceTree = "<group>"; };
+		5A25210921913978006D642B /* KGFoundInterestAreaCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGFoundInterestAreaCell.xib; sourceTree = "<group>"; };
 		5A2620D8218FF0BA0047A319 /* KGSquareMessageVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGSquareMessageVC.h; sourceTree = "<group>"; };
 		5A2620D9218FF0BA0047A319 /* KGSquareMessageVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGSquareMessageVC.m; sourceTree = "<group>"; };
 		5A2620DB218FF2AF0047A319 /* KGSquareMessageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGSquareMessageCell.h; sourceTree = "<group>"; };
@@ -426,6 +431,9 @@
 				5A2620E8219028EB0047A319 /* KGSquareDetailCell.xib */,
 				5A2620EB219043B80047A319 /* KGReleaseTF.h */,
 				5A2620EC219043B80047A319 /* KGReleaseTF.m */,
+				5A25210721913978006D642B /* KGFoundInterestAreaCell.h */,
+				5A25210821913978006D642B /* KGFoundInterestAreaCell.m */,
+				5A25210921913978006D642B /* KGFoundInterestAreaCell.xib */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -889,6 +897,7 @@
 				5A8FA62E2189813700498307 /* KGCollectionInstituteCell.xib in Resources */,
 				5A79E4182181D2820015AC91 /* KGTalentPrivilegeVC.xib in Resources */,
 				5A81D946217F14FB009B7517 /* KGRegisterVC.xib in Resources */,
+				5A25210B21913978006D642B /* KGFoundInterestAreaCell.xib in Resources */,
 				5A79E40021815FFE0015AC91 /* KGIntegralTableViewCell.xib in Resources */,
 				5A548B3621789A440065744E /* PhotosCell.xib in Resources */,
 				5A4A53C0218AE32200ABC7C9 /* KGLocationCell.xib in Resources */,
@@ -1005,6 +1014,7 @@
 				5A5631E121800E370007127C /* KGFriendsVC.m in Sources */,
 				5A563207218077770007127C /* KGIntegralDetailVC.m in Sources */,
 				5A5631DB21800DA30007127C /* KGCommunityVC.m in Sources */,
+				5A25210A21913978006D642B /* KGFoundInterestAreaCell.m in Sources */,
 				5A5631EC2180487A0007127C /* KGUserInfo.m in Sources */,
 				5A5A728F218C40A60081F173 /* KGQuareHorizontalCell.m in Sources */,
 				5A5A7283218BEC590081F173 /* KGPreviewVC.m in Sources */,
