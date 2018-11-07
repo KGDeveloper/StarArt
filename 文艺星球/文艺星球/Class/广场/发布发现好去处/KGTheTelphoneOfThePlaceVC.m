@@ -1,20 +1,20 @@
 //
-//  KGTheDetailNameOfThePlaceVC.m
+//  KGTheTelphoneOfThePlaceVC.m
 //  文艺星球
 //
 //  Created by 文艺星球 on 2018/11/7.
 //  Copyright © 2018年 KG丿轩帝. All rights reserved.
 //
 
-#import "KGTheDetailNameOfThePlaceVC.h"
+#import "KGTheTelphoneOfThePlaceVC.h"
 
-@interface KGTheDetailNameOfThePlaceVC ()<UITextFieldDelegate>
-/** 副标题 */
-@property (weak, nonatomic) IBOutlet UITextField *detailTF;
+@interface KGTheTelphoneOfThePlaceVC ()<UITextFieldDelegate>
+/** 联系方式 */
+@property (weak, nonatomic) IBOutlet UITextField *telphoneTF;
 
 @end
 
-@implementation KGTheDetailNameOfThePlaceVC
+@implementation KGTheTelphoneOfThePlaceVC
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -30,10 +30,10 @@
     /** 定制z右侧返回按钮 */
     [self setRightNavItemWithFrame:CGRectZero title:@"确定" image:nil font:KGFontSHRegular(13) color:KGGrayColor select:@selector(rightNavAction)];
     /** 导航栏标题 */
-    self.title = @"地点副标题";
+    self.title = @"联系电话";
     self.view.backgroundColor = KGWhiteColor;
     self.rightNavItem.userInteractionEnabled = NO;
-    self.detailTF.delegate = self;
+    self.telphoneTF.delegate = self;
 }
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{
@@ -41,14 +41,14 @@
 }
 /** 导航栏右侧点击事件 */
 - (void)rightNavAction{
-    if (self.sendDetailString) {
-        self.sendDetailString(self.detailTF.text);
+    if (self.sendTheOfficialTelphone) {
+        self.sendTheOfficialTelphone(self.telphoneTF.text);
     }
     [self.navigationController popViewControllerAnimated:YES];
 }
 /** UITextFieldDelegate */
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    if (self.detailTF.text.length > 0) {
+    if (self.telphoneTF.text.length > 0) {
         [self.rightNavItem setTitleColor:KGBlueColor forState:UIControlStateNormal];
         self.rightNavItem.userInteractionEnabled = YES;
     }else{
@@ -56,6 +56,7 @@
         self.rightNavItem.userInteractionEnabled = NO;
     }
 }
+
 
 /*
 #pragma mark - Navigation

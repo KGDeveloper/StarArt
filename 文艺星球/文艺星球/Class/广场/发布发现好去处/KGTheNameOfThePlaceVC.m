@@ -22,6 +22,7 @@
     [super viewWillAppear:animated];
     /** 导航栏标题颜色 */
     [self changeNavBackColor:KGWhiteColor controller:self];
+    [self changeNavTitleColor:KGBlackColor font:KGFontSHBold(15) controller:self];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];

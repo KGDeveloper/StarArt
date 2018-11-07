@@ -12,6 +12,12 @@
 #import "KGTheNameOfThePlaceVC.h"
 #import "KGTheDetailNameOfThePlaceVC.h"
 #import "KGTheIntroduceOfThePlaceVC.h"
+#import "KGDetailedIntroductionOfThePlaceVC.h"
+#import "KGSelectTheCategoryOfThePlaceVC.h"
+#import "KGWhereTheCityOfTheCityVC.h"
+#import "KGTheTelphoneOfThePlaceVC.h"
+#import "KGBusinessHoursOfThePlaceVC.h"
+#import "KGPerCapitaConsumptionOfThePlaceVC.h"
 
 @interface KGSubmitLocationInfoVC ()<UITableViewDelegate,UITableViewDataSource>
 /** 信息 */
@@ -109,8 +115,7 @@
     [self.submitBtu setTitleColor:KGWhiteColor forState:UIControlStateNormal];
     self.submitBtu.titleLabel.font = KGFontSHRegular(15);
     [self.submitBtu addTarget:self action:@selector(chooseAction) forControlEvents:UIControlEventTouchUpInside];
-    self.submitBtu.backgroundColor = KGGrayColor;
-    self.submitBtu.userInteractionEnabled = NO;
+    self.submitBtu.backgroundColor = KGBlueColor;
     self.submitBtu.layer.cornerRadius = 17.5;
     self.submitBtu.layer.masksToBounds = YES;
     [backView addSubview:self.submitBtu];
@@ -172,19 +177,43 @@
         };
         [self pushHideenTabbarViewController:vc animted:YES];
     }else if (indexPath.row == 4){/** 详细介绍 */
-        
+        KGDetailedIntroductionOfThePlaceVC *vc = [[KGDetailedIntroductionOfThePlaceVC alloc]init];
+        vc.sendDetailedIntroduction = ^(NSString * _Nonnull introduce, NSArray<UIImage *> * _Nonnull photos) {
+            
+        };
+        [self pushHideenTabbarViewController:vc animted:YES];
     }else if (indexPath.row == 5){/** 地点类型 */
-        
+        KGSelectTheCategoryOfThePlaceVC *vc = [[KGSelectTheCategoryOfThePlaceVC alloc]init];
+        vc.sendChooseSelectString = ^(NSString * _Nonnull imageUrl) {
+            
+        };
+        [self pushHideenTabbarViewController:vc animted:YES];
     }else if (indexPath.row == 6){/** 所在城市 */
-        
+        KGWhereTheCityOfTheCityVC *vc = [[KGWhereTheCityOfTheCityVC alloc]init];
+        vc.sendChooseCity = ^(NSString * _Nonnull city) {
+            
+        };
+        [self pushHideenTabbarViewController:vc animted:YES];
     }else if (indexPath.row == 7){/** 详细地址 */
         
     }else if (indexPath.row == 8){/** 联系电话 */
-        
+        KGTheTelphoneOfThePlaceVC *vc = [[KGTheTelphoneOfThePlaceVC alloc]initWithNibName:@"KGTheTelphoneOfThePlaceVC" bundle:nil];
+        vc.sendTheOfficialTelphone = ^(NSString * _Nonnull telphone) {
+            
+        };
+        [self pushHideenTabbarViewController:vc animted:YES];
     }else if (indexPath.row == 9){/** 营业时间 */
-        
+        KGBusinessHoursOfThePlaceVC *vc = [[KGBusinessHoursOfThePlaceVC alloc]initWithNibName:@"KGBusinessHoursOfThePlaceVC" bundle:nil];
+        vc.sendBusinessTime = ^(NSString * _Nonnull timeStr) {
+            
+        };
+        [self pushHideenTabbarViewController:vc animted:YES];
     }else{/** 人均消费 */
-        
+        KGPerCapitaConsumptionOfThePlaceVC *vc = [[KGPerCapitaConsumptionOfThePlaceVC alloc]initWithNibName:@"KGPerCapitaConsumptionOfThePlaceVC" bundle:nil];
+        vc.sendPriceString = ^(NSString * _Nonnull price) {
+            
+        };
+        [self pushHideenTabbarViewController:vc animted:YES];
     }
 }
 

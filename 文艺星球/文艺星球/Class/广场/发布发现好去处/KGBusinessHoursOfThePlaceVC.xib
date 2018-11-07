@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceHanSansCN-Regular.otf">
+            <string>SourceHanSansCN-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KGBusinessHoursOfThePlaceVC">
+            <connections>
+                <outlet property="timeTF" destination="Xht-5T-fLx" id="ter-at-04H"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="营业时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y3g-Si-c7m">
+                    <rect key="frame" x="15" y="20" width="70" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="70" id="DrB-gT-cfv"/>
+                        <constraint firstAttribute="height" constant="50" id="dcd-Lg-hnx"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SourceHanSansCN-Regular" family="Source Han Sans CN" pointSize="14"/>
+                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请填写地点的营业时间" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JnE-SS-Q62">
+                    <rect key="frame" x="15" y="111" width="345" height="13"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="13" id="ckm-Io-Ysv"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SourceHanSansCN-Regular" family="Source Han Sans CN" pointSize="13"/>
+                    <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请填写营业时间" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xht-5T-fLx">
+                    <rect key="frame" x="100" y="20" width="260" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="OrH-VV-mch"/>
+                    </constraints>
+                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" name="SourceHanSansCN-Regular" family="Source Han Sans CN" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sbY-JX-NKA">
+                    <rect key="frame" x="15" y="70" width="345" height="1"/>
+                    <color key="backgroundColor" red="0.92941176470588238" green="0.92941176470588238" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="64T-aY-Kdh"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="y3g-Si-c7m" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="15" id="AZn-rA-AEB"/>
+                <constraint firstItem="sbY-JX-NKA" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="15" id="IVU-dq-Rkl"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="Xht-5T-fLx" secondAttribute="trailing" constant="15" id="NAR-sv-CNf"/>
+                <constraint firstItem="JnE-SS-Q62" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="15" id="VfE-xU-K6y"/>
+                <constraint firstItem="Xht-5T-fLx" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" id="Yhb-CC-zR1"/>
+                <constraint firstItem="Xht-5T-fLx" firstAttribute="leading" secondItem="y3g-Si-c7m" secondAttribute="trailing" constant="15" id="biC-fh-5Lb"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="sbY-JX-NKA" secondAttribute="trailing" constant="15" id="dbh-6R-wbT"/>
+                <constraint firstItem="JnE-SS-Q62" firstAttribute="top" secondItem="sbY-JX-NKA" secondAttribute="bottom" constant="40" id="lju-pQ-RkX"/>
+                <constraint firstItem="y3g-Si-c7m" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" id="nNe-nU-oNX"/>
+                <constraint firstItem="sbY-JX-NKA" firstAttribute="top" secondItem="y3g-Si-c7m" secondAttribute="bottom" id="s07-ju-sPh"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="JnE-SS-Q62" secondAttribute="trailing" constant="15" id="w5D-cY-auo"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+        </view>
+    </objects>
+</document>

@@ -35,6 +35,16 @@
 		5A2D84542192D5C800CBC727 /* KGTheDetailNameOfThePlaceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2D84522192D5C800CBC727 /* KGTheDetailNameOfThePlaceVC.m */; };
 		5A2D84552192D5C800CBC727 /* KGTheDetailNameOfThePlaceVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A2D84532192D5C800CBC727 /* KGTheDetailNameOfThePlaceVC.xib */; };
 		5A2D84582192DA6D00CBC727 /* KGTheIntroduceOfThePlaceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2D84572192DA6D00CBC727 /* KGTheIntroduceOfThePlaceVC.m */; };
+		5A2D845B2192E0E400CBC727 /* KGDetailedIntroductionOfThePlaceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2D845A2192E0E300CBC727 /* KGDetailedIntroductionOfThePlaceVC.m */; };
+		5A2D845E2192EB6F00CBC727 /* KGSelectTheCategoryOfThePlaceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2D845D2192EB6F00CBC727 /* KGSelectTheCategoryOfThePlaceVC.m */; };
+		5A2D84612192F02A00CBC727 /* KGWhereTheCityOfTheCityVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2D84602192F02A00CBC727 /* KGWhereTheCityOfTheCityVC.m */; };
+		5A2D84652192F20500CBC727 /* KGTheTelphoneOfThePlaceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2D84632192F20500CBC727 /* KGTheTelphoneOfThePlaceVC.m */; };
+		5A2D84662192F20500CBC727 /* KGTheTelphoneOfThePlaceVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A2D84642192F20500CBC727 /* KGTheTelphoneOfThePlaceVC.xib */; };
+		5A2D846A2192F4B700CBC727 /* KGBusinessHoursOfThePlaceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2D84682192F4B700CBC727 /* KGBusinessHoursOfThePlaceVC.m */; };
+		5A2D846B2192F4B700CBC727 /* KGBusinessHoursOfThePlaceVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A2D84692192F4B700CBC727 /* KGBusinessHoursOfThePlaceVC.xib */; };
+		5A2D846F2192F63B00CBC727 /* KGPerCapitaConsumptionOfThePlaceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2D846D2192F63B00CBC727 /* KGPerCapitaConsumptionOfThePlaceVC.m */; };
+		5A2D84702192F63B00CBC727 /* KGPerCapitaConsumptionOfThePlaceVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A2D846E2192F63B00CBC727 /* KGPerCapitaConsumptionOfThePlaceVC.xib */; };
+		5A2D84732192F87C00CBC727 /* KGRecommendPlaceAggremmentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2D84722192F87C00CBC727 /* KGRecommendPlaceAggremmentVC.m */; };
 		5A2D898C2175B2AC003411DC /* KGImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2D898B2175B2AC003411DC /* KGImageView.m */; };
 		5A2D898F2175CB19003411DC /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2D898E2175CB19003411DC /* MBProgressHUD.m */; };
 		5A2D89922175D22F003411DC /* KGHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A2D89912175D22F003411DC /* KGHUD.m */; };
@@ -189,6 +199,23 @@
 		5A2D84532192D5C800CBC727 /* KGTheDetailNameOfThePlaceVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGTheDetailNameOfThePlaceVC.xib; sourceTree = "<group>"; };
 		5A2D84562192DA6D00CBC727 /* KGTheIntroduceOfThePlaceVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGTheIntroduceOfThePlaceVC.h; sourceTree = "<group>"; };
 		5A2D84572192DA6D00CBC727 /* KGTheIntroduceOfThePlaceVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGTheIntroduceOfThePlaceVC.m; sourceTree = "<group>"; };
+		5A2D84592192E0E300CBC727 /* KGDetailedIntroductionOfThePlaceVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGDetailedIntroductionOfThePlaceVC.h; sourceTree = "<group>"; };
+		5A2D845A2192E0E300CBC727 /* KGDetailedIntroductionOfThePlaceVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGDetailedIntroductionOfThePlaceVC.m; sourceTree = "<group>"; };
+		5A2D845C2192EB6F00CBC727 /* KGSelectTheCategoryOfThePlaceVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGSelectTheCategoryOfThePlaceVC.h; sourceTree = "<group>"; };
+		5A2D845D2192EB6F00CBC727 /* KGSelectTheCategoryOfThePlaceVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGSelectTheCategoryOfThePlaceVC.m; sourceTree = "<group>"; };
+		5A2D845F2192F02A00CBC727 /* KGWhereTheCityOfTheCityVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGWhereTheCityOfTheCityVC.h; sourceTree = "<group>"; };
+		5A2D84602192F02A00CBC727 /* KGWhereTheCityOfTheCityVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGWhereTheCityOfTheCityVC.m; sourceTree = "<group>"; };
+		5A2D84622192F20500CBC727 /* KGTheTelphoneOfThePlaceVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGTheTelphoneOfThePlaceVC.h; sourceTree = "<group>"; };
+		5A2D84632192F20500CBC727 /* KGTheTelphoneOfThePlaceVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGTheTelphoneOfThePlaceVC.m; sourceTree = "<group>"; };
+		5A2D84642192F20500CBC727 /* KGTheTelphoneOfThePlaceVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGTheTelphoneOfThePlaceVC.xib; sourceTree = "<group>"; };
+		5A2D84672192F4B700CBC727 /* KGBusinessHoursOfThePlaceVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGBusinessHoursOfThePlaceVC.h; sourceTree = "<group>"; };
+		5A2D84682192F4B700CBC727 /* KGBusinessHoursOfThePlaceVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGBusinessHoursOfThePlaceVC.m; sourceTree = "<group>"; };
+		5A2D84692192F4B700CBC727 /* KGBusinessHoursOfThePlaceVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGBusinessHoursOfThePlaceVC.xib; sourceTree = "<group>"; };
+		5A2D846C2192F63B00CBC727 /* KGPerCapitaConsumptionOfThePlaceVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGPerCapitaConsumptionOfThePlaceVC.h; sourceTree = "<group>"; };
+		5A2D846D2192F63B00CBC727 /* KGPerCapitaConsumptionOfThePlaceVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGPerCapitaConsumptionOfThePlaceVC.m; sourceTree = "<group>"; };
+		5A2D846E2192F63B00CBC727 /* KGPerCapitaConsumptionOfThePlaceVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGPerCapitaConsumptionOfThePlaceVC.xib; sourceTree = "<group>"; };
+		5A2D84712192F87C00CBC727 /* KGRecommendPlaceAggremmentVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGRecommendPlaceAggremmentVC.h; sourceTree = "<group>"; };
+		5A2D84722192F87C00CBC727 /* KGRecommendPlaceAggremmentVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGRecommendPlaceAggremmentVC.m; sourceTree = "<group>"; };
 		5A2D898A2175B2AC003411DC /* KGImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGImageView.h; sourceTree = "<group>"; };
 		5A2D898B2175B2AC003411DC /* KGImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KGImageView.m; sourceTree = "<group>"; };
 		5A2D898D2175CB19003411DC /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
@@ -454,6 +481,23 @@
 				5A2D84532192D5C800CBC727 /* KGTheDetailNameOfThePlaceVC.xib */,
 				5A2D84562192DA6D00CBC727 /* KGTheIntroduceOfThePlaceVC.h */,
 				5A2D84572192DA6D00CBC727 /* KGTheIntroduceOfThePlaceVC.m */,
+				5A2D84592192E0E300CBC727 /* KGDetailedIntroductionOfThePlaceVC.h */,
+				5A2D845A2192E0E300CBC727 /* KGDetailedIntroductionOfThePlaceVC.m */,
+				5A2D845C2192EB6F00CBC727 /* KGSelectTheCategoryOfThePlaceVC.h */,
+				5A2D845D2192EB6F00CBC727 /* KGSelectTheCategoryOfThePlaceVC.m */,
+				5A2D845F2192F02A00CBC727 /* KGWhereTheCityOfTheCityVC.h */,
+				5A2D84602192F02A00CBC727 /* KGWhereTheCityOfTheCityVC.m */,
+				5A2D84622192F20500CBC727 /* KGTheTelphoneOfThePlaceVC.h */,
+				5A2D84632192F20500CBC727 /* KGTheTelphoneOfThePlaceVC.m */,
+				5A2D84642192F20500CBC727 /* KGTheTelphoneOfThePlaceVC.xib */,
+				5A2D84672192F4B700CBC727 /* KGBusinessHoursOfThePlaceVC.h */,
+				5A2D84682192F4B700CBC727 /* KGBusinessHoursOfThePlaceVC.m */,
+				5A2D84692192F4B700CBC727 /* KGBusinessHoursOfThePlaceVC.xib */,
+				5A2D846C2192F63B00CBC727 /* KGPerCapitaConsumptionOfThePlaceVC.h */,
+				5A2D846D2192F63B00CBC727 /* KGPerCapitaConsumptionOfThePlaceVC.m */,
+				5A2D846E2192F63B00CBC727 /* KGPerCapitaConsumptionOfThePlaceVC.xib */,
+				5A2D84712192F87C00CBC727 /* KGRecommendPlaceAggremmentVC.h */,
+				5A2D84722192F87C00CBC727 /* KGRecommendPlaceAggremmentVC.m */,
 			);
 			path = "发布发现好去处";
 			sourceTree = "<group>";
@@ -970,8 +1014,10 @@
 				5A79E40021815FFE0015AC91 /* KGIntegralTableViewCell.xib in Resources */,
 				5A548B3621789A440065744E /* PhotosCell.xib in Resources */,
 				5A4A53C0218AE32200ABC7C9 /* KGLocationCell.xib in Resources */,
+				5A2D846B2192F4B700CBC727 /* KGBusinessHoursOfThePlaceVC.xib in Resources */,
 				5A5631E921801DCA0007127C /* KGMine.xcassets in Resources */,
 				5A8FA6382189A1C600498307 /* KGSqureCell.xib in Resources */,
+				5A2D84702192F63B00CBC727 /* KGPerCapitaConsumptionOfThePlaceVC.xib in Resources */,
 				5A563204218067380007127C /* KGIntegralVC.xib in Resources */,
 				5A6E86492182EBD200937450 /* KGWriteTalentInfoVC.xib in Resources */,
 				5A2D84452192B5AB00CBC727 /* KGTheNameOfThePlaceVC.xib in Resources */,
@@ -988,6 +1034,7 @@
 				5A79E40821816B1F0015AC91 /* KGSetupCell.xib in Resources */,
 				5A2D844D2192C44900CBC727 /* KGSubmitLocationCell.xib in Resources */,
 				5A8FA63321899BB300498307 /* KGExhibitionCell.xib in Resources */,
+				5A2D84662192F20500CBC727 /* KGTheTelphoneOfThePlaceVC.xib in Resources */,
 				5A4F5EE1217DB44E005C6A14 /* KGTabbar.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1074,9 +1121,12 @@
 				5A2D84502192C9A200CBC727 /* KGSubmitMapCell.m in Sources */,
 				5A5631DE21800E1F0007127C /* KGSquareVC.m in Sources */,
 				5A2D84442192B5AB00CBC727 /* KGTheNameOfThePlaceVC.m in Sources */,
+				5A2D84652192F20500CBC727 /* KGTheTelphoneOfThePlaceVC.m in Sources */,
 				5A81D94A217F1F45009B7517 /* KGBirthdayView.m in Sources */,
+				5A2D845B2192E0E400CBC727 /* KGDetailedIntroductionOfThePlaceVC.m in Sources */,
 				5A4C3F20217F0D8800A7B01F /* KGAlertView.m in Sources */,
 				5A6E86482182EBD200937450 /* KGWriteTalentInfoVC.m in Sources */,
+				5A2D846F2192F63B00CBC727 /* KGPerCapitaConsumptionOfThePlaceVC.m in Sources */,
 				5A9AECB8217EF61E0003478E /* KGWYXQPrivacyAgreementVC.m in Sources */,
 				5A25211321916468006D642B /* KGFoundDetailVC.m in Sources */,
 				5A5A7292218C40D10081F173 /* KGSquareVerticalCell.m in Sources */,
@@ -1101,6 +1151,7 @@
 				5A79E40E2181C73E0015AC91 /* KGAboutOurVC.m in Sources */,
 				5A5631E421800E460007127C /* KGMineVC.m in Sources */,
 				5A2620ED219043B80047A319 /* KGReleaseTF.m in Sources */,
+				5A2D84732192F87C00CBC727 /* KGRecommendPlaceAggremmentVC.m in Sources */,
 				5A7814B521880FBD001A14D5 /* KGHomeTownListViewCell.m in Sources */,
 				5A5631F921805D4D0007127C /* KGMineSingleCell.m in Sources */,
 				5A5A7295218C40E00081F173 /* KGSquareRoundCell.m in Sources */,
@@ -1136,11 +1187,13 @@
 				5A6E86542182F81800937450 /* KGEditSelfVC.m in Sources */,
 				5A25210F21914A0C006D642B /* KGFoundCell.m in Sources */,
 				5A6E86572183128500937450 /* KGWriteSignatureVC.m in Sources */,
+				5A2D845E2192EB6F00CBC727 /* KGSelectTheCategoryOfThePlaceVC.m in Sources */,
 				5A7814AE2187FCC1001A14D5 /* KGHometownVC.m in Sources */,
 				5A79E4122181CBFA0015AC91 /* KGTalentShowVC.m in Sources */,
 				5AA248C32189B1B900AE908B /* KGBookCell.m in Sources */,
 				5A2D89922175D22F003411DC /* KGHUD.m in Sources */,
 				5A5A7286218BFF9E0081F173 /* KGPreviewHorizontalTextView.m in Sources */,
+				5A2D84612192F02A00CBC727 /* KGWhereTheCityOfTheCityVC.m in Sources */,
 				5AF6563D215C781400B8FC07 /* KGBaseViewController.m in Sources */,
 				5AA248B92189A85A00AE908B /* KGArticleCell.m in Sources */,
 				5A6E86442182BA7A00937450 /* KGChooseIDCardView.m in Sources */,
@@ -1151,6 +1204,7 @@
 				5A548B3521789A440065744E /* PhotosLibraryView.m in Sources */,
 				5A2D898F2175CB19003411DC /* MBProgressHUD.m in Sources */,
 				5A2620F7219050140047A319 /* KGReleaseChooseVC.m in Sources */,
+				5A2D846A2192F4B700CBC727 /* KGBusinessHoursOfThePlaceVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

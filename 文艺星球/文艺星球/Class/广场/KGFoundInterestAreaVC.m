@@ -118,7 +118,7 @@
         [self.sortBtu setImage:[UIImage imageNamed:@"liwozuijin"] forState:UIControlStateNormal];
         self.isLeft = YES;
         self.screenView.hidden = NO;
-        self.screenArr = [NSMutableArray arrayWithArray:@[@"美术",@"音乐",@"书店",@"设计",@"戏剧",@"摄影",@"美食",@"咖啡",@"茗茶",@"糕点面包",@"集成店",@"电影",@"剧院"]];
+        self.screenArr = [NSMutableArray arrayWithArray:@[@"餐厅",@"咖啡",@"茗茶",@"糕点面包",@"酒店民宿",@"书店",@"夜蒲",@"影像音乐",@"展览艺术",@"花店",@"度假胜地",@"集成店",@"剧院"]];
         [self.screenView reloadData];
     }
 }

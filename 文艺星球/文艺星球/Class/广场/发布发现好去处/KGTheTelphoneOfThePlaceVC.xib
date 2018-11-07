@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceHanSansCN-Regular.otf">
+            <string>SourceHanSansCN-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KGTheTelphoneOfThePlaceVC">
+            <connections>
+                <outlet property="telphoneTF" destination="hR2-rO-HEn" id="I4h-yT-1J5"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="联系电话" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3p-4o-I1Q">
+                    <rect key="frame" x="15" y="20" width="70" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="70" id="F8V-Am-gL9"/>
+                        <constraint firstAttribute="height" constant="50" id="xS9-tq-7Lc"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SourceHanSansCN-Regular" family="Source Han Sans CN" pointSize="14"/>
+                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请填写电话号码" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hR2-rO-HEn">
+                    <rect key="frame" x="100" y="20" width="260" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="XyJ-U8-YFX"/>
+                    </constraints>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" name="SourceHanSansCN-Regular" family="Source Han Sans CN" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ob8-ua-tbH">
+                    <rect key="frame" x="15" y="70" width="345" height="1"/>
+                    <color key="backgroundColor" red="0.92941176470588238" green="0.92941176470588238" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="mB6-Gk-6WV"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请填写地点的官方联系电话" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jia-R3-4Jn">
+                    <rect key="frame" x="15" y="111" width="345" height="13"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="13" id="1Bt-9k-1AK"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SourceHanSansCN-Regular" family="Source Han Sans CN" pointSize="13"/>
+                    <color key="textColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Q3p-4o-I1Q" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="15" id="56d-Zv-Bhq"/>
+                <constraint firstItem="ob8-ua-tbH" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="15" id="72H-CO-Avj"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="hR2-rO-HEn" secondAttribute="trailing" constant="15" id="7R7-el-Igy"/>
+                <constraint firstItem="hR2-rO-HEn" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" id="NlE-CE-Whz"/>
+                <constraint firstItem="Jia-R3-4Jn" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="15" id="O55-VD-7iw"/>
+                <constraint firstItem="hR2-rO-HEn" firstAttribute="leading" secondItem="Q3p-4o-I1Q" secondAttribute="trailing" constant="15" id="Qbu-vA-cWc"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="Jia-R3-4Jn" secondAttribute="trailing" constant="15" id="RJU-nN-OAC"/>
+                <constraint firstItem="Jia-R3-4Jn" firstAttribute="top" secondItem="ob8-ua-tbH" secondAttribute="bottom" constant="40" id="S3B-C1-3G7"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="ob8-ua-tbH" secondAttribute="trailing" constant="15" id="al8-70-MBE"/>
+                <constraint firstItem="Q3p-4o-I1Q" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" id="lMh-0m-RE2"/>
+                <constraint firstItem="ob8-ua-tbH" firstAttribute="top" secondItem="hR2-rO-HEn" secondAttribute="bottom" id="qp6-2b-YTT"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+        </view>
+    </objects>
+</document>
