@@ -171,7 +171,7 @@
             width += 105;
         }
     }
-    self.header.frame = CGRectMake(0, 0, KGScreenWidth, height + 140);
+    self.header.frame = CGRectMake(0, 0, KGScreenWidth, height + 40);
     
     /** 评论数 */
     self.commentLab = [[UILabel alloc]initWithFrame:CGRectMake(15, height + 20, KGScreenWidth - 30, 14)];

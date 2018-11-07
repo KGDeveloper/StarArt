@@ -7,6 +7,7 @@
 //
 
 #import "KGFoundReleaseHomeVC.h"
+#import "KGSubmitLocationInfoVC.h"
 
 @interface KGFoundReleaseHomeVC ()
 
@@ -35,7 +36,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)addAction:(UIButton *)sender {
-    
+    [self pushHideenTabbarViewController:[[KGSubmitLocationInfoVC alloc]init] animted:YES];
 }
 
 /*

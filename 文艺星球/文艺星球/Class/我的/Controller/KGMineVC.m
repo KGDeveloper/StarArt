@@ -14,6 +14,7 @@
 #import "KGTalentShowVC.h"
 #import "KGEditSelfVC.h"
 #import "KGContellionVC.h"
+#import "KGLockUserInfoVC.h"
 
 @interface KGMineVC ()<UITableViewDelegate,UITableViewDataSource,KGMineDoubleDelegate,KGMineSingleCellDelegate>
 /** 头像 */
@@ -154,7 +155,8 @@
     }else if ([title isEqualToString:@"我的达人"]){
         [self pushHideenTabbarViewController:[[KGTalentShowVC alloc]initWithNibName:@"KGTalentShowVC" bundle:nil] animted:YES];
     }else if ([title isEqualToString:@"我的动态"]){
-        
+        [self pushHideenTabbarViewController:[[KGLockUserInfoVC alloc]init] animted:YES];
+//        [self pushHideenTabbarViewController:[[KGFriendsVC alloc]init] animted:YES];
     }
 }
 

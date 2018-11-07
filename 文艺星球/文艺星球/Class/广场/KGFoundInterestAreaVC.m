@@ -145,7 +145,8 @@
     self.screenView.delegate = self;
     self.screenView.dataSource = self;
     self.screenView.hidden = YES;
-    self.screenView.scrollEnabled = NO;
+    self.screenView.scrollEnabled = YES;
+    self.screenView.bounces = NO;
     self.screenView.backgroundColor = [KGBlackColor colorWithAlphaComponent:0.2];
     self.screenView.tableFooterView = [UIView new];
     self.screenView.showsVerticalScrollIndicator = NO;
