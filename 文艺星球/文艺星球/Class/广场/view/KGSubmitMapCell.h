@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface KGSubmitMapCell : UITableViewCell
 
+@property (nonatomic,copy) UIImage *resultImage;
+
 @end
 
 NS_ASSUME_NONNULL_END

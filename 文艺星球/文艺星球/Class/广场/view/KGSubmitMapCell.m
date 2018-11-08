@@ -43,6 +43,11 @@
     [self.contentView addSubview:line];
 }
 
+- (void)setResultImage:(UIImage *)resultImage{
+    _resultImage = resultImage;
+    self.mapImage.image = resultImage;
+}
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code

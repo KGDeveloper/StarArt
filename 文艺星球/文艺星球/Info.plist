@@ -21,9 +21,15 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>保存图片到相册或者从相册获取照片</string>
+	<string>允许访问相册</string>
+	<key>NSLocationUsageDescription</key>
+	<string>始终允许访问位置信息</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>在使用期间允许</string>
+	<string>使用应用期间允许访问位置信息
+
+使用应用期间允许访问位置信息
+
+使用应用期间允许访问位置信息</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>FZYingXueJW.TTF</string>

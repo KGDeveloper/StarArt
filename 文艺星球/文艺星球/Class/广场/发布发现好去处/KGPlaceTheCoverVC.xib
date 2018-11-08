@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceHanSansCN-Regular.otf">
+            <string>SourceHanSansCN-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KGPlaceTheCoverVC">
+            <connections>
+                <outlet property="coverImage" destination="bK6-nO-5oE" id="9mb-ho-s10"/>
+                <outlet property="shureBtu" destination="yNd-mw-9yS" id="Ile-kL-80x"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fubutuwen" translatesAutoresizingMaskIntoConstraints="NO" id="bK6-nO-5oE">
+                    <rect key="frame" x="120" y="70" width="135" height="135"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="135" id="8o7-FK-vQS"/>
+                        <constraint firstAttribute="height" constant="135" id="IMi-zO-ZOz"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="5"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点击上传地点封面照片" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yrG-X3-opT">
+                    <rect key="frame" x="15" y="225" width="345" height="13"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="13" id="zLj-Im-X6d"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SourceHanSansCN-Regular" family="Source Han Sans CN" pointSize="13"/>
+                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yNd-mw-9yS">
+                    <rect key="frame" x="40" y="512" width="295" height="35"/>
+                    <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="Yvv-aW-Epy"/>
+                        <constraint firstAttribute="width" constant="295" id="t7I-VL-TIO"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SourceHanSansCN-Regular" family="Source Han Sans CN" pointSize="15"/>
+                    <state key="normal" title="确定"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <real key="value" value="17.5"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="shureAction:" destination="-1" eventType="touchUpInside" id="foO-Rj-trJ"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qvx-3h-1eW">
+                    <rect key="frame" x="164" y="129" width="46" height="30"/>
+                    <connections>
+                        <action selector="chooseAction:" destination="-1" eventType="touchUpInside" id="bY1-Es-pjy"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="yrG-X3-opT" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" constant="15" id="2vg-eZ-p6E"/>
+                <constraint firstItem="qvx-3h-1eW" firstAttribute="leading" secondItem="bK6-nO-5oE" secondAttribute="leading" id="5GE-br-CCP"/>
+                <constraint firstItem="qvx-3h-1eW" firstAttribute="top" secondItem="bK6-nO-5oE" secondAttribute="top" id="6Kx-Gm-kUc"/>
+                <constraint firstItem="bK6-nO-5oE" firstAttribute="top" secondItem="Q5M-cg-NOt" secondAttribute="top" constant="50" id="TNn-HM-f3G"/>
+                <constraint firstItem="qvx-3h-1eW" firstAttribute="width" secondItem="bK6-nO-5oE" secondAttribute="width" id="XD9-Zi-Jeb"/>
+                <constraint firstItem="bK6-nO-5oE" firstAttribute="centerX" secondItem="Q5M-cg-NOt" secondAttribute="centerX" id="f8I-fV-Kav"/>
+                <constraint firstItem="qvx-3h-1eW" firstAttribute="height" secondItem="bK6-nO-5oE" secondAttribute="height" id="hSL-T5-TzL"/>
+                <constraint firstItem="yrG-X3-opT" firstAttribute="top" secondItem="bK6-nO-5oE" secondAttribute="bottom" constant="20" id="ibD-Xo-68Z"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="yrG-X3-opT" secondAttribute="trailing" constant="15" id="rug-ns-GAi"/>
+                <constraint firstItem="Q5M-cg-NOt" firstAttribute="bottom" secondItem="yNd-mw-9yS" secondAttribute="bottom" constant="120" id="sdB-dX-Ffg"/>
+                <constraint firstItem="yNd-mw-9yS" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="wS0-8L-tI1"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="fubutuwen" width="75" height="75"/>
+    </resources>
+</document>

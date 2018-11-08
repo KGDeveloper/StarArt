@@ -54,6 +54,9 @@
 		5A4A53BA218AE15800ABC7C9 /* KGChooseYourLocationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4A53B9218AE15800ABC7C9 /* KGChooseYourLocationVC.m */; };
 		5A4A53BF218AE32200ABC7C9 /* KGLocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4A53BD218AE32200ABC7C9 /* KGLocationCell.m */; };
 		5A4A53C0218AE32200ABC7C9 /* KGLocationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A4A53BE218AE32200ABC7C9 /* KGLocationCell.xib */; };
+		5A4B19B92193D7E80054E732 /* KGPlaceTheCoverVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4B19B72193D7E80054E732 /* KGPlaceTheCoverVC.m */; };
+		5A4B19BA2193D7E80054E732 /* KGPlaceTheCoverVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A4B19B82193D7E80054E732 /* KGPlaceTheCoverVC.xib */; };
+		5A4B19BD2193DC240054E732 /* KGDetailedAddressOfThePlaceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4B19BC2193DC240054E732 /* KGDetailedAddressOfThePlaceVC.m */; };
 		5A4C3F20217F0D8800A7B01F /* KGAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4C3F1F217F0D8800A7B01F /* KGAlertView.m */; };
 		5A4F5EDF217DB29D005C6A14 /* KGLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4F5EDE217DB29D005C6A14 /* KGLoginVC.m */; };
 		5A4F5EE1217DB44E005C6A14 /* KGTabbar.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A4F5EE0217DB44E005C6A14 /* KGTabbar.xcassets */; };
@@ -233,6 +236,11 @@
 		5A4A53BC218AE32200ABC7C9 /* KGLocationCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGLocationCell.h; sourceTree = "<group>"; };
 		5A4A53BD218AE32200ABC7C9 /* KGLocationCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGLocationCell.m; sourceTree = "<group>"; };
 		5A4A53BE218AE32200ABC7C9 /* KGLocationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGLocationCell.xib; sourceTree = "<group>"; };
+		5A4B19B62193D7E80054E732 /* KGPlaceTheCoverVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGPlaceTheCoverVC.h; sourceTree = "<group>"; };
+		5A4B19B72193D7E80054E732 /* KGPlaceTheCoverVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGPlaceTheCoverVC.m; sourceTree = "<group>"; };
+		5A4B19B82193D7E80054E732 /* KGPlaceTheCoverVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGPlaceTheCoverVC.xib; sourceTree = "<group>"; };
+		5A4B19BB2193DC240054E732 /* KGDetailedAddressOfThePlaceVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGDetailedAddressOfThePlaceVC.h; sourceTree = "<group>"; };
+		5A4B19BC2193DC240054E732 /* KGDetailedAddressOfThePlaceVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGDetailedAddressOfThePlaceVC.m; sourceTree = "<group>"; };
 		5A4C3F1E217F0D8800A7B01F /* KGAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGAlertView.h; sourceTree = "<group>"; };
 		5A4C3F1F217F0D8800A7B01F /* KGAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGAlertView.m; sourceTree = "<group>"; };
 		5A4F5EDD217DB29D005C6A14 /* KGLoginVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGLoginVC.h; sourceTree = "<group>"; };
@@ -498,6 +506,11 @@
 				5A2D846E2192F63B00CBC727 /* KGPerCapitaConsumptionOfThePlaceVC.xib */,
 				5A2D84712192F87C00CBC727 /* KGRecommendPlaceAggremmentVC.h */,
 				5A2D84722192F87C00CBC727 /* KGRecommendPlaceAggremmentVC.m */,
+				5A4B19B62193D7E80054E732 /* KGPlaceTheCoverVC.h */,
+				5A4B19B72193D7E80054E732 /* KGPlaceTheCoverVC.m */,
+				5A4B19B82193D7E80054E732 /* KGPlaceTheCoverVC.xib */,
+				5A4B19BB2193DC240054E732 /* KGDetailedAddressOfThePlaceVC.h */,
+				5A4B19BC2193DC240054E732 /* KGDetailedAddressOfThePlaceVC.m */,
 			);
 			path = "发布发现好去处";
 			sourceTree = "<group>";
@@ -1001,6 +1014,7 @@
 			files = (
 				5AA248BA2189A85A00AE908B /* KGArticleCell.xib in Resources */,
 				5A2D84552192D5C800CBC727 /* KGTheDetailNameOfThePlaceVC.xib in Resources */,
+				5A4B19BA2193D7E80054E732 /* KGPlaceTheCoverVC.xib in Resources */,
 				5A2620FC219052730047A319 /* KGFoundReleaseHomeVC.xib in Resources */,
 				5AA248BF2189ACB400AE908B /* KGArticleInterviewCell.xib in Resources */,
 				5A4F5EE3217DB481005C6A14 /* KGLogin.xcassets in Resources */,
@@ -1157,6 +1171,7 @@
 				5A5A7295218C40E00081F173 /* KGSquareRoundCell.m in Sources */,
 				5A8FA63221899BB300498307 /* KGExhibitionCell.m in Sources */,
 				5A2D844C2192C44900CBC727 /* KGSubmitLocationCell.m in Sources */,
+				5A4B19BD2193DC240054E732 /* KGDetailedAddressOfThePlaceVC.m in Sources */,
 				5A5631F621804AF90007127C /* KGMineDoubleCell.m in Sources */,
 				5A54A1282179BE87005709F3 /* KGLabel.m in Sources */,
 				5A25211621919956006D642B /* KGFoundDetailCell.m in Sources */,
@@ -1188,6 +1203,7 @@
 				5A25210F21914A0C006D642B /* KGFoundCell.m in Sources */,
 				5A6E86572183128500937450 /* KGWriteSignatureVC.m in Sources */,
 				5A2D845E2192EB6F00CBC727 /* KGSelectTheCategoryOfThePlaceVC.m in Sources */,
+				5A4B19B92193D7E80054E732 /* KGPlaceTheCoverVC.m in Sources */,
 				5A7814AE2187FCC1001A14D5 /* KGHometownVC.m in Sources */,
 				5A79E4122181CBFA0015AC91 /* KGTalentShowVC.m in Sources */,
 				5AA248C32189B1B900AE908B /* KGBookCell.m in Sources */,

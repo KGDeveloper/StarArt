@@ -18,6 +18,9 @@
 #import "KGTheTelphoneOfThePlaceVC.h"
 #import "KGBusinessHoursOfThePlaceVC.h"
 #import "KGPerCapitaConsumptionOfThePlaceVC.h"
+#import "KGRecommendPlaceAggremmentVC.h"
+#import "KGPlaceTheCoverVC.h"
+#import "KGDetailedAddressOfThePlaceVC.h"
 
 @interface KGSubmitLocationInfoVC ()<UITableViewDelegate,UITableViewDataSource>
 /** 信息 */
@@ -28,6 +31,8 @@
 @property (nonatomic,strong) UIButton *submitBtu;
 /** 标题 */
 @property (nonatomic,copy) NSArray *titleArr;
+/** 地址图片 */
+@property (nonatomic,copy) UIImage *cellImage;
 
 @end
 
@@ -104,7 +109,7 @@
     /** 点击用户协议 */
     [attributedString setTextHighlightRange:[string rangeOfString:@"具体说明"] color:KGBlueColor backgroundColor:[UIColor clearColor] tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            
+            [weakSelf pushHideenTabbarViewController:[[KGRecommendPlaceAggremmentVC alloc]init] animted:YES];
         });
     }];
     aggrementLab.attributedText = attributedString;
@@ -148,6 +153,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 7) {
         KGSubmitMapCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGSubmitMapCell"];
+        if (self.cellImage) {
+            cell.resultImage = self.cellImage;
+        }
         return cell;
     }else{
         KGSubmitLocationCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGSubmitLocationCell" forIndexPath:indexPath];
@@ -156,8 +164,13 @@
     }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0) {
-        
+    __weak typeof(self) weakSelf = self;
+    if (indexPath.row == 0) {/** 选择封面 */
+        KGPlaceTheCoverVC *vc = [[KGPlaceTheCoverVC alloc]initWithNibName:@"KGPlaceTheCoverVC" bundle:nil];
+        vc.sendPlaceTheCover = ^(UIImage * _Nonnull coverImage) {
+            
+        };
+        [self pushHideenTabbarViewController:vc animted:YES];
     }else if (indexPath.row == 1){/** 英文名称以及中文名称 */
         KGTheNameOfThePlaceVC *vc = [[KGTheNameOfThePlaceVC alloc]initWithNibName:@"KGTheNameOfThePlaceVC" bundle:nil];
         vc.sendPlaceName = ^(NSString * _Nonnull chinaName, NSString * _Nonnull englishName) {
@@ -184,18 +197,23 @@
         [self pushHideenTabbarViewController:vc animted:YES];
     }else if (indexPath.row == 5){/** 地点类型 */
         KGSelectTheCategoryOfThePlaceVC *vc = [[KGSelectTheCategoryOfThePlaceVC alloc]init];
-        vc.sendChooseSelectString = ^(NSString * _Nonnull imageUrl) {
+        vc.sendChooseSelectString = ^(NSString *imageUrl) {
             
         };
         [self pushHideenTabbarViewController:vc animted:YES];
     }else if (indexPath.row == 6){/** 所在城市 */
         KGWhereTheCityOfTheCityVC *vc = [[KGWhereTheCityOfTheCityVC alloc]init];
-        vc.sendChooseCity = ^(NSString * _Nonnull city) {
+        vc.sendChooseCity = ^(NSString *city) {
             
         };
         [self pushHideenTabbarViewController:vc animted:YES];
     }else if (indexPath.row == 7){/** 详细地址 */
-        
+        KGDetailedAddressOfThePlaceVC *vc = [[KGDetailedAddressOfThePlaceVC alloc]init];
+        vc.sendDetailedAddress = ^(NSString * _Nonnull address, UIImage *resultImage) {
+            weakSelf.cellImage = resultImage;
+            [weakSelf.listView reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationAutomatic];
+        };
+        [self pushHideenTabbarViewController:vc animted:YES];
     }else if (indexPath.row == 8){/** 联系电话 */
         KGTheTelphoneOfThePlaceVC *vc = [[KGTheTelphoneOfThePlaceVC alloc]initWithNibName:@"KGTheTelphoneOfThePlaceVC" bundle:nil];
         vc.sendTheOfficialTelphone = ^(NSString * _Nonnull telphone) {

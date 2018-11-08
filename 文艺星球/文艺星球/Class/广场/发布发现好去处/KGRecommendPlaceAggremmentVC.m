@@ -27,8 +27,9 @@
     [self setLeftNavItemWithFrame:CGRectZero title:nil image:[UIImage imageNamed:@"fanhui"] font:nil color:nil select:@selector(leftNavAction)];
     /** 导航栏标题 */
     self.title = @"推荐店铺用户协议说明";
-    self.view.backgroundColor = KGWhiteColor;
+    self.view.backgroundColor = KGAreaGrayColor;
     
+    [self setUI];
 }
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{
@@ -36,12 +37,24 @@
 }
 /** ui */
 - (void)setUI{
-    NSAttributedString *attStr = @"提交，即表示您能够保证您提交的地点描述文字、图片为您本人原创，文艺星球拥有了相关使用产权，如发生纠纷皆与文艺星球无关。";
-    UILabel *topLab = [[UILabel alloc]initWithFrame:CGRectMake(15, KGRectNavAndStatusHight + 20, KGScreenWidth - 30, [attStr boundingRectWithSize:CGSizeMake(KGScreenWidth - 30, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height)];
-    topLab.textColor = KGBlackColor;
-    topLab.attributedText = attStr;
-    topLab.font = KGFontSHRegular(14);
-    [self.view addSubview:topLab];
+    /** 协议 */
+    YYLabel *aggrementLab = [[YYLabel alloc]initWithFrame:CGRectMake(15, KGRectNavAndStatusHight + 20, KGScreenWidth - 30, 100)];
+    aggrementLab.numberOfLines = 0;
+    [self.view addSubview:aggrementLab];
+    /** 设置富文本 */
+    NSString *string = @"提交，即表示您能够保证您提交的地点描述文字、图片为您本人原创，文艺星球拥有了相关使用产权，如发生纠纷皆与文艺星球无关。";
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc]initWithString:string];
+    attributedString.alignment = NSTextAlignmentLeft;
+    attributedString.font = KGFontSHRegular(14);
+    attributedString.color = KGBlackColor;
+    attributedString.lineSpacing = 8;
+    aggrementLab.attributedText = attributedString;
+    
+    UILabel *lowLab = [[UILabel alloc]initWithFrame:CGRectMake(15, KGRectNavAndStatusHight + 146, KGScreenWidth - 30, 14)];
+    lowLab.text = @"*最终解释权归文艺星球所有";
+    lowLab.textColor = KGBlackColor;
+    lowLab.font = KGFontSHRegular(14);
+    [self.view addSubview:lowLab];
 }
 
 
