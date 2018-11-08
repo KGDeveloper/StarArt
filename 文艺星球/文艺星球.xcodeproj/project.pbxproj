@@ -57,6 +57,8 @@
 		5A4B19B92193D7E80054E732 /* KGPlaceTheCoverVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4B19B72193D7E80054E732 /* KGPlaceTheCoverVC.m */; };
 		5A4B19BA2193D7E80054E732 /* KGPlaceTheCoverVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A4B19B82193D7E80054E732 /* KGPlaceTheCoverVC.xib */; };
 		5A4B19BD2193DC240054E732 /* KGDetailedAddressOfThePlaceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4B19BC2193DC240054E732 /* KGDetailedAddressOfThePlaceVC.m */; };
+		5A4B19C12194065C0054E732 /* KGCommentOfThePlaceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4B19BF2194065C0054E732 /* KGCommentOfThePlaceVC.m */; };
+		5A4B19C22194065C0054E732 /* KGCommentOfThePlaceVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A4B19C02194065C0054E732 /* KGCommentOfThePlaceVC.xib */; };
 		5A4C3F20217F0D8800A7B01F /* KGAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4C3F1F217F0D8800A7B01F /* KGAlertView.m */; };
 		5A4F5EDF217DB29D005C6A14 /* KGLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4F5EDE217DB29D005C6A14 /* KGLoginVC.m */; };
 		5A4F5EE1217DB44E005C6A14 /* KGTabbar.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A4F5EE0217DB44E005C6A14 /* KGTabbar.xcassets */; };
@@ -241,6 +243,9 @@
 		5A4B19B82193D7E80054E732 /* KGPlaceTheCoverVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGPlaceTheCoverVC.xib; sourceTree = "<group>"; };
 		5A4B19BB2193DC240054E732 /* KGDetailedAddressOfThePlaceVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGDetailedAddressOfThePlaceVC.h; sourceTree = "<group>"; };
 		5A4B19BC2193DC240054E732 /* KGDetailedAddressOfThePlaceVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGDetailedAddressOfThePlaceVC.m; sourceTree = "<group>"; };
+		5A4B19BE2194065C0054E732 /* KGCommentOfThePlaceVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGCommentOfThePlaceVC.h; sourceTree = "<group>"; };
+		5A4B19BF2194065C0054E732 /* KGCommentOfThePlaceVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGCommentOfThePlaceVC.m; sourceTree = "<group>"; };
+		5A4B19C02194065C0054E732 /* KGCommentOfThePlaceVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGCommentOfThePlaceVC.xib; sourceTree = "<group>"; };
 		5A4C3F1E217F0D8800A7B01F /* KGAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGAlertView.h; sourceTree = "<group>"; };
 		5A4C3F1F217F0D8800A7B01F /* KGAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGAlertView.m; sourceTree = "<group>"; };
 		5A4F5EDD217DB29D005C6A14 /* KGLoginVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGLoginVC.h; sourceTree = "<group>"; };
@@ -468,6 +473,9 @@
 			children = (
 				5A25211121916468006D642B /* KGFoundDetailVC.h */,
 				5A25211221916468006D642B /* KGFoundDetailVC.m */,
+				5A4B19BE2194065C0054E732 /* KGCommentOfThePlaceVC.h */,
+				5A4B19BF2194065C0054E732 /* KGCommentOfThePlaceVC.m */,
+				5A4B19C02194065C0054E732 /* KGCommentOfThePlaceVC.xib */,
 			);
 			name = "发现好去处";
 			path = "好去处";
@@ -1023,6 +1031,7 @@
 				5A8FA62E2189813700498307 /* KGCollectionInstituteCell.xib in Resources */,
 				5A79E4182181D2820015AC91 /* KGTalentPrivilegeVC.xib in Resources */,
 				5A81D946217F14FB009B7517 /* KGRegisterVC.xib in Resources */,
+				5A4B19C22194065C0054E732 /* KGCommentOfThePlaceVC.xib in Resources */,
 				5A25211021914A0C006D642B /* KGFoundCell.xib in Resources */,
 				5A25210B21913978006D642B /* KGFoundInterestAreaCell.xib in Resources */,
 				5A79E40021815FFE0015AC91 /* KGIntegralTableViewCell.xib in Resources */,
@@ -1152,6 +1161,7 @@
 				5A5631E121800E370007127C /* KGFriendsVC.m in Sources */,
 				5A563207218077770007127C /* KGIntegralDetailVC.m in Sources */,
 				5A2D84582192DA6D00CBC727 /* KGTheIntroduceOfThePlaceVC.m in Sources */,
+				5A4B19C12194065C0054E732 /* KGCommentOfThePlaceVC.m in Sources */,
 				5A5631DB21800DA30007127C /* KGCommunityVC.m in Sources */,
 				5A25210A21913978006D642B /* KGFoundInterestAreaCell.m in Sources */,
 				5A2D84542192D5C800CBC727 /* KGTheDetailNameOfThePlaceVC.m in Sources */,

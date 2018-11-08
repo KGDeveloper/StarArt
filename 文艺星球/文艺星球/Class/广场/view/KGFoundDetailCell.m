@@ -46,7 +46,6 @@
     self.line = [UIView new];
     
     [self.contentView sd_addSubviews:@[self.headerImage,self.nameLab,self.starView,self.detailLab,self.oneImage,self.twoImage,self.threeImage,self.timeLab,self.zansBtu,self.line]];
-    self.contentView.sd_equalWidthSubviews = @[self.oneImage,self.twoImage,self.threeImage];
     
     /** 头像 */
     self.headerImage.contentMode = UIViewContentModeScaleAspectFill;
@@ -89,20 +88,22 @@
     self.oneImage.sd_layout
     .topSpaceToView(self.detailLab, 10)
     .leftEqualToView(self.detailLab)
-    .autoHeightRatio(1);
+    .widthIs(80)
+    .heightEqualToWidth();
     self.twoImage.contentMode = UIViewContentModeScaleAspectFill;
     self.twoImage.backgroundColor = KGLineColor;
     self.twoImage.sd_layout
     .topSpaceToView(self.detailLab, 10)
     .leftSpaceToView(self.oneImage, 5)
-    .autoHeightRatio(1);
+    .widthIs(80)
+    .heightEqualToWidth();
     self.threeImage.contentMode = UIViewContentModeScaleAspectFill;
     self.threeImage.backgroundColor = KGLineColor;
     self.threeImage.sd_layout
     .topSpaceToView(self.detailLab, 10)
-    .rightEqualToView(self.detailLab)
     .leftSpaceToView(self.twoImage, 5)
-    .autoHeightRatio(1);
+    .widthIs(80)
+    .heightEqualToWidth();
     /** 时间 */
     self.timeLab.text = @"5 小时前";
     self.timeLab.textColor = KGGrayColor;

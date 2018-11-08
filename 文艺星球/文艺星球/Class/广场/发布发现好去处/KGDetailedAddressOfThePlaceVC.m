@@ -89,7 +89,7 @@
     self.mapView = [[MAMapView alloc]initWithFrame:CGRectMake(0, KGRectNavAndStatusHight, KGScreenWidth, KGScreenHeight - KGRectNavAndStatusHight)];
     self.mapView.zoomEnabled = NO;
     self.mapView.rotateEnabled = NO;
-    self.mapView.zoomLevel = 15;
+    self.mapView.zoomLevel = 12;
     self.mapView.rotateCameraEnabled = NO;
     [self.view addSubview:self.mapView];
     self.mapView.showsUserLocation = YES;
@@ -97,7 +97,7 @@
     /** 自定义定位蓝点 */
     MAUserLocationRepresentation *pointStyle = [[MAUserLocationRepresentation alloc]init];
     pointStyle.showsAccuracyRing = YES;
-    pointStyle.showsHeadingIndicator = YES;
+    pointStyle.showsHeadingIndicator = NO;
     pointStyle.fillColor = [KGBlueColor colorWithAlphaComponent:0.3];
     pointStyle.strokeColor = KGBlueColor;
     pointStyle.lineWidth = 1;

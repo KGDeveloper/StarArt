@@ -8,6 +8,7 @@
 
 #import "KGFoundDetailVC.h"
 #import "KGFoundDetailCell.h"
+#import "KGCommentOfThePlaceVC.h"
 
 @interface KGFoundDetailVC ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
 /** 详情 */
@@ -231,8 +232,8 @@
 }
 /** 点击事件 */
 - (void)commentAction{
-    
-    
+    KGCommentOfThePlaceVC *commentVC = [[KGCommentOfThePlaceVC alloc]initWithNibName:@"KGCommentOfThePlaceVC" bundle:nil];
+    [self pushHideenTabbarViewController:commentVC animted:YES];
 }
 
 /*
