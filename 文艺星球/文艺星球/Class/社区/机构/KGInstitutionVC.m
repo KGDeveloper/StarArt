@@ -7,6 +7,7 @@
 //
 
 #import "KGInstitutionVC.h"
+#import "KGAgencyHomePageVC.h"
 
 @interface KGInstitutionVC ()<UITextFieldDelegate,UIScrollViewDelegate>
 /** 底部加载 */
@@ -104,7 +105,7 @@
     backView.layer.masksToBounds = YES;
     [self.backScroll addSubview:backView];
     /** 点击按钮 */
-    NSArray *imageArr = @[[UIImage imageNamed:@"meishu"],[UIImage imageNamed:@"sheji"],[UIImage imageNamed:@"sheying"],[UIImage imageNamed:@"xiju"],[UIImage imageNamed:@"dianying"],[UIImage imageNamed:@"yinyue"],[UIImage imageNamed:@"meishi"],[UIImage imageNamed:@"xiju"]];
+    NSArray *imageArr = @[[UIImage imageNamed:@"meishu"],[UIImage imageNamed:@"sheji"],[UIImage imageNamed:@"sheying"],[UIImage imageNamed:@"xiju"],[UIImage imageNamed:@"dianying"],[UIImage imageNamed:@"yinyue"],[UIImage imageNamed:@"meishi"],[UIImage imageNamed:@"juyuan"]];
     NSArray *titleArr = @[@"美术",@"设计",@"摄影",@"戏剧",@"电影",@"音乐",@"美食",@"剧院"];
     for (int i = 0; i < 8; i++) {
         if (i < 4) {
@@ -193,7 +194,7 @@
     [btuView addSubview:imageView];
     
     UIButton *btu = [UIButton buttonWithType:UIButtonTypeCustom];
-    btu.frame = btuView.frame;
+    btu.frame = btuView.bounds;
     btu.tag = tag;
     [btu addTarget:self action:@selector(selectAction:) forControlEvents:UIControlEventTouchUpInside];
     [btuView addSubview:btu];
@@ -202,7 +203,67 @@
 }
 /** 点击事件 */
 - (void)selectAction:(UIButton *)sender{
-    
+    if (sender.tag == 999) {
+        /** 美术 */
+        KGAgencyHomePageVC *vc = [[KGAgencyHomePageVC alloc]init];
+        vc.scenarioStyle = KGScenarioStyleArts;
+        [self pushHideenTabbarViewController:vc animted:YES];
+    }else if (sender.tag == 1000){
+        /** 设计 */
+        KGAgencyHomePageVC *vc = [[KGAgencyHomePageVC alloc]init];
+        vc.scenarioStyle = KGScenarioStyleDesign;
+        [self pushHideenTabbarViewController:vc animted:YES];
+    }else if (sender.tag == 1001){
+        /** 摄影 */
+        KGAgencyHomePageVC *vc = [[KGAgencyHomePageVC alloc]init];
+        vc.scenarioStyle = KGScenarioStylePhotography;
+        [self pushHideenTabbarViewController:vc animted:YES];
+    }else if (sender.tag == 1002){
+        /** 戏剧 */
+        KGAgencyHomePageVC *vc = [[KGAgencyHomePageVC alloc]init];
+        vc.scenarioStyle = KGScenarioStyleDrama;
+        [self pushHideenTabbarViewController:vc animted:YES];
+    }else if (sender.tag == 1003){
+        /** 电影 */
+        KGAgencyHomePageVC *vc = [[KGAgencyHomePageVC alloc]init];
+        vc.scenarioStyle = KGScenarioStyleMovies;
+        [self pushHideenTabbarViewController:vc animted:YES];
+    }else if (sender.tag == 1004){
+        /** 音乐 */
+        KGAgencyHomePageVC *vc = [[KGAgencyHomePageVC alloc]init];
+        vc.scenarioStyle = KGScenarioStyleMusic;
+        [self pushHideenTabbarViewController:vc animted:YES];
+    }else if (sender.tag == 1005){
+        /** 美食 */
+        KGAgencyHomePageVC *vc = [[KGAgencyHomePageVC alloc]init];
+        vc.scenarioStyle = KGScenarioStyleFood;
+        [self pushHideenTabbarViewController:vc animted:YES];
+    }else if (sender.tag == 1006){
+        /** 剧院 */
+        KGAgencyHomePageVC *vc = [[KGAgencyHomePageVC alloc]init];
+        vc.scenarioStyle = KGScenarioStyleTheatre;
+        [self pushHideenTabbarViewController:vc animted:YES];
+    }else if (sender.tag == 1999){
+        
+    }else if (sender.tag == 2000){
+        
+    }else if (sender.tag == 2001){
+        
+    }else if (sender.tag == 2002){
+        
+    }else if (sender.tag == 2003){
+        
+    }else if (sender.tag == 2999){
+        
+    }else if (sender.tag == 3000){
+        
+    }else if (sender.tag == 3001){
+        
+    }else if (sender.tag == 3002){
+        
+    }else if (sender.tag == 3003){
+        
+    }
 }
 /** 图片文字 */
 - (UIView *)createImageAndTitleWithFrame:(CGRect)frame title:(NSString *)title image:(NSString *)imageUrl tag:(NSInteger)tag{
@@ -222,7 +283,7 @@
     [btuView addSubview:imageView];
     
     UIButton *btu = [UIButton buttonWithType:UIButtonTypeCustom];
-    btu.frame = btuView.frame;
+    btu.frame = btuView.bounds;
     btu.tag = tag;
     [btu addTarget:self action:@selector(selectAction:) forControlEvents:UIControlEventTouchUpInside];
     [btuView addSubview:btu];

@@ -36,8 +36,8 @@
     self.title = @"所在城市";
     self.view.backgroundColor = KGWhiteColor;
     
-    self.titleArr = [NSMutableArray arrayWithArray:@[@"西安",@"成都",@"上海",@"天津",@"广州"]];
-    self.cityStr = @"西安";
+    self.titleArr = [NSMutableArray arrayWithArray:@[@"北京市",@"西安市",@"成都市",@"上海市",@"天津市",@"广州市",@"深圳市"]];
+    self.cityStr = @"北京市";
     self.chooseRow = 0;
     [self setUpListView];
 }

@@ -76,6 +76,12 @@
                             <constraint firstAttribute="width" constant="85" id="gO2-9G-rHW"/>
                             <constraint firstAttribute="height" constant="70" id="gmP-Vb-yNS"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ed4-XT-vXv">
                         <rect key="frame" x="149" y="255.5" width="85" height="70"/>
@@ -84,6 +90,12 @@
                             <constraint firstAttribute="width" constant="85" id="HTi-LY-RtL"/>
                             <constraint firstAttribute="height" constant="70" id="vSI-Hk-SaM"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4Dr-O4-8M6">
                         <rect key="frame" x="283" y="255.5" width="85" height="70"/>
@@ -92,6 +104,12 @@
                             <constraint firstAttribute="width" constant="85" id="Rbo-8O-c5v"/>
                             <constraint firstAttribute="height" constant="70" id="o1I-O4-38A"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="炸鸡店" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z0A-zE-EqH">
                         <rect key="frame" x="0.0" y="232.5" width="383" height="13"/>
@@ -118,6 +136,12 @@
                             <constraint firstAttribute="width" constant="70" id="5NY-Lk-hnC"/>
                             <constraint firstAttribute="height" constant="80" id="s5f-6e-b50"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="展览艺术" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="thT-om-VkE">
                         <rect key="frame" x="241.5" y="149.5" width="126.5" height="10"/>
