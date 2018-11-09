@@ -121,6 +121,9 @@
 		5A8F5165219564DE007E6165 /* KGAgencyHomePageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A8F5163219564DE007E6165 /* KGAgencyHomePageCell.xib */; };
 		5A8F5169219573F4007E6165 /* KGAgencyHomePageScreeningCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A8F5167219573F4007E6165 /* KGAgencyHomePageScreeningCell.m */; };
 		5A8F516A219573F4007E6165 /* KGAgencyHomePageScreeningCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A8F5168219573F4007E6165 /* KGAgencyHomePageScreeningCell.xib */; };
+		5A8F516D21958B93007E6165 /* KGAgencyDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A8F516C21958B93007E6165 /* KGAgencyDetailVC.m */; };
+		5A8F517121959070007E6165 /* KGAgencyDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A8F516F21959070007E6165 /* KGAgencyDetailTableViewCell.m */; };
+		5A8F517221959070007E6165 /* KGAgencyDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A8F517021959070007E6165 /* KGAgencyDetailTableViewCell.xib */; };
 		5A8FA6292189541500498307 /* KGContellionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A8FA6282189541500498307 /* KGContellionVC.m */; };
 		5A8FA62D2189813700498307 /* KGCollectionInstituteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A8FA62B2189813700498307 /* KGCollectionInstituteCell.m */; };
 		5A8FA62E2189813700498307 /* KGCollectionInstituteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A8FA62C2189813700498307 /* KGCollectionInstituteCell.xib */; };
@@ -363,6 +366,11 @@
 		5A8F5166219573F4007E6165 /* KGAgencyHomePageScreeningCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGAgencyHomePageScreeningCell.h; sourceTree = "<group>"; };
 		5A8F5167219573F4007E6165 /* KGAgencyHomePageScreeningCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGAgencyHomePageScreeningCell.m; sourceTree = "<group>"; };
 		5A8F5168219573F4007E6165 /* KGAgencyHomePageScreeningCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGAgencyHomePageScreeningCell.xib; sourceTree = "<group>"; };
+		5A8F516B21958B93007E6165 /* KGAgencyDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGAgencyDetailVC.h; sourceTree = "<group>"; };
+		5A8F516C21958B93007E6165 /* KGAgencyDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGAgencyDetailVC.m; sourceTree = "<group>"; };
+		5A8F516E21959070007E6165 /* KGAgencyDetailTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGAgencyDetailTableViewCell.h; sourceTree = "<group>"; };
+		5A8F516F21959070007E6165 /* KGAgencyDetailTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGAgencyDetailTableViewCell.m; sourceTree = "<group>"; };
+		5A8F517021959070007E6165 /* KGAgencyDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGAgencyDetailTableViewCell.xib; sourceTree = "<group>"; };
 		5A8FA6272189541500498307 /* KGContellionVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGContellionVC.h; sourceTree = "<group>"; };
 		5A8FA6282189541500498307 /* KGContellionVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGContellionVC.m; sourceTree = "<group>"; };
 		5A8FA62A2189813700498307 /* KGCollectionInstituteCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGCollectionInstituteCell.h; sourceTree = "<group>"; };
@@ -604,6 +612,8 @@
 				5A4B19CB21942B4F0054E732 /* KGInstitutionVC.m */,
 				5AA0535F21952E5300D2CE49 /* KGAgencyHomePageVC.h */,
 				5AA0536021952E5300D2CE49 /* KGAgencyHomePageVC.m */,
+				5A8F516B21958B93007E6165 /* KGAgencyDetailVC.h */,
+				5A8F516C21958B93007E6165 /* KGAgencyDetailVC.m */,
 			);
 			path = "机构";
 			sourceTree = "<group>";
@@ -917,6 +927,9 @@
 				5A8F5166219573F4007E6165 /* KGAgencyHomePageScreeningCell.h */,
 				5A8F5167219573F4007E6165 /* KGAgencyHomePageScreeningCell.m */,
 				5A8F5168219573F4007E6165 /* KGAgencyHomePageScreeningCell.xib */,
+				5A8F516E21959070007E6165 /* KGAgencyDetailTableViewCell.h */,
+				5A8F516F21959070007E6165 /* KGAgencyDetailTableViewCell.m */,
+				5A8F517021959070007E6165 /* KGAgencyDetailTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1115,6 +1128,7 @@
 				5AA248C42189B1B900AE908B /* KGBookCell.xib in Resources */,
 				5A79E40821816B1F0015AC91 /* KGSetupCell.xib in Resources */,
 				5A2D844D2192C44900CBC727 /* KGSubmitLocationCell.xib in Resources */,
+				5A8F517221959070007E6165 /* KGAgencyDetailTableViewCell.xib in Resources */,
 				5A8FA63321899BB300498307 /* KGExhibitionCell.xib in Resources */,
 				5A2D84662192F20500CBC727 /* KGTheTelphoneOfThePlaceVC.xib in Resources */,
 				5A4F5EE1217DB44E005C6A14 /* KGTabbar.xcassets in Resources */,
@@ -1226,6 +1240,7 @@
 				5A4B19C12194065C0054E732 /* KGCommentOfThePlaceVC.m in Sources */,
 				5A5631DB21800DA30007127C /* KGCommunityVC.m in Sources */,
 				5A25210A21913978006D642B /* KGFoundInterestAreaCell.m in Sources */,
+				5A8F517121959070007E6165 /* KGAgencyDetailTableViewCell.m in Sources */,
 				5A2D84542192D5C800CBC727 /* KGTheDetailNameOfThePlaceVC.m in Sources */,
 				5A5631EC2180487A0007127C /* KGUserInfo.m in Sources */,
 				5A4B19CC21942B4F0054E732 /* KGInstitutionVC.m in Sources */,
@@ -1259,6 +1274,7 @@
 				5A8FA6372189A1C600498307 /* KGSqureCell.m in Sources */,
 				5A4B19C6219419AB0054E732 /* KFCircleMenu.m in Sources */,
 				5A6E86402182B40A00937450 /* KGWriteTalentVC.m in Sources */,
+				5A8F516D21958B93007E6165 /* KGAgencyDetailVC.m in Sources */,
 				5A4A53BF218AE32200ABC7C9 /* KGLocationCell.m in Sources */,
 				5A79E40B21816F530015AC91 /* KGSetUpAdviceVC.m in Sources */,
 				5A548B2F217882E10065744E /* KGEditPhotoView.m in Sources */,

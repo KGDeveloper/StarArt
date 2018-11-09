@@ -149,7 +149,7 @@
         [self.newsScroll addSubview:[self createImageAndTitleWithFrame:CGRectMake(110*i, 0, 100, 100) title:@"哈哈哈" image:nil tag:2999+i]];
     }
     
-    self.backScroll.contentSize = CGSizeMake(KGScreenWidth, 675 + KGRectNavAndStatusHight);
+    self.backScroll.contentSize = CGSizeMake(KGScreenWidth, 690 + KGRectNavAndStatusHight);
     
 }
 /** 监听输入 */

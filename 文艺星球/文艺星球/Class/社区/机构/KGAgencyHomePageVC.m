@@ -9,6 +9,7 @@
 #import "KGAgencyHomePageVC.h"
 #import "KGAgencyHomePageCell.h"
 #import "KGAgencyHomePageScreeningCell.h"
+#import "KGAgencyDetailVC.h"
 
 @interface KGAgencyHomePageVC ()
 <
@@ -40,6 +41,14 @@ DZNEmptyDataSetDelegate
 @property (nonatomic,strong) UITableView *onlyListView;
 /** 筛选页面 */
 @property (nonatomic,strong) UIView *screenView;
+/** 第一个列表选中 */
+@property (nonatomic,assign) NSInteger oneListCellRow;
+/** 第二个列表选中 */
+@property (nonatomic,assign) NSInteger twoListCellRow;
+/** 第三个列表选中 */
+@property (nonatomic,assign) NSInteger threeListCellRow;
+/** 左侧列表标题 */
+@property (nonatomic,copy) NSArray *oneArr;
 
 @end
 
@@ -57,7 +66,11 @@ DZNEmptyDataSetDelegate
     [self setLeftNavItemWithFrame:CGRectMake(15, 0, 50, 30) title:nil image:[UIImage imageNamed:@"fanhui"] font:nil color:nil select:@selector(leftNavAction)];
     self.view.backgroundColor = KGWhiteColor;
     
-    
+    /** 初始赋值 */
+    self.oneListCellRow = 0;
+    self.twoListCellRow = 0;
+    self.threeListCellRow = 0;
+    self.oneArr = @[@"全部",@"北京",@"上海",@"广州",@"深圳",@"天津",@"成都",@"西安"];
     [self setNavCenterView];
     [self setUpListView];
     [self setUpScreeningView];
@@ -147,7 +160,9 @@ DZNEmptyDataSetDelegate
 }
 /** 点击事件 */
 - (void)advertisingAction:(UIButton *)sender{
-    
+    // MARK: --在这里要写广告的点击事件--
+    // !!!: --在这里要写广告的点击事件--
+    // ???: --在这里要写广告的点击事件--
 }
 /** 控制页码 */
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
@@ -235,25 +250,56 @@ DZNEmptyDataSetDelegate
         return cell;
     }else if (tableView == self.leftListView){
         KGAgencyHomePageScreeningCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGAgencyHomePageScreeningCell"];
-        cell.backgroundColor = KGLineColor;
+        if (indexPath.row == self.oneListCellRow) {
+            cell.backgroundColor = KGWhiteColor;
+            cell.titleLab.textColor = KGBlackColor;
+        }else{
+            cell.backgroundColor = KGLineColor;
+            cell.titleLab.textColor = KGGrayColor;
+        }
+        cell.titleLab.text = self.oneArr[indexPath.row];
         return cell;
     }else if (tableView == self.onlyListView){
         KGAgencyHomePageScreeningCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGAgencyHomePageScreeningCell"];
-        cell.backgroundColor = KGWhiteColor;
         if (indexPath.row == 0) {
             cell.titleLab.text = @"离我最近";
         }else{
             cell.titleLab.text = @"好评优先";
         }
+        if (indexPath.row == self.threeListCellRow) {
+            cell.backgroundColor = KGWhiteColor;
+            cell.titleLab.textColor = KGBlueColor;
+        }else{
+            cell.backgroundColor = KGWhiteColor;
+            cell.titleLab.textColor = KGBlackColor;
+        }
         return cell;
     }else{
         KGAgencyHomePageScreeningCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGAgencyHomePageScreeningCell"];
-        cell.backgroundColor = KGWhiteColor;
+        if (indexPath.row == self.oneListCellRow) {
+            cell.backgroundColor = KGWhiteColor;
+            cell.titleLab.textColor = KGBlackColor;
+        }else{
+            cell.backgroundColor = KGWhiteColor;
+            cell.titleLab.textColor = KGGrayColor;
+        }
         return cell;
     }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    if (tableView == self.listView) {
+        KGAgencyDetailVC *vc = [[KGAgencyDetailVC alloc]init];
+        [self pushHideenTabbarViewController:vc animted:YES];
+    }else if (tableView == self.leftListView){
+        self.oneListCellRow = indexPath.row;
+        [self.leftListView reloadData];
+    }else if (tableView == self.onlyListView){
+        self.threeListCellRow = indexPath.row;
+        [self.onlyListView reloadData];
+    }else{
+        self.twoListCellRow = indexPath.row;
+        [self.rightListView reloadData];
+    }
 }
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView{
     if (scrollView == self.listView) {
