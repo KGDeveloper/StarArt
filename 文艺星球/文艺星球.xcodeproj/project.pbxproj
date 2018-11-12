@@ -66,6 +66,8 @@
 		5A4F5EDF217DB29D005C6A14 /* KGLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4F5EDE217DB29D005C6A14 /* KGLoginVC.m */; };
 		5A4F5EE1217DB44E005C6A14 /* KGTabbar.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A4F5EE0217DB44E005C6A14 /* KGTabbar.xcassets */; };
 		5A4F5EE3217DB481005C6A14 /* KGLogin.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A4F5EE2217DB481005C6A14 /* KGLogin.xcassets */; };
+		5A543E4C219930F90085B1E0 /* KGAgencyDetailListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A543E4A219930F90085B1E0 /* KGAgencyDetailListViewCell.m */; };
+		5A543E4D219930F90085B1E0 /* KGAgencyDetailListViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A543E4B219930F90085B1E0 /* KGAgencyDetailListViewCell.xib */; };
 		5A548B2F217882E10065744E /* KGEditPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A548B2E217882E10065744E /* KGEditPhotoView.m */; };
 		5A548B3521789A440065744E /* PhotosLibraryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A548B3021789A430065744E /* PhotosLibraryView.m */; };
 		5A548B3621789A440065744E /* PhotosCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A548B3221789A440065744E /* PhotosCell.xib */; };
@@ -269,6 +271,9 @@
 		5A4F5EE0217DB44E005C6A14 /* KGTabbar.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = KGTabbar.xcassets; sourceTree = "<group>"; };
 		5A4F5EE2217DB481005C6A14 /* KGLogin.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = KGLogin.xcassets; sourceTree = "<group>"; };
 		5A4F5EED217DB81B005C6A14 /* KGPCH.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGPCH.pch; sourceTree = "<group>"; };
+		5A543E49219930F90085B1E0 /* KGAgencyDetailListViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGAgencyDetailListViewCell.h; sourceTree = "<group>"; };
+		5A543E4A219930F90085B1E0 /* KGAgencyDetailListViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGAgencyDetailListViewCell.m; sourceTree = "<group>"; };
+		5A543E4B219930F90085B1E0 /* KGAgencyDetailListViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGAgencyDetailListViewCell.xib; sourceTree = "<group>"; };
 		5A548B2D217882E10065744E /* KGEditPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGEditPhotoView.h; sourceTree = "<group>"; };
 		5A548B2E217882E10065744E /* KGEditPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KGEditPhotoView.m; sourceTree = "<group>"; };
 		5A548B3021789A430065744E /* PhotosLibraryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosLibraryView.m; sourceTree = "<group>"; };
@@ -930,6 +935,9 @@
 				5A8F516E21959070007E6165 /* KGAgencyDetailTableViewCell.h */,
 				5A8F516F21959070007E6165 /* KGAgencyDetailTableViewCell.m */,
 				5A8F517021959070007E6165 /* KGAgencyDetailTableViewCell.xib */,
+				5A543E49219930F90085B1E0 /* KGAgencyDetailListViewCell.h */,
+				5A543E4A219930F90085B1E0 /* KGAgencyDetailListViewCell.m */,
+				5A543E4B219930F90085B1E0 /* KGAgencyDetailListViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1121,6 +1129,7 @@
 				5A2620EA219028EB0047A319 /* KGSquareDetailCell.xib in Resources */,
 				5A7814B621880FBD001A14D5 /* KGHomeTownListViewCell.xib in Resources */,
 				5ABB9D5A215B9A8500C612B2 /* Assets.xcassets in Resources */,
+				5A543E4D219930F90085B1E0 /* KGAgencyDetailListViewCell.xib in Resources */,
 				5AED6C0E217DC84A000657C9 /* FZYingXueJW.TTF in Resources */,
 				5AED6C0D217DC84A000657C9 /* SourceHanSansCN-Bold.otf in Resources */,
 				5A2620DF218FF2AF0047A319 /* KGSquareMessageCell.xib in Resources */,
@@ -1298,6 +1307,7 @@
 				5A7814AE2187FCC1001A14D5 /* KGHometownVC.m in Sources */,
 				5A79E4122181CBFA0015AC91 /* KGTalentShowVC.m in Sources */,
 				5AA248C32189B1B900AE908B /* KGBookCell.m in Sources */,
+				5A543E4C219930F90085B1E0 /* KGAgencyDetailListViewCell.m in Sources */,
 				5A2D89922175D22F003411DC /* KGHUD.m in Sources */,
 				5A5A7286218BFF9E0081F173 /* KGPreviewHorizontalTextView.m in Sources */,
 				5A2D84612192F02A00CBC727 /* KGWhereTheCityOfTheCityVC.m in Sources */,

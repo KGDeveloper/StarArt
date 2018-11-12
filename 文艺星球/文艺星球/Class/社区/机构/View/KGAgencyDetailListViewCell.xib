@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceHanSansCN-Regular.otf">
+            <string>SourceHanSansCN-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="107" id="KGk-i7-Jjw" customClass="KGAgencyDetailListViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="457" height="107"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="457" height="106.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u0U-fS-wpU">
+                        <rect key="frame" x="15" y="105.5" width="427" height="1"/>
+                        <color key="backgroundColor" red="0.92941176470588238" green="0.92941176470588238" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="SFj-VZ-mU6"/>
+                        </constraints>
+                    </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7F1-ug-oFX">
+                        <rect key="frame" x="15" y="10" width="65" height="80"/>
+                        <color key="backgroundColor" red="0.92941176469999998" green="0.92941176469999998" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="65" id="Dgk-Xc-MlG"/>
+                            <constraint firstAttribute="height" constant="80" id="Idv-WE-ej2"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="乡野的呼唤--红花梨划账" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tNy-nZ-2Bd">
+                        <rect key="frame" x="95" y="15" width="347" height="14"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="14" id="l2t-aY-Bv9"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SourceHanSansCN-Regular" family="Source Han Sans CN" pointSize="14"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2018-10-14至2018-11-10日" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zf9-Vd-nh9">
+                        <rect key="frame" x="95" y="39" width="347" height="12"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="12" id="Pg5-Oc-9Eg"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SourceHanSansCN-Regular" family="Source Han Sans CN" pointSize="12"/>
+                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="u0U-fS-wpU" secondAttribute="trailing" constant="15" id="3oS-BT-kjz"/>
+                    <constraint firstItem="Zf9-Vd-nh9" firstAttribute="top" secondItem="tNy-nZ-2Bd" secondAttribute="bottom" constant="10" id="8l6-OP-Mmv"/>
+                    <constraint firstItem="7F1-ug-oFX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="8zc-y3-Qcg"/>
+                    <constraint firstAttribute="trailing" secondItem="tNy-nZ-2Bd" secondAttribute="trailing" constant="15" id="Fh3-9d-Ev9"/>
+                    <constraint firstItem="tNy-nZ-2Bd" firstAttribute="leading" secondItem="7F1-ug-oFX" secondAttribute="trailing" constant="15" id="KCJ-b7-AVY"/>
+                    <constraint firstItem="Zf9-Vd-nh9" firstAttribute="leading" secondItem="7F1-ug-oFX" secondAttribute="trailing" constant="15" id="MGD-jh-3y8"/>
+                    <constraint firstAttribute="bottom" secondItem="u0U-fS-wpU" secondAttribute="bottom" id="mxI-oW-eUb"/>
+                    <constraint firstItem="u0U-fS-wpU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="nAk-j2-UPw"/>
+                    <constraint firstItem="7F1-ug-oFX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="nV8-PN-gA9"/>
+                    <constraint firstAttribute="trailing" secondItem="Zf9-Vd-nh9" secondAttribute="trailing" constant="15" id="tYW-lV-vxN"/>
+                    <constraint firstItem="tNy-nZ-2Bd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="xze-be-afj"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="customImage" destination="7F1-ug-oFX" id="jOo-sT-Z54"/>
+                <outlet property="nameLab" destination="tNy-nZ-2Bd" id="yda-hd-sTw"/>
+                <outlet property="timeLab" destination="Zf9-Vd-nh9" id="7yn-7r-RWU"/>
+            </connections>
+            <point key="canvasLocation" x="247.19999999999999" y="183.05847076461771"/>
+        </tableViewCell>
+    </objects>
+</document>
