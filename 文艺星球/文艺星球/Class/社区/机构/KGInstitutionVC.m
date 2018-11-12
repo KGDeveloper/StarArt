@@ -8,6 +8,7 @@
 
 #import "KGInstitutionVC.h"
 #import "KGAgencyHomePageVC.h"
+#import "KGInstitutionDramaVC.h"
 
 @interface KGInstitutionVC ()<UITextFieldDelegate,UIScrollViewDelegate>
 /** 底部加载 */
@@ -220,8 +221,7 @@
         [self pushHideenTabbarViewController:vc animted:YES];
     }else if (sender.tag == 1002){
         /** 戏剧 */
-        KGAgencyHomePageVC *vc = [[KGAgencyHomePageVC alloc]init];
-        vc.scenarioStyle = KGScenarioStyleDrama;
+        KGInstitutionDramaVC *vc = [[KGInstitutionDramaVC alloc]init];
         [self pushHideenTabbarViewController:vc animted:YES];
     }else if (sender.tag == 1003){
         /** 电影 */
