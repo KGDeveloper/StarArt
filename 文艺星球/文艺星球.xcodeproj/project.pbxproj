@@ -68,6 +68,11 @@
 		5A4F5EE3217DB481005C6A14 /* KGLogin.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A4F5EE2217DB481005C6A14 /* KGLogin.xcassets */; };
 		5A543E4C219930F90085B1E0 /* KGAgencyDetailListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A543E4A219930F90085B1E0 /* KGAgencyDetailListViewCell.m */; };
 		5A543E4D219930F90085B1E0 /* KGAgencyDetailListViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A543E4B219930F90085B1E0 /* KGAgencyDetailListViewCell.xib */; };
+		5A543E50219954B70085B1E0 /* KGAgencyExhibitionDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A543E4F219954B70085B1E0 /* KGAgencyExhibitionDetailVC.m */; };
+		5A543E5421995BA70085B1E0 /* KGAgencyExhibitionDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A543E5221995BA70085B1E0 /* KGAgencyExhibitionDetailCell.m */; };
+		5A543E5521995BA70085B1E0 /* KGAgencyExhibitionDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A543E5321995BA70085B1E0 /* KGAgencyExhibitionDetailCell.xib */; };
+		5A543E5921995D090085B1E0 /* KGAgencyExhibitionDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A543E5721995D090085B1E0 /* KGAgencyExhibitionDetailHeaderView.m */; };
+		5A543E5A21995D090085B1E0 /* KGAgencyExhibitionDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A543E5821995D090085B1E0 /* KGAgencyExhibitionDetailHeaderView.xib */; };
 		5A548B2F217882E10065744E /* KGEditPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A548B2E217882E10065744E /* KGEditPhotoView.m */; };
 		5A548B3521789A440065744E /* PhotosLibraryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A548B3021789A430065744E /* PhotosLibraryView.m */; };
 		5A548B3621789A440065744E /* PhotosCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A548B3221789A440065744E /* PhotosCell.xib */; };
@@ -274,6 +279,14 @@
 		5A543E49219930F90085B1E0 /* KGAgencyDetailListViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGAgencyDetailListViewCell.h; sourceTree = "<group>"; };
 		5A543E4A219930F90085B1E0 /* KGAgencyDetailListViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGAgencyDetailListViewCell.m; sourceTree = "<group>"; };
 		5A543E4B219930F90085B1E0 /* KGAgencyDetailListViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGAgencyDetailListViewCell.xib; sourceTree = "<group>"; };
+		5A543E4E219954B70085B1E0 /* KGAgencyExhibitionDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGAgencyExhibitionDetailVC.h; sourceTree = "<group>"; };
+		5A543E4F219954B70085B1E0 /* KGAgencyExhibitionDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGAgencyExhibitionDetailVC.m; sourceTree = "<group>"; };
+		5A543E5121995BA70085B1E0 /* KGAgencyExhibitionDetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGAgencyExhibitionDetailCell.h; sourceTree = "<group>"; };
+		5A543E5221995BA70085B1E0 /* KGAgencyExhibitionDetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGAgencyExhibitionDetailCell.m; sourceTree = "<group>"; };
+		5A543E5321995BA70085B1E0 /* KGAgencyExhibitionDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGAgencyExhibitionDetailCell.xib; sourceTree = "<group>"; };
+		5A543E5621995D090085B1E0 /* KGAgencyExhibitionDetailHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGAgencyExhibitionDetailHeaderView.h; sourceTree = "<group>"; };
+		5A543E5721995D090085B1E0 /* KGAgencyExhibitionDetailHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGAgencyExhibitionDetailHeaderView.m; sourceTree = "<group>"; };
+		5A543E5821995D090085B1E0 /* KGAgencyExhibitionDetailHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGAgencyExhibitionDetailHeaderView.xib; sourceTree = "<group>"; };
 		5A548B2D217882E10065744E /* KGEditPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGEditPhotoView.h; sourceTree = "<group>"; };
 		5A548B2E217882E10065744E /* KGEditPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KGEditPhotoView.m; sourceTree = "<group>"; };
 		5A548B3021789A430065744E /* PhotosLibraryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosLibraryView.m; sourceTree = "<group>"; };
@@ -619,6 +632,8 @@
 				5AA0536021952E5300D2CE49 /* KGAgencyHomePageVC.m */,
 				5A8F516B21958B93007E6165 /* KGAgencyDetailVC.h */,
 				5A8F516C21958B93007E6165 /* KGAgencyDetailVC.m */,
+				5A543E4E219954B70085B1E0 /* KGAgencyExhibitionDetailVC.h */,
+				5A543E4F219954B70085B1E0 /* KGAgencyExhibitionDetailVC.m */,
 			);
 			path = "机构";
 			sourceTree = "<group>";
@@ -938,6 +953,12 @@
 				5A543E49219930F90085B1E0 /* KGAgencyDetailListViewCell.h */,
 				5A543E4A219930F90085B1E0 /* KGAgencyDetailListViewCell.m */,
 				5A543E4B219930F90085B1E0 /* KGAgencyDetailListViewCell.xib */,
+				5A543E5121995BA70085B1E0 /* KGAgencyExhibitionDetailCell.h */,
+				5A543E5221995BA70085B1E0 /* KGAgencyExhibitionDetailCell.m */,
+				5A543E5321995BA70085B1E0 /* KGAgencyExhibitionDetailCell.xib */,
+				5A543E5621995D090085B1E0 /* KGAgencyExhibitionDetailHeaderView.h */,
+				5A543E5721995D090085B1E0 /* KGAgencyExhibitionDetailHeaderView.m */,
+				5A543E5821995D090085B1E0 /* KGAgencyExhibitionDetailHeaderView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1132,6 +1153,8 @@
 				5A543E4D219930F90085B1E0 /* KGAgencyDetailListViewCell.xib in Resources */,
 				5AED6C0E217DC84A000657C9 /* FZYingXueJW.TTF in Resources */,
 				5AED6C0D217DC84A000657C9 /* SourceHanSansCN-Bold.otf in Resources */,
+				5A543E5521995BA70085B1E0 /* KGAgencyExhibitionDetailCell.xib in Resources */,
+				5A543E5A21995D090085B1E0 /* KGAgencyExhibitionDetailHeaderView.xib in Resources */,
 				5A2620DF218FF2AF0047A319 /* KGSquareMessageCell.xib in Resources */,
 				5A79E4132181CBFA0015AC91 /* KGTalentShowVC.xib in Resources */,
 				5AA248C42189B1B900AE908B /* KGBookCell.xib in Resources */,
@@ -1243,6 +1266,7 @@
 				5A4F5EDF217DB29D005C6A14 /* KGLoginVC.m in Sources */,
 				5A79E40721816B1F0015AC91 /* KGSetupCell.m in Sources */,
 				5ABB9D60215B9A8500C612B2 /* main.m in Sources */,
+				5A543E50219954B70085B1E0 /* KGAgencyExhibitionDetailVC.m in Sources */,
 				5A5631E121800E370007127C /* KGFriendsVC.m in Sources */,
 				5A563207218077770007127C /* KGIntegralDetailVC.m in Sources */,
 				5A2D84582192DA6D00CBC727 /* KGTheIntroduceOfThePlaceVC.m in Sources */,
@@ -1275,6 +1299,7 @@
 				5A25211621919956006D642B /* KGFoundDetailCell.m in Sources */,
 				5A2620E221900F2E0047A319 /* KGSquareDetailVC.m in Sources */,
 				5ABB9D52215B9A7C00C612B2 /* AppDelegate.m in Sources */,
+				5A543E5921995D090085B1E0 /* KGAgencyExhibitionDetailHeaderView.m in Sources */,
 				5A4A53BA218AE15800ABC7C9 /* KGChooseYourLocationVC.m in Sources */,
 				5A9AECB1217EF4680003478E /* KGWYXQUserAgreementVC.m in Sources */,
 				5A5A7289218C2BA50081F173 /* KGPreviewKGPreviewRoundView.m in Sources */,
@@ -1294,6 +1319,7 @@
 				5A2D84372192831E00CBC727 /* KGLockUserInfoVC.m in Sources */,
 				5A81D945217F14FB009B7517 /* KGRegisterVC.m in Sources */,
 				5A2620FB219052730047A319 /* KGFoundReleaseHomeVC.m in Sources */,
+				5A543E5421995BA70085B1E0 /* KGAgencyExhibitionDetailCell.m in Sources */,
 				5A79E3FF21815FFE0015AC91 /* KGIntegralTableViewCell.m in Sources */,
 				5A5631D821800D7B0007127C /* KGMapVC.m in Sources */,
 				5A2620E9219028EB0047A319 /* KGSquareDetailCell.m in Sources */,

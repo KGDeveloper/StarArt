@@ -9,6 +9,7 @@
 #import "KGAgencyDetailVC.h"
 #import "KGAgencyDetailTableViewCell.h"
 #import "KGAgencyDetailListViewCell.h"
+#import "KGAgencyExhibitionDetailVC.h"
 
 @interface KGAgencyDetailVC ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
 
@@ -249,7 +250,9 @@
     }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    if (tableView == self.rightListView) {
+        [self pushHideenTabbarViewController:[[KGAgencyExhibitionDetailVC alloc]init] animted:YES];
+    }
 }
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     if (scrollView == self.topScrollView) {
