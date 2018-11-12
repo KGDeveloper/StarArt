@@ -101,7 +101,7 @@ DZNEmptyDataSetDelegate
     /** 轮播图 */
     self.topScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(15, 0, KGScreenWidth - 30, (KGScreenWidth - 30)/69*16)];
     self.topScrollView.delegate = self;
-    self.topScrollView.contentSize = CGSizeMake((KGScreenWidth - 30)*5, (KGScreenWidth - 30)/69*16 + 20);
+    self.topScrollView.contentSize = CGSizeMake((KGScreenWidth - 30)*5, (KGScreenWidth - 30)/69*16);
     self.topScrollView.bounces = NO;
     self.topScrollView.pagingEnabled = YES;
     self.topScrollView.showsVerticalScrollIndicator = NO;
