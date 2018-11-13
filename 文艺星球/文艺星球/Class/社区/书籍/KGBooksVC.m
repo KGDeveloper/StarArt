@@ -98,6 +98,15 @@
     recommendLab.textColor = KGBlackColor;
     recommendLab.font = KGFontSHBold(14);
     [headerView addSubview:recommendLab];
+    /** 打开按钮 */
+    UIButton *topRightBtu = [UIButton buttonWithType:UIButtonTypeCustom];
+    topRightBtu.frame = CGRectMake(KGScreenWidth - 150, 0, 135, 50);
+    [topRightBtu setImage:[UIImage imageNamed:@"dakai"] forState:UIControlStateNormal];
+    topRightBtu.imageEdgeInsets = UIEdgeInsetsMake(19, 0, 19, 0);
+    topRightBtu.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    topRightBtu.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [topRightBtu addTarget:self action:@selector(topRightAction) forControlEvents:UIControlEventTouchUpInside];
+    [headerView addSubview:topRightBtu];
     /** 今日推荐滚动 */
     self.recommendScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 50, KGScreenWidth, 195)];
     self.recommendScrollView.contentSize = CGSizeMake(575, 195);
@@ -116,6 +125,15 @@
     hotLab.textColor = KGBlackColor;
     hotLab.font = KGFontSHBold(14);
     [headerView addSubview:hotLab];
+    /** 打开按钮 */
+    UIButton *lowRightBtu = [UIButton buttonWithType:UIButtonTypeCustom];
+    lowRightBtu.frame = CGRectMake(KGScreenWidth - 150,255, 135, 50);
+    [lowRightBtu setImage:[UIImage imageNamed:@"dakai"] forState:UIControlStateNormal];
+    lowRightBtu.imageEdgeInsets = UIEdgeInsetsMake(19, 0, 19, 0);
+    lowRightBtu.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    lowRightBtu.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    [lowRightBtu addTarget:self action:@selector(lowRightAction) forControlEvents:UIControlEventTouchUpInside];
+    [headerView addSubview:lowRightBtu];
     /** 畅销图书榜滚动 */
     self.hotScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 305, KGScreenWidth, 195)];
     self.hotScrollView.contentSize = CGSizeMake(575, 195);
@@ -136,6 +154,14 @@
     [headerView addSubview:mayLab];
     
     return headerView;
+}
+/** 查看今日推荐 */
+- (void)topRightAction{
+    
+}
+/** 查看畅销图书榜 */
+- (void)lowRightAction{
+    
 }
 /** 顶部滚动 */
 - (void)setRecommendScrollViewSubViews{
