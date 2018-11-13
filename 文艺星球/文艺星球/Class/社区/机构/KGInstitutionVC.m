@@ -66,16 +66,16 @@
     backBlue.backgroundColor = KGBlueColor;
     [self.backScroll addSubview:backBlue];
     /** 搜索框 */
-    self.searchTF = [[UITextField alloc]initWithFrame:CGRectMake(15, KGRectNavAndStatusHight + 25, KGScreenWidth - 30, 30)];
-    self.searchTF.delegate = self;
-    self.searchTF.backgroundColor = [UIColor colorWithHexString:@"#76a3ff"];
-    self.searchTF.textAlignment = NSTextAlignmentCenter;
-    self.searchTF.text = @"搜索喜欢的场馆";
-    self.searchTF.font = KGFontSHRegular(12);
-    self.searchTF.textColor = KGWhiteColor;
-    self.searchTF.layer.cornerRadius = 15;
-    self.searchTF.layer.masksToBounds = YES;
-    [self.backScroll addSubview:self.searchTF];
+    UIButton *searchBtu = [UIButton buttonWithType:UIButtonTypeCustom];
+    searchBtu.frame = CGRectMake(15, KGRectNavAndStatusHight + 25, KGScreenWidth - 30, 30);
+    [searchBtu setTitle:@"搜索喜欢的场馆" forState:UIControlStateNormal];
+    [searchBtu setImage:[UIImage imageNamed:@"sousuo"] forState:UIControlStateNormal];
+    [searchBtu setTitleColor:KGWhiteColor forState:UIControlStateNormal];
+    searchBtu.titleLabel.font = KGFontSHRegular(12);
+    searchBtu.layer.cornerRadius = 15;
+    searchBtu.layer.masksToBounds = YES;
+    searchBtu.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
+    [self.backScroll addSubview:searchBtu];
     /** 顶部滚动图 */
     self.topScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(10, KGRectNavAndStatusHight + 65, KGScreenWidth - 20 , 120)];
     self.topScroll.contentSize = CGSizeMake((KGScreenWidth - 20)*5, 120);

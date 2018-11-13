@@ -13,16 +13,12 @@
 
 @interface KGAgencyHomePageVC ()
 <
-UITextFieldDelegate,
 UIScrollViewDelegate,
 UITableViewDelegate,
 UITableViewDataSource,
 DZNEmptyDataSetSource,
 DZNEmptyDataSetDelegate
 >
-
-/** 导航栏搜索框 */
-@property (nonatomic,strong) UITextField *searchTF;
 /** 顶部滚动页 */
 @property (nonatomic,strong) UIScrollView *topScrollView;
 /** 页码 */
@@ -81,16 +77,16 @@ DZNEmptyDataSetDelegate
 }
 /** 导航栏搜索 */
 - (void)setNavCenterView{
-    self.searchTF = [[UITextField alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth - 130, 30)];
-    self.searchTF.backgroundColor = [KGLineColor colorWithAlphaComponent:0.2];
-    self.searchTF.placeholder = @"搜索喜欢的场馆";
-    self.searchTF.delegate = self;
-    self.searchTF.textColor = KGBlackColor;
-    self.searchTF.textAlignment = NSTextAlignmentCenter;
-    self.searchTF.font = KGFontSHRegular(12);
-    self.searchTF.layer.cornerRadius = 15;
-    self.searchTF.layer.masksToBounds = YES;
-    self.navigationItem.titleView = self.searchTF;
+    UIButton *searchBtu = [UIButton buttonWithType:UIButtonTypeCustom];
+    searchBtu.frame = CGRectMake(0, 0, KGScreenWidth - 130, 30);
+    [searchBtu setTitle:@"搜索..." forState:UIControlStateNormal];
+    [searchBtu setImage:[UIImage imageNamed:@"sousuohuise"] forState:UIControlStateNormal];
+    [searchBtu setTitleColor:KGGrayColor forState:UIControlStateNormal];
+    searchBtu.titleLabel.font = KGFontSHRegular(12);
+    searchBtu.layer.cornerRadius = 15;
+    searchBtu.layer.masksToBounds = YES;
+    searchBtu.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
+    self.navigationItem.titleView = searchBtu;
 }
 /** 顶部滚动页 */
 - (UIView *)setUpTopScrollView{

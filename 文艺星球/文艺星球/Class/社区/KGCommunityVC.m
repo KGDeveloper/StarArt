@@ -10,6 +10,7 @@
 #import "KFCircleMenu.h"
 #import "KGInstitutionVC.h"
 #import "KGDatingVC.h"
+#import "KGBooksVC.h"
 
 @interface KGCommunityVC ()
 
@@ -53,7 +54,7 @@
     if (index == 0 || index == 7) {//:--机构--
         [self pushHideenTabbarViewController:[[KGInstitutionVC alloc]init] animted:YES];
     }else if (index == 1 || index == 8){//:--书籍--
-        
+        [self pushHideenTabbarViewController:[[KGBooksVC alloc]init] animted:YES];
     }else if (index == 2 || index == 9){//:--头条--
         
     }else if (index == 3 || index == 10){//:--演出--
