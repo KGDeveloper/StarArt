@@ -9,6 +9,8 @@
 #import "KGBooksVC.h"
 #import "KGBooksCell.h"
 #import "KGBooksView.h"
+#import "KGRecommendBooksVC.h"
+#import "KGBestSellingBooksVC.h"
 
 @interface KGBooksVC ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 /** 图书列表 */
@@ -157,11 +159,11 @@
 }
 /** 查看今日推荐 */
 - (void)topRightAction{
-    
+    [self pushHideenTabbarViewController:[[KGRecommendBooksVC alloc]init] animted:YES];
 }
 /** 查看畅销图书榜 */
 - (void)lowRightAction{
-    
+    [self pushHideenTabbarViewController:[[KGBestSellingBooksVC alloc]init] animted:YES];
 }
 /** 顶部滚动 */
 - (void)setRecommendScrollViewSubViews{

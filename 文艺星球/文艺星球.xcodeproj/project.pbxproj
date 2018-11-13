@@ -61,6 +61,8 @@
 		5A4408CF219AC69E00393CAF /* KGBooksCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A4408CD219AC69E00393CAF /* KGBooksCell.xib */; };
 		5A4408D2219ACD1800393CAF /* KGBooksView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4408D1219ACD1800393CAF /* KGBooksView.m */; };
 		5A4408D4219ACD3B00393CAF /* KGBooksView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A4408D3219ACD3B00393CAF /* KGBooksView.xib */; };
+		5A4408D7219AE13400393CAF /* KGRecommendBooksVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4408D6219AE13400393CAF /* KGRecommendBooksVC.m */; };
+		5A4408DD219AE1F100393CAF /* KGBestSellingBooksVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4408DC219AE1F100393CAF /* KGBestSellingBooksVC.m */; };
 		5A4A53B4218A9B0700ABC7C9 /* KGSquare.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A4A53B3218A9B0700ABC7C9 /* KGSquare.xcassets */; };
 		5A4A53B7218AAB7500ABC7C9 /* KGReleaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4A53B6218AAB7500ABC7C9 /* KGReleaseVC.m */; };
 		5A4A53BA218AE15800ABC7C9 /* KGChooseYourLocationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4A53B9218AE15800ABC7C9 /* KGChooseYourLocationVC.m */; };
@@ -284,6 +286,10 @@
 		5A4408D0219ACD1800393CAF /* KGBooksView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGBooksView.h; sourceTree = "<group>"; };
 		5A4408D1219ACD1800393CAF /* KGBooksView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGBooksView.m; sourceTree = "<group>"; };
 		5A4408D3219ACD3B00393CAF /* KGBooksView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGBooksView.xib; sourceTree = "<group>"; };
+		5A4408D5219AE13400393CAF /* KGRecommendBooksVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGRecommendBooksVC.h; sourceTree = "<group>"; };
+		5A4408D6219AE13400393CAF /* KGRecommendBooksVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGRecommendBooksVC.m; sourceTree = "<group>"; };
+		5A4408DB219AE1F100393CAF /* KGBestSellingBooksVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGBestSellingBooksVC.h; sourceTree = "<group>"; };
+		5A4408DC219AE1F100393CAF /* KGBestSellingBooksVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGBestSellingBooksVC.m; sourceTree = "<group>"; };
 		5A4A53B3218A9B0700ABC7C9 /* KGSquare.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = KGSquare.xcassets; sourceTree = "<group>"; };
 		5A4A53B5218AAB7500ABC7C9 /* KGReleaseVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGReleaseVC.h; sourceTree = "<group>"; };
 		5A4A53B6218AAB7500ABC7C9 /* KGReleaseVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGReleaseVC.m; sourceTree = "<group>"; };
@@ -636,6 +642,10 @@
 				5A4408CA219AC68700393CAF /* view */,
 				5A4408C7219AC52300393CAF /* KGBooksVC.h */,
 				5A4408C8219AC52300393CAF /* KGBooksVC.m */,
+				5A4408D5219AE13400393CAF /* KGRecommendBooksVC.h */,
+				5A4408D6219AE13400393CAF /* KGRecommendBooksVC.m */,
+				5A4408DB219AE1F100393CAF /* KGBestSellingBooksVC.h */,
+				5A4408DC219AE1F100393CAF /* KGBestSellingBooksVC.m */,
 			);
 			path = "书籍";
 			sourceTree = "<group>";
@@ -1394,11 +1404,13 @@
 				5A5631E421800E460007127C /* KGMineVC.m in Sources */,
 				5A2620ED219043B80047A319 /* KGReleaseTF.m in Sources */,
 				5A2D84732192F87C00CBC727 /* KGRecommendPlaceAggremmentVC.m in Sources */,
+				5A4408D7219AE13400393CAF /* KGRecommendBooksVC.m in Sources */,
 				5A4408B6219A6FDC00393CAF /* KGInstitutionDramaDetailVC.m in Sources */,
 				5A7814B521880FBD001A14D5 /* KGHomeTownListViewCell.m in Sources */,
 				5A543E60219984D40085B1E0 /* KGInstitutionHotDramaVC.m in Sources */,
 				5A5631F921805D4D0007127C /* KGMineSingleCell.m in Sources */,
 				5A5A7295218C40E00081F173 /* KGSquareRoundCell.m in Sources */,
+				5A4408DD219AE1F100393CAF /* KGBestSellingBooksVC.m in Sources */,
 				5A8FA63221899BB300498307 /* KGExhibitionCell.m in Sources */,
 				5A2D844C2192C44900CBC727 /* KGSubmitLocationCell.m in Sources */,
 				5A4B19BD2193DC240054E732 /* KGDetailedAddressOfThePlaceVC.m in Sources */,
