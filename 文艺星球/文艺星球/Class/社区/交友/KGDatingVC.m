@@ -8,6 +8,7 @@
 
 #import "KGDatingVC.h"
 #import "KGDatingView.h"
+#import "KGDatingManagerVC.h"
 
 @interface KGDatingVC ()
 
@@ -37,8 +38,15 @@
 }
 /** 创建聊天 */
 - (void)setDatingView{
+    __weak typeof(self) weakSelf = self;
     for (int i = 0; i < 10; i++) {
         KGDatingView *datingView = [[KGDatingView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, KGScreenHeight)];
+        datingView.leftMoveRemoveSelf = ^{
+            
+        };
+        datingView.rightMoveStarChat = ^(NSString *userID) {
+            [weakSelf pushHideenTabbarViewController:[[KGDatingManagerVC alloc]initWithNibName:@"KGDatingManagerVC" bundle:nil] animted:YES];
+        };
         [self.view addSubview:datingView];
     }
 }
