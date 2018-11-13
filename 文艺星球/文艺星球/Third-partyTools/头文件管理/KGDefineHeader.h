@@ -39,6 +39,8 @@
 #define KGAreaGrayColor KGColor(@"#f5f5f5")
 /** 蓝色 */
 #define KGBlueColor KGColor(@"#6699ff")
+/** 随机色 */
+#define KGRandomColor [UIColor colorWithRed:(arc4random()%255)/255.0 green:(arc4random()%255)/255.0 blue:(arc4random()%255)/255.0 alpha:1]
 /** 透明遮罩 */
 #define KGAlpheColor [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2]
 /** 设置思源细体字体 */

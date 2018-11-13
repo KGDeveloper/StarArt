@@ -9,6 +9,7 @@
 #import "KGCommunityVC.h"
 #import "KFCircleMenu.h"
 #import "KGInstitutionVC.h"
+#import "KGDatingVC.h"
 
 @interface KGCommunityVC ()
 
@@ -49,20 +50,20 @@
 }
 /** 点击跳转页面 */
 - (void)pushViewControllerWithIndex:(NSInteger)index{
-    if (index == 0 || index == 7) {
+    if (index == 0 || index == 7) {//:--机构--
         [self pushHideenTabbarViewController:[[KGInstitutionVC alloc]init] animted:YES];
-    }else if (index == 1 || index == 8){
+    }else if (index == 1 || index == 8){//:--书籍--
         
-    }else if (index == 2 || index == 9){
+    }else if (index == 2 || index == 9){//:--头条--
         
-    }else if (index == 3 || index == 10){
+    }else if (index == 3 || index == 10){//:--演出--
         
-    }else if (index == 4 || index == 11){
+    }else if (index == 4 || index == 11){//:--艺术人--
         
-    }else if (index == 5 || index == 12){
+    }else if (index == 5 || index == 12){//:--展览--
         
-    }else if (index == 6 || index == 13){
-        
+    }else if (index == 6 || index == 13){//:--交友--
+        [self pushHideenTabbarViewController:[[KGDatingVC alloc]init] animted:YES];
     }
 //    dispatch_async(dispatch_get_main_queue(), ^{
 //        
