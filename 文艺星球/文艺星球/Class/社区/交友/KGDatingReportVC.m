@@ -116,10 +116,23 @@
     if ([self.fourBtu.currentTitleColor isEqual:KGBlueColor]) {
         [self.fourBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
     }
+    sender.hidden = YES;
 }
 /** 计算字数 */
 - (void)textViewDidChange:(UITextView *)textView{
     self.countLab.text = [NSString stringWithFormat:@"%lu/200",(unsigned long)textView.text.length];
+}
+- (void)textViewDidBeginEditing:(UITextView *)textView{
+    if ([textView.text isEqualToString:@"请输入不少于10个字的描述"]) {
+        self.describeTV.text = @"";
+        self.describeTV.textColor = KGBlackColor;
+    }
+}
+- (void)textViewDidEndEditing:(UITextView *)textView{
+    if (textView.text.length < 1) {
+        self.describeTV.text = @"请输入不少于10个字的描述";
+        self.describeTV.textColor = [UIColor colorWithHexString:@"#cccccc"];
+    }
 }
 
 /*
