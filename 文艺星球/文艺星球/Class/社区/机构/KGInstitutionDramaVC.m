@@ -10,6 +10,7 @@
 #import "KGAgencyHomePageCell.h"
 #import "KGAgencyHomePageScreeningCell.h"
 #import "KGInstitutionHotDramaVC.h"
+#import "KGInstitutionDramaDetailVC.h"
 
 @interface KGInstitutionDramaVC ()
 <
@@ -341,7 +342,7 @@ DZNEmptyDataSetDelegate
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.listView) {
-        
+        [self pushHideenTabbarViewController:[[KGInstitutionDramaDetailVC alloc]initWithNibName:@"KGInstitutionDramaDetailVC" bundle:nil] animted:YES];
     }else if (tableView == self.leftListView){
         self.oneListCellRow = indexPath.row;
         [self.leftListView reloadData];

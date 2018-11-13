@@ -8,6 +8,7 @@
 
 #import "KGInstitutionDramaTheUpcomingVC.h"
 #import "KGInstitutionHotDramaCell.h"
+#import "KGInstitutionDramaDetailVC.h"
 
 @interface KGInstitutionDramaTheUpcomingVC ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 
@@ -72,7 +73,7 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    [self pushHideenTabbarViewController:[[KGInstitutionDramaDetailVC alloc]initWithNibName:@"KGInstitutionDramaDetailVC" bundle:nil] animted:YES];
 }
 
 /*
