@@ -10,6 +10,8 @@
 		5A0D3230219BBF9A00A49AE7 /* KGBooksDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D322F219BBF9A00A49AE7 /* KGBooksDetailVC.m */; };
 		5A0D3238219BCEA100A49AE7 /* KGBooksDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D3237219BCEA100A49AE7 /* KGBooksDetailHeaderView.m */; };
 		5A0D323A219BCEAA00A49AE7 /* KGBooksDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A0D3239219BCEAA00A49AE7 /* KGBooksDetailHeaderView.xib */; };
+		5A0D323E219C148C00A49AE7 /* KGWriteReviewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D323C219C148C00A49AE7 /* KGWriteReviewVC.m */; };
+		5A0D323F219C148C00A49AE7 /* KGWriteReviewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A0D323D219C148C00A49AE7 /* KGWriteReviewVC.xib */; };
 		5A25210A21913978006D642B /* KGFoundInterestAreaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25210821913978006D642B /* KGFoundInterestAreaCell.m */; };
 		5A25210B21913978006D642B /* KGFoundInterestAreaCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A25210921913978006D642B /* KGFoundInterestAreaCell.xib */; };
 		5A25210F21914A0C006D642B /* KGFoundCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25210D21914A0C006D642B /* KGFoundCell.m */; };
@@ -201,6 +203,9 @@
 		5A0D3236219BCEA100A49AE7 /* KGBooksDetailHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGBooksDetailHeaderView.h; sourceTree = "<group>"; };
 		5A0D3237219BCEA100A49AE7 /* KGBooksDetailHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGBooksDetailHeaderView.m; sourceTree = "<group>"; };
 		5A0D3239219BCEAA00A49AE7 /* KGBooksDetailHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGBooksDetailHeaderView.xib; sourceTree = "<group>"; };
+		5A0D323B219C148C00A49AE7 /* KGWriteReviewVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGWriteReviewVC.h; sourceTree = "<group>"; };
+		5A0D323C219C148C00A49AE7 /* KGWriteReviewVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGWriteReviewVC.m; sourceTree = "<group>"; };
+		5A0D323D219C148C00A49AE7 /* KGWriteReviewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGWriteReviewVC.xib; sourceTree = "<group>"; };
 		5A25210721913978006D642B /* KGFoundInterestAreaCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGFoundInterestAreaCell.h; sourceTree = "<group>"; };
 		5A25210821913978006D642B /* KGFoundInterestAreaCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGFoundInterestAreaCell.m; sourceTree = "<group>"; };
 		5A25210921913978006D642B /* KGFoundInterestAreaCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGFoundInterestAreaCell.xib; sourceTree = "<group>"; };
@@ -656,6 +661,9 @@
 				5A4408DC219AE1F100393CAF /* KGBestSellingBooksVC.m */,
 				5A0D322E219BBF9A00A49AE7 /* KGBooksDetailVC.h */,
 				5A0D322F219BBF9A00A49AE7 /* KGBooksDetailVC.m */,
+				5A0D323B219C148C00A49AE7 /* KGWriteReviewVC.h */,
+				5A0D323C219C148C00A49AE7 /* KGWriteReviewVC.m */,
+				5A0D323D219C148C00A49AE7 /* KGWriteReviewVC.xib */,
 			);
 			path = "书籍";
 			sourceTree = "<group>";
@@ -1282,6 +1290,7 @@
 				5A543E5A21995D090085B1E0 /* KGAgencyExhibitionDetailHeaderView.xib in Resources */,
 				5A2620DF218FF2AF0047A319 /* KGSquareMessageCell.xib in Resources */,
 				5A79E4132181CBFA0015AC91 /* KGTalentShowVC.xib in Resources */,
+				5A0D323F219C148C00A49AE7 /* KGWriteReviewVC.xib in Resources */,
 				5AA248C42189B1B900AE908B /* KGBookCell.xib in Resources */,
 				5A79E40821816B1F0015AC91 /* KGSetupCell.xib in Resources */,
 				5A2D844D2192C44900CBC727 /* KGSubmitLocationCell.xib in Resources */,
@@ -1390,6 +1399,7 @@
 				5A5A7292218C40D10081F173 /* KGSquareVerticalCell.m in Sources */,
 				5A79E4172181D2820015AC91 /* KGTalentPrivilegeVC.m in Sources */,
 				5A8FA62D2189813700498307 /* KGCollectionInstituteCell.m in Sources */,
+				5A0D323E219C148C00A49AE7 /* KGWriteReviewVC.m in Sources */,
 				5A4F5EDF217DB29D005C6A14 /* KGLoginVC.m in Sources */,
 				5A79E40721816B1F0015AC91 /* KGSetupCell.m in Sources */,
 				5ABB9D60215B9A8500C612B2 /* main.m in Sources */,

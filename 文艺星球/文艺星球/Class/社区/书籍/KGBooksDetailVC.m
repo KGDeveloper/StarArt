@@ -9,6 +9,7 @@
 #import "KGBooksDetailVC.h"
 #import "KGBooksDetailHeaderView.h"
 #import "KGBooksCell.h"
+#import "KGWriteReviewVC.h"
 
 @interface KGBooksDetailVC ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 /** 图书列表 */
@@ -41,8 +42,9 @@
 /** 头视图 */
 - (UIView *)setUpHeaderView{
     self.headerView = [[KGBooksDetailHeaderView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, 1090)];
+    __weak typeof(self) weakSelf = self;
     self.headerView.writeMyReview = ^(NSString *stateStr) {
-        
+        [weakSelf pushHideenTabbarViewController:[[KGWriteReviewVC alloc]initWithNibName:@"KGWriteReviewVC" bundle:nil] animted:YES];
     };
     self.headerView.lockAllCommend = ^{
         
