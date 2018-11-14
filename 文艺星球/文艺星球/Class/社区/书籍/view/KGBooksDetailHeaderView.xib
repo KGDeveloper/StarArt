@@ -199,6 +199,9 @@
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                     </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="wantToReadAction:" destination="-1" eventType="touchUpInside" id="J2N-6y-e9f"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oBC-sD-rym">
                     <rect key="frame" x="110" y="260" width="80" height="30"/>
@@ -216,6 +219,9 @@
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                     </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="readingAction:" destination="-1" eventType="touchUpInside" id="yGk-eW-hFx"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KVn-YS-RNw">
                     <rect key="frame" x="310" y="260" width="50" height="30"/>
@@ -233,6 +239,9 @@
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                     </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="scoreAction:" destination="-1" eventType="touchUpInside" id="S2v-Hy-a5z"/>
+                    </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mub-xa-iBn">
                     <rect key="frame" x="15" y="305" width="345" height="141"/>
@@ -299,6 +308,9 @@
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                     </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="finishAction:" destination="-1" eventType="touchUpInside" id="ClD-bB-41G"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="简介" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DQ7-hy-3lK">
                     <rect key="frame" x="15" y="496" width="345" height="14"/>
@@ -444,6 +456,9 @@
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                     </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="wantToScroeAction:" destination="-1" eventType="touchUpInside" id="xiz-2n-qAM"/>
+                    </connections>
                 </button>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VMq-SC-Rml">
                     <rect key="frame" x="15" y="865" width="20" height="20"/>
@@ -551,6 +566,9 @@
                     <state key="normal" title="查看全部评论">
                         <color key="titleColor" red="0.40000000000000002" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
+                    <connections>
+                        <action selector="lockAllCommendAction:" destination="-1" eventType="touchUpInside" id="fAD-wX-B8E"/>
+                    </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LYv-BS-5KE">
                     <rect key="frame" x="0.0" y="994.66666666666663" width="375" height="10"/>

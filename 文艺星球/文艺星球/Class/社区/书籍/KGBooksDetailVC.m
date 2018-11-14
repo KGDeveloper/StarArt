@@ -40,7 +40,13 @@
 }
 /** 头视图 */
 - (UIView *)setUpHeaderView{
-    self.headerView = [[KGBooksDetailHeaderView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, 1055)];
+    self.headerView = [[KGBooksDetailHeaderView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, 1090)];
+    self.headerView.writeMyReview = ^(NSString *stateStr) {
+        
+    };
+    self.headerView.lockAllCommend = ^{
+        
+    };
     return self.headerView;
 }
 // MARK: --创建机构列表--

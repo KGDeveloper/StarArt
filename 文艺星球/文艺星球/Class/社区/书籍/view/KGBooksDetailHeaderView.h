@@ -72,6 +72,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIButton *userZansBtu;
 /** 查看全部评论 */
 @property (weak, nonatomic) IBOutlet UIButton *pushAllCommendView;
+/** 想读 */
+@property (nonatomic,copy) void(^writeMyReview)(NSString *stateStr);
+/** 查看评论 */
+@property (nonatomic,copy) void(^lockAllCommend)(void);
 
 @end
 
