@@ -8,6 +8,7 @@
 
 #import "KGBestSellingBooksVC.h"
 #import "KGBooksCell.h"
+#import "KGBooksDetailVC.h"
 
 @interface KGBestSellingBooksVC ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 /** 图书列表 */
@@ -21,7 +22,7 @@
     [super viewWillAppear:animated];
     /** 导航栏标题颜色 */
     [self changeNavBackColor:KGWhiteColor controller:self];
-    [self changeNavTitleColor:KGWhiteColor font:KGFontSHBold(15) controller:self];
+    [self changeNavTitleColor:KGBlackColor font:KGFontSHBold(15) controller:self];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -68,7 +69,7 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    [self pushHideenTabbarViewController:[[KGBooksDetailVC alloc]init] animted:YES];
 }
 
 /*
