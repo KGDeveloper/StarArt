@@ -37,7 +37,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     /** 定制左侧返回按钮 */
-    [self setLeftNavItemWithFrame:CGRectMake(15, 0, 50, 30) title:nil image:[UIImage imageNamed:@"fanhuibai"] font:nil color:nil select:@selector(leftNavAction)];
+    [self setLeftNavItemWithFrame:CGRectMake(15, 0, 50, 30) title:nil image:[UIImage imageNamed:@"fanhui"] font:nil color:nil select:@selector(leftNavAction)];
+    [self setRightNavItemWithFrame:CGRectZero title:@"确定" image:nil font:KGFontSHRegular(14) color:KGBlueColor select:@selector(rightNavAction)];
     self.view.backgroundColor = KGWhiteColor;
     
     self.reviewTV.layer.cornerRadius = 5;
@@ -47,6 +48,10 @@
     self.reviewTV.delegate = self;
     [self.wantToReadBtu setTitleColor:KGBlueColor forState:UIControlStateNormal];
     self.reviewHeigt.constant = 0;
+}
+/** 导航栏右侧按钮点击事件 */
+- (void)rightNavAction{
+    
 }
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{

@@ -12,6 +12,8 @@
 		5A0D323A219BCEAA00A49AE7 /* KGBooksDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A0D3239219BCEAA00A49AE7 /* KGBooksDetailHeaderView.xib */; };
 		5A0D323E219C148C00A49AE7 /* KGWriteReviewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D323C219C148C00A49AE7 /* KGWriteReviewVC.m */; };
 		5A0D323F219C148C00A49AE7 /* KGWriteReviewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A0D323D219C148C00A49AE7 /* KGWriteReviewVC.xib */; };
+		5A0D3242219C279B00A49AE7 /* KGAllBooksReviewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D3241219C279B00A49AE7 /* KGAllBooksReviewVC.m */; };
+		5A0D3245219C2B0F00A49AE7 /* KGAllBooksReviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D3244219C2B0F00A49AE7 /* KGAllBooksReviewCell.m */; };
 		5A25210A21913978006D642B /* KGFoundInterestAreaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25210821913978006D642B /* KGFoundInterestAreaCell.m */; };
 		5A25210B21913978006D642B /* KGFoundInterestAreaCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A25210921913978006D642B /* KGFoundInterestAreaCell.xib */; };
 		5A25210F21914A0C006D642B /* KGFoundCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25210D21914A0C006D642B /* KGFoundCell.m */; };
@@ -206,6 +208,10 @@
 		5A0D323B219C148C00A49AE7 /* KGWriteReviewVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGWriteReviewVC.h; sourceTree = "<group>"; };
 		5A0D323C219C148C00A49AE7 /* KGWriteReviewVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGWriteReviewVC.m; sourceTree = "<group>"; };
 		5A0D323D219C148C00A49AE7 /* KGWriteReviewVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGWriteReviewVC.xib; sourceTree = "<group>"; };
+		5A0D3240219C279B00A49AE7 /* KGAllBooksReviewVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGAllBooksReviewVC.h; sourceTree = "<group>"; };
+		5A0D3241219C279B00A49AE7 /* KGAllBooksReviewVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGAllBooksReviewVC.m; sourceTree = "<group>"; };
+		5A0D3243219C2B0F00A49AE7 /* KGAllBooksReviewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGAllBooksReviewCell.h; sourceTree = "<group>"; };
+		5A0D3244219C2B0F00A49AE7 /* KGAllBooksReviewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGAllBooksReviewCell.m; sourceTree = "<group>"; };
 		5A25210721913978006D642B /* KGFoundInterestAreaCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGFoundInterestAreaCell.h; sourceTree = "<group>"; };
 		5A25210821913978006D642B /* KGFoundInterestAreaCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGFoundInterestAreaCell.m; sourceTree = "<group>"; };
 		5A25210921913978006D642B /* KGFoundInterestAreaCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGFoundInterestAreaCell.xib; sourceTree = "<group>"; };
@@ -661,6 +667,8 @@
 				5A4408DC219AE1F100393CAF /* KGBestSellingBooksVC.m */,
 				5A0D322E219BBF9A00A49AE7 /* KGBooksDetailVC.h */,
 				5A0D322F219BBF9A00A49AE7 /* KGBooksDetailVC.m */,
+				5A0D3240219C279B00A49AE7 /* KGAllBooksReviewVC.h */,
+				5A0D3241219C279B00A49AE7 /* KGAllBooksReviewVC.m */,
 				5A0D323B219C148C00A49AE7 /* KGWriteReviewVC.h */,
 				5A0D323C219C148C00A49AE7 /* KGWriteReviewVC.m */,
 				5A0D323D219C148C00A49AE7 /* KGWriteReviewVC.xib */,
@@ -680,6 +688,8 @@
 				5A0D3236219BCEA100A49AE7 /* KGBooksDetailHeaderView.h */,
 				5A0D3237219BCEA100A49AE7 /* KGBooksDetailHeaderView.m */,
 				5A0D3239219BCEAA00A49AE7 /* KGBooksDetailHeaderView.xib */,
+				5A0D3243219C2B0F00A49AE7 /* KGAllBooksReviewCell.h */,
+				5A0D3244219C2B0F00A49AE7 /* KGAllBooksReviewCell.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -1412,6 +1422,7 @@
 				5A25210A21913978006D642B /* KGFoundInterestAreaCell.m in Sources */,
 				5A8F517121959070007E6165 /* KGAgencyDetailTableViewCell.m in Sources */,
 				5A4408C4219ABBED00393CAF /* KGDatingReportVC.m in Sources */,
+				5A0D3242219C279B00A49AE7 /* KGAllBooksReviewVC.m in Sources */,
 				5A2D84542192D5C800CBC727 /* KGTheDetailNameOfThePlaceVC.m in Sources */,
 				5A5631EC2180487A0007127C /* KGUserInfo.m in Sources */,
 				5A4B19CC21942B4F0054E732 /* KGInstitutionVC.m in Sources */,
@@ -1482,6 +1493,7 @@
 				5A4B19B92193D7E80054E732 /* KGPlaceTheCoverVC.m in Sources */,
 				5A7814AE2187FCC1001A14D5 /* KGHometownVC.m in Sources */,
 				5A79E4122181CBFA0015AC91 /* KGTalentShowVC.m in Sources */,
+				5A0D3245219C2B0F00A49AE7 /* KGAllBooksReviewCell.m in Sources */,
 				5AA248C32189B1B900AE908B /* KGBookCell.m in Sources */,
 				5A543E4C219930F90085B1E0 /* KGAgencyDetailListViewCell.m in Sources */,
 				5A2D89922175D22F003411DC /* KGHUD.m in Sources */,
