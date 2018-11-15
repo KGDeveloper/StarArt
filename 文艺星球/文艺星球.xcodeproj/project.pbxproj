@@ -164,6 +164,12 @@
 		5A8FA63321899BB300498307 /* KGExhibitionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A8FA63121899BB300498307 /* KGExhibitionCell.xib */; };
 		5A8FA6372189A1C600498307 /* KGSqureCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A8FA6352189A1C600498307 /* KGSqureCell.m */; };
 		5A8FA6382189A1C600498307 /* KGSqureCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A8FA6362189A1C600498307 /* KGSqureCell.xib */; };
+		5A927457219D1F5900998281 /* KGNewsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A927456219D1F5900998281 /* KGNewsVC.m */; };
+		5A92745C219D3BE100998281 /* KGNewsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A92745A219D3BE100998281 /* KGNewsCell.m */; };
+		5A92745D219D3BE100998281 /* KGNewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A92745B219D3BE100998281 /* KGNewsCell.xib */; };
+		5A927460219D474700998281 /* KGNewsDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A92745F219D474700998281 /* KGNewsDetailVC.m */; };
+		5A927463219D5A6900998281 /* KGNewsDetailUILabCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A927462219D5A6900998281 /* KGNewsDetailUILabCell.m */; };
+		5A927466219D5A8300998281 /* KGNewsDetailUIImageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A927465219D5A8300998281 /* KGNewsDetailUIImageViewCell.m */; };
 		5A9AECB1217EF4680003478E /* KGWYXQUserAgreementVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A9AECB0217EF4680003478E /* KGWYXQUserAgreementVC.m */; };
 		5A9AECB8217EF61E0003478E /* KGWYXQPrivacyAgreementVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A9AECB7217EF61E0003478E /* KGWYXQPrivacyAgreementVC.m */; };
 		5AA0536121952E5300D2CE49 /* KGAgencyHomePageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA0536021952E5300D2CE49 /* KGAgencyHomePageVC.m */; };
@@ -470,6 +476,17 @@
 		5A8FA6342189A1C600498307 /* KGSqureCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGSqureCell.h; sourceTree = "<group>"; };
 		5A8FA6352189A1C600498307 /* KGSqureCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGSqureCell.m; sourceTree = "<group>"; };
 		5A8FA6362189A1C600498307 /* KGSqureCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGSqureCell.xib; sourceTree = "<group>"; };
+		5A927455219D1F5900998281 /* KGNewsVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGNewsVC.h; sourceTree = "<group>"; };
+		5A927456219D1F5900998281 /* KGNewsVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGNewsVC.m; sourceTree = "<group>"; };
+		5A927459219D3BE100998281 /* KGNewsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGNewsCell.h; sourceTree = "<group>"; };
+		5A92745A219D3BE100998281 /* KGNewsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGNewsCell.m; sourceTree = "<group>"; };
+		5A92745B219D3BE100998281 /* KGNewsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGNewsCell.xib; sourceTree = "<group>"; };
+		5A92745E219D474700998281 /* KGNewsDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGNewsDetailVC.h; sourceTree = "<group>"; };
+		5A92745F219D474700998281 /* KGNewsDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGNewsDetailVC.m; sourceTree = "<group>"; };
+		5A927461219D5A6900998281 /* KGNewsDetailUILabCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGNewsDetailUILabCell.h; sourceTree = "<group>"; };
+		5A927462219D5A6900998281 /* KGNewsDetailUILabCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGNewsDetailUILabCell.m; sourceTree = "<group>"; };
+		5A927464219D5A8300998281 /* KGNewsDetailUIImageViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGNewsDetailUIImageViewCell.h; sourceTree = "<group>"; };
+		5A927465219D5A8300998281 /* KGNewsDetailUIImageViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGNewsDetailUIImageViewCell.m; sourceTree = "<group>"; };
 		5A9AECAF217EF4680003478E /* KGWYXQUserAgreementVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGWYXQUserAgreementVC.h; sourceTree = "<group>"; };
 		5A9AECB0217EF4680003478E /* KGWYXQUserAgreementVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGWYXQUserAgreementVC.m; sourceTree = "<group>"; };
 		5A9AECB6217EF61E0003478E /* KGWYXQPrivacyAgreementVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGWYXQPrivacyAgreementVC.h; sourceTree = "<group>"; };
@@ -809,6 +826,7 @@
 		5A4F5ED9217DB232005C6A14 /* 社区 */ = {
 			isa = PBXGroup;
 			children = (
+				5A927454219D1F2800998281 /* 头条 */,
 				5A4408C6219AC50200393CAF /* 书籍 */,
 				5A4408B8219A829000393CAF /* 交友 */,
 				5A4B19C921942B270054E732 /* 机构 */,
@@ -1101,6 +1119,32 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		5A927454219D1F2800998281 /* 头条 */ = {
+			isa = PBXGroup;
+			children = (
+				5A927458219D245B00998281 /* view */,
+				5A927455219D1F5900998281 /* KGNewsVC.h */,
+				5A927456219D1F5900998281 /* KGNewsVC.m */,
+				5A92745E219D474700998281 /* KGNewsDetailVC.h */,
+				5A92745F219D474700998281 /* KGNewsDetailVC.m */,
+			);
+			path = "头条";
+			sourceTree = "<group>";
+		};
+		5A927458219D245B00998281 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				5A927459219D3BE100998281 /* KGNewsCell.h */,
+				5A92745A219D3BE100998281 /* KGNewsCell.m */,
+				5A92745B219D3BE100998281 /* KGNewsCell.xib */,
+				5A927461219D5A6900998281 /* KGNewsDetailUILabCell.h */,
+				5A927462219D5A6900998281 /* KGNewsDetailUILabCell.m */,
+				5A927464219D5A8300998281 /* KGNewsDetailUIImageViewCell.h */,
+				5A927465219D5A8300998281 /* KGNewsDetailUIImageViewCell.m */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
 		5ABB9D44215B9A7C00C612B2 = {
 			isa = PBXGroup;
 			children = (
@@ -1297,6 +1341,7 @@
 				5AED6C0D217DC84A000657C9 /* SourceHanSansCN-Bold.otf in Resources */,
 				5A0D323A219BCEAA00A49AE7 /* KGBooksDetailHeaderView.xib in Resources */,
 				5A543E5521995BA70085B1E0 /* KGAgencyExhibitionDetailCell.xib in Resources */,
+				5A92745D219D3BE100998281 /* KGNewsCell.xib in Resources */,
 				5A543E5A21995D090085B1E0 /* KGAgencyExhibitionDetailHeaderView.xib in Resources */,
 				5A2620DF218FF2AF0047A319 /* KGSquareMessageCell.xib in Resources */,
 				5A79E4132181CBFA0015AC91 /* KGTalentShowVC.xib in Resources */,
@@ -1349,6 +1394,7 @@
 				"${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework",
 				"${BUILT_PRODUCTS_DIR}/SDAutoLayout/SDAutoLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/XHWebImageAutoSize/XHWebImageAutoSize.framework",
 				"${BUILT_PRODUCTS_DIR}/YYKit/YYKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -1359,6 +1405,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJRefresh.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDAutoLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XHWebImageAutoSize.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1429,6 +1476,7 @@
 				5A2D8440219292A800CBC727 /* KGSeeFriendsVC.m in Sources */,
 				5A5A728F218C40A60081F173 /* KGQuareHorizontalCell.m in Sources */,
 				5A5A7283218BEC590081F173 /* KGPreviewVC.m in Sources */,
+				5A927466219D5A8300998281 /* KGNewsDetailUIImageViewCell.m in Sources */,
 				5A4408BF219AB96C00393CAF /* KGDatingManagerVC.m in Sources */,
 				5A563203218067380007127C /* KGIntegralVC.m in Sources */,
 				5A2620E521901AFC0047A319 /* KGFoundInterestAreaVC.m in Sources */,
@@ -1477,10 +1525,12 @@
 				5A2D89982175EDFA003411DC /* KGDatingView.m in Sources */,
 				5A6E865A21831B4B00937450 /* KGMyLabelVC.m in Sources */,
 				5A2D84372192831E00CBC727 /* KGLockUserInfoVC.m in Sources */,
+				5A927460219D474700998281 /* KGNewsDetailVC.m in Sources */,
 				5A81D945217F14FB009B7517 /* KGRegisterVC.m in Sources */,
 				5A2620FB219052730047A319 /* KGFoundReleaseHomeVC.m in Sources */,
 				5A0D3230219BBF9A00A49AE7 /* KGBooksDetailVC.m in Sources */,
 				5A543E5421995BA70085B1E0 /* KGAgencyExhibitionDetailCell.m in Sources */,
+				5A927463219D5A6900998281 /* KGNewsDetailUILabCell.m in Sources */,
 				5A79E3FF21815FFE0015AC91 /* KGIntegralTableViewCell.m in Sources */,
 				5A5631D821800D7B0007127C /* KGMapVC.m in Sources */,
 				5A2620E9219028EB0047A319 /* KGSquareDetailCell.m in Sources */,
@@ -1493,6 +1543,7 @@
 				5A4B19B92193D7E80054E732 /* KGPlaceTheCoverVC.m in Sources */,
 				5A7814AE2187FCC1001A14D5 /* KGHometownVC.m in Sources */,
 				5A79E4122181CBFA0015AC91 /* KGTalentShowVC.m in Sources */,
+				5A92745C219D3BE100998281 /* KGNewsCell.m in Sources */,
 				5A0D3245219C2B0F00A49AE7 /* KGAllBooksReviewCell.m in Sources */,
 				5AA248C32189B1B900AE908B /* KGBookCell.m in Sources */,
 				5A543E4C219930F90085B1E0 /* KGAgencyDetailListViewCell.m in Sources */,
@@ -1510,6 +1561,7 @@
 				5A548B3521789A440065744E /* PhotosLibraryView.m in Sources */,
 				5A0D3238219BCEA100A49AE7 /* KGBooksDetailHeaderView.m in Sources */,
 				5A2D898F2175CB19003411DC /* MBProgressHUD.m in Sources */,
+				5A927457219D1F5900998281 /* KGNewsVC.m in Sources */,
 				5A2620F7219050140047A319 /* KGReleaseChooseVC.m in Sources */,
 				5A2D846A2192F4B700CBC727 /* KGBusinessHoursOfThePlaceVC.m in Sources */,
 				5AA0536121952E5300D2CE49 /* KGAgencyHomePageVC.m in Sources */,

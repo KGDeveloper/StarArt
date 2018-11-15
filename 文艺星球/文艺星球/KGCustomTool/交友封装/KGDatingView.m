@@ -126,7 +126,7 @@
     /** 左滑 */
     if (pan.direction == UISwipeGestureRecognizerDirectionLeft) {
         [UIView animateWithDuration:0.5 animations:^{
-            self.frame = CGRectMake(-KGScreenWidth, KGScreenHeight/4, KGScreenWidth/2, KGScreenHeight/2);
+            self.frame = CGRectMake(-KGScreenWidth, KGScreenHeight/2, 100, 100/KGScreenWidth*KGScreenHeight);
         }completion:^(BOOL finished) {
             [self removeFromSuperview];
         }];

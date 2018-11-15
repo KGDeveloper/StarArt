@@ -86,7 +86,12 @@ DZNEmptyDataSetDelegate
     searchBtu.layer.cornerRadius = 15;
     searchBtu.layer.masksToBounds = YES;
     searchBtu.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
+    [searchBtu addTarget:self action:@selector(searchAction) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.titleView = searchBtu;
+}
+/** 搜索框点击事件 */
+- (void)searchAction{
+    
 }
 /** 顶部滚动页 */
 - (UIView *)setUpTopScrollView{

@@ -20,6 +20,7 @@
 #import <AMapSearchKit/AMapSearchKit.h>
 #import <AMapLocationKit/AMapLocationKit.h>
 #import <MAMapKit/MAMapKit.h>
+#import "XHWebImageAutoSize.h"
 
 /** 自定义部分 */
 #import "KGAlertView.h"

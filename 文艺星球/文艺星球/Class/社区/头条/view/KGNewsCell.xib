@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceHanSansCN-Regular.otf">
+            <string>SourceHanSansCN-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="405" id="KGk-i7-Jjw" customClass="KGNewsCell">
+            <rect key="frame" x="0.0" y="0.0" width="457" height="380"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="457" height="379.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MoK-L1-7RD">
+                        <rect key="frame" x="15" y="20" width="427" height="247.5"/>
+                        <color key="backgroundColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="MoK-L1-7RD" secondAttribute="height" multiplier="69:40" id="mlT-Uy-AEO"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="阿达大阿萨德阿斯达阿斯达阿斯蒂芬威风威风是二个发生大范围二位玩儿儿温热我" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ajt-1y-qmB">
+                        <rect key="frame" x="15" y="282.5" width="427" height="38"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="38" id="vYw-Ml-I06"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SourceHanSansCN-Regular" family="Source Han Sans CN" pointSize="14"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="艺术中国" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ERD-GX-fwI">
+                        <rect key="frame" x="15" y="335.5" width="100" height="12"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="81t-f0-OFm"/>
+                            <constraint firstAttribute="height" constant="12" id="QSX-A5-gXr"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SourceHanSansCN-Regular" family="Source Han Sans CN" pointSize="12"/>
+                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y4r-sg-Me2">
+                        <rect key="frame" x="427" y="334" width="15" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="H5t-wo-BZu"/>
+                            <constraint firstAttribute="width" constant="15" id="Les-sY-rwS"/>
+                        </constraints>
+                        <state key="normal" image="fenxiang"/>
+                        <connections>
+                            <action selector="shareAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="4lt-gU-km2"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="amp-uG-JLQ">
+                        <rect key="frame" x="332" y="334" width="70" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="70" id="6GI-to-hi3"/>
+                            <constraint firstAttribute="height" constant="15" id="7qz-dJ-H53"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SourceHanSansCN-Regular" family="Source Han Sans CN" pointSize="12"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
+                        <state key="normal" title="343" image="pinglun">
+                            <color key="titleColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="commendAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="2qu-1q-0ez"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e7x-b4-L1k">
+                        <rect key="frame" x="237" y="334" width="70" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="Pak-y8-Vog"/>
+                            <constraint firstAttribute="width" constant="70" id="yMZ-yc-de8"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SourceHanSansCN-Regular" family="Source Han Sans CN" pointSize="12"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
+                        <state key="normal" title="231" image="dianzan (2)">
+                            <color key="titleColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="zansBtu:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xpc-zm-RUr"/>
+                        </connections>
+                    </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XOC-9F-dKV">
+                        <rect key="frame" x="0.0" y="369" width="457" height="10"/>
+                        <color key="backgroundColor" red="0.92941176469999998" green="0.92941176469999998" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="10" id="rcp-zr-yKP"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="XOC-9F-dKV" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="1US-MV-khg"/>
+                    <constraint firstItem="XOC-9F-dKV" firstAttribute="top" secondItem="e7x-b4-L1k" secondAttribute="bottom" constant="20" id="2qF-b6-pMy"/>
+                    <constraint firstItem="ajt-1y-qmB" firstAttribute="top" secondItem="MoK-L1-7RD" secondAttribute="bottom" constant="15" id="2qk-cX-ykv"/>
+                    <constraint firstItem="y4r-sg-Me2" firstAttribute="leading" secondItem="amp-uG-JLQ" secondAttribute="trailing" constant="25" id="3Qt-9w-KTb"/>
+                    <constraint firstItem="MoK-L1-7RD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="HM1-XC-NTG"/>
+                    <constraint firstAttribute="trailing" secondItem="ajt-1y-qmB" secondAttribute="trailing" constant="15" id="HTj-eJ-eGQ"/>
+                    <constraint firstItem="amp-uG-JLQ" firstAttribute="centerY" secondItem="y4r-sg-Me2" secondAttribute="centerY" id="OhF-g5-h6n"/>
+                    <constraint firstItem="y4r-sg-Me2" firstAttribute="centerY" secondItem="ERD-GX-fwI" secondAttribute="centerY" id="UQn-oQ-gUL"/>
+                    <constraint firstItem="MoK-L1-7RD" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="W7s-wW-T3g"/>
+                    <constraint firstItem="ERD-GX-fwI" firstAttribute="top" secondItem="ajt-1y-qmB" secondAttribute="bottom" constant="15" id="Xbh-Ad-J4P"/>
+                    <constraint firstItem="ajt-1y-qmB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="ZAy-As-lco"/>
+                    <constraint firstAttribute="trailing" secondItem="XOC-9F-dKV" secondAttribute="trailing" id="czE-nh-IyJ"/>
+                    <constraint firstAttribute="trailing" secondItem="MoK-L1-7RD" secondAttribute="trailing" constant="15" id="oib-l8-oyf"/>
+                    <constraint firstItem="e7x-b4-L1k" firstAttribute="centerY" secondItem="amp-uG-JLQ" secondAttribute="centerY" id="ptv-Bn-oNO"/>
+                    <constraint firstItem="ERD-GX-fwI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="sgJ-yc-RPR"/>
+                    <constraint firstItem="amp-uG-JLQ" firstAttribute="leading" secondItem="e7x-b4-L1k" secondAttribute="trailing" constant="25" id="u82-m8-C7h"/>
+                    <constraint firstAttribute="trailing" secondItem="y4r-sg-Me2" secondAttribute="trailing" constant="15" id="yXD-3R-4OD"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="commendBtu" destination="amp-uG-JLQ" id="yDu-8Z-687"/>
+                <outlet property="customImage" destination="MoK-L1-7RD" id="Smo-Kq-tCQ"/>
+                <outlet property="detailLab" destination="ajt-1y-qmB" id="LxO-tW-nSN"/>
+                <outlet property="nameLab" destination="ERD-GX-fwI" id="WXP-XQ-yAj"/>
+                <outlet property="shareBtu" destination="y4r-sg-Me2" id="csY-ML-kuZ"/>
+                <outlet property="zansBtu" destination="e7x-b4-L1k" id="ppr-G8-DV8"/>
+            </connections>
+            <point key="canvasLocation" x="247.19999999999999" y="317.09145427286359"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="dianzan (2)" width="14" height="14"/>
+        <image name="fenxiang" width="14" height="14"/>
+        <image name="pinglun" width="15" height="14"/>
+    </resources>
+</document>
