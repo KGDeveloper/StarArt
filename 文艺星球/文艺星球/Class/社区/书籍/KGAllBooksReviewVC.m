@@ -64,9 +64,9 @@
     [btuBackView addSubview:self.allReviewBtu];
     /** 热门书评 */
     self.hotReviewBtu = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.hotReviewBtu.frame = CGRectMake(1, 1, 79, 28);
-    self.hotReviewBtu.backgroundColor = KGWhiteColor;
-    [self.hotReviewBtu setTitleColor:KGGrayColor forState:UIControlStateNormal];
+    self.hotReviewBtu.frame = CGRectMake(80, 1, 79, 28);
+    self.hotReviewBtu.backgroundColor = KGBlueColor;
+    [self.hotReviewBtu setTitleColor:KGWhiteColor forState:UIControlStateNormal];
     [self.hotReviewBtu setTitle:@"热门书评" forState:UIControlStateNormal];
     self.hotReviewBtu.titleLabel.font = KGFontSHRegular(12);
     [self.hotReviewBtu addTarget:self action:@selector(hotReviewAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -113,7 +113,7 @@
     return 20;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 170;
+    return [self.listView cellHeightForIndexPath:indexPath cellContentViewWidth:KGScreenWidth tableView:self.listView];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     KGAllBooksReviewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGAllBooksReviewCell"];

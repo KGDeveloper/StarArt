@@ -10,6 +10,7 @@
 #import "KGBooksDetailHeaderView.h"
 #import "KGBooksCell.h"
 #import "KGWriteReviewVC.h"
+#import "KGAllBooksReviewVC.h"
 
 @interface KGBooksDetailVC ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 /** 图书列表 */
@@ -47,7 +48,7 @@
         [weakSelf pushHideenTabbarViewController:[[KGWriteReviewVC alloc]initWithNibName:@"KGWriteReviewVC" bundle:nil] animted:YES];
     };
     self.headerView.lockAllCommend = ^{
-        
+        [weakSelf pushHideenTabbarViewController:[[KGAllBooksReviewVC alloc]init] animted:YES];
     };
     return self.headerView;
 }

@@ -33,6 +33,7 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self setCell];
     }
     return self;
@@ -125,6 +126,24 @@
     .topSpaceToView(self.headerImage, 15)
     .heightIs(20);
     /** 时间 */
+    self.timeLab.text = @"6分钟前";
+    self.timeLab.textColor = KGGrayColor;
+    self.timeLab.font = KGFontSHRegular(10);
+    self.timeLab.sd_layout
+    .leftEqualToView(self.detailLab)
+    .topSpaceToView(self.detailLab, 11)
+    .rightSpaceToView(self.contentView, 15)
+    .heightIs(10);
+    /** 直线 */
+    self.line.backgroundColor = KGLineColor;
+    self.line.sd_layout
+    .leftEqualToView(self.contentView)
+    .rightEqualToView(self.contentView)
+    .topSpaceToView(self.timeLab, 15)
+    .heightIs(10);
+    
+    [self setupAutoHeightWithBottomView:self.line bottomMargin:0];
+    
 }
 /** 点赞 */
 - (void)zansAction:(UIButton *)sender{
