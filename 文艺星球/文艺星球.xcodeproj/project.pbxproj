@@ -183,6 +183,7 @@
 		5ABB9D5A215B9A8500C612B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5ABB9D59215B9A8500C612B2 /* Assets.xcassets */; };
 		5ABB9D5D215B9A8500C612B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ABB9D5B215B9A8500C612B2 /* LaunchScreen.storyboard */; };
 		5ABB9D60215B9A8500C612B2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ABB9D5F215B9A8500C612B2 /* main.m */; };
+		5ACC9640219E711D00E838A8 /* KGLrregularView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ACC963F219E711D00E838A8 /* KGLrregularView.m */; };
 		5AD6634B217EE84D00A54847 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AD6634A217EE84D00A54847 /* UIKit.framework */; };
 		5AD6634D217EE85E00A54847 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AD6634C217EE85E00A54847 /* CoreFoundation.framework */; };
 		5AD6634F217EE86500A54847 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AD6634E217EE86500A54847 /* CoreText.framework */; };
@@ -509,6 +510,8 @@
 		5ABB9D5C215B9A8500C612B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5ABB9D5E215B9A8500C612B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5ABB9D5F215B9A8500C612B2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5ACC963E219E711D00E838A8 /* KGLrregularView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGLrregularView.h; sourceTree = "<group>"; };
+		5ACC963F219E711D00E838A8 /* KGLrregularView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGLrregularView.m; sourceTree = "<group>"; };
 		5AD6634A217EE84D00A54847 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5AD6634C217EE85E00A54847 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		5AD6634E217EE86500A54847 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -1141,6 +1144,8 @@
 				5A927462219D5A6900998281 /* KGNewsDetailUILabCell.m */,
 				5A927464219D5A8300998281 /* KGNewsDetailUIImageViewCell.h */,
 				5A927465219D5A8300998281 /* KGNewsDetailUIImageViewCell.m */,
+				5ACC963E219E711D00E838A8 /* KGLrregularView.h */,
+				5ACC963F219E711D00E838A8 /* KGLrregularView.m */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -1453,6 +1458,7 @@
 				5A2D846F2192F63B00CBC727 /* KGPerCapitaConsumptionOfThePlaceVC.m in Sources */,
 				5A9AECB8217EF61E0003478E /* KGWYXQPrivacyAgreementVC.m in Sources */,
 				5A25211321916468006D642B /* KGFoundDetailVC.m in Sources */,
+				5ACC9640219E711D00E838A8 /* KGLrregularView.m in Sources */,
 				5A5A7292218C40D10081F173 /* KGSquareVerticalCell.m in Sources */,
 				5A79E4172181D2820015AC91 /* KGTalentPrivilegeVC.m in Sources */,
 				5A8FA62D2189813700498307 /* KGCollectionInstituteCell.m in Sources */,
