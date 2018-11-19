@@ -12,6 +12,7 @@
 #import "KGDatingVC.h"
 #import "KGBooksVC.h"
 #import "KGNewsVC.h"
+#import "KGPerformanceVC.h"
 
 @interface KGCommunityVC ()
 
@@ -59,7 +60,7 @@
     }else if (index == 2 || index == 9){//:--头条--
         [self pushHideenTabbarViewController:[[KGNewsVC alloc]init] animted:YES];
     }else if (index == 3 || index == 10){//:--演出--
-        
+        [self pushHideenTabbarViewController:[[KGPerformanceVC alloc]init] animted:YES];
     }else if (index == 4 || index == 11){//:--艺术人--
         
     }else if (index == 5 || index == 12){//:--展览--

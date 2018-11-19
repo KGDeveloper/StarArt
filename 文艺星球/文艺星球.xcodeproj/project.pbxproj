@@ -183,7 +183,11 @@
 		5ABB9D5A215B9A8500C612B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5ABB9D59215B9A8500C612B2 /* Assets.xcassets */; };
 		5ABB9D5D215B9A8500C612B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ABB9D5B215B9A8500C612B2 /* LaunchScreen.storyboard */; };
 		5ABB9D60215B9A8500C612B2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ABB9D5F215B9A8500C612B2 /* main.m */; };
+		5ACA14F421A284C100DC9C64 /* KGPerformanceDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ACA14F321A284C100DC9C64 /* KGPerformanceDetailVC.m */; };
 		5ACC9640219E711D00E838A8 /* KGLrregularView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ACC963F219E711D00E838A8 /* KGLrregularView.m */; };
+		5ACC9644219EBBBF00E838A8 /* KGPerformanceVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ACC9643219EBBBF00E838A8 /* KGPerformanceVC.m */; };
+		5ACC9649219EC46F00E838A8 /* KGPerformanceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ACC9647219EC46F00E838A8 /* KGPerformanceCell.m */; };
+		5ACC964A219EC46F00E838A8 /* KGPerformanceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5ACC9648219EC46F00E838A8 /* KGPerformanceCell.xib */; };
 		5AD6634B217EE84D00A54847 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AD6634A217EE84D00A54847 /* UIKit.framework */; };
 		5AD6634D217EE85E00A54847 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AD6634C217EE85E00A54847 /* CoreFoundation.framework */; };
 		5AD6634F217EE86500A54847 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AD6634E217EE86500A54847 /* CoreText.framework */; };
@@ -510,8 +514,15 @@
 		5ABB9D5C215B9A8500C612B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5ABB9D5E215B9A8500C612B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5ABB9D5F215B9A8500C612B2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5ACA14F221A284C100DC9C64 /* KGPerformanceDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGPerformanceDetailVC.h; sourceTree = "<group>"; };
+		5ACA14F321A284C100DC9C64 /* KGPerformanceDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGPerformanceDetailVC.m; sourceTree = "<group>"; };
 		5ACC963E219E711D00E838A8 /* KGLrregularView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGLrregularView.h; sourceTree = "<group>"; };
 		5ACC963F219E711D00E838A8 /* KGLrregularView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGLrregularView.m; sourceTree = "<group>"; };
+		5ACC9642219EBBBF00E838A8 /* KGPerformanceVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGPerformanceVC.h; sourceTree = "<group>"; };
+		5ACC9643219EBBBF00E838A8 /* KGPerformanceVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGPerformanceVC.m; sourceTree = "<group>"; };
+		5ACC9646219EC46F00E838A8 /* KGPerformanceCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGPerformanceCell.h; sourceTree = "<group>"; };
+		5ACC9647219EC46F00E838A8 /* KGPerformanceCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGPerformanceCell.m; sourceTree = "<group>"; };
+		5ACC9648219EC46F00E838A8 /* KGPerformanceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGPerformanceCell.xib; sourceTree = "<group>"; };
 		5AD6634A217EE84D00A54847 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5AD6634C217EE85E00A54847 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		5AD6634E217EE86500A54847 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -829,6 +840,7 @@
 		5A4F5ED9217DB232005C6A14 /* 社区 */ = {
 			isa = PBXGroup;
 			children = (
+				5ACC9641219EBB9000E838A8 /* 演出 */,
 				5A927454219D1F2800998281 /* 头条 */,
 				5A4408C6219AC50200393CAF /* 书籍 */,
 				5A4408B8219A829000393CAF /* 交友 */,
@@ -1228,6 +1240,28 @@
 			path = KGCustomTool;
 			sourceTree = "<group>";
 		};
+		5ACC9641219EBB9000E838A8 /* 演出 */ = {
+			isa = PBXGroup;
+			children = (
+				5ACC9645219EC45300E838A8 /* View */,
+				5ACC9642219EBBBF00E838A8 /* KGPerformanceVC.h */,
+				5ACC9643219EBBBF00E838A8 /* KGPerformanceVC.m */,
+				5ACA14F221A284C100DC9C64 /* KGPerformanceDetailVC.h */,
+				5ACA14F321A284C100DC9C64 /* KGPerformanceDetailVC.m */,
+			);
+			path = "演出";
+			sourceTree = "<group>";
+		};
+		5ACC9645219EC45300E838A8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5ACC9646219EC46F00E838A8 /* KGPerformanceCell.h */,
+				5ACC9647219EC46F00E838A8 /* KGPerformanceCell.m */,
+				5ACC9648219EC46F00E838A8 /* KGPerformanceCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		5AED6C08217DC838000657C9 /* 字体 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1333,6 +1367,7 @@
 				5A2D84702192F63B00CBC727 /* KGPerCapitaConsumptionOfThePlaceVC.xib in Resources */,
 				5A563204218067380007127C /* KGIntegralVC.xib in Resources */,
 				5A543E65219986440085B1E0 /* KGInstitutionHotDramaCell.xib in Resources */,
+				5ACC964A219EC46F00E838A8 /* KGPerformanceCell.xib in Resources */,
 				5A6E86492182EBD200937450 /* KGWriteTalentInfoVC.xib in Resources */,
 				5A2D84452192B5AB00CBC727 /* KGTheNameOfThePlaceVC.xib in Resources */,
 				5AED6C0C217DC84A000657C9 /* SourceHanSansCN-Regular.otf in Resources */,
@@ -1495,6 +1530,7 @@
 				5A2D84732192F87C00CBC727 /* KGRecommendPlaceAggremmentVC.m in Sources */,
 				5A4408D7219AE13400393CAF /* KGRecommendBooksVC.m in Sources */,
 				5A4408B6219A6FDC00393CAF /* KGInstitutionDramaDetailVC.m in Sources */,
+				5ACC9649219EC46F00E838A8 /* KGPerformanceCell.m in Sources */,
 				5A7814B521880FBD001A14D5 /* KGHomeTownListViewCell.m in Sources */,
 				5A543E60219984D40085B1E0 /* KGInstitutionHotDramaVC.m in Sources */,
 				5A5631F921805D4D0007127C /* KGMineSingleCell.m in Sources */,
@@ -1528,11 +1564,13 @@
 				5A548B2F217882E10065744E /* KGEditPhotoView.m in Sources */,
 				5AA248BE2189ACB400AE908B /* KGArticleInterviewCell.m in Sources */,
 				5A2620DA218FF0BA0047A319 /* KGSquareMessageVC.m in Sources */,
+				5ACC9644219EBBBF00E838A8 /* KGPerformanceVC.m in Sources */,
 				5A2D89982175EDFA003411DC /* KGDatingView.m in Sources */,
 				5A6E865A21831B4B00937450 /* KGMyLabelVC.m in Sources */,
 				5A2D84372192831E00CBC727 /* KGLockUserInfoVC.m in Sources */,
 				5A927460219D474700998281 /* KGNewsDetailVC.m in Sources */,
 				5A81D945217F14FB009B7517 /* KGRegisterVC.m in Sources */,
+				5ACA14F421A284C100DC9C64 /* KGPerformanceDetailVC.m in Sources */,
 				5A2620FB219052730047A319 /* KGFoundReleaseHomeVC.m in Sources */,
 				5A0D3230219BBF9A00A49AE7 /* KGBooksDetailVC.m in Sources */,
 				5A543E5421995BA70085B1E0 /* KGAgencyExhibitionDetailCell.m in Sources */,
