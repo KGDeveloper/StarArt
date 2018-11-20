@@ -13,6 +13,7 @@
 #import "KGBooksVC.h"
 #import "KGNewsVC.h"
 #import "KGPerformanceVC.h"
+#import "KGArtisticPeopleVC.h"
 
 @interface KGCommunityVC ()
 
@@ -62,7 +63,7 @@
     }else if (index == 3 || index == 10){//:--演出--
         [self pushHideenTabbarViewController:[[KGPerformanceVC alloc]init] animted:YES];
     }else if (index == 4 || index == 11){//:--艺术人--
-        
+        [self pushHideenTabbarViewController:[[KGArtisticPeopleVC alloc]init] animted:YES];
     }else if (index == 5 || index == 12){//:--展览--
         
     }else if (index == 6 || index == 13){//:--交友--
