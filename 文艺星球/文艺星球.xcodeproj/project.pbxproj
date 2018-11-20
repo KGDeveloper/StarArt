@@ -60,6 +60,7 @@
 		5A33AB9721A3B79C0046E296 /* KGArtisticPeopleDetailTheEndCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A33AB9521A3B79C0046E296 /* KGArtisticPeopleDetailTheEndCell.xib */; };
 		5A33AB9D21A3D3890046E296 /* KGArtisticPeopleDetailHomeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A33AB9B21A3B8850046E296 /* KGArtisticPeopleDetailHomeHeaderView.xib */; };
 		5A33ABA021A3DC710046E296 /* KGArtisticPeopleDetailHomeHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A33AB9F21A3DC710046E296 /* KGArtisticPeopleDetailHomeHeaderView.m */; };
+		5A33ABA321A3E0360046E296 /* KGArtisticPeopleDetailWorksView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A33ABA221A3E0360046E296 /* KGArtisticPeopleDetailWorksView.m */; };
 		5A4408B6219A6FDC00393CAF /* KGInstitutionDramaDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4408B4219A6FDC00393CAF /* KGInstitutionDramaDetailVC.m */; };
 		5A4408B7219A6FDC00393CAF /* KGInstitutionDramaDetailVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A4408B5219A6FDC00393CAF /* KGInstitutionDramaDetailVC.xib */; };
 		5A4408BB219A82FB00393CAF /* KGDatingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4408BA219A82FB00393CAF /* KGDatingVC.m */; };
@@ -312,6 +313,8 @@
 		5A33AB9B21A3B8850046E296 /* KGArtisticPeopleDetailHomeHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGArtisticPeopleDetailHomeHeaderView.xib; sourceTree = "<group>"; };
 		5A33AB9E21A3DC710046E296 /* KGArtisticPeopleDetailHomeHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGArtisticPeopleDetailHomeHeaderView.h; sourceTree = "<group>"; };
 		5A33AB9F21A3DC710046E296 /* KGArtisticPeopleDetailHomeHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGArtisticPeopleDetailHomeHeaderView.m; sourceTree = "<group>"; };
+		5A33ABA121A3E0360046E296 /* KGArtisticPeopleDetailWorksView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGArtisticPeopleDetailWorksView.h; sourceTree = "<group>"; };
+		5A33ABA221A3E0360046E296 /* KGArtisticPeopleDetailWorksView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGArtisticPeopleDetailWorksView.m; sourceTree = "<group>"; };
 		5A4408B3219A6FDC00393CAF /* KGInstitutionDramaDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGInstitutionDramaDetailVC.h; sourceTree = "<group>"; };
 		5A4408B4219A6FDC00393CAF /* KGInstitutionDramaDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGInstitutionDramaDetailVC.m; sourceTree = "<group>"; };
 		5A4408B5219A6FDC00393CAF /* KGInstitutionDramaDetailVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGInstitutionDramaDetailVC.xib; sourceTree = "<group>"; };
@@ -1289,6 +1292,8 @@
 				5A33AB9E21A3DC710046E296 /* KGArtisticPeopleDetailHomeHeaderView.h */,
 				5A33AB9F21A3DC710046E296 /* KGArtisticPeopleDetailHomeHeaderView.m */,
 				5A33AB9B21A3B8850046E296 /* KGArtisticPeopleDetailHomeHeaderView.xib */,
+				5A33ABA121A3E0360046E296 /* KGArtisticPeopleDetailWorksView.h */,
+				5A33ABA221A3E0360046E296 /* KGArtisticPeopleDetailWorksView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1589,6 +1594,7 @@
 				5A2D84732192F87C00CBC727 /* KGRecommendPlaceAggremmentVC.m in Sources */,
 				5A4408D7219AE13400393CAF /* KGRecommendBooksVC.m in Sources */,
 				5A4408B6219A6FDC00393CAF /* KGInstitutionDramaDetailVC.m in Sources */,
+				5A33ABA321A3E0360046E296 /* KGArtisticPeopleDetailWorksView.m in Sources */,
 				5ACC9649219EC46F00E838A8 /* KGPerformanceCell.m in Sources */,
 				5A7814B521880FBD001A14D5 /* KGHomeTownListViewCell.m in Sources */,
 				5A543E60219984D40085B1E0 /* KGInstitutionHotDramaVC.m in Sources */,

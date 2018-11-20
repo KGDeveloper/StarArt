@@ -9,6 +9,7 @@
 #import "KGArtisticPeopleDetailVC.h"
 #import "KGArtisticPeopleDetailTheEndCell.h"
 #import "KGArtisticPeopleDetailHomeHeaderView.h"
+#import "KGArtisticPeopleDetailWorksView.h"
 
 @interface KGArtisticPeopleDetailVC ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 /** 首页 */
@@ -25,6 +26,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *moveLineCenterX;
 /** 首页列表 */
 @property (nonatomic,strong) UITableView *listView;
+/** 作品 */
+@property (nonatomic,strong) KGArtisticPeopleDetailWorksView *worksView;
 
 @end
 
@@ -56,6 +59,7 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.moveLineCenterX.constant = self.homeBtu.center.x - KGScreenWidth/8;
     }];
+    [self.view bringSubviewToFront:self.listView];
 }
 - (IBAction)spreadtrumAction:(UIButton *)sender {
     [sender setTitleColor:KGBlueColor forState:UIControlStateNormal];
@@ -74,6 +78,7 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.moveLineCenterX.constant = self.worksBtu.center.x - KGScreenWidth/8;
     }];
+    [self.view bringSubviewToFront:self.worksView];
 }
 - (IBAction)articleAction:(UIButton *)sender {
     [sender setTitleColor:KGBlueColor forState:UIControlStateNormal];
@@ -128,6 +133,14 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 900;
+}
+/** 作品 */
+- (KGArtisticPeopleDetailWorksView *)worksView{
+    if (!_worksView) {
+        _worksView = [[KGArtisticPeopleDetailWorksView alloc]initWithFrame:CGRectMake(0, KGRectNavAndStatusHight + 50, KGScreenWidth, KGScreenHeight - KGRectNavAndStatusHight - 50)];
+        [self.view addSubview:_worksView];
+    }
+    return _worksView;
 }
 
 /*
