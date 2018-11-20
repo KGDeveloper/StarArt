@@ -61,6 +61,9 @@
 		5A33AB9D21A3D3890046E296 /* KGArtisticPeopleDetailHomeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A33AB9B21A3B8850046E296 /* KGArtisticPeopleDetailHomeHeaderView.xib */; };
 		5A33ABA021A3DC710046E296 /* KGArtisticPeopleDetailHomeHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A33AB9F21A3DC710046E296 /* KGArtisticPeopleDetailHomeHeaderView.m */; };
 		5A33ABA321A3E0360046E296 /* KGArtisticPeopleDetailWorksView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A33ABA221A3E0360046E296 /* KGArtisticPeopleDetailWorksView.m */; };
+		5A33ABA621A4065C0046E296 /* KGArtisticPeopleDetailSperadtrumView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A33ABA521A4065C0046E296 /* KGArtisticPeopleDetailSperadtrumView.m */; };
+		5A33ABAA21A408EF0046E296 /* KGArtisticPeopleDetailSpeardtrumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A33ABA821A408EF0046E296 /* KGArtisticPeopleDetailSpeardtrumCell.m */; };
+		5A33ABAB21A408EF0046E296 /* KGArtisticPeopleDetailSpeardtrumCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A33ABA921A408EF0046E296 /* KGArtisticPeopleDetailSpeardtrumCell.xib */; };
 		5A4408B6219A6FDC00393CAF /* KGInstitutionDramaDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4408B4219A6FDC00393CAF /* KGInstitutionDramaDetailVC.m */; };
 		5A4408B7219A6FDC00393CAF /* KGInstitutionDramaDetailVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A4408B5219A6FDC00393CAF /* KGInstitutionDramaDetailVC.xib */; };
 		5A4408BB219A82FB00393CAF /* KGDatingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4408BA219A82FB00393CAF /* KGDatingVC.m */; };
@@ -315,6 +318,11 @@
 		5A33AB9F21A3DC710046E296 /* KGArtisticPeopleDetailHomeHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGArtisticPeopleDetailHomeHeaderView.m; sourceTree = "<group>"; };
 		5A33ABA121A3E0360046E296 /* KGArtisticPeopleDetailWorksView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGArtisticPeopleDetailWorksView.h; sourceTree = "<group>"; };
 		5A33ABA221A3E0360046E296 /* KGArtisticPeopleDetailWorksView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGArtisticPeopleDetailWorksView.m; sourceTree = "<group>"; };
+		5A33ABA421A4065C0046E296 /* KGArtisticPeopleDetailSperadtrumView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGArtisticPeopleDetailSperadtrumView.h; sourceTree = "<group>"; };
+		5A33ABA521A4065C0046E296 /* KGArtisticPeopleDetailSperadtrumView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGArtisticPeopleDetailSperadtrumView.m; sourceTree = "<group>"; };
+		5A33ABA721A408EF0046E296 /* KGArtisticPeopleDetailSpeardtrumCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGArtisticPeopleDetailSpeardtrumCell.h; sourceTree = "<group>"; };
+		5A33ABA821A408EF0046E296 /* KGArtisticPeopleDetailSpeardtrumCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGArtisticPeopleDetailSpeardtrumCell.m; sourceTree = "<group>"; };
+		5A33ABA921A408EF0046E296 /* KGArtisticPeopleDetailSpeardtrumCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGArtisticPeopleDetailSpeardtrumCell.xib; sourceTree = "<group>"; };
 		5A4408B3219A6FDC00393CAF /* KGInstitutionDramaDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGInstitutionDramaDetailVC.h; sourceTree = "<group>"; };
 		5A4408B4219A6FDC00393CAF /* KGInstitutionDramaDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGInstitutionDramaDetailVC.m; sourceTree = "<group>"; };
 		5A4408B5219A6FDC00393CAF /* KGInstitutionDramaDetailVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGInstitutionDramaDetailVC.xib; sourceTree = "<group>"; };
@@ -1294,6 +1302,11 @@
 				5A33AB9B21A3B8850046E296 /* KGArtisticPeopleDetailHomeHeaderView.xib */,
 				5A33ABA121A3E0360046E296 /* KGArtisticPeopleDetailWorksView.h */,
 				5A33ABA221A3E0360046E296 /* KGArtisticPeopleDetailWorksView.m */,
+				5A33ABA421A4065C0046E296 /* KGArtisticPeopleDetailSperadtrumView.h */,
+				5A33ABA521A4065C0046E296 /* KGArtisticPeopleDetailSperadtrumView.m */,
+				5A33ABA721A408EF0046E296 /* KGArtisticPeopleDetailSpeardtrumCell.h */,
+				5A33ABA821A408EF0046E296 /* KGArtisticPeopleDetailSpeardtrumCell.m */,
+				5A33ABA921A408EF0046E296 /* KGArtisticPeopleDetailSpeardtrumCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1429,6 +1442,7 @@
 				5A543E65219986440085B1E0 /* KGInstitutionHotDramaCell.xib in Resources */,
 				5ACC964A219EC46F00E838A8 /* KGPerformanceCell.xib in Resources */,
 				5A6E86492182EBD200937450 /* KGWriteTalentInfoVC.xib in Resources */,
+				5A33ABAB21A408EF0046E296 /* KGArtisticPeopleDetailSpeardtrumCell.xib in Resources */,
 				5A2D84452192B5AB00CBC727 /* KGTheNameOfThePlaceVC.xib in Resources */,
 				5AED6C0C217DC84A000657C9 /* SourceHanSansCN-Regular.otf in Resources */,
 				5A4A53B4218A9B0700ABC7C9 /* KGSquare.xcassets in Resources */,
@@ -1576,6 +1590,7 @@
 				5A0D3242219C279B00A49AE7 /* KGAllBooksReviewVC.m in Sources */,
 				5A2D84542192D5C800CBC727 /* KGTheDetailNameOfThePlaceVC.m in Sources */,
 				5A5631EC2180487A0007127C /* KGUserInfo.m in Sources */,
+				5A33ABAA21A408EF0046E296 /* KGArtisticPeopleDetailSpeardtrumCell.m in Sources */,
 				5A4B19CC21942B4F0054E732 /* KGInstitutionVC.m in Sources */,
 				5A2D8440219292A800CBC727 /* KGSeeFriendsVC.m in Sources */,
 				5A33ABA021A3DC710046E296 /* KGArtisticPeopleDetailHomeHeaderView.m in Sources */,
@@ -1646,6 +1661,7 @@
 				5A2620E9219028EB0047A319 /* KGSquareDetailCell.m in Sources */,
 				5A5A728C218C2EF00081F173 /* KGPreviewVerticalView.m in Sources */,
 				5A2620DE218FF2AF0047A319 /* KGSquareMessageCell.m in Sources */,
+				5A33ABA621A4065C0046E296 /* KGArtisticPeopleDetailSperadtrumView.m in Sources */,
 				5A6E86542182F81800937450 /* KGEditSelfVC.m in Sources */,
 				5A25210F21914A0C006D642B /* KGFoundCell.m in Sources */,
 				5A6E86572183128500937450 /* KGWriteSignatureVC.m in Sources */,

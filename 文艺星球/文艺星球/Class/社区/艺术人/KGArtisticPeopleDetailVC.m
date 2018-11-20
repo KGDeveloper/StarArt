@@ -10,6 +10,7 @@
 #import "KGArtisticPeopleDetailTheEndCell.h"
 #import "KGArtisticPeopleDetailHomeHeaderView.h"
 #import "KGArtisticPeopleDetailWorksView.h"
+#import "KGArtisticPeopleDetailSperadtrumView.h"
 
 @interface KGArtisticPeopleDetailVC ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 /** 首页 */
@@ -28,6 +29,8 @@
 @property (nonatomic,strong) UITableView *listView;
 /** 作品 */
 @property (nonatomic,strong) KGArtisticPeopleDetailWorksView *worksView;
+/** 展讯 */
+@property (nonatomic,strong) KGArtisticPeopleDetailSperadtrumView *speradtrumView;
 
 @end
 
@@ -69,6 +72,7 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.moveLineCenterX.constant = self.spreadtrumBtu.center.x - KGScreenWidth/8;
     }];
+    [self.view bringSubviewToFront:self.speradtrumView];
 }
 - (IBAction)worksAction:(UIButton *)sender {
     [sender setTitleColor:KGBlueColor forState:UIControlStateNormal];
@@ -141,6 +145,14 @@
         [self.view addSubview:_worksView];
     }
     return _worksView;
+}
+/** 展讯 */
+- (KGArtisticPeopleDetailSperadtrumView *)speradtrumView{
+    if (!_speradtrumView) {
+        _speradtrumView = [[KGArtisticPeopleDetailSperadtrumView alloc]initWithFrame:CGRectMake(0, KGRectNavAndStatusHight + 50, KGScreenWidth, KGScreenHeight - KGRectNavAndStatusHight - 50)];
+        [self.view addSubview:_speradtrumView];
+    }
+    return _speradtrumView;
 }
 
 /*
