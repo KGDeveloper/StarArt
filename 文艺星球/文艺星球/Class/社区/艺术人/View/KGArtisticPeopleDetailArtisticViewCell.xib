@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceHanSansCN-Bold.otf">
+            <string>SourceHanSansCN-Bold</string>
+        </array>
+        <array key="SourceHanSansCN-Regular.otf">
+            <string>SourceHanSansCN-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="440" id="KGk-i7-Jjw" customClass="KGArtisticPeopleDetailArtisticViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="496" height="440"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="496" height="439.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nWv-Ky-Zxh">
+                        <rect key="frame" x="15" y="20" width="466" height="256.5"/>
+                        <color key="backgroundColor" red="0.40000000000000002" green="0.59999999999999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="nWv-Ky-Zxh" secondAttribute="height" multiplier="69:38" id="WvF-ZD-udW"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="雅昌专访" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="znC-1G-O0y">
+                        <rect key="frame" x="15" y="291.5" width="466" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="mS9-xw-OWB"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SourceHanSansCN-Bold" family="Source Han Sans CN" pointSize="15"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="阿打算南大街阿克苏你打卡阿萨德按时打卡那十多年卡接收到你看氨基丁酸你看卡十多年卡十多年看是的能看到卡十多年卡死的那斯柯达卡十多年看集散地看到萨科技等你卡十多年萨克的那斯柯达你看撒旦卡十多年卡萨见到你卡十多年上看到啥科达洁能撒看到你看撒旦萨克但萨" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kkC-ps-ruj">
+                        <rect key="frame" x="15" y="316.5" width="466" height="55"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="55" id="hc2-iM-hmo"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SourceHanSansCN-Regular" family="Source Han Sans CN" pointSize="15"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2zf-1E-rac">
+                        <rect key="frame" x="0.0" y="429.5" width="496" height="10"/>
+                        <color key="backgroundColor" red="0.92941176469999998" green="0.92941176469999998" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="10" id="iis-4g-EpK"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="2zf-1E-rac" secondAttribute="trailing" id="9tB-Hy-1bJ"/>
+                    <constraint firstAttribute="trailing" secondItem="znC-1G-O0y" secondAttribute="trailing" constant="15" id="ARF-LM-joe"/>
+                    <constraint firstAttribute="trailing" secondItem="nWv-Ky-Zxh" secondAttribute="trailing" constant="15" id="EIe-Ps-C6w"/>
+                    <constraint firstItem="2zf-1E-rac" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="F7G-2n-mVW"/>
+                    <constraint firstAttribute="bottom" secondItem="2zf-1E-rac" secondAttribute="bottom" id="JrS-rD-ApE"/>
+                    <constraint firstItem="kkC-ps-ruj" firstAttribute="top" secondItem="znC-1G-O0y" secondAttribute="bottom" constant="10" id="L4r-i7-KgB"/>
+                    <constraint firstItem="kkC-ps-ruj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="ScA-BN-8b7"/>
+                    <constraint firstItem="nWv-Ky-Zxh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="m91-Ga-6GN"/>
+                    <constraint firstItem="znC-1G-O0y" firstAttribute="top" secondItem="nWv-Ky-Zxh" secondAttribute="bottom" constant="15" id="mgw-pY-1a9"/>
+                    <constraint firstItem="nWv-Ky-Zxh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="peb-d7-0SS"/>
+                    <constraint firstItem="znC-1G-O0y" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="qyz-Ay-E2x"/>
+                    <constraint firstAttribute="trailing" secondItem="kkC-ps-ruj" secondAttribute="trailing" constant="15" id="zrw-eh-QTM"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="customImage" destination="nWv-Ky-Zxh" id="j2c-vg-sdh"/>
+                <outlet property="detailLab" destination="kkC-ps-ruj" id="XBF-MC-Jur"/>
+                <outlet property="nameLab" destination="znC-1G-O0y" id="7p5-nc-D7M"/>
+            </connections>
+            <point key="canvasLocation" x="278.39999999999998" y="332.83358320839585"/>
+        </tableViewCell>
+    </objects>
+</document>

@@ -11,6 +11,7 @@
 #import "KGArtisticPeopleDetailHomeHeaderView.h"
 #import "KGArtisticPeopleDetailWorksView.h"
 #import "KGArtisticPeopleDetailSperadtrumView.h"
+#import "KGArtisticPeopleDetailArtisticView.h"
 
 @interface KGArtisticPeopleDetailVC ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 /** 首页 */
@@ -31,6 +32,8 @@
 @property (nonatomic,strong) KGArtisticPeopleDetailWorksView *worksView;
 /** 展讯 */
 @property (nonatomic,strong) KGArtisticPeopleDetailSperadtrumView *speradtrumView;
+/** 文章 */
+@property (nonatomic,strong) KGArtisticPeopleDetailArtisticView *artisticView;
 
 @end
 
@@ -92,6 +95,7 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.moveLineCenterX.constant = self.articleBtu.center.x - KGScreenWidth/8;
     }];
+    [self.view bringSubviewToFront:self.artisticView];
 }
 /** 列表 */
 - (void)setUpListView{
@@ -153,6 +157,14 @@
         [self.view addSubview:_speradtrumView];
     }
     return _speradtrumView;
+}
+/** 文章 */
+- (KGArtisticPeopleDetailArtisticView *)artisticView{
+    if (!_artisticView) {
+        _artisticView = [[KGArtisticPeopleDetailArtisticView alloc]initWithFrame:CGRectMake(0, KGRectNavAndStatusHight + 50, KGScreenWidth, KGScreenHeight - KGRectNavAndStatusHight - 50)];
+        [self.view addSubview:_artisticView];
+    }
+    return _artisticView;
 }
 
 /*
