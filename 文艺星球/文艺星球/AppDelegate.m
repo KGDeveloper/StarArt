@@ -24,6 +24,7 @@
     self.window.rootViewController = [[KGTabbarVC alloc]init];
     [self.window makeKeyAndVisible];
     [self registGeodo];
+    [self registRongIM];
     return YES;
 }
 
@@ -31,6 +32,19 @@
 - (void)registGeodo{
     [AMapServices sharedServices].apiKey = @"5a8e15e6edaf329a1716b6ab48a5f266";
     [AMapServices sharedServices].enableHTTPS = YES;
+}
+/** 注册融云 */
+- (void)registRongIM{
+    [[RCIM sharedRCIM] initWithAppKey:@"qd46yzrfqimtf"];
+    if ([[KGUserInfo shareInstance] rongIMToken]) {
+        [[RCIM sharedRCIM] connectWithToken:[KGUserInfo shareInstance].rongIMToken success:^(NSString *userId) {
+            
+        } error:^(RCConnectErrorCode status) {
+            
+        } tokenIncorrect:^{
+            
+        }];
+    }
 }
 
 

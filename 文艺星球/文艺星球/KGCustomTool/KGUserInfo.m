@@ -52,5 +52,9 @@ static KGUserInfo *userInfo;
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     return [infoDictionary objectForKey:@"CFBundleShortVersionString"];
 }
+/** 融云rtoken */
+- (NSString *)rongIMToken{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@""];
+}
 
 @end

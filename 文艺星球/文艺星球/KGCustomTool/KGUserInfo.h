@@ -29,6 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)userId;
 /** 获取版本号 */
 - (NSString *)app_Version;
+/** 融云token */
+- (NSString *)rongIMToken;
 
 @end
 
