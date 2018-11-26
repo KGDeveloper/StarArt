@@ -31,6 +31,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)app_Version;
 /** 融云token */
 - (NSString *)rongIMToken;
+/** 个人封面 */
+- (NSString *)userCoverImage;
+/** token */
+- (NSString *)userToken;
+/** 签名 */
+- (NSString *)userPersonalitySignature;
+/** 持久化个人信息 */
++ (void)saveUserInfoWithDictionary:(NSDictionary *)dic;
 
 @end
 

@@ -59,6 +59,7 @@
 - (void)setHeaderView{
     /** 设置头像 */
     self.headerImage = [[UIImageView alloc]initWithFrame:CGRectMake(36, 85, 79, 79)];
+    [self.headerImage sd_setImageWithURL:[NSURL URLWithString:[KGUserInfo shareInstance].userPortrait]];
     self.headerImage.layer.cornerRadius = 37.5;
     self.headerImage.layer.masksToBounds = YES;
     self.headerImage.layer.borderColor = KGWhiteColor.CGColor;
@@ -67,23 +68,31 @@
     [self.view addSubview:self.headerImage];
     /** 设置昵称 */
     self.nikeName = [[UILabel alloc]initWithFrame:CGRectMake(36, 174, 100, 15)];
-    self.nikeName.text = @"轩哥哥";
+    self.nikeName.text = [KGUserInfo shareInstance].userName;
     self.nikeName.textColor = KGBlackColor;
     self.nikeName.font = KGFontSHRegular(15);
     [self.view addSubview:self.nikeName];
     /** 设置签名 */
     self.signatureLab = [[UILabel alloc]initWithFrame:CGRectMake(36, 194, KGScreenWidth - 96, 11)];
     self.signatureLab.textColor = KGBlackColor;
-    self.signatureLab.text = @"不曾在你巅峰的时候慕名而来，只在你低谷的时候陪伴左右!";
+    self.signatureLab.text = [KGUserInfo shareInstance].userPersonalitySignature;
     self.signatureLab.font = KGFontSHRegular(11);
     [self.view addSubview:self.signatureLab];
     /** 设置年龄 */
     self.ageAndSex = [UIButton buttonWithType:UIButtonTypeCustom];
     self.ageAndSex.frame = CGRectMake([self calculateWidthWithString:self.nikeName.text font:KGFontSHRegular(15)] + 46, 174, 35, 15);
-    [self.ageAndSex setTitle:@"24" forState:UIControlStateNormal];
+    [self.ageAndSex setTitle:[KGUserInfo shareInstance].userAge forState:UIControlStateNormal];
     self.ageAndSex.titleLabel.font = KGFontSHRegular(11);
-    [self.ageAndSex setImage:[UIImage imageNamed:@"xingbienv"] forState:UIControlStateNormal];
-    self.ageAndSex.backgroundColor = KGWomanColor;
+    if ([[KGUserInfo shareInstance].userSex integerValue] == 0) {
+        [self.ageAndSex setImage:[UIImage imageNamed:@"xingbienv"] forState:UIControlStateNormal];
+        self.ageAndSex.backgroundColor = KGWomanColor;
+    }else if ([[KGUserInfo shareInstance].userSex integerValue] == 1){
+        [self.ageAndSex setImage:[UIImage imageNamed:@"xingbienan"] forState:UIControlStateNormal];
+        self.ageAndSex.backgroundColor = KGManColor;
+    }else{
+        [self.ageAndSex setImage:[UIImage imageNamed:@"xingbiebaomi"] forState:UIControlStateNormal];
+        self.ageAndSex.backgroundColor = KGManColor;
+    }
     self.ageAndSex.userInteractionEnabled = NO;
     self.ageAndSex.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
     self.ageAndSex.layer.cornerRadius = 2;

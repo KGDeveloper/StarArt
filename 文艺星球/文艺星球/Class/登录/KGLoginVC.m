@@ -10,6 +10,7 @@
 #import "KGWYXQUserAgreementVC.h"
 #import "KGWYXQPrivacyAgreementVC.h"
 #import "KGRegisterVC.h"
+#import "KGTabbarVC.h"
 
 @interface KGLoginVC ()<UITextFieldDelegate>{
     NSTimer *_timer;
@@ -144,6 +145,19 @@
         _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeSMSBtuTitle) userInfo:nil repeats:YES];
         [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
     }
+    [self postRequestSMS];
+}
+/** 请求验证码 */
+- (void)postRequestSMS{
+    [KGRequest postWithUrl:LoginSMS parameters:@{@"telephone":self.phoneTF.text} succ:^(id  _Nonnull result) {
+        if ([result[@"status"] integerValue] == 200) {
+            [[KGHUD showMessage:@"发送成功，请注意查收"] hideAnimated:YES afterDelay:1];
+        }else{
+            [[KGHUD showMessage:@"发送失败，请重试"] hideAnimated:YES afterDelay:1];
+        }
+    } fail:^(NSError * _Nonnull error) {
+        [[KGHUD showMessage:@"发送失败，请重试"] hideAnimated:YES afterDelay:1];
+    }];
 }
 /** 开始发送验证码倒计时 */
 - (void)changeSMSBtuTitle{
@@ -159,8 +173,25 @@
 }
 /** 登录按钮点击事件 */
 - (void)loginAction:(UIButton *)sender{
-    KGRegisterVC *registerVC = [[KGRegisterVC alloc]initWithNibName:@"KGRegisterVC" bundle:nil];
-    [self presentViewController:registerVC animated:YES completion:nil];
+    [KGRequest postWithUrl:Login parameters:@{@"telephone":self.phoneTF.text,@"msgAuthCode":self.passTF.text} succ:^(id  _Nonnull result) {
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            [[NSUserDefaults standardUserDefaults] setObject:dic[@"token"] forKey:@"token"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [KGUserInfo saveUserInfoWithDictionary:dic[@"user"]];
+            if ([@"ApiModelProperty" integerValue] == 0) {
+                KGRegisterVC *registerVC = [[KGRegisterVC alloc]initWithNibName:@"KGRegisterVC" bundle:nil];
+                [self presentViewController:registerVC animated:YES completion:nil];
+            }else{
+                UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                window.rootViewController = [[KGTabbarVC alloc]init];
+            }
+        }else{
+            [[KGHUD showMessage:@"请求失败，请重试！"] hideAnimated:YES afterDelay:1];
+        }
+    } fail:^(NSError * _Nonnull error) {
+        [[KGHUD showMessage:@"请求失败，请重试！"] hideAnimated:YES afterDelay:1];
+    }];
 }
 /** 已阅读按钮点击事件 */
 - (void)readIngAction:(UIButton *)sender{

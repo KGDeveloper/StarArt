@@ -26,6 +26,10 @@
 @property (weak, nonatomic) IBOutlet UIView *backView;
 /** 选择生日view */
 @property (nonatomic,strong) KGBirthdayView *birthdayView;
+/** 生日 */
+@property (nonatomic,copy) NSString *userBrithday;
+/** 性别 */
+@property (nonatomic,copy) NSString *userSex;
 
 @end
 
@@ -63,6 +67,7 @@
     [self.womanBtu setTitleColor:KGGrayColor forState:UIControlStateNormal];
     [self.knowBtu setImage:[UIImage imageNamed:@"yuan"] forState:UIControlStateNormal];
     [self.knowBtu setTitleColor:KGGrayColor forState:UIControlStateNormal];
+    self.userSex = @"1";
 }
 /** 选择女 */
 - (IBAction)chooseWoman:(UIButton *)sender {
@@ -72,6 +77,7 @@
     [self.manBtu setTitleColor:KGGrayColor forState:UIControlStateNormal];
     [self.knowBtu setImage:[UIImage imageNamed:@"yuan"] forState:UIControlStateNormal];
     [self.knowBtu setTitleColor:KGGrayColor forState:UIControlStateNormal];
+    self.userSex = @"0";
 }
 /** 选择保密 */
 - (IBAction)chooseKnow:(UIButton *)sender {
@@ -81,11 +87,35 @@
     [self.womanBtu setTitleColor:KGGrayColor forState:UIControlStateNormal];
     [self.manBtu setImage:[UIImage imageNamed:@"yuan"] forState:UIControlStateNormal];
     [self.manBtu setTitleColor:KGGrayColor forState:UIControlStateNormal];
+    self.userSex = @"2";
 }
 /** 登录 */
 - (IBAction)loginAction:(UIButton *)sender {
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    window.rootViewController = [[KGTabbarVC alloc]init];
+    if (self.userSex != nil) {
+        if (self.userBrithday != nil) {
+            if (self.nikName.text.length > 1) {
+                [KGRequest postWithUrl:Register parameters:@{@"username":self.nikName.text,@"sex":self.userSex,@"birthday":self.userBrithday} succ:^(id  _Nonnull result) {
+                    if ([result[@"status"] integerValue] == 200) {
+                        [[NSUserDefaults standardUserDefaults] setObject:self.userBrithday forKey:@"userBirthday"];
+                        [[NSUserDefaults standardUserDefaults] setObject:self.nikName.text forKey:@"username"];
+                        [[NSUserDefaults standardUserDefaults] setObject:self.userSex forKey:@"userSex"];
+                        UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                        window.rootViewController = [[KGTabbarVC alloc]init];
+                    }else{
+                        [[KGHUD showMessage:@"请求失败，请重试"] hideAnimated:YES afterDelay:1];
+                    }
+                } fail:^(NSError * _Nonnull error) {
+                    [[KGHUD showMessage:@"请求失败，请重试"] hideAnimated:YES afterDelay:1];
+                }];
+            }else{
+                [[KGHUD showMessage:@"请输入昵称"] hideAnimated:YES afterDelay:1];
+            }
+        }else{
+            [[KGHUD showMessage:@"请选择生日"] hideAnimated:YES afterDelay:1];
+        }
+    }else{
+        [[KGHUD showMessage:@"请选择性别"] hideAnimated:YES afterDelay:1];
+    }
 }
 /** 选择生日view */
 - (KGBirthdayView *)birthdayView{
@@ -93,6 +123,7 @@
         _birthdayView = [[KGBirthdayView alloc]initWithFrame:CGRectMake(0, KGScreenHeight - 200, kScreenWidth, 200)];
         __weak typeof(self) weakSelf = self;
         _birthdayView.chooseBirthdayString = ^(NSString * _Nonnull birthday, NSString * _Nonnull constellation) {
+            weakSelf.userBrithday = [[[birthday stringByReplacingOccurrencesOfString:@"年" withString:@"-"] stringByReplacingOccurrencesOfString:@"月" withString:@"-"] stringByReplacingOccurrencesOfString:@"日" withString:@""];
             [weakSelf.birthdayLab setTitle:[NSString stringWithFormat:@"%@ %@",birthday,constellation] forState:UIControlStateNormal];
             [weakSelf.birthdayLab setTitleColor:KGBlueColor forState:UIControlStateNormal];
         };

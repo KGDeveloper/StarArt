@@ -21,31 +21,31 @@ static KGUserInfo *userInfo;
 }
 /** 用户名 */
 - (NSString *)userName{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@""];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"username"];
 }
 /** 手机号 */
 - (NSString *)userPhone{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@""];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"telephone"];
 }
 /** 签名 */
 - (NSString *)userSignature{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@""];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"personalitySignature"];
 }
 /** 头像 */
 - (NSString *)userPortrait{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@""];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"portraitUri"];
 }
 /** 年龄 */
 - (NSString *)userAge{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@""];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"userAge"];
 }
 /** 性别 */
 - (NSString *)userSex{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@""];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"userSex"];
 }
 /** 用户id */
 - (NSString *)userId{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@""];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"userId"];
 }
 /** 获取版本号 */
 - (NSString *)app_Version{
@@ -54,7 +54,41 @@ static KGUserInfo *userInfo;
 }
 /** 融云rtoken */
 - (NSString *)rongIMToken{
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@""];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"RongToken"];
+}
+/** 个人封面 */
+- (NSString *)userCoverImage{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"userCoverImage"];
+}
+/** token */
+- (NSString *)userToken{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
+}
+/** 签名 */
+- (NSString *)userPersonalitySignature{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"personalitySignature"];
+}
+/** 持久化个人信息 */
++ (void)saveUserInfoWithDictionary:(NSDictionary *)dic{
+    [[NSUserDefaults standardUserDefaults] setObject:dic[@"accessToken"] forKey:@"RongToken"];
+    [[NSUserDefaults standardUserDefaults] setObject:dic[@"coverImage"] forKey:@"userCoverImage"];
+    [[NSUserDefaults standardUserDefaults] setObject:dic[@"id"] forKey:@"userId"];
+    [[NSUserDefaults standardUserDefaults] setObject:dic[@"portraitUri"] forKey:@"portraitUri"];
+    [[NSUserDefaults standardUserDefaults] setObject:dic[@"telephone"] forKey:@"telephone"];
+    [[NSUserDefaults standardUserDefaults] setObject:dic[@"username"] forKey:@"username"];
+    if (![dic[@"birthday"] isKindOfClass:[NSNull class]]) {
+        [[NSUserDefaults standardUserDefaults] setObject:dic[@"birthday"] forKey:@"userBirthday"];
+    }
+    if (![dic[@"personalitySignature"] isKindOfClass:[NSNull class]]) {
+        [[NSUserDefaults standardUserDefaults] setObject:dic[@"personalitySignature"] forKey:@"personalitySignature"];
+    }
+    if (![dic[@"sex"] isKindOfClass:[NSNull class]]) {
+        [[NSUserDefaults standardUserDefaults] setObject:dic[@"sex"] forKey:@"userSex"];
+    }
+    if (![dic[@"age"] isKindOfClass:[NSNull class]]) {
+        [[NSUserDefaults standardUserDefaults] setObject:dic[@"age"] forKey:@"userAge"];
+    }
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

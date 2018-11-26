@@ -21,7 +21,11 @@
     
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor blackColor];
-    self.window.rootViewController = [[KGTabbarVC alloc]init];
+    if ([KGUserInfo shareInstance].userToken) {
+        self.window.rootViewController = [[KGTabbarVC alloc]init];
+    }else{
+        self.window.rootViewController = [[KGLoginVC alloc]init];
+    }
     [self.window makeKeyAndVisible];
     [self registGeodo];
     [self registRongIM];
