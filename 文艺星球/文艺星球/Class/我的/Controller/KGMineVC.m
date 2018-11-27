@@ -59,12 +59,15 @@
 - (void)setHeaderView{
     /** 设置头像 */
     self.headerImage = [[UIImageView alloc]initWithFrame:CGRectMake(36, 85, 79, 79)];
-    [self.headerImage sd_setImageWithURL:[NSURL URLWithString:[KGUserInfo shareInstance].userPortrait]];
+    if ([KGUserInfo shareInstance].userPortrait) {
+        [self.headerImage sd_setImageWithURL:[NSURL URLWithString:[KGUserInfo shareInstance].userPortrait]];
+    }else{
+        self.headerImage.backgroundColor = KGLineColor;
+    }
     self.headerImage.layer.cornerRadius = 37.5;
     self.headerImage.layer.masksToBounds = YES;
     self.headerImage.layer.borderColor = KGWhiteColor.CGColor;
     self.headerImage.layer.borderWidth = 1;
-    self.headerImage.backgroundColor = KGGrayColor;
     [self.view addSubview:self.headerImage];
     /** 设置昵称 */
     self.nikeName = [[UILabel alloc]initWithFrame:CGRectMake(36, 174, 100, 15)];

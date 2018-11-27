@@ -44,8 +44,18 @@
     /** 导航栏标题 */
     self.title = @"我的标签";
     self.view.backgroundColor = KGWhiteColor;
-    
     self.titleArr = [NSMutableArray array];
+    if (self.oldArr.count > 0) {
+        for (int i = 0; i < self.oldArr.count; i++) {
+            NSDictionary *dic = self.oldArr[i];
+            if (dic[@"name"]) {
+                [self.titleArr addObject:@{@"labelName":dic[@"name"],@"id":dic[@"id"]}];
+            }else{
+                [self.titleArr addObject:@{@"labelName":dic[@"labelName"],@"id":dic[@"id"]}];
+            }
+        }
+    }
+    [self requestLabels];
     [self setUI];
     
 }
@@ -64,6 +74,18 @@
         [[KGHUD showMessage:@"请选择标签"] hideAnimated:YES afterDelay:1];
     }
 }
+/** 请求标签 */
+- (void)requestLabels{
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:UserLabelsSame parameters:@{@"uid":[KGUserInfo shareInstance].userId} succ:^(id  _Nonnull result) {
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            [weakSelf setAddViewSubViews:dic[@"list"] toView:self.addView];
+        }
+    } fail:^(NSError * _Nonnull error) {
+        
+    }];
+}
 /** 搭建ui */
 - (void)setUI{
     /** 个性标签 */
@@ -74,7 +96,7 @@
     [self.view addSubview:titleLab];
     /** 数量统计 */
     self.countLab = [[UILabel alloc]initWithFrame:CGRectMake(KGScreenWidth - 60, KGRectNavAndStatusHight, 45, 50)];
-    self.countLab.text = @"0/15";
+    self.countLab.text = [NSString stringWithFormat:@"%lu/15",(unsigned long)self.titleArr.count];
     self.countLab.textColor = KGGrayColor;
     self.countLab.font = KGFontSHRegular(14);
     self.countLab.textAlignment = NSTextAlignmentRight;
@@ -107,7 +129,7 @@
     /** 加载标签 */
     self.addView = [[UIView alloc]initWithFrame:CGRectMake(0, KGRectNavAndStatusHight + 50, KGScreenWidth, KGScreenHeight - KGRectNavAndStatusHight - 150)];
     [self.view addSubview:self.addView];
-    [self setAddViewSubViews:@[@"是",@"关",@"键",@"帧",@"动",@"画",@"我",@"们",@"可",@"以",@"指",@"定",@"其",@"动",@"画",@"执",@"行",@"过",@"程",@"中",@"每"] toView:self.addView];
+    [self changeChooseBtuTitile];
 }
 /** 已选择点击事件 */
 - (void)chooseAction{
@@ -136,12 +158,13 @@
     CGFloat width = 15;
     CGFloat height = 20;
     for (int i = 0; i < arr.count; i++) {
+        NSDictionary *dic = arr[i];
         UIButton *titleBtu = [UIButton buttonWithType:UIButtonTypeCustom];
         titleBtu.frame = CGRectMake(width,height, 100, 30);
-        [titleBtu setTitle:arr[i] forState:UIControlStateNormal];
+        [titleBtu setTitle:dic[@"labelName"] forState:UIControlStateNormal];
         [titleBtu setTitleColor:KGGrayColor forState:UIControlStateNormal];
         titleBtu.titleLabel.font = KGFontSHRegular(13);
-        titleBtu.tag = i;
+        titleBtu.tag = [dic[@"id"] integerValue];
         titleBtu.backgroundColor = KGWhiteColor;
         titleBtu.layer.cornerRadius = 15;
         titleBtu.layer.masksToBounds = YES;
@@ -164,12 +187,12 @@
             [sender setTitleColor:KGWhiteColor forState:UIControlStateNormal];
             sender.layer.borderColor = KGBlueColor.CGColor;
             sender.backgroundColor = KGBlueColor;
-            [self.titleArr addObject:@{@"title":sender.currentTitle,@"id":[NSString stringWithFormat:@"%ld",(long)sender.tag]}];
+            [self.titleArr addObject:@{@"labelName":sender.currentTitle,@"id":[NSString stringWithFormat:@"%ld",(long)sender.tag]}];
         }else{
             [sender setTitleColor:KGGrayColor forState:UIControlStateNormal];
             sender.layer.borderColor = KGGrayColor.CGColor;
             sender.backgroundColor = KGWhiteColor;
-            [self.titleArr removeObject:@{@"title":sender.currentTitle,@"id":[NSString stringWithFormat:@"%ld",(long)sender.tag]}];
+            [self.titleArr removeObject:@{@"labelName":sender.currentTitle,@"id":[NSString stringWithFormat:@"%ld",(long)sender.tag]}];
         }
         self.countLab.text = [NSString stringWithFormat:@"%lu/15",(unsigned long)self.titleArr.count];
     }else{
@@ -177,7 +200,7 @@
             [sender setTitleColor:KGGrayColor forState:UIControlStateNormal];
             sender.layer.borderColor = KGGrayColor.CGColor;
             sender.backgroundColor = KGWhiteColor;
-            [self.titleArr removeObject:@{@"title":sender.currentTitle,@"id":[NSString stringWithFormat:@"%ld",(long)sender.tag]}];
+            [self.titleArr removeObject:@{@"labelName":sender.currentTitle,@"id":[NSString stringWithFormat:@"%ld",(long)sender.tag]}];
         }
         self.countLab.text = [NSString stringWithFormat:@"%lu/15",(unsigned long)self.titleArr.count];
     }
@@ -186,9 +209,11 @@
 /** 改变选择按钮的标题 */
 - (void)changeChooseBtuTitile{
     if (self.titleArr.count > 0) {
-        NSString *title = self.titleArr[0][@"title"];
+        NSDictionary *firstDic = self.titleArr[0];
+        NSString *title = firstDic[@"labelName"];
         for (int i = 1; i < self.titleArr.count; i++) {
-            title = [NSString stringWithFormat:@"%@/%@",title,self.titleArr[i][@"title"]];
+            NSDictionary *dic = self.titleArr[i];
+            title = [NSString stringWithFormat:@"%@/%@",title,dic[@"labelName"]];
         }
         [self.chooseBtu setTitle:title forState:UIControlStateNormal];
     }else{
@@ -229,7 +254,7 @@
         UIButton *titleBtu = [UIButton buttonWithType:UIButtonTypeCustom];
         titleBtu.frame = CGRectMake(width,height, 100, 30);
         NSDictionary *dic = arr[i];
-        [titleBtu setTitle:dic[@"title"] forState:UIControlStateNormal];
+        [titleBtu setTitle:dic[@"labelName"] forState:UIControlStateNormal];
         [titleBtu setTitleColor:KGWhiteColor forState:UIControlStateNormal];
         titleBtu.titleLabel.font = KGFontSHRegular(13);
         titleBtu.tag = [dic[@"id"] integerValue];
@@ -250,7 +275,7 @@
 }
 /** 删除已选择 */
 - (void)deleteChoose:(UIButton *)sender{
-    [self.titleArr removeObject:@{@"title":sender.currentTitle,@"id":[NSString stringWithFormat:@"%ld",(long)sender.tag]}];
+    [self.titleArr removeObject:@{@"labelName":sender.currentTitle,@"id":[NSString stringWithFormat:@"%ld",(long)sender.tag]}];
     [self.chooseBack removeAllSubviews];
     [self setChooseViewSubViews:self.titleArr toView:self.chooseBack];
     [self.view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {

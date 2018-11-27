@@ -25,8 +25,11 @@ PODS:
   - AMapSearch (6.5.0):
     - AMapFoundation (~> 1.4)
   - DZNEmptyDataSet (1.8.1)
+  - HappyDNS (0.3.14)
   - IQKeyboardManager (6.2.0)
   - MJRefresh (3.1.15.7)
+  - Qiniu (7.2.5):
+    - HappyDNS (~> 0.3)
   - RongCloudIM/IMKit (2.9.6):
     - RongCloudIM/IMLib
   - RongCloudIM/IMLib (2.9.6)
@@ -45,8 +48,10 @@ DEPENDENCIES:
   - AMapNavi
   - AMapSearch
   - DZNEmptyDataSet
+  - HappyDNS
   - IQKeyboardManager
   - MJRefresh
+  - Qiniu
   - RongCloudIM/IMKit
   - RongCloudIM/IMLib
   - SDAutoLayout
@@ -63,8 +68,10 @@ SPEC REPOS:
     - AMapNavi
     - AMapSearch
     - DZNEmptyDataSet
+    - HappyDNS
     - IQKeyboardManager
     - MJRefresh
+    - Qiniu
     - RongCloudIM
     - SDAutoLayout
     - SDWebImage
@@ -79,14 +86,16 @@ SPEC CHECKSUMS:
   AMapNavi: 2bc469d0523c2f66a5fcacb6947c7eb745ce9e64
   AMapSearch: c22d8c98e04aad30615834e567781ec1367c4f36
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
+  HappyDNS: dc6a164ee81979093123c241c6353bcf0218add6
   IQKeyboardManager: 6194101620b73af5e67900b8f89707a99de0b804
   MJRefresh: 697f8ec75ebdbe9207767bb682cf0f51b0d8a41f
+  Qiniu: 909b408ee489ea54827e9717be90b94bc9dfbc48
   RongCloudIM: 8f00ae3db8f8b971ad923026cea48854920bf8ee
   SDAutoLayout: 8bf6b3bbc8b01f775d4defbb4fda2ace805461be
   SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
   XHWebImageAutoSize: 8e5d7bf036f960885769dbe3410579024d3ac1a1
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: fdbf43bbff021d0dc74d2d2ad1a48f1a844c31d5
+PODFILE CHECKSUM: 3d5cf87b7d173180a709e294db22d5bdfaa3e558
 
 COCOAPODS: 1.5.3

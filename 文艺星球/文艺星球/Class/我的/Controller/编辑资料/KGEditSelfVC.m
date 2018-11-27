@@ -51,6 +51,10 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
 @property (nonatomic,strong) UIButton *myLabelBtu;
 /** 选择的标签 */
 @property (nonatomic,strong) UIView *chooseLabelView;
+/** 用户信息 */
+@property (nonatomic,strong) NSMutableDictionary *userDic;
+/** 我的标签 */
+@property (nonatomic,strong) NSMutableArray *myLabelsArr;
 
 @end
 
@@ -68,15 +72,31 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
     /** 定制左侧返回按钮 */
     [self setLeftNavItemWithFrame:CGRectZero title:nil image:[UIImage imageNamed:@"fanhui"] font:nil color:nil select:@selector(leftNavAction)];
     /** 定制z右侧返回按钮 */
-    [self setRightNavItemWithFrame:CGRectZero title:@"保存" image:nil font:KGFontSHRegular(13) color:KGGrayColor select:@selector(rightNavAction)];
+    [self setRightNavItemWithFrame:CGRectZero title:@"保存" image:nil font:KGFontSHRegular(13) color:KGBlueColor select:@selector(rightNavAction)];
     /** 导航栏标题 */
     self.title = @"编辑资料";
     self.view.backgroundColor = KGAreaGrayColor;
+    self.userDic = [NSMutableDictionary dictionary];
     
+    [self requestUserInfo];
     [self setScrollView];
     [self setTopImage];
     [self setInfo];
     [self setSelfInfo];
+}
+/** 查看个人资料 */
+- (void)requestUserInfo{
+    __weak typeof(self) weakSelf = self;
+    __block MBProgressHUD *hud = [KGHUD showMessage:@"正在加载......" toView:self.view];
+    [KGRequest postWithUrl:[RequestUserInfo stringByAppendingString:[NSString stringWithFormat:@"/%@",[KGUserInfo shareInstance].userId]] parameters:@{} succ:^(id  _Nonnull result) {
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            [weakSelf changeViewModel:dic];
+        }
+        [hud hideAnimated:YES];
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+    }];
 }
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{
@@ -84,7 +104,56 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
 }
 /** 导航栏右侧点击事件 */
 - (void)rightNavAction{
-    [self.navigationController popViewControllerAnimated:YES];
+    __weak typeof(self) weakSelf = self;
+    if (![self.leftImage.image isEqual:[UIImage imageNamed:@"bianjitianjia"]]) {
+        if (![self.leftImage.image isEqual:[UIImage imageNamed:@"bianjitianjia"]]) {
+            if (![self.leftImage.image isEqual:[UIImage imageNamed:@"bianjitianjia"]]) {
+                MBProgressHUD *hud = [KGHUD showMessage:@"正在上传图片..." toView:self.view];
+                // 串行队列的创建方法
+                dispatch_queue_t queue = dispatch_queue_create("上传图片", DISPATCH_QUEUE_SERIAL);
+                dispatch_sync(queue, ^{
+                    [[KGRequest shareInstance] uploadImageToQiniuWithFile:[[KGRequest shareInstance] getImagePath:self.leftImage.image] result:^(NSString * _Nonnull strPath) {
+                        [weakSelf.userDic setObject:strPath forKey:@"dynamicImage1"];
+                    }];
+                });
+                dispatch_sync(queue, ^{
+                    [[KGRequest shareInstance] uploadImageToQiniuWithFile:[[KGRequest shareInstance] getImagePath:self.centerImage.image] result:^(NSString * _Nonnull strPath) {
+                        [weakSelf.userDic setObject:strPath forKey:@"dynamicImage2"];
+                    }];
+                });
+                dispatch_sync(queue, ^{
+                    [[KGRequest shareInstance] uploadImageToQiniuWithFile:[[KGRequest shareInstance] getImagePath:self.rightImage.image] result:^(NSString * _Nonnull strPath) {
+                        [weakSelf.userDic setObject:strPath forKey:@"dynamicImage3"];
+                    }];
+                });
+                [hud hideAnimated:YES afterDelay:1];
+                [self changeUserInfo];
+            }else{
+                [[KGHUD showMessage:@"请选择封面照片"] hideAnimated:YES afterDelay:1];
+            }
+        }else{
+            [[KGHUD showMessage:@"请选择封面照片"] hideAnimated:YES afterDelay:1];
+        }
+    }else{
+        [[KGHUD showMessage:@"请选择封面照片"] hideAnimated:YES afterDelay:1];
+    }
+}
+/** 修改资料 */
+- (void)changeUserInfo{
+    if (self.userDic.count > 0) {
+        __weak typeof(self) weakSelf = self;
+        [KGRequest postWithUrl:UpdateUserInfo parameters:self.userDic succ:^(id  _Nonnull result) {
+            if ([result[@"status"] integerValue] == 200) {
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            }else{
+                [[KGHUD showMessage:@"请求出错，请重试！"] hideAnimated:YES afterDelay:1];
+            }
+        } fail:^(NSError * _Nonnull error) {
+            [[KGHUD showMessage:@"请求出错，请重试！"] hideAnimated:YES afterDelay:1];
+        }];
+    }else{
+        [[KGHUD showMessage:@"没有做任何修改，请修改后提交"] hideAnimated:YES afterDelay:1];
+    }
 }
 /** 创建底部滚动图 */
 - (void)setScrollView{
@@ -276,6 +345,7 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
         _birthdayView = [[KGBirthdayView alloc]initWithFrame:CGRectMake(0, KGScreenHeight - 200, kScreenWidth, 200)];
         __weak typeof(self) weakSelf = self;
         _birthdayView.chooseBirthdayString = ^(NSString * _Nonnull birthday, NSString * _Nonnull constellation) {
+            [weakSelf.userDic setObject:[[[birthday stringByReplacingOccurrencesOfString:@"年" withString:@"-"] stringByReplacingOccurrencesOfString:@"月" withString:@"-"]stringByReplacingOccurrencesOfString:@"日" withString:@""] forKey:@"birthday"];
             [weakSelf.brithdayBtu setTitle:[NSString stringWithFormat:@"%@ (%@)",birthday,constellation] forState:UIControlStateNormal];
             [weakSelf.brithdayBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
         };
@@ -288,6 +358,7 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
     KGWriteSignatureVC *vc = [[KGWriteSignatureVC alloc]init];
     __weak typeof(self) weakSelf = self;
     vc.sendSignature = ^(NSString * _Nonnull signature) {
+        [weakSelf.userDic setObject:signature forKey:@"personalitySignature"];
         [weakSelf.signatureBtu setTitle:signature forState:UIControlStateNormal];
         [weakSelf.signatureBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
     };
@@ -381,6 +452,7 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
     KGHometownVC *vc = [[KGHometownVC alloc]init];
     __weak typeof(self) weakSelf = self;
     vc.sendHomeTownToController = ^(NSString * _Nonnull homeTown) {
+        [weakSelf.userDic setObject:homeTown forKey:@"hometown"];
         [weakSelf.homeBtu setTitle:homeTown forState:UIControlStateNormal];
         [weakSelf.homeBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
     };
@@ -389,11 +461,23 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
 /** 我的标签点击事件 */
 - (void)mylabelAction{
     KGMyLabelVC *vc = [[KGMyLabelVC alloc]init];
+    vc.oldArr = self.myLabelsArr.copy;
     __weak typeof(self) weakSelf = self;
     vc.sendChooseLabel = ^(NSArray * _Nonnull chooseArr) {
         [weakSelf addLabelToViewWithArr:chooseArr];
+        [weakSelf.myLabelsArr addObjectsFromArray:chooseArr];
+        [weakSelf addTitle:chooseArr];
     };
     [self pushHideenTabbarViewController:vc animted:YES];
+}
+/** 选择的标签 */
+- (void)addTitle:(NSArray *)arr{
+    NSMutableArray *tmp = [NSMutableArray array];
+    for (int i = 0; i < arr.count; i++) {
+        NSDictionary *dic = arr[i];
+        [tmp addObject:dic[@"id"]];
+    }
+    [self.userDic setObject:tmp forKey:@"mylabelIds"];
 }
 /** 添加选择的标签 */
 - (UIView *)chooseLabelView{
@@ -410,7 +494,7 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
     for (int i = 0; i < arr.count; i++) {
         UILabel *tmpLab = [[UILabel alloc]initWithFrame:CGRectMake(width,height, 100, 20)];
         NSDictionary *dic = arr[i];
-        tmpLab.text = dic[@"title"];
+        tmpLab.text = dic[@"labelName"];
         tmpLab.textColor = KGWhiteColor;
         tmpLab.font = KGFontSHRegular(13);
         tmpLab.textAlignment = NSTextAlignmentCenter;
@@ -431,7 +515,83 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
     self.chooseLabelView.frame = CGRectMake(0, 630, KGScreenWidth, height + 35);
     self.backView.contentSize = CGSizeMake(KGScreenWidth, 630 + height + 35);
 }
-
+// MARK: --设置页面数据--
+/** 设置页面参数 */
+- (void)changeViewModel:(NSDictionary *)dic{
+    /** 设置图片 */
+    [self downLoadImageWithURL:@{@"url":dic[@"portraitUri"],@"type":@"Header"}];
+    if (![dic[@"dynamicImage1"] isKindOfClass:[NSNull class]]) {
+        [self downLoadImageWithURL:@{@"url":dic[@"dynamicImage1"],@"type":@"Left"}];
+    }
+    if (![dic[@"dynamicImage2"] isKindOfClass:[NSNull class]]) {
+        [self downLoadImageWithURL:@{@"url":dic[@"dynamicImage2"],@"type":@"Center"}];
+    }
+    if (![dic[@"dynamicImage3"] isKindOfClass:[NSNull class]]) {
+        [self downLoadImageWithURL:@{@"url":dic[@"dynamicImage3"],@"type":@"Right"}];
+    }
+    /** 设置名称 */
+    self.nikNameTF.text = dic[@"username"];
+    if (![dic[@"birthday"] isKindOfClass:[NSNull class]]) {
+        [self.brithdayBtu setTitle:dic[@"birthday"] forState:UIControlStateNormal];
+        [self.brithdayBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
+    }
+    if (![dic[@"personalitySignature"] isKindOfClass:[NSNull class]]) {
+        [self.signatureBtu setTitle:dic[@"personalitySignature"] forState:UIControlStateNormal];
+        [self.signatureBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
+    }
+    if (![dic[@"industry"] isKindOfClass:[NSNull class]]) {
+        self.industryTF.text = dic[@"industry"];
+    }
+    if (![dic[@"school"] isKindOfClass:[NSNull class]]) {
+        self.schoolTF.text = dic[@"school"];
+    }
+    if (![dic[@"hometown"] isKindOfClass:[NSNull class]]) {
+        [self.homeBtu setTitle:dic[@"hometown"] forState:UIControlStateNormal];
+        [self.homeBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
+    }
+    NSArray *labelsArr = dic[@"mylabels"];
+    if (labelsArr.count > 0) {
+        self.myLabelsArr = [NSMutableArray arrayWithArray:labelsArr];
+    }
+}
+/** 异步请求网络图片 */
+- (void)downLoadImageWithURL:(NSDictionary *)dic{
+    NSOperationQueue *operationQueue = [[NSOperationQueue alloc]init];
+    NSInvocationOperation *op = [[NSInvocationOperation alloc]initWithTarget:self selector:@selector(changeImageView:) object:dic];
+    [operationQueue addOperation:op];
+}
+/** 更新页面数据 */
+- (void)changeImageView:(NSDictionary *)dic{
+    UIImage *image = [[UIImage alloc]initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:dic[@"url"]]]];
+    [self performSelectorOnMainThread:@selector(updataImageView:) withObject:@{@"image":image,@"type":dic[@"type"]} waitUntilDone:YES];
+}
+/** 刷新页面 */
+- (void)updataImageView:(NSDictionary *)dic{
+    if ([dic[@"type"] isEqualToString:@"Header"]) {
+        [self.headerBtu setImage:dic[@"image"] forState:UIControlStateNormal];
+    }
+    if ([dic[@"type"] isEqualToString:@"Left"]) {
+        self.leftImage.image = dic[@"image"];
+    }
+    if ([dic[@"type"] isEqualToString:@"Center"]) {
+        self.centerImage.image = dic[@"image"];
+    }
+    if ([dic[@"type"] isEqualToString:@"Right"]) {
+        self.rightImage.image = dic[@"image"];
+    }
+}
+/** 监听键盘输入 */
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    if (textField.text.length > 1) {
+        if (textField == self.nikNameTF) {
+            [self.userDic setObject:self.nikNameTF.text forKey:@"username"];
+        }else if (textField == self.schoolTF){
+            [self.userDic setObject:self.schoolTF.text forKey:@"school"];
+        }else if (textField == self.industryTF){
+            [self.userDic setObject:self.industryTF.text forKey:@"industry"];
+        }
+    }
+}
 
 
 

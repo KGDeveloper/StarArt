@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** 已选择的标签 */
 @property (nonatomic,copy) void(^sendChooseLabel)(NSArray *chooseArr);
+/** 已经存在的 */
+@property (nonatomic,copy) NSArray *oldArr;
 
 @end
 

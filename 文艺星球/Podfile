@@ -16,6 +16,8 @@ pod 'AMapNavi'
 pod 'XHWebImageAutoSize'
 pod 'RongCloudIM/IMLib'
 pod 'RongCloudIM/IMKit' 
+pod 'Qiniu'
+pod 'HappyDNS'
 
   use_frameworks!
   

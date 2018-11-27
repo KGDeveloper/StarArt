@@ -16,5 +16,13 @@
 #define Login [POSTURL stringByAppendingString:@"/api/login"]
 /** 注册 */
 #define Register [POSTURL stringByAppendingString:@"/api/register"]
+/** 查看个人资料 */
+#define RequestUserInfo [POSTURL stringByAppendingString:@"/api/user"]
+/** 编辑个人资料 */
+#define UpdateUserInfo [POSTURL stringByAppendingString:@"/api/user/update"]
+/** 生成七牛云token */
+#define QiNiuToken [POSTURL stringByAppendingString:@"/api/userIntegral/findQiNiuYuntoken"]
+/** 个人标签 */
+#define UserLabelsSame [POSTURL stringByAppendingString:@"/api/user/selectUserLabelSame"]
 
 #endif /* KGRequestHeader_h */

@@ -22,6 +22,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (UIImage *)fixOrientation:(UIImage *)aImage;
 /** 获取视频第一帧 */
 - (UIImage *)thumbnailImageForVideo:(NSURL *)video;
+/** 上传图片到七牛云 */
+- (void)uploadImageToQiniuWithFile:(NSString *)filePath result:(void(^)(NSString *strPath))uploadData;
+/** 照片获取本地路径转换 */
+- (NSString *)getImagePath:(UIImage *)Image;
 
 @end
 
