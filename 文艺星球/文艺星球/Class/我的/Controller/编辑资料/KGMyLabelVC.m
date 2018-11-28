@@ -244,6 +244,8 @@
     UITouch *touch = touches.anyObject;
     if ([touch.view isEqual:self.chooseView]) {
         self.chooseView.hidden = YES;
+        [self changeChooseBtuTitile];
+        self.countLab.text = [NSString stringWithFormat:@"%lu/15",(unsigned long)self.titleArr.count];
     }
 }
 /** 创建数据源 */

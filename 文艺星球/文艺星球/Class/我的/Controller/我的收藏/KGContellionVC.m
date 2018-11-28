@@ -25,6 +25,10 @@
 @property (nonatomic,strong) UIView *editView;
 /** 目前状态 */
 @property (nonatomic,copy) NSString *styleName;
+/** 数据 */
+@property (nonatomic,strong) NSMutableArray *dataArr;
+@property (nonatomic,assign) NSInteger page;
+@property (nonatomic,assign) NSInteger type;
 
 @end
 
@@ -51,8 +55,35 @@
     self.isEdit = NO;
     /** 默认进入显示机构收藏 */
     self.styleName = @"机构";
+    self.page = 1;
+    self.dataArr = [NSMutableArray array];
+    
+    [self requestDataWithType:0];
     [self setTopView];
     [self setUpListView];
+}
+/** 请求数据 */
+- (void)requestDataWithType:(NSInteger)type{
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:[NSString stringWithFormat:@"%@/%ld",CollectionList,(long)type] parameters:@{@"pageIndex":@"1",@"pageSize":@"20"} succ:^(id  _Nonnull result) {
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            NSArray *tmp = dic[@"list"];
+            if (tmp.count > 0) {
+                [weakSelf.dataArr addObjectsFromArray:tmp];
+            }
+        }
+        [weakSelf.listView.mj_header endRefreshing];
+        [weakSelf.listView.mj_footer endRefreshing];
+        [weakSelf.listView reloadData];
+        [hud hideAnimated:YES];
+    } fail:^(NSError * _Nonnull error) {
+        [weakSelf.listView.mj_header endRefreshing];
+        [weakSelf.listView.mj_footer endRefreshing];
+        [weakSelf.listView reloadData];
+        [hud hideAnimated:YES];
+    }];
 }
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{
@@ -102,6 +133,27 @@
     }
     [sender setTitleColor:KGBlueColor forState:UIControlStateNormal];
     self.styleName = sender.currentTitle;
+    self.dataArr = [NSMutableArray array];
+    if ([sender.currentTitle isEqualToString:@"机构"]) {
+        [self requestDataWithType:0];
+        self.type = 0;
+    }
+    if ([sender.currentTitle isEqualToString:@"展览"]) {
+        [self requestDataWithType:1];
+        self.type = 1;
+    }
+    if ([sender.currentTitle isEqualToString:@"广场"]) {
+        [self requestDataWithType:2];
+        self.type = 2;
+    }
+    if ([sender.currentTitle isEqualToString:@"文章"]) {
+        [self requestDataWithType:3];
+        self.type = 3;
+    }
+    if ([sender.currentTitle isEqualToString:@"图书"]) {
+        [self requestDataWithType:4];
+        self.type = 4;
+    }
     [self.listView reloadData];
 }
 /** 收藏列表 */
@@ -115,12 +167,18 @@
     self.listView.showsHorizontalScrollIndicator = NO;
     self.listView.tableFooterView = [UIView new];
     self.listView.separatorStyle = UITableViewCellSelectionStyleNone;
-//    self.listView.mj_header = [MJRefreshHeader headerWithRefreshingBlock:^{
-//        
-//    }];
-//    self.listView.mj_footer = [MJRefreshAutoFooter footerWithRefreshingBlock:^{
-//        
-//    }];
+    __weak typeof(self) weakSelf = self;
+    self.listView.mj_header = [MJRefreshHeader headerWithRefreshingBlock:^{
+        weakSelf.page = 1;
+        weakSelf.dataArr = [NSMutableArray array];
+        [weakSelf requestDataWithType:weakSelf.type];
+        [weakSelf.listView.mj_header beginRefreshing];
+    }];
+    self.listView.mj_footer = [MJRefreshAutoFooter footerWithRefreshingBlock:^{
+        weakSelf.page++;
+        [weakSelf requestDataWithType:weakSelf.type];
+        [weakSelf.listView.mj_footer beginRefreshing];
+    }];
     [self.view addSubview:self.listView];
     /** 绑定cell */
     [self.listView registerNib:[UINib nibWithNibName:@"KGCollectionInstituteCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"KGCollectionInstituteCell"];
@@ -132,17 +190,7 @@
 }
 /** UITableViewDataSource */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if ([self.styleName isEqualToString:@"机构"]) {
-        return 1;
-    }else if ([self.styleName isEqualToString:@"广场"]){
-        return 3;
-    }else if ([self.styleName isEqualToString:@"文章"]){
-        return 4;
-    }else if ([self.styleName isEqualToString:@"图书"]){
-        return 5;
-    }else{
-        return 2;
-    }
+    return self.dataArr.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if ([self.styleName isEqualToString:@"机构"]) {
@@ -165,6 +213,19 @@
         }else{
             [cell endEdit];
         }
+//        if (self.dataArr.count > 0) {
+//            NSDictionary *dic = self.dataArr[indexPath.row];
+//            [cell.cusTomImage sd_setImageWithURL:[NSURL URLWithString:dic[@"merchantImage"]]];
+//            cell.introductionLab.text = dic[@"merchantDetails"];
+//            cell.nameLab.text = dic[@"merchantName"];
+//            cell.addressLab.text = dic[@"merchantLocation"];
+////            cell.distanceLab.text = dic
+//            cell.scoreLab.text = [NSString stringWithFormat:@"%@",dic[@"merchantGrade"]];
+//            if ([dic[@"merchantGrade"] integerValue] == 5) {
+//
+//            }
+//            [cell changeStarWithScroe:[dic[@"merchantGrade"] integerValue]];
+//        }
         return cell;
     }else if ([self.styleName isEqualToString:@"广场"]){
         KGSqureCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGSqureCell"];
@@ -181,6 +242,12 @@
                 [cell starEdit];
             }else{
                 [cell endEdit];
+            }
+            if (self.dataArr.count > 0) {
+                NSDictionary *dic = self.dataArr[indexPath.row];
+                [cell.customImage sd_setImageWithURL:[NSURL URLWithString:[[dic[@"newsCover"] componentsSeparatedByString:@"#"] firstObject]]];
+                cell.titleLab.text = dic[@"newsTitle"];
+                cell.detailLab.text = dic[@"newsSource"];
             }
             return cell;
         }else{
@@ -199,6 +266,15 @@
         }else{
             [cell endEdit];
         }
+        if (self.dataArr.count > 0) {
+            NSDictionary *dic = self.dataArr[indexPath.row];
+            [cell.customImage sd_setImageWithURL:[NSURL URLWithString:[[dic[@"bookCover"] componentsSeparatedByString:@"#"] firstObject]]];
+            cell.titleLab.text = dic[@"bookName"];
+            cell.scoreLab.text = [NSString stringWithFormat:@"%@",dic[@"bookScore"]];
+            cell.detailLab.text = [NSString stringWithFormat:@"%@\n%@",dic[@"bookPress"],dic[@"bookIntroduction"]];
+            cell.detailHeight.constant = 60;
+            [cell changeStarWithScroe:[dic[@"bookScore"] integerValue]];
+        }
         return cell;
     }else{
         KGExhibitionCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGExhibitionCell"];
@@ -206,6 +282,12 @@
             [cell starEdit];
         }else{
             [cell endEdit];
+        }
+        if (self.dataArr.count > 0) {
+            NSDictionary *dic = self.dataArr[indexPath.row];
+            [cell.customImage sd_setImageWithURL:[NSURL URLWithString:[[dic[@"exhibitionCover"] componentsSeparatedByString:@"#"] firstObject]]];
+            cell.nameLab.text = dic[@"exhibitionTitle"];
+            cell.adressLab.text = dic[@"exhibitionAddres"];
         }
         return cell;
     }

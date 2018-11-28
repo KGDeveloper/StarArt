@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -195,6 +195,7 @@
                 <outlet property="addressLab" destination="SGj-tL-evr" id="sFn-bf-4Rj"/>
                 <outlet property="changeViewWidth" destination="mrc-1X-rhJ" id="dir-nl-bhK"/>
                 <outlet property="chooseBtu" destination="AwW-Uh-oXu" id="OwZ-7n-n9N"/>
+                <outlet property="cusTomImage" destination="Xx4-qg-wfv" id="Rda-IV-a8H"/>
                 <outlet property="distanceLab" destination="yW7-wf-FmX" id="PG2-Pl-9Xx"/>
                 <outlet property="fiveStar" destination="2ap-NH-Svp" id="292-Ta-RXx"/>
                 <outlet property="fourStar" destination="lgc-Nf-MQ5" id="dh5-UK-RXu"/>

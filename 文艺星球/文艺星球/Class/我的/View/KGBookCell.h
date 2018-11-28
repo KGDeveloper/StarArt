@@ -24,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *scoreLab;
 @property (weak, nonatomic) IBOutlet UILabel *detailLab;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *detailHeight;
+/** 修改评分 */
+- (void)changeStarWithScroe:(NSInteger)scroe;
 /** 开始编辑 */
 - (void)starEdit;
 /** 结束编辑 */

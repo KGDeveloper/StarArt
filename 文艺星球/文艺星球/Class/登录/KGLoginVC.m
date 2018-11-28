@@ -15,6 +15,7 @@
 @interface KGLoginVC ()<UITextFieldDelegate>{
     NSTimer *_timer;
     NSInteger _count;
+    UIButton *readBtu;
 }
 /** 发送验证码 */
 @property (nonatomic,strong) UIButton *sendSMS;
@@ -106,7 +107,7 @@
     self.loginBtu.userInteractionEnabled = NO;
     [self.view addSubview:self.loginBtu];
     /** 阅读协议 */
-    UIButton *readBtu = [UIButton buttonWithType:UIButtonTypeCustom];
+    readBtu = [UIButton buttonWithType:UIButtonTypeCustom];
     readBtu.frame = CGRectMake(40, 385, 10, 10);
     [readBtu setImage:[UIImage imageNamed:@"协议选择框"] forState:UIControlStateNormal];
     [readBtu addTarget:self action:@selector(readIngAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -173,25 +174,30 @@
 }
 /** 登录按钮点击事件 */
 - (void)loginAction:(UIButton *)sender{
-    [KGRequest postWithUrl:Login parameters:@{@"telephone":self.phoneTF.text,@"msgAuthCode":self.passTF.text} succ:^(id  _Nonnull result) {
-        if ([result[@"status"] integerValue] == 200) {
-            NSDictionary *dic = result[@"data"];
-            [[NSUserDefaults standardUserDefaults] setObject:dic[@"token"] forKey:@"token"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            [KGUserInfo saveUserInfoWithDictionary:dic[@"user"]];
-            if ([@"ApiModelProperty" integerValue] == 0) {
-                KGRegisterVC *registerVC = [[KGRegisterVC alloc]initWithNibName:@"KGRegisterVC" bundle:nil];
-                [self presentViewController:registerVC animated:YES completion:nil];
+    if (![readBtu.currentImage isEqual:[UIImage imageNamed:@"协议选择框"]]) {
+        [KGRequest postWithUrl:Login parameters:@{@"telephone":self.phoneTF.text,@"msgAuthCode":self.passTF.text} succ:^(id  _Nonnull result) {
+            if ([result[@"status"] integerValue] == 200) {
+                NSDictionary *dic = result[@"data"];
+                [[NSUserDefaults standardUserDefaults] setObject:dic[@"token"] forKey:@"token"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [KGUserInfo saveUserInfoWithDictionary:dic[@"user"]];
+                NSDictionary *tmpDic = dic[@"user"];
+                if ([tmpDic[@"isRegiste"] integerValue] == 0) {
+                    KGRegisterVC *registerVC = [[KGRegisterVC alloc]initWithNibName:@"KGRegisterVC" bundle:nil];
+                    [self presentViewController:registerVC animated:YES completion:nil];
+                }else{
+                    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                    window.rootViewController = [[KGTabbarVC alloc]init];
+                }
             }else{
-                UIWindow *window = [UIApplication sharedApplication].keyWindow;
-                window.rootViewController = [[KGTabbarVC alloc]init];
+                [[KGHUD showMessage:@"请求失败，请重试！"] hideAnimated:YES afterDelay:1];
             }
-        }else{
+        } fail:^(NSError * _Nonnull error) {
             [[KGHUD showMessage:@"请求失败，请重试！"] hideAnimated:YES afterDelay:1];
-        }
-    } fail:^(NSError * _Nonnull error) {
-        [[KGHUD showMessage:@"请求失败，请重试！"] hideAnimated:YES afterDelay:1];
-    }];
+        }];
+    }else{
+        [[KGHUD showMessage:@"请先阅读并且同意协议"] hideAnimated:YES afterDelay:1];
+    }
 }
 /** 已阅读按钮点击事件 */
 - (void)readIngAction:(UIButton *)sender{

@@ -70,23 +70,43 @@ static KGUserInfo *userInfo;
 }
 /** 持久化个人信息 */
 + (void)saveUserInfoWithDictionary:(NSDictionary *)dic{
-    [[NSUserDefaults standardUserDefaults] setObject:dic[@"accessToken"] forKey:@"RongToken"];
-    [[NSUserDefaults standardUserDefaults] setObject:dic[@"coverImage"] forKey:@"userCoverImage"];
-    [[NSUserDefaults standardUserDefaults] setObject:dic[@"id"] forKey:@"userId"];
-    [[NSUserDefaults standardUserDefaults] setObject:dic[@"portraitUri"] forKey:@"portraitUri"];
-    [[NSUserDefaults standardUserDefaults] setObject:dic[@"telephone"] forKey:@"telephone"];
-    [[NSUserDefaults standardUserDefaults] setObject:dic[@"username"] forKey:@"username"];
-    if (![dic[@"birthday"] isKindOfClass:[NSNull class]]) {
-        [[NSUserDefaults standardUserDefaults] setObject:dic[@"birthday"] forKey:@"userBirthday"];
+    if (dic[@"accessToken"]) {
+        [[NSUserDefaults standardUserDefaults] setObject:dic[@"accessToken"] forKey:@"RongToken"];
     }
-    if (![dic[@"personalitySignature"] isKindOfClass:[NSNull class]]) {
-        [[NSUserDefaults standardUserDefaults] setObject:dic[@"personalitySignature"] forKey:@"personalitySignature"];
+    if (dic[@"coverImage"]) {
+        [[NSUserDefaults standardUserDefaults] setObject:dic[@"coverImage"] forKey:@"userCoverImage"];
     }
-    if (![dic[@"sex"] isKindOfClass:[NSNull class]]) {
-        [[NSUserDefaults standardUserDefaults] setObject:dic[@"sex"] forKey:@"userSex"];
+    if (dic[@"id"]) {
+        [[NSUserDefaults standardUserDefaults] setObject:dic[@"id"] forKey:@"userId"];
     }
-    if (![dic[@"age"] isKindOfClass:[NSNull class]]) {
-        [[NSUserDefaults standardUserDefaults] setObject:dic[@"age"] forKey:@"userAge"];
+    if (dic[@"portraitUri"]) {
+        [[NSUserDefaults standardUserDefaults] setObject:dic[@"portraitUri"] forKey:@"portraitUri"];
+    }
+    if (dic[@"telephone"]) {
+        [[NSUserDefaults standardUserDefaults] setObject:dic[@"telephone"] forKey:@"telephone"];
+    }
+    if (dic[@"username"]) {
+        [[NSUserDefaults standardUserDefaults] setObject:dic[@"username"] forKey:@"username"];
+    }
+    if (dic[@"birthday"]) {
+        if (![dic[@"birthday"] isKindOfClass:[NSNull class]]) {
+            [[NSUserDefaults standardUserDefaults] setObject:dic[@"birthday"] forKey:@"userBirthday"];
+        }
+    }
+    if (dic[@"personalitySignature"]) {
+        if (![dic[@"personalitySignature"] isKindOfClass:[NSNull class]]) {
+            [[NSUserDefaults standardUserDefaults] setObject:dic[@"personalitySignature"] forKey:@"personalitySignature"];
+        }
+    }
+    if (dic[@"sex"]) {
+        if (![dic[@"sex"] isKindOfClass:[NSNull class]]) {
+            [[NSUserDefaults standardUserDefaults] setObject:dic[@"sex"] forKey:@"userSex"];
+        }
+    }
+    if (dic[@"age"]) {
+        if (![dic[@"age"] isKindOfClass:[NSNull class]]) {
+            [[NSUserDefaults standardUserDefaults] setObject:dic[@"age"] forKey:@"userAge"];
+        }
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
 }

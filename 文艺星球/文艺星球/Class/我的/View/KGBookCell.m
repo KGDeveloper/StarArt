@@ -38,5 +38,45 @@
     self.changeEditStyle.constant = 0;
     self.chooseBtu.hidden = YES;
 }
+/** 修改评分 */
+- (void)changeStarWithScroe:(NSInteger)scroe{
+    if (scroe < 1) {
+        self.oneImage.image = [UIImage imageNamed:@"xingxing"];
+        self.twoImage.image = [UIImage imageNamed:@"xingxing"];
+        self.threeImage.image = [UIImage imageNamed:@"xingxing"];
+        self.fourImage.image = [UIImage imageNamed:@"xingxing"];
+        self.fiveImage.image = [UIImage imageNamed:@"xingxing"];
+    }else if (scroe < 2){
+        self.oneImage.image = [UIImage imageNamed:@"xing"];
+        self.twoImage.image = [UIImage imageNamed:@"xingxing"];
+        self.threeImage.image = [UIImage imageNamed:@"xingxing"];
+        self.fourImage.image = [UIImage imageNamed:@"xingxing"];
+        self.fiveImage.image = [UIImage imageNamed:@"xingxing"];
+    }else if (scroe < 3){
+        self.oneImage.image = [UIImage imageNamed:@"xing"];
+        self.twoImage.image = [UIImage imageNamed:@"xing"];
+        self.threeImage.image = [UIImage imageNamed:@"xingxing"];
+        self.fourImage.image = [UIImage imageNamed:@"xingxing"];
+        self.fiveImage.image = [UIImage imageNamed:@"xingxing"];
+    }else if (scroe < 4){
+        self.oneImage.image = [UIImage imageNamed:@"xing"];
+        self.twoImage.image = [UIImage imageNamed:@"xing"];
+        self.threeImage.image = [UIImage imageNamed:@"xing"];
+        self.fourImage.image = [UIImage imageNamed:@"xingxing"];
+        self.fiveImage.image = [UIImage imageNamed:@"xingxing"];
+    }else if (scroe < 5){
+        self.oneImage.image = [UIImage imageNamed:@"xing"];
+        self.twoImage.image = [UIImage imageNamed:@"xing"];
+        self.threeImage.image = [UIImage imageNamed:@"xing"];
+        self.fourImage.image = [UIImage imageNamed:@"xing"];
+        self.fiveImage.image = [UIImage imageNamed:@"xingxing"];
+    }else{
+        self.oneImage.image = [UIImage imageNamed:@"xing"];
+        self.twoImage.image = [UIImage imageNamed:@"xing"];
+        self.threeImage.image = [UIImage imageNamed:@"xing"];
+        self.fourImage.image = [UIImage imageNamed:@"xing"];
+        self.fiveImage.image = [UIImage imageNamed:@"xing"];
+    }
+}
 
 @end

@@ -55,6 +55,11 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
 @property (nonatomic,strong) NSMutableDictionary *userDic;
 /** 我的标签 */
 @property (nonatomic,strong) NSMutableArray *myLabelsArr;
+@property (nonatomic,assign) BOOL firstUpdate;
+@property (nonatomic,assign) BOOL sencedUpdate;
+@property (nonatomic,assign) BOOL thiredUpdate;
+@property (nonatomic,assign) BOOL fouthUpdate;
+@property (nonatomic,strong) MBProgressHUD *hud;
 
 @end
 
@@ -77,6 +82,10 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
     self.title = @"编辑资料";
     self.view.backgroundColor = KGAreaGrayColor;
     self.userDic = [NSMutableDictionary dictionary];
+    self.firstUpdate = YES;
+    self.sencedUpdate = YES;
+    self.thiredUpdate = YES;
+    self.fouthUpdate = YES;
     
     [self requestUserInfo];
     [self setScrollView];
@@ -104,54 +113,81 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
 }
 /** 导航栏右侧点击事件 */
 - (void)rightNavAction{
+    self.hud = [KGHUD showMessage:@"正在上传..." toView:self.view];
     __weak typeof(self) weakSelf = self;
-    if (![self.leftImage.image isEqual:[UIImage imageNamed:@"bianjitianjia"]]) {
-        if (![self.leftImage.image isEqual:[UIImage imageNamed:@"bianjitianjia"]]) {
-            if (![self.leftImage.image isEqual:[UIImage imageNamed:@"bianjitianjia"]]) {
-                MBProgressHUD *hud = [KGHUD showMessage:@"正在上传图片..." toView:self.view];
-                // 串行队列的创建方法
-                dispatch_queue_t queue = dispatch_queue_create("上传图片", DISPATCH_QUEUE_SERIAL);
-                dispatch_sync(queue, ^{
-                    [[KGRequest shareInstance] uploadImageToQiniuWithFile:[[KGRequest shareInstance] getImagePath:self.leftImage.image] result:^(NSString * _Nonnull strPath) {
-                        [weakSelf.userDic setObject:strPath forKey:@"dynamicImage1"];
-                    }];
-                });
-                dispatch_sync(queue, ^{
-                    [[KGRequest shareInstance] uploadImageToQiniuWithFile:[[KGRequest shareInstance] getImagePath:self.centerImage.image] result:^(NSString * _Nonnull strPath) {
-                        [weakSelf.userDic setObject:strPath forKey:@"dynamicImage2"];
-                    }];
-                });
-                dispatch_sync(queue, ^{
-                    [[KGRequest shareInstance] uploadImageToQiniuWithFile:[[KGRequest shareInstance] getImagePath:self.rightImage.image] result:^(NSString * _Nonnull strPath) {
-                        [weakSelf.userDic setObject:strPath forKey:@"dynamicImage3"];
-                    }];
-                });
-                [hud hideAnimated:YES afterDelay:1];
-                [self changeUserInfo];
-            }else{
-                [[KGHUD showMessage:@"请选择封面照片"] hideAnimated:YES afterDelay:1];
-            }
-        }else{
-            [[KGHUD showMessage:@"请选择封面照片"] hideAnimated:YES afterDelay:1];
-        }
-    }else{
-        [[KGHUD showMessage:@"请选择封面照片"] hideAnimated:YES afterDelay:1];
+    if (self.firstUpdate == NO) {
+        // 串行队列的创建方法
+        dispatch_queue_t queue = dispatch_queue_create("上传图片", DISPATCH_QUEUE_SERIAL);
+        dispatch_sync(queue, ^{
+            [[KGRequest shareInstance] uploadImageToQiniuWithFile:[[KGRequest shareInstance] getImagePath:self.leftImage.image] result:^(NSString * _Nonnull strPath) {
+                [weakSelf.userDic setObject:strPath forKey:@"dynamicImage1"];
+                weakSelf.firstUpdate = YES;
+                [weakSelf changeUserInfo];
+            }];
+        });
+    }
+    if (self.sencedUpdate == NO) {
+        // 串行队列的创建方法
+        dispatch_queue_t queue = dispatch_queue_create("上传图片", DISPATCH_QUEUE_SERIAL);
+        dispatch_sync(queue, ^{
+            [[KGRequest shareInstance] uploadImageToQiniuWithFile:[[KGRequest shareInstance] getImagePath:self.centerImage.image] result:^(NSString * _Nonnull strPath) {
+                [weakSelf.userDic setObject:strPath forKey:@"dynamicImage2"];
+                weakSelf.sencedUpdate = YES;
+                [weakSelf changeUserInfo];
+            }];
+        });
+    }
+    if (self.thiredUpdate == NO) {
+        // 串行队列的创建方法
+        dispatch_queue_t queue = dispatch_queue_create("上传图片", DISPATCH_QUEUE_SERIAL);
+        dispatch_sync(queue, ^{
+            [[KGRequest shareInstance] uploadImageToQiniuWithFile:[[KGRequest shareInstance] getImagePath:self.rightImage.image] result:^(NSString * _Nonnull strPath) {
+                [weakSelf.userDic setObject:strPath forKey:@"portraitUri"];
+                weakSelf.thiredUpdate = YES;
+                [weakSelf changeUserInfo];
+            }];
+        });
+    }
+    if (self.fouthUpdate == NO) {
+        // 串行队列的创建方法
+        dispatch_queue_t queue = dispatch_queue_create("上传图片", DISPATCH_QUEUE_SERIAL);
+        dispatch_sync(queue, ^{
+            [[KGRequest shareInstance] uploadImageToQiniuWithFile:[[KGRequest shareInstance] getImagePath:self.headerBtu.currentImage] result:^(NSString * _Nonnull strPath) {
+                [weakSelf.userDic setObject:strPath forKey:@"dynamicImage1"];
+                weakSelf.fouthUpdate = YES;
+                [weakSelf changeUserInfo];
+            }];
+        });
+    }
+    if (self.firstUpdate == YES && self.sencedUpdate == YES && self.thiredUpdate == YES && self.fouthUpdate == YES) {
+        [self changeUserInfo];
     }
 }
 /** 修改资料 */
 - (void)changeUserInfo{
     if (self.userDic.count > 0) {
-        __weak typeof(self) weakSelf = self;
-        [KGRequest postWithUrl:UpdateUserInfo parameters:self.userDic succ:^(id  _Nonnull result) {
-            if ([result[@"status"] integerValue] == 200) {
-                [weakSelf.navigationController popViewControllerAnimated:YES];
-            }else{
-                [[KGHUD showMessage:@"请求出错，请重试！"] hideAnimated:YES afterDelay:1];
+        if (self.firstUpdate == YES) {
+            if (self.sencedUpdate == YES) {
+                if (self.thiredUpdate == YES) {
+                    if (self.fouthUpdate == YES) {
+                        __weak typeof(self) weakSelf = self;
+                        [KGRequest postWithUrl:UpdateUserInfo parameters:self.userDic succ:^(id  _Nonnull result) {
+                            if ([result[@"status"] integerValue] == 200) {
+                                [KGUserInfo saveUserInfoWithDictionary:weakSelf.userDic];
+                                [weakSelf.navigationController popViewControllerAnimated:YES];
+                            }else{
+                                [[KGHUD showMessage:@"请求出错，请重试！"] hideAnimated:YES afterDelay:1];
+                            }
+                        } fail:^(NSError * _Nonnull error) {
+                            [[KGHUD showMessage:@"请求出错，请重试！"] hideAnimated:YES afterDelay:1];
+                        }];
+                        [weakSelf.hud hideAnimated:YES];
+                    }
+                }
             }
-        } fail:^(NSError * _Nonnull error) {
-            [[KGHUD showMessage:@"请求出错，请重试！"] hideAnimated:YES afterDelay:1];
-        }];
+        }
     }else{
+        [self.hud hideAnimated:YES];
         [[KGHUD showMessage:@"没有做任何修改，请修改后提交"] hideAnimated:YES afterDelay:1];
     }
 }
@@ -222,15 +258,19 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
             switch (weakSelf.photoPosition) {
                 case ChoosePhotoPoisitionLeft:
                     weakSelf.leftImage.image = [imageArr firstObject];
+                    weakSelf.firstUpdate = NO;
                     break;
                 case ChoosePhotoPoisitionCenter:
                     weakSelf.centerImage.image = [imageArr firstObject];
+                    weakSelf.sencedUpdate = NO;
                     break;
                 case ChoosePhotoPoisitionRight:
                     weakSelf.rightImage.image = [imageArr firstObject];
+                    weakSelf.thiredUpdate = NO;
                     break;
                 case ChoosePhotoPoisitionheader:
                     [weakSelf.headerBtu setImage:[imageArr firstObject] forState:UIControlStateNormal];
+                    weakSelf.fouthUpdate = NO;
                     break;
                 default:
                     break;
@@ -556,14 +596,15 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
 }
 /** 异步请求网络图片 */
 - (void)downLoadImageWithURL:(NSDictionary *)dic{
-    NSOperationQueue *operationQueue = [[NSOperationQueue alloc]init];
-    NSInvocationOperation *op = [[NSInvocationOperation alloc]initWithTarget:self selector:@selector(changeImageView:) object:dic];
-    [operationQueue addOperation:op];
-}
-/** 更新页面数据 */
-- (void)changeImageView:(NSDictionary *)dic{
-    UIImage *image = [[UIImage alloc]initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:dic[@"url"]]]];
-    [self performSelectorOnMainThread:@selector(updataImageView:) withObject:@{@"image":image,@"type":dic[@"type"]} waitUntilDone:YES];
+    dispatch_queue_t queue = dispatch_queue_create("缓存图片", DISPATCH_QUEUE_SERIAL);
+    __block UIImage *image = nil;
+    dispatch_sync(queue, ^{
+        image = [[UIImage alloc]initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:dic[@"url"]]]];
+        
+    });
+    if (image != nil) {
+        [self updataImageView:@{@"image":image,@"type":dic[@"type"]}];
+    }
 }
 /** 刷新页面 */
 - (void)updataImageView:(NSDictionary *)dic{

@@ -84,7 +84,7 @@
     /** 设置年龄 */
     self.ageAndSex = [UIButton buttonWithType:UIButtonTypeCustom];
     self.ageAndSex.frame = CGRectMake([self calculateWidthWithString:self.nikeName.text font:KGFontSHRegular(15)] + 46, 174, 35, 15);
-    [self.ageAndSex setTitle:[KGUserInfo shareInstance].userAge forState:UIControlStateNormal];
+    [self.ageAndSex setTitle:[NSString stringWithFormat:@"%@",[KGUserInfo shareInstance].userAge] forState:UIControlStateNormal];
     self.ageAndSex.titleLabel.font = KGFontSHRegular(11);
     if ([[KGUserInfo shareInstance].userSex integerValue] == 0) {
         [self.ageAndSex setImage:[UIImage imageNamed:@"xingbienv"] forState:UIControlStateNormal];

@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface KGCollectionInstituteCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *cusTomImage;
 /** 修改view宽度，改变编辑状态 */
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *changeViewWidth;
 /** 选择删除 */
@@ -30,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIImageView *threeStar;
 @property (weak, nonatomic) IBOutlet UIImageView *fourStar;
 @property (weak, nonatomic) IBOutlet UIImageView *fiveStar;
+/** 修改评分 */
+- (void)changeStarWithScroe:(NSInteger)scroe;
 /** 开始编辑 */
 - (void)starEdit;
 /** 结束编辑 */

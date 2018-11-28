@@ -24,5 +24,13 @@
 #define QiNiuToken [POSTURL stringByAppendingString:@"/api/userIntegral/findQiNiuYuntoken"]
 /** 个人标签 */
 #define UserLabelsSame [POSTURL stringByAppendingString:@"/api/user/selectUserLabelSame"]
+/** 积分详情 */
+#define FindIntegerDetails [POSTURL stringByAppendingString:@"/api/userIntegral/findIntegerDetails"]
+/** 刷新登录时间 */
+#define FindRefreshPage [POSTURL stringByAppendingString:@"/api/userIntegral/findRefreshPage"]
+/** 积分首页数据 */
+#define FindIntegerHomePage [POSTURL stringByAppendingString:@"/api/userIntegral/findIntegerHomePage"]
+/** 查询收藏 */
+#define CollectionList [POSTURL stringByAppendingString:@"/api/personCollect/list"]
 
 #endif /* KGRequestHeader_h */

@@ -22,6 +22,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *commentBtu;
 /** 发布 */
 @property (weak, nonatomic) IBOutlet UIButton *releaseBtu;
+/** 任务情况 */
+@property (nonatomic,copy) NSDictionary *taskInfo;
 
 @end
 
@@ -42,10 +44,49 @@
     self.integralDetailBtu.layer.borderColor = KGWhiteColor.CGColor;
     self.integralDetailBtu.layer.borderWidth = 1;
     
+    [self requestData];
     [self changeBtuGrayColor:self.loginBtu];
     [self changeBtuGrayColor:self.foundBtu];
     [self changeBtuWhiteColor:self.commentBtu];
     [self changeBtuWhiteColor:self.releaseBtu];
+}
+/** 请求首页数据 */
+- (void)requestData{
+    __weak typeof(self) weakSelf = self;
+    __block MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [KGRequest postWithUrl:FindIntegerHomePage parameters:@{} succ:^(id  _Nonnull result) {
+        if ([result[@"status"] integerValue] == 200) {
+            weakSelf.taskInfo = result[@"data"];
+            [weakSelf changeBtu];
+        }
+        [hud hideAnimated:YES];
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+    }];
+}
+/** 修改页面状态 */
+- (void)changeBtu{
+    self.countLab.text = [NSString stringWithFormat:@"%@",self.taskInfo[@"count"]];
+    if ([self.taskInfo[@"goodPlace"] isEqualToString:@"已完成"]) {
+        [self changeBtuGrayColor:self.foundBtu];
+    }else{
+        [self changeBtuWhiteColor:self.foundBtu];
+    }
+    if ([self.taskInfo[@"login"] isEqualToString:@"已完成"]) {
+        [self changeBtuGrayColor:self.loginBtu];
+    }else{
+        [self changeBtuWhiteColor:self.loginBtu];
+    }
+    if ([self.taskInfo[@"fabu"] isEqualToString:@"已完成"]) {
+        [self changeBtuGrayColor:self.releaseBtu];
+    }else{
+        [self changeBtuWhiteColor:self.releaseBtu];
+    }
+    if ([self.taskInfo[@"comment"] isEqualToString:@"已完成"]) {
+        [self changeBtuGrayColor:self.commentBtu];
+    }else{
+        [self changeBtuWhiteColor:self.commentBtu];
+    }
 }
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{
