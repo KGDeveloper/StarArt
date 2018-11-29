@@ -33,6 +33,12 @@ typedef NS_ENUM(NSInteger,ChoosePhotoType){
 @property (nonatomic,strong) PhotosLibraryView *photoLibary;
 /** 选择照片类型 */
 @property (nonatomic,assign) ChoosePhotoType chooseType;
+/** 认证信息 */
+@property (nonatomic,strong) NSMutableDictionary *userDic;
+@property (nonatomic,assign) BOOL isFirst;
+@property (nonatomic,assign) BOOL isSenced;
+@property (nonatomic,assign) BOOL isThird;
+@property (nonatomic,strong) MBProgressHUD *hud;
 
 @end
 
@@ -57,6 +63,11 @@ typedef NS_ENUM(NSInteger,ChoosePhotoType){
     self.industryTF.delegate = self;
     self.unitTF.delegate = self;
     self.positionTF.delegate = self;
+    self.userDic = [NSMutableDictionary dictionaryWithDictionary:self.sendDic];
+    [self.userDic setObject:[KGUserInfo shareInstance].userId forKey:@"uid"];
+    self.isFirst = YES;
+    self.isSenced = YES;
+    self.isThird = YES;
 }
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{
@@ -79,7 +90,56 @@ typedef NS_ENUM(NSInteger,ChoosePhotoType){
 }
 /** 完成点击事件 */
 - (IBAction)finishAction:(UIButton *)sender {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    self.hud = [KGHUD showMessage:@"正在上传..."];
+    __weak typeof(self) weakSelf = self;
+    if (self.isFirst == NO) {
+        dispatch_queue_t queue = dispatch_queue_create("上传身份证正面图片",DISPATCH_QUEUE_SERIAL);
+        dispatch_sync(queue, ^{
+            [[KGRequest shareInstance] uploadImageToQiniuWithFile:[[KGRequest shareInstance] getImagePath:self.idCardPositiveBtu.currentImage] result:^(NSString * _Nonnull strPath) {
+                [weakSelf.userDic setObject:strPath forKey:@"identityCardFront"];
+                weakSelf.isFirst = YES;
+                [weakSelf requestData];
+            }];
+        });
+    }
+    if (self.isSenced == NO) {
+        dispatch_queue_t queue = dispatch_queue_create("上传身份证反面图片",DISPATCH_QUEUE_SERIAL);
+        dispatch_sync(queue, ^{
+            [[KGRequest shareInstance] uploadImageToQiniuWithFile:[[KGRequest shareInstance] getImagePath:self.idCardReverseBtu.currentImage] result:^(NSString * _Nonnull strPath) {
+                [weakSelf.userDic setObject:strPath forKey:@"identityCardContrary"];
+                weakSelf.isSenced = YES;
+                [weakSelf requestData];
+            }];
+        });
+    }
+    if (self.isThird == NO) {
+        dispatch_queue_t queue = dispatch_queue_create("上传证明材料图片",DISPATCH_QUEUE_SERIAL);
+        dispatch_sync(queue, ^{
+            [[KGRequest shareInstance] uploadImageToQiniuWithFile:[[KGRequest shareInstance] getImagePath:self.wordCardBtu.currentImage] result:^(NSString * _Nonnull strPath) {
+                [weakSelf.userDic setObject:strPath forKey:@"cARTEPROFESSIONELLE"];
+                weakSelf.isThird = YES;
+                [weakSelf requestData];
+            }];
+        });
+    }
+}
+- (void)requestData{
+    __weak typeof(self) weakSelf = self;
+    if (self.isThird == YES && self.isSenced == YES && self.isFirst == YES) {
+        [KGRequest postWithUrl:SAVEAlert parameters:self.userDic succ:^(id  _Nonnull result) {
+            [weakSelf.hud hideAnimated:YES];
+            if ([result[@"status"] integerValue] == 200) {
+                NSDictionary *dic = result[@"data"];
+                [[KGHUD showMessage:dic[@"success"]] hideAnimated:YES afterDelay:1];
+                [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+            }else{
+                [[KGHUD showMessage:@"提交失败！！！"] hideAnimated:YES afterDelay:1];
+            }
+        } fail:^(NSError * _Nonnull error) {
+            [weakSelf.hud hideAnimated:YES];
+            [[KGHUD showMessage:@"提交失败！！！"] hideAnimated:YES afterDelay:1];
+        }];
+    }
 }
 /** 选择照片 */
 - (PhotosLibraryView *)photoLibary{
@@ -91,12 +151,15 @@ typedef NS_ENUM(NSInteger,ChoosePhotoType){
             switch (weakSelf.chooseType) {
                 case ChoosePhotoTypeReverse:
                     [weakSelf.idCardReverseBtu setImage:[imageArr firstObject] forState:UIControlStateNormal];
+                    weakSelf.isSenced = NO;
                     break;
                 case ChoosePhotoTypePositive:
                     [weakSelf.idCardPositiveBtu setImage:[imageArr firstObject] forState:UIControlStateNormal];
+                    weakSelf.isFirst = NO;
                     break;
                 case ChoosePhotoTypeWordCard:
                     [weakSelf.wordCardBtu setImage:[imageArr firstObject] forState:UIControlStateNormal];
+                    weakSelf.isThird = NO;
                     break;
                 default:
                     break;
@@ -119,6 +182,19 @@ typedef NS_ENUM(NSInteger,ChoosePhotoType){
 }
 /** UITextFieldDelegate */
 - (void)textFieldDidEndEditing:(UITextField *)textField{
+    if (self.industryTF.text > 0) {
+        [self.userDic setObject:self.industryTF.text forKey:@"industry"];
+    }
+    if (self.unitTF.text.length > 0) {
+        [self.userDic setObject:self.unitTF.text forKey:@"companyName"];
+    }else{
+        [self.userDic setObject:@"暂无zan" forKey:@"companyName"];
+    }
+    if (self.positionTF.text.length > 0) {
+        [self.userDic setObject:self.positionTF.text forKey:@"position"];
+    }else{
+        [self.userDic setObject:@"暂无" forKey:@"position"];
+    }
     [self changeFinishBtuEnable];
 }
 

@@ -77,8 +77,10 @@
     }else if (indexPath.row == 1){
         [self pushHideenTabbarViewController:[[KGAboutOurVC alloc]init] animted:YES];
     }else if (indexPath.row == 3){
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"文艺星球" message:@"你确定退出登录？退出后你无法继续使用文艺星球软件！" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"文艺星球" message:@"你确定退出登录?" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *shureAction = [UIAlertAction actionWithTitle:@"退出" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"token"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
             UIWindow *windows = [UIApplication sharedApplication].keyWindow;
             windows.rootViewController = [[KGLoginVC alloc]init];
         }];

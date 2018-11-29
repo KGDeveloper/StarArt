@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface KGWriteTalentInfoVC : KGBaseViewController
+/** 传过来的资料 */
+@property (nonatomic,copy) NSDictionary *sendDic;
 
 @end
 

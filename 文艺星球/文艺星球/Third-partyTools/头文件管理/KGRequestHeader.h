@@ -23,7 +23,7 @@
 /** 生成七牛云token */
 #define QiNiuToken [POSTURL stringByAppendingString:@"/api/userIntegral/findQiNiuYuntoken"]
 /** 个人标签 */
-#define UserLabelsSame [POSTURL stringByAppendingString:@"/api/user/selectUserLabelSame"]
+#define RandomLabel [POSTURL stringByAppendingString:@"/api/mylabel/random"]
 /** 积分详情 */
 #define FindIntegerDetails [POSTURL stringByAppendingString:@"/api/userIntegral/findIntegerDetails"]
 /** 刷新登录时间 */
@@ -32,5 +32,13 @@
 #define FindIntegerHomePage [POSTURL stringByAppendingString:@"/api/userIntegral/findIntegerHomePage"]
 /** 查询收藏 */
 #define CollectionList [POSTURL stringByAppendingString:@"/api/personCollect/list"]
+/** 达人认证 */
+#define SAVEAlert [POSTURL stringByAppendingString:@"/api/userAuthentication/saveuserAuthentication"]
+/** 意见反馈 */
+#define SaveUserOpinion [POSTURL stringByAppendingString:@"/api/userOpinion/saveUserOpinion"]
+/** 删除收藏 */
+#define DeleteCollectionList [POSTURL stringByAppendingString:@"/api/personCollect/delete"]
+/** 查询收藏 */
+#define ListMessage [POSTURL stringByAppendingString:@"/api/releaseFriendMessage/listMessage"]
 
 #endif /* KGRequestHeader_h */

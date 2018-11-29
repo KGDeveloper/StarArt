@@ -37,20 +37,33 @@
     [super viewDidLoad];
     
     [self setLeftNavItemWithFrame:CGRectZero title:nil image:[UIImage imageNamed:@"fanhuibai"] font:nil color:nil select:@selector(leftNavAction)];
-    [self setRightNavItemWithFrame:CGRectZero title:@"关注" image:nil font:KGFontSHRegular(12) color:KGWhiteColor select:@selector(rightNavAction:)];
-    self.rightNavItem.backgroundColor = KGBlueColor;
-    self.rightNavItem.layer.cornerRadius = 5;
-    self.rightNavItem.layer.masksToBounds = YES;
-    self.rightNavItem.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    if (![self.isShow isEqualToString:@"隐藏"]) {
+        [self setRightNavItemWithFrame:CGRectZero title:@"关注" image:nil font:KGFontSHRegular(12) color:KGWhiteColor select:@selector(rightNavAction:)];
+        self.rightNavItem.backgroundColor = KGBlueColor;
+        self.rightNavItem.layer.cornerRadius = 5;
+        self.rightNavItem.layer.masksToBounds = YES;
+        self.rightNavItem.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    }
     self.view.backgroundColor = KGWhiteColor;
     
+    [self requestData];
     [self setUpListView];
+}
+/** 查看动态 */
+- (void)requestData{
+    [KGRequest postWithUrl:ListMessage parameters:@{@"pageSize":@"20",@"pageIndex":@"1",@"uid":[KGUserInfo shareInstance].userId} succ:^(id  _Nonnull result) {
+        if ([result[@"status"] integerValue] == 200) {
+            
+        }
+    } fail:^(NSError * _Nonnull error) {
+        
+    }];
 }
 /** 导航栏返回按钮点击事件 */
 - (void)leftNavAction{
     [self.navigationController popViewControllerAnimated:YES];
 }
-/** 导航栏返回按钮点击事件 */
+/** 导航栏关注按钮点击事件 */
 - (void)rightNavAction:(UIButton *)sender{
     
 }

@@ -29,6 +29,9 @@
 @property (nonatomic,strong) NSMutableArray *dataArr;
 @property (nonatomic,assign) NSInteger page;
 @property (nonatomic,assign) NSInteger type;
+/** 删除收藏 */
+@property (nonatomic,strong) NSMutableArray *deleteArr;
+@property (nonatomic,strong) UIButton *allChooseBtu;
 
 @end
 
@@ -154,6 +157,8 @@
         [self requestDataWithType:4];
         self.type = 4;
     }
+    self.deleteArr = [NSMutableArray array];
+    [self.allChooseBtu setImage:[UIImage imageNamed:@"weixuanzhong"] forState:UIControlStateNormal];
     [self.listView reloadData];
 }
 /** 收藏列表 */
@@ -213,19 +218,22 @@
         }else{
             [cell endEdit];
         }
-//        if (self.dataArr.count > 0) {
-//            NSDictionary *dic = self.dataArr[indexPath.row];
-//            [cell.cusTomImage sd_setImageWithURL:[NSURL URLWithString:dic[@"merchantImage"]]];
-//            cell.introductionLab.text = dic[@"merchantDetails"];
-//            cell.nameLab.text = dic[@"merchantName"];
-//            cell.addressLab.text = dic[@"merchantLocation"];
-////            cell.distanceLab.text = dic
-//            cell.scoreLab.text = [NSString stringWithFormat:@"%@",dic[@"merchantGrade"]];
-//            if ([dic[@"merchantGrade"] integerValue] == 5) {
-//
-//            }
-//            [cell changeStarWithScroe:[dic[@"merchantGrade"] integerValue]];
-//        }
+        if (self.dataArr.count > 0) {
+            NSDictionary *dic = self.dataArr[indexPath.row];
+            for (int i = 0; i < self.deleteArr.count; i++) {
+                if ([dic[@"id"] isEqual:self.deleteArr[i]]) {
+                    [cell.chooseBtu setImage:[UIImage imageNamed:@"fuhao"] forState:UIControlStateNormal];
+                }else{
+                    [cell.chooseBtu setImage:[UIImage imageNamed:@"weixuanzhong"] forState:UIControlStateNormal];
+                }
+            }
+            [cell.cusTomImage sd_setImageWithURL:[NSURL URLWithString:[[dic[@"merchantImage"] componentsSeparatedByString:@"#"] firstObject]]];
+            cell.introductionLab.text = dic[@"merchantDetails"];
+            cell.nameLab.text = dic[@"merchantName"];
+            cell.addressLab.text = dic[@"merchantLocation"];
+            cell.scoreLab.text = [NSString stringWithFormat:@"%@",dic[@"merchantGrade"]];
+            [cell changeStarWithScroe:[dic[@"merchantGrade"] integerValue]];
+        }
         return cell;
     }else if ([self.styleName isEqualToString:@"广场"]){
         KGSqureCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGSqureCell"];
@@ -234,9 +242,24 @@
         }else{
             [cell endEdit];
         }
+        if (self.dataArr.count > 0) {
+            NSDictionary *dic = self.dataArr[indexPath.row];
+            for (int i = 0; i < self.deleteArr.count; i++) {
+                if ([dic[@"id"] isEqual:self.deleteArr[i]]) {
+                    [cell.chooseBtu setImage:[UIImage imageNamed:@"fuhao"] forState:UIControlStateNormal];
+                }else{
+                    [cell.chooseBtu setImage:[UIImage imageNamed:@"weixuanzhong"] forState:UIControlStateNormal];
+                }
+            }
+            cell.nameLab.text = dic[@"friendUsername"];
+            [cell.headerImage sd_setImageWithURL:[NSURL URLWithString:dic[@"friendPortraituri"]]];
+            [cell.customImage sd_setImageWithURL:[NSURL URLWithString:dic[@"friendImg"]]];
+            cell.titleLab.text = dic[@"friendContent"];
+            cell.titleHeight.constant = 60;
+        }
         return cell;
     }else if ([self.styleName isEqualToString:@"文章"]){
-        if (indexPath.row%2 == 0) {
+//        if (indexPath.row%2 == 0) {
             KGArticleCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGArticleCell"];
             if (self.isEdit == YES) {
                 [cell starEdit];
@@ -245,20 +268,27 @@
             }
             if (self.dataArr.count > 0) {
                 NSDictionary *dic = self.dataArr[indexPath.row];
+                for (int i = 0; i < self.deleteArr.count; i++) {
+                    if ([dic[@"id"] isEqual:self.deleteArr[i]]) {
+                        [cell.chooseBtu setImage:[UIImage imageNamed:@"fuhao"] forState:UIControlStateNormal];
+                    }else{
+                        [cell.chooseBtu setImage:[UIImage imageNamed:@"weixuanzhong"] forState:UIControlStateNormal];
+                    }
+                }
                 [cell.customImage sd_setImageWithURL:[NSURL URLWithString:[[dic[@"newsCover"] componentsSeparatedByString:@"#"] firstObject]]];
                 cell.titleLab.text = dic[@"newsTitle"];
                 cell.detailLab.text = dic[@"newsSource"];
             }
             return cell;
-        }else{
-            KGArticleInterviewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGArticleInterviewCell"];
-            if (self.isEdit == YES) {
-                [cell starEdit];
-            }else{
-                [cell endEdit];
-            }
-            return cell;
-        }
+//        }else{
+//            KGArticleInterviewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGArticleInterviewCell"];
+//            if (self.isEdit == YES) {
+//                [cell starEdit];
+//            }else{
+//                [cell endEdit];
+//            }
+//            return cell;
+//        }
     }else if ([self.styleName isEqualToString:@"图书"]){
         KGBookCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGBookCell"];
         if (self.isEdit == YES) {
@@ -268,6 +298,13 @@
         }
         if (self.dataArr.count > 0) {
             NSDictionary *dic = self.dataArr[indexPath.row];
+            for (int i = 0; i < self.deleteArr.count; i++) {
+                if ([dic[@"id"] isEqual:self.deleteArr[i]]) {
+                    [cell.chooseBtu setImage:[UIImage imageNamed:@"fuhao"] forState:UIControlStateNormal];
+                }else{
+                    [cell.chooseBtu setImage:[UIImage imageNamed:@"weixuanzhong"] forState:UIControlStateNormal];
+                }
+            }
             [cell.customImage sd_setImageWithURL:[NSURL URLWithString:[[dic[@"bookCover"] componentsSeparatedByString:@"#"] firstObject]]];
             cell.titleLab.text = dic[@"bookName"];
             cell.scoreLab.text = [NSString stringWithFormat:@"%@",dic[@"bookScore"]];
@@ -285,6 +322,13 @@
         }
         if (self.dataArr.count > 0) {
             NSDictionary *dic = self.dataArr[indexPath.row];
+            for (int i = 0; i < self.deleteArr.count; i++) {
+                if ([dic[@"id"] isEqual:self.deleteArr[i]]) {
+                    [cell.chooseBtu setImage:[UIImage imageNamed:@"fuhao"] forState:UIControlStateNormal];
+                }else{
+                    [cell.chooseBtu setImage:[UIImage imageNamed:@"weixuanzhong"] forState:UIControlStateNormal];
+                }
+            }
             [cell.customImage sd_setImageWithURL:[NSURL URLWithString:[[dic[@"exhibitionCover"] componentsSeparatedByString:@"#"] firstObject]]];
             cell.nameLab.text = dic[@"exhibitionTitle"];
             cell.adressLab.text = dic[@"exhibitionAddres"];
@@ -312,15 +356,15 @@
         line.backgroundColor = KGLineColor;
         [_editView addSubview:line];
         /** 全选按钮 */
-        UIButton *allChooseBtu = [UIButton buttonWithType:UIButtonTypeCustom];
-        allChooseBtu.frame = CGRectMake(0, 0, 130, 50);
-        [allChooseBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
-        [allChooseBtu setTitle:@"全选" forState:UIControlStateNormal];
-        [allChooseBtu setImage:[UIImage imageNamed:@"weixuanzhong"] forState:UIControlStateNormal];
-        allChooseBtu.titleEdgeInsets = UIEdgeInsetsMake(0, allChooseBtu.imageView.bounds.size.width + 15, 0, 0);
-        allChooseBtu.titleLabel.font = KGFontSHRegular(16);
-        [allChooseBtu addTarget:self action:@selector(allChooseAction:) forControlEvents:UIControlEventTouchUpInside];
-        [_editView addSubview:allChooseBtu];
+        self.allChooseBtu = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.allChooseBtu.frame = CGRectMake(0, 0, 130, 50);
+        [self.allChooseBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
+        [self.allChooseBtu setTitle:@"全选" forState:UIControlStateNormal];
+        [self.allChooseBtu setImage:[UIImage imageNamed:@"weixuanzhong"] forState:UIControlStateNormal];
+        self.allChooseBtu.titleEdgeInsets = UIEdgeInsetsMake(0, self.allChooseBtu.imageView.bounds.size.width + 15, 0, 0);
+        self.allChooseBtu.titleLabel.font = KGFontSHRegular(16);
+        [self.allChooseBtu addTarget:self action:@selector(allChooseAction:) forControlEvents:UIControlEventTouchUpInside];
+        [_editView addSubview:self.allChooseBtu];
         /** 删除按钮 */
         UIButton *deleteBtu = [UIButton buttonWithType:UIButtonTypeCustom];
         deleteBtu.frame = CGRectMake(130, 0, 130, 50);
@@ -333,7 +377,6 @@
         UIView *hLine = [[UIView alloc]initWithFrame:CGRectMake(130, 12.5, 1, 25)];
         hLine.backgroundColor = KGLineColor;
         [_editView addSubview:hLine];
-        
     }
     return _editView;
 }
@@ -341,13 +384,34 @@
 - (void)allChooseAction:(UIButton *)sender{
     if ([sender.currentImage isEqual:[UIImage imageNamed:@"weixuanzhong"]]) {
         [sender setImage:[UIImage imageNamed:@"fuhao"] forState:UIControlStateNormal];
+        self.deleteArr = [NSMutableArray array];
+        for (int i = 0; i < self.dataArr.count; i++) {
+            NSDictionary *dic = self.dataArr[i];
+            [self.deleteArr addObject:dic[@"id"]];
+        }
     }else{
         [sender setImage:[UIImage imageNamed:@"weixuanzhong"] forState:UIControlStateNormal];
+        self.deleteArr = [NSMutableArray array];
     }
+    [self.listView reloadData];
 }
 /** 删除点击事件 */
 - (void)deleteAction:(UIButton *)sender{
-    
+    if (self.deleteArr.count > 0) {
+        __weak typeof(self) weakSelf = self;
+        [KGRequest postWithUrl:DeleteCollectionList parameters:@{@"ids":self.deleteArr} succ:^(id  _Nonnull result) {
+            if ([result[@"status"] integerValue] == 200) {
+                [[KGHUD showMessage:@"删除成功"] hideAnimated:YES afterDelay:1];
+            }else{
+                [[KGHUD showMessage:@"删除失败"] hideAnimated:YES afterDelay:1];
+            }
+            [weakSelf requestDataWithType:self.type];
+        } fail:^(NSError * _Nonnull error) {
+            [[KGHUD showMessage:@"删除失败"] hideAnimated:YES afterDelay:1];
+        }];
+    }else{
+        [[KGHUD showMessage:@"请选择要删除的数据"] hideAnimated:YES afterDelay:1];
+    }
 }
 
 

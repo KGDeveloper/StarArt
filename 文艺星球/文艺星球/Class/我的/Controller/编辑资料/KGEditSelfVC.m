@@ -54,12 +54,13 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
 /** 用户信息 */
 @property (nonatomic,strong) NSMutableDictionary *userDic;
 /** 我的标签 */
-@property (nonatomic,strong) NSMutableArray *myLabelsArr;
+@property (nonatomic,strong) NSMutableSet *myLabelsArr;
 @property (nonatomic,assign) BOOL firstUpdate;
 @property (nonatomic,assign) BOOL sencedUpdate;
 @property (nonatomic,assign) BOOL thiredUpdate;
 @property (nonatomic,assign) BOOL fouthUpdate;
 @property (nonatomic,strong) MBProgressHUD *hud;
+@property (nonatomic,copy) NSString *portraitUri;
 
 @end
 
@@ -100,6 +101,7 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
     [KGRequest postWithUrl:[RequestUserInfo stringByAppendingString:[NSString stringWithFormat:@"/%@",[KGUserInfo shareInstance].userId]] parameters:@{} succ:^(id  _Nonnull result) {
         if ([result[@"status"] integerValue] == 200) {
             NSDictionary *dic = result[@"data"];
+            weakSelf.portraitUri = dic[@"portraitUri"];
             [weakSelf changeViewModel:dic];
         }
         [hud hideAnimated:YES];
@@ -170,6 +172,9 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
             if (self.sencedUpdate == YES) {
                 if (self.thiredUpdate == YES) {
                     if (self.fouthUpdate == YES) {
+                        if (!self.userDic[@"portraitUri"]) {
+                            [self.userDic setObject:self.portraitUri forKey:@"portraitUri"];
+                        }
                         __weak typeof(self) weakSelf = self;
                         [KGRequest postWithUrl:UpdateUserInfo parameters:self.userDic succ:^(id  _Nonnull result) {
                             if ([result[@"status"] integerValue] == 200) {
@@ -505,6 +510,7 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
     __weak typeof(self) weakSelf = self;
     vc.sendChooseLabel = ^(NSArray * _Nonnull chooseArr) {
         [weakSelf addLabelToViewWithArr:chooseArr];
+        weakSelf.myLabelsArr = [NSMutableSet set];
         [weakSelf.myLabelsArr addObjectsFromArray:chooseArr];
         [weakSelf addTitle:chooseArr];
     };
@@ -534,7 +540,7 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
     for (int i = 0; i < arr.count; i++) {
         UILabel *tmpLab = [[UILabel alloc]initWithFrame:CGRectMake(width,height, 100, 20)];
         NSDictionary *dic = arr[i];
-        tmpLab.text = dic[@"labelName"];
+        tmpLab.text = dic[@"name"];
         tmpLab.textColor = KGWhiteColor;
         tmpLab.font = KGFontSHRegular(13);
         tmpLab.textAlignment = NSTextAlignmentCenter;
@@ -591,7 +597,7 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
     }
     NSArray *labelsArr = dic[@"mylabels"];
     if (labelsArr.count > 0) {
-        self.myLabelsArr = [NSMutableArray arrayWithArray:labelsArr];
+        self.myLabelsArr = [NSMutableSet setWithArray:labelsArr];
     }
 }
 /** 异步请求网络图片 */

@@ -25,6 +25,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *nextBtu;
 /** 选择证件类型 */
 @property (nonatomic,strong) KGChooseIDCardView *chooseID;
+/** 认证信息 */
+@property (nonatomic,strong) NSMutableDictionary *userDic;
 
 @end
 
@@ -50,6 +52,7 @@
     self.idCardTF.delegate = self;
     /** 信息没有填写完成之前取消下一页按钮点击事件 */
     self.nextBtu.userInteractionEnabled = NO;
+    self.userDic = [NSMutableDictionary dictionaryWithObject:@"二代身份证" forKey:@"papersType"];
 }
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{
@@ -61,7 +64,13 @@
 }
 /** 点击进入下一页 */
 - (IBAction)nextAction:(UIButton *)sender {
-    [self pushHideenTabbarViewController:[[KGWriteTalentInfoVC alloc]initWithNibName:@"KGWriteTalentInfoVC" bundle:nil] animted:YES];
+    if (self.userDic.count == 5) {
+        KGWriteTalentInfoVC *vc = [[KGWriteTalentInfoVC alloc]initWithNibName:@"KGWriteTalentInfoVC" bundle:nil];
+        vc.sendDic = self.userDic.copy;
+        [self pushHideenTabbarViewController:vc animted:YES];
+    }else{
+        [[KGHUD showMessage:@"资料填写不完整"] hideAnimated:YES afterDelay:1];
+    }
 }
 /** 选择器 */
 - (KGChooseIDCardView *)chooseID{
@@ -69,6 +78,7 @@
         _chooseID = [[KGChooseIDCardView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, KGScreenHeight)];
         __weak typeof(self) weakSelf = self;
         _chooseID.chooseIdCardClass = ^(NSString *className) {
+            [weakSelf.userDic setObject:className forKey:@"papersType"];
             [weakSelf.chooseIDCardBtu setTitle:className forState:UIControlStateNormal];
         };
         [self.navigationController.view insertSubview:_chooseID atIndex:99];
@@ -83,6 +93,18 @@
     }else{
         self.nextBtu.userInteractionEnabled = NO;
         self.nextBtu.backgroundColor = KGGrayColor;
+    }
+    if (textField == self.nikeTF) {
+        [self.userDic setObject:self.nikeTF.text forKey:@"userNickname"];
+    }
+    if (textField == self.nameTF) {
+        [self.userDic setObject:self.nameTF.text forKey:@"userName"];
+    }
+    if (textField == self.phoneTF) {
+        [self.userDic setObject:self.phoneTF.text forKey:@"tel"];
+    }
+    if (textField == self.idCardTF) {
+        [self.userDic setObject:self.idCardTF.text forKey:@"identityCardId"];
     }
 }
 

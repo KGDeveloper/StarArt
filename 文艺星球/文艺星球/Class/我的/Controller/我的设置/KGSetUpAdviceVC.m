@@ -25,6 +25,7 @@
 @property (nonatomic,strong) NSMutableArray *dataArr;
 /** 加载图片 */
 @property (nonatomic,strong) UIView *lowView;
+@property (nonatomic,strong) MBProgressHUD *hud;
 
 @end
 
@@ -116,7 +117,35 @@
 }
 /** 提交按钮点击事件 */
 - (void)submitIdeaAction{
-    
+    __weak typeof(self) weakSelf = self;
+    self.hud = [KGHUD showMessage:@"正在上传..."];
+    __block NSMutableArray *tmp = [NSMutableArray array];
+    for (int i = 0; i < self.dataArr.count; i++) {
+        dispatch_queue_t queue = dispatch_queue_create("上传", DISPATCH_QUEUE_SERIAL);
+        dispatch_sync(queue, ^{
+            [[KGRequest shareInstance] uploadImageToQiniuWithFile:[[KGRequest shareInstance] getImagePath:self.dataArr[i]] result:^(NSString * _Nonnull strPath) {
+                [tmp addObject:strPath];
+                [weakSelf requestwithArr:tmp];
+            }];
+        });
+    }
+}
+/** 反馈 */
+- (void)requestwithArr:(NSArray *)arr{
+    __weak typeof(self) weakSelf = self;
+    if (arr.count == self.dataArr.count) {
+        [KGRequest postWithUrl:SaveUserOpinion parameters:@{@"uid":[KGUserInfo shareInstance].userId,@"context":self.ideaView.text,@"images":arr} succ:^(id  _Nonnull result) {
+            [weakSelf.hud hideAnimated:YES];
+            if ([result[@"status"] integerValue] == 200) {
+                [[KGHUD showMessage:@"反馈成功"] hideAnimated:YES afterDelay:1];
+            }else{
+                [[KGHUD showMessage:@"反馈失败"] hideAnimated:YES afterDelay:1];
+            }
+        } fail:^(NSError * _Nonnull error) {
+            [weakSelf.hud hideAnimated:YES];
+            [[KGHUD showMessage:@"反馈失败"] hideAnimated:YES afterDelay:1];
+        }];
+    }
 }
 /** 富文本修改样式 */
 - (NSMutableAttributedString *)attributedStringWithString:(NSString *)string changeString:(NSString *)changeString{
@@ -155,6 +184,7 @@
         _photoLibary.chooseImageFromPhotoLibary = ^(NSArray<UIImage *> *imageArr) {
             [weakSelf.dataArr addObjectsFromArray:imageArr];
             [weakSelf createImageView];
+            weakSelf.photosCount.attributedText = [weakSelf attributedStringWithString:[NSString stringWithFormat:@"%lu/3",(unsigned long)weakSelf.dataArr.count] changeString:[NSString stringWithFormat:@"%lu",(unsigned long)weakSelf.dataArr.count]];
         };
         [self.navigationController.view insertSubview:_photoLibary atIndex:99];
     }
