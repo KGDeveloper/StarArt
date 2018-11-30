@@ -41,4 +41,15 @@
 /** 查询收藏 */
 #define ListMessage [POSTURL stringByAppendingString:@"/api/releaseFriendMessage/listMessage"]
 
+
+
+
+
+
+
+
+/** 发布广场 */
+#define ReleaseFriends [POSTURL stringByAppendingString:@"/api/releaseFriendMessage/addMessage"]
+
+
 #endif /* KGRequestHeader_h */

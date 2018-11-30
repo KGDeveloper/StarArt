@@ -22,6 +22,10 @@
 @property (nonatomic,strong) KGPreviewKGPreviewRoundView *previewRoundView;
 /** 竖直排版 */
 @property (nonatomic,strong) KGPreviewVerticalView *previewVerticalView;
+/** 发布信息 */
+@property (nonatomic,strong) NSMutableDictionary *userDic;
+@property (nonatomic,strong) MBProgressHUD *hud;
+@property (nonatomic,strong) NSMutableSet *imgs;
 
 @end
 
@@ -44,6 +48,7 @@
     self.title = @"位置";
     self.view.backgroundColor = KGWhiteColor;
     self.scaleIndex = 0;
+    self.userDic = [NSMutableDictionary dictionaryWithObject:[KGUserInfo shareInstance].userId forKey:@"uid"];
     [self setUpScrollView];
     
     [self.view bringSubviewToFront:self.previewHorizontalView];
@@ -54,8 +59,42 @@
 }
 /** 导航栏右侧点击事件 */
 - (void)rightNavAction{
-    
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.userDic setObject:[KGUserInfo shareInstance].userName forKey:@"userName"];
+    [self.userDic setObject:[KGUserInfo shareInstance].userPortrait forKey:@"userPortraitUri"];
+    [self.userDic setObject:[NSString stringWithFormat:@"%ld",(long)self.scaleIndex] forKey:@"composing"];
+    [self.userDic setObject:self.contentStr forKey:@"content"];
+    [self.userDic setObject:self.locationStr forKey:@"location"];
+    self.hud = [KGHUD showMessage:@"正在发布..."];
+    self.imgs = [NSMutableSet set];
+    __weak typeof(self) weakSelf = self;
+    for (int i = 0; i < self.photosArr.count; i++) {
+        dispatch_queue_t queue = dispatch_queue_create("上传图片", DISPATCH_QUEUE_SERIAL);
+        dispatch_sync(queue, ^{
+            [[KGRequest shareInstance] uploadImageToQiniuWithFile:[[KGRequest shareInstance] getImagePath:self.photosArr[i]] result:^(NSString * _Nonnull strPath) {
+                [weakSelf.imgs addObject:@{@"imageUrl":strPath}];
+                [weakSelf RequestData];
+            }];
+        });
+    }
+}
+/** 请求 */
+- (void)RequestData{
+    __weak typeof(self) weakSelf = self;
+    if (self.imgs.count == self.photosArr.count) {
+        [self.userDic setObject:[self.imgs allObjects] forKey:@"imgs"];
+        [KGRequest postWithUrl:ReleaseFriends parameters:self.userDic succ:^(id  _Nonnull result) {
+            [weakSelf.hud hideAnimated:YES];
+            if ([result[@"status"] integerValue] == 200) {
+                [[KGHUD showMessage:@"发布成功"] hideAnimated:YES afterDelay:1];
+                [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+            }else{
+                [[KGHUD showMessage:@"发布失败"] hideAnimated:YES afterDelay:1];
+            }
+        } fail:^(NSError * _Nonnull error) {
+            [weakSelf.hud hideAnimated:YES];
+            [[KGHUD showMessage:@"发布失败"] hideAnimated:YES afterDelay:1];
+        }];
+    }
 }
 /** 滚动模板 */
 - (void)setUpScrollView{
@@ -91,6 +130,7 @@
 /** 点击放大 */
 - (void)changeImageScale:(UITapGestureRecognizer *)tap{
     self.scaleIndex = tap.view.tag - 200;
+    [self.userDic setObject:[NSString stringWithFormat:@"%ld",(long)self.scaleIndex] forKey:@"composing"];
     for (id obj in self.scrollView.subviews) {
         if ([obj isKindOfClass:[UIImageView class]]) {
             UIImageView *imageView = obj;

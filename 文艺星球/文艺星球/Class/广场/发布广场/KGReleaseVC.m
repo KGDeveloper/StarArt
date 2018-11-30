@@ -20,7 +20,7 @@
 /** 相册 */
 @property (nonatomic,strong) PhotosLibraryView *photoAlbm;
 /** 选择的照片数组 */
-@property (nonatomic,strong) NSMutableArray *photosArr;
+@property (nonatomic,strong) NSMutableSet *photosArr;
 /** 提示 */
 @property (nonatomic,strong) UIView *alertView;
 
@@ -47,7 +47,7 @@
     self.rightNavItem.userInteractionEnabled = YES;
     
     /** 初始化 */
-    _photosArr = [NSMutableArray array];
+    self.photosArr = [NSMutableSet set];
     
     [self setUpIdeaView];
     [self setUpChoosePhotosView];
@@ -58,10 +58,23 @@
 }
 /** 导航栏右侧点击事件 */
 - (void)rightNavAction{
-    KGPreviewVC *vc = [[KGPreviewVC alloc]init];
-    vc.contentStr = self.ideaTV.text;
-    vc.photosArr = self.photosArr.copy;
-    [self pushHideenTabbarViewController:vc animted:YES];
+    if (self.ideaTV.text.length > 0 && ![self.ideaTV.text isEqualToString:@"这一刻的想法..."]) {
+        if (self.photosArr.count > 0) {
+            if (![self.locationBtu.currentTitle isEqualToString:@"你在哪里？"]) {
+                KGPreviewVC *vc = [[KGPreviewVC alloc]init];
+                vc.contentStr = self.ideaTV.text;
+                vc.photosArr = [self.photosArr allObjects];
+                vc.locationStr = self.locationBtu.currentTitle;
+                [self pushHideenTabbarViewController:vc animted:YES];
+            }else{
+                [[KGHUD showMessage:@"请填写完整发布内容"] hideAnimated:YES afterDelay:1];
+            }
+        }else{
+            [[KGHUD showMessage:@"请填写完整发布内容"] hideAnimated:YES afterDelay:1];
+        }
+    }else{
+        [[KGHUD showMessage:@"请填写完整发布内容"] hideAnimated:YES afterDelay:1];
+    }
 }
 /** 想法 */
 - (void)setUpIdeaView{
@@ -153,12 +166,13 @@
     }
     CGFloat width = 15;
     CGFloat height = KGRectNavAndStatusHight + 160;
+    NSArray *tmpImage = [self.photosArr allObjects];
     for (int i = 0; i < self.photosArr.count; i++) {
         KGImageView *imageView = [[KGImageView alloc]initWithFrame:CGRectMake(width,height, 75, 75)];
         imageView.allowZoom = NO;
         imageView.allowDelete = YES;
         imageView.delegate = self;
-        imageView.image = self.photosArr[i];
+        imageView.image = tmpImage[i];
         __weak typeof(self) weakSelf = self;
         imageView.selectDeleteBtuDeleteUIImage = ^(UIImage *deleteImage) {
             [weakSelf.photosArr removeObject:deleteImage];

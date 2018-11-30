@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString *contentStr;
 /** 选择的图片 */
 @property (nonatomic,copy) NSArray *photosArr;
+/** 位置 */
+@property (nonatomic,copy) NSString *locationStr;
 
 @end
 
