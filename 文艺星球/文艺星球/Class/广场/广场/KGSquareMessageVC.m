@@ -12,6 +12,7 @@
 @interface KGSquareMessageVC ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 /** 显示消息 */
 @property (nonatomic,strong) UITableView *listView;
+@property (nonatomic,strong) NSMutableArray *dataArr;
 
 @end
 
@@ -33,8 +34,27 @@
     /** 导航栏标题 */
     self.title = @"消息";
     self.view.backgroundColor = KGWhiteColor;
-    
+    self.dataArr = [NSMutableArray array];
+    [self requestList];
     [self setUpListView];
+}
+/** 请求消息列表 */
+- (void)requestList{
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:ListInform parameters:@{@"pageSize":@"20",@"pageIndex":@"1",} succ:^(id  _Nonnull result) {
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            NSArray *tmp = dic[@"list"];
+            if (tmp.count > 0) {
+                [weakSelf.dataArr addObjectsFromArray:tmp];
+            }
+        }
+        [weakSelf.listView reloadData];
+        [hud hideAnimated:YES];
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+    }];
 }
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{
@@ -65,13 +85,28 @@
 }
 /** 代理 */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    return self.dataArr.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 80;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     KGSquareMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGSquareMessageCell"];
+    if (indexPath.row < self.msgCount) {
+        cell.contextLab.textColor = KGBlackColor;
+    }else{
+        cell.contextLab.textColor = KGGrayColor;
+    }
+    if (self.dataArr.count > 0) {
+        NSDictionary *dic = self.dataArr[indexPath.row];
+        if ([dic[@"type"] integerValue] == 0) {
+            cell.contextLab.text = [NSString stringWithFormat:@"%@给你点赞",dic[@"comName"]];
+        }else{
+            cell.contextLab.text = [NSString stringWithFormat:@"%@评论你%@",dic[@"comName"],dic[@"content"]];
+        }
+        [cell.headerImage sd_setImageWithURL:[NSURL URLWithString:dic[@"comPortraitUri"]]];
+        [cell.customImage sd_setImageWithURL:[NSURL URLWithString:dic[@"rfmImg"]]];
+    }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -79,10 +114,24 @@
     
 }
 - (void)alertView{
-    
+    __weak typeof(self) weakSelf = self;
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *clearAction = [UIAlertAction actionWithTitle:@"清空所有消息" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
+        [KGRequest postWithUrl:DeleteInform parameters:@{} succ:^(id  _Nonnull result) {
+            [hud hideAnimated:YES];
+            if ([result[@"status"] integerValue] == 200) {
+                weakSelf.dataArr = [NSMutableArray array];
+                [[KGHUD showMessage:@"清除成功"] hideAnimated:YES afterDelay:1];
+            }else{
+                [[KGHUD showMessage:@"清除失败"] hideAnimated:YES afterDelay:1];
+            }
+            [weakSelf.listView reloadData];
+        } fail:^(NSError * _Nonnull error) {
+            [hud hideAnimated:YES];
+            [[KGHUD showMessage:@"清除失败"] hideAnimated:YES afterDelay:1];
+            [weakSelf.listView reloadData];
+        }];
     }];
     [clearAction setValuesForKeysWithDictionary:@{@"titleTextColor":[UIColor colorWithHexString:@"#ff6666"]}];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {

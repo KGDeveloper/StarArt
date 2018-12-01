@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface KGSquareMessageVC : KGBaseViewController
 
+@property (nonatomic,assign) NSInteger msgCount;
+
 @end
 
 NS_ASSUME_NONNULL_END

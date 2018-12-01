@@ -8,8 +8,10 @@
 
 #ifndef KGRequestHeader_h
 #define KGRequestHeader_h
-
-#define POSTURL @"http://192.168.1.119"
+/** zhai */
+//#define POSTURL @"http://192.168.1.119"
+/** zhang */
+#define POSTURL @"http://192.168.1.6"
 /** 登录发送验证码 */
 #define LoginSMS [POSTURL stringByAppendingString:@"/api/sendMsg"]
 /** 登录验证 */
@@ -50,6 +52,20 @@
 
 /** 发布广场 */
 #define ReleaseFriends [POSTURL stringByAppendingString:@"/api/releaseFriendMessage/addMessage"]
+/** 广场列表 */
+#define ReleaseFriendsListMessage [POSTURL stringByAppendingString:@"/api/releaseFriendMessage/listMessage"]
+/** 广场列表详情 */
+#define ReleaseFriendsGetMessageDetail [POSTURL stringByAppendingString:@"/api/releaseFriendMessage/getMessageDetail"]
+/** 点赞/取消点赞 */
+#define addLike [POSTURL stringByAppendingString:@"/api/like/addLike"]
+/** 未读消息 */
+#define UnreadInform [POSTURL stringByAppendingString:@"/api/inform/unreadInform"]
+/** 查看历史消息 */
+#define ListInform [POSTURL stringByAppendingString:@"/api/inform/listInform"]
+/** 发布评论 */
+#define AddComment [POSTURL stringByAppendingString:@"/api/releaseFriendComment/addComment"]
+/** 清空通知列表 */
+#define DeleteInform [POSTURL stringByAppendingString:@"/api/inform/deleteInform"]
 
 
 #endif /* KGRequestHeader_h */

@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface KGSquareDetailVC : KGBaseViewController
 
+@property (nonatomic,copy) NSString *newsId;
+
 @end
 
 NS_ASSUME_NONNULL_END

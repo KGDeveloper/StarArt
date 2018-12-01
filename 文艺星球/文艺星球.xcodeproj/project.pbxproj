@@ -804,6 +804,41 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		5A31E78121B2683F00EEEF04 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5A4A53BC218AE32200ABC7C9 /* KGLocationCell.h */,
+				5A4A53BD218AE32200ABC7C9 /* KGLocationCell.m */,
+				5A4A53BE218AE32200ABC7C9 /* KGLocationCell.xib */,
+				5A5A728D218C40A60081F173 /* KGQuareHorizontalCell.h */,
+				5A5A728E218C40A60081F173 /* KGQuareHorizontalCell.m */,
+				5A5A7290218C40D10081F173 /* KGSquareVerticalCell.h */,
+				5A5A7291218C40D10081F173 /* KGSquareVerticalCell.m */,
+				5A5A7293218C40E00081F173 /* KGSquareRoundCell.h */,
+				5A5A7294218C40E00081F173 /* KGSquareRoundCell.m */,
+				5A2620DB218FF2AF0047A319 /* KGSquareMessageCell.h */,
+				5A2620DC218FF2AF0047A319 /* KGSquareMessageCell.m */,
+				5A2620DD218FF2AF0047A319 /* KGSquareMessageCell.xib */,
+				5A2620E6219028EB0047A319 /* KGSquareDetailCell.h */,
+				5A2620E7219028EB0047A319 /* KGSquareDetailCell.m */,
+				5A2620E8219028EB0047A319 /* KGSquareDetailCell.xib */,
+				5A25210721913978006D642B /* KGFoundInterestAreaCell.h */,
+				5A25210821913978006D642B /* KGFoundInterestAreaCell.m */,
+				5A25210921913978006D642B /* KGFoundInterestAreaCell.xib */,
+				5A25210C21914A0C006D642B /* KGFoundCell.h */,
+				5A25210D21914A0C006D642B /* KGFoundCell.m */,
+				5A25210E21914A0C006D642B /* KGFoundCell.xib */,
+				5A25211421919956006D642B /* KGFoundDetailCell.h */,
+				5A25211521919956006D642B /* KGFoundDetailCell.m */,
+				5A2D844E2192C9A200CBC727 /* KGSubmitMapCell.h */,
+				5A2D844F2192C9A200CBC727 /* KGSubmitMapCell.m */,
+				5A2D84492192C44900CBC727 /* KGSubmitLocationCell.h */,
+				5A2D844A2192C44900CBC727 /* KGSubmitLocationCell.m */,
+				5A2D844B2192C44900CBC727 /* KGSubmitLocationCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		5A4408B8219A829000393CAF /* 交友 */ = {
 			isa = PBXGroup;
 			children = (
@@ -861,42 +896,15 @@
 		5A4A53BB218AE30C00ABC7C9 /* view */ = {
 			isa = PBXGroup;
 			children = (
-				5A4A53BC218AE32200ABC7C9 /* KGLocationCell.h */,
-				5A4A53BD218AE32200ABC7C9 /* KGLocationCell.m */,
-				5A4A53BE218AE32200ABC7C9 /* KGLocationCell.xib */,
 				5A5A7284218BFF9E0081F173 /* KGPreviewHorizontalTextView.h */,
 				5A5A7285218BFF9E0081F173 /* KGPreviewHorizontalTextView.m */,
 				5A5A7287218C2BA50081F173 /* KGPreviewKGPreviewRoundView.h */,
 				5A5A7288218C2BA50081F173 /* KGPreviewKGPreviewRoundView.m */,
 				5A5A728A218C2EF00081F173 /* KGPreviewVerticalView.h */,
 				5A5A728B218C2EF00081F173 /* KGPreviewVerticalView.m */,
-				5A5A728D218C40A60081F173 /* KGQuareHorizontalCell.h */,
-				5A5A728E218C40A60081F173 /* KGQuareHorizontalCell.m */,
-				5A5A7290218C40D10081F173 /* KGSquareVerticalCell.h */,
-				5A5A7291218C40D10081F173 /* KGSquareVerticalCell.m */,
-				5A5A7293218C40E00081F173 /* KGSquareRoundCell.h */,
-				5A5A7294218C40E00081F173 /* KGSquareRoundCell.m */,
-				5A2620DB218FF2AF0047A319 /* KGSquareMessageCell.h */,
-				5A2620DC218FF2AF0047A319 /* KGSquareMessageCell.m */,
-				5A2620DD218FF2AF0047A319 /* KGSquareMessageCell.xib */,
-				5A2620E6219028EB0047A319 /* KGSquareDetailCell.h */,
-				5A2620E7219028EB0047A319 /* KGSquareDetailCell.m */,
-				5A2620E8219028EB0047A319 /* KGSquareDetailCell.xib */,
 				5A2620EB219043B80047A319 /* KGReleaseTF.h */,
 				5A2620EC219043B80047A319 /* KGReleaseTF.m */,
-				5A25210721913978006D642B /* KGFoundInterestAreaCell.h */,
-				5A25210821913978006D642B /* KGFoundInterestAreaCell.m */,
-				5A25210921913978006D642B /* KGFoundInterestAreaCell.xib */,
-				5A25210C21914A0C006D642B /* KGFoundCell.h */,
-				5A25210D21914A0C006D642B /* KGFoundCell.m */,
-				5A25210E21914A0C006D642B /* KGFoundCell.xib */,
-				5A25211421919956006D642B /* KGFoundDetailCell.h */,
-				5A25211521919956006D642B /* KGFoundDetailCell.m */,
-				5A2D844E2192C9A200CBC727 /* KGSubmitMapCell.h */,
-				5A2D844F2192C9A200CBC727 /* KGSubmitMapCell.m */,
-				5A2D84492192C44900CBC727 /* KGSubmitLocationCell.h */,
-				5A2D844A2192C44900CBC727 /* KGSubmitLocationCell.m */,
-				5A2D844B2192C44900CBC727 /* KGSubmitLocationCell.xib */,
+				5A31E78121B2683F00EEEF04 /* Cell */,
 			);
 			path = view;
 			sourceTree = "<group>";

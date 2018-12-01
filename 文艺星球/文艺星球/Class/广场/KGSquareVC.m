@@ -28,6 +28,10 @@
 @property (nonatomic,strong) UIButton *leftBtu;
 /** 导航右侧 */
 @property (nonatomic,strong) UIButton *rightBtu;
+/** 动态 */
+@property (nonatomic,strong) NSMutableArray *dataArr;
+@property (nonatomic,assign) NSInteger page;
+@property (nonatomic,assign) NSInteger msgCount;
 
 @end
 
@@ -46,9 +50,55 @@
     self.title = @"广场";
     self.view.backgroundColor = KGAreaGrayColor;
     
+    self.dataArr = [NSMutableArray array];
+    self.page = 1;
+    [self requestData];
     [self setNavCenterView];
     [self setUpListView];
     [self releaseBtu];
+}
+/** 请求数据 */
+- (void)requestData{
+    __weak typeof(self) weakSelf = self;
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    [KGRequest postWithUrl:ReleaseFriendsListMessage parameters:@{@"pageSize":@"20",@"pageIndex":[NSString stringWithFormat:@"%ld",(long)self.page],@"uid":[KGUserInfo shareInstance].userId} succ:^(id  _Nonnull result) {
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            NSArray *tmp = dic[@"list"];
+            if (tmp.count > 0) {
+                [weakSelf.dataArr addObjectsFromArray:tmp];
+            }
+        }
+        [weakSelf.listView.mj_header endRefreshing];
+        [weakSelf.listView.mj_footer endRefreshing];
+        [weakSelf.listView reloadData];
+        [hud hideAnimated:YES];
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+    }];
+    
+    [KGRequest postWithUrl:UnreadInform parameters:@{} succ:^(id  _Nonnull result) {
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            NSInteger count = [dic[@"count"] integerValue];
+            if (count == 0) {
+                weakSelf.headerView.frame = CGRectMake(0, 0, KGScreenWidth, 0);
+                weakSelf.contextBtu.hidden = YES;
+            }else{
+                weakSelf.msgCount = count;
+                weakSelf.headerView.frame = CGRectMake(0, 0, KGScreenWidth, 60);
+                weakSelf.contextBtu.hidden = NO;
+                [weakSelf.contextBtu setTitle:[NSString stringWithFormat:@"%@条消息",dic[@"count"]] forState:UIControlStateNormal];
+                [weakSelf.contextBtu setImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:dic[@"comPortraitUri"]]]] forState:UIControlStateNormal];
+            }
+        }else{
+            weakSelf.headerView.frame = CGRectMake(0, 0, KGScreenWidth, 0);
+            weakSelf.contextBtu.hidden = YES;
+        }
+    } fail:^(NSError * _Nonnull error) {
+        weakSelf.headerView.frame = CGRectMake(0, 0, KGScreenWidth, 0);
+        weakSelf.contextBtu.hidden = YES;
+    }];
 }
 /** 导航栏设置 */
 - (void)setNavCenterView{
@@ -116,6 +166,18 @@
     self.listView.tableFooterView = [UIView new];
     self.listView.tableHeaderView = [self setUpHeaderView];
     self.listView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    __weak typeof(self) weakSelf = self;
+    self.listView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        weakSelf.dataArr = [NSMutableArray array];
+        weakSelf.page = 1;
+        [weakSelf requestData];
+        [weakSelf.listView.mj_header beginRefreshing];
+    }];
+    self.listView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        weakSelf.page++;
+        [weakSelf requestData];
+        [weakSelf.listView.mj_footer beginRefreshing];
+    }];
     [self.view addSubview:self.listView];
     
     [self.listView registerClass:[KGSquareRoundCell class] forCellReuseIdentifier:@"KGSquareRoundCell"];
@@ -134,7 +196,7 @@
     [self.contextBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
     self.contextBtu.titleLabel.font = KGFontSHRegular(13);
     [self.contextBtu setImage:[UIImage imageNamed:@"yuyin"] forState:UIControlStateNormal];
-    self.contextBtu.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
+    self.contextBtu.titleEdgeInsets = UIEdgeInsetsMake(0, 20, 0, 0);
     self.contextBtu.backgroundColor = [UIColor colorWithHexString:@"#e0e0e0"];
     self.contextBtu.layer.cornerRadius = 5;
     self.contextBtu.layer.masksToBounds = YES;
@@ -144,28 +206,47 @@
 }
 /** 点击查看消息 */
 - (void)lockMeeagesAction:(UIButton *)sender{
-    [self pushHideenTabbarViewController:[[KGSquareMessageVC alloc]init] animted:YES];
+    KGSquareMessageVC *vc = [[KGSquareMessageVC alloc]init];
+    vc.msgCount = self.msgCount;
+    [self pushHideenTabbarViewController:vc animted:YES];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 3;
+    return self.dataArr.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 500;
+    NSDictionary *dic = self.dataArr[indexPath.row];
+    if ([dic[@"composing"] integerValue] == 2) {
+        KGSquareRoundCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGSquareRoundCell"];
+        return [cell rowHeightWithDictionary:dic];
+    }else if ([dic[@"composing"] integerValue] == 0 || [dic[@"composing"] integerValue] == 1){
+        KGQuareHorizontalCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGQuareHorizontalCell"];
+        return [cell rowHeightWithDictionary:dic];
+    }else{
+        KGSquareVerticalCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGSquareVerticalCell"];
+        return [cell rowHeightWithDictionary:dic];
+    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0) {
+    NSDictionary *dic = self.dataArr[indexPath.row];
+    if ([dic[@"composing"] integerValue] == 2) {
         KGSquareRoundCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGSquareRoundCell"];
+        [cell cellDataWithDictionary:dic];
         return cell;
-    }else if (indexPath.row == 1){
+    }else if ([dic[@"composing"] integerValue] == 0 || [dic[@"composing"] integerValue] == 1){
         KGQuareHorizontalCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGQuareHorizontalCell"];
+        [cell cellDataWithDictionary:dic];
         return cell;
     }else{
         KGSquareVerticalCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGSquareVerticalCell"];
+        [cell cellDataWithDictionary:dic];
         return cell;
     }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self pushHideenTabbarViewController:[[KGSquareDetailVC alloc]init] animted:YES];
+    NSDictionary *dic = self.dataArr[indexPath.row];
+    KGSquareDetailVC *vc = [[KGSquareDetailVC alloc]init];
+    vc.newsId = [NSString stringWithFormat:@"%@",dic[@"id"]];
+    [self pushHideenTabbarViewController:vc animted:YES];
 }
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView{
     return [UIImage imageNamed:@"kongyemian"];

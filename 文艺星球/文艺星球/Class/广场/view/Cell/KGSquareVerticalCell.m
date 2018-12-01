@@ -1,14 +1,14 @@
 //
-//  KGQuareHorizontalCell.m
+//  KGSquareVerticalCell.m
 //  文艺星球
 //
 //  Created by 文艺星球 on 2018/11/2.
 //  Copyright © 2018年 KG丿轩帝. All rights reserved.
 //
 
-#import "KGQuareHorizontalCell.h"
+#import "KGSquareVerticalCell.h"
 
-@interface KGQuareHorizontalCell ()
+@interface KGSquareVerticalCell ()
 /** 头像 */
 @property (nonatomic,strong) UIImageView *headerImage;
 /** 昵称 */
@@ -33,10 +33,11 @@
 @property (nonatomic,strong) UILabel *countLab;
 /** 底部线 */
 @property (nonatomic,strong) UIView *line;
+@property (nonatomic,copy) NSDictionary *userDic;
 
 @end
 
-@implementation KGQuareHorizontalCell
+@implementation KGSquareVerticalCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
@@ -78,14 +79,14 @@
     self.timeLab.font = KGFontSHRegular(12);
     self.timeLab.sd_layout.leftSpaceToView(self.headerImage, 10).bottomEqualToView(self.headerImage).rightSpaceToView(self.contentView, 15).heightIs(12);
     /** labelview */
-    self.labView.sd_layout.leftEqualToView(self.headerImage).topSpaceToView(self.headerImage, 15).rightSpaceToView(self.contentView, 15).heightIs(110);
+    self.labView.sd_layout.topSpaceToView(self.headerImage, 15).rightSpaceToView(self.contentView, 15).widthIs(115).heightIs((KGScreenWidth - 160)/50*6);
     /** 图片view */
     self.photoView.contentMode = UIViewContentModeScaleAspectFill;
     self.photoView.backgroundColor = KGLineColor;
-    self.photoView.sd_layout.leftEqualToView(self.labView).rightEqualToView(self.labView).topSpaceToView(self.labView, 15).heightIs((KGScreenWidth - 30)/69*46);
+    self.photoView.sd_layout.leftEqualToView(self.headerImage).topSpaceToView(self.headerImage, 15).widthIs(KGScreenWidth - 30 - 115).heightIs((KGScreenWidth - 160)/50*69);
     /** 显示照片书view */
     self.countBack.backgroundColor = [KGBlackColor colorWithAlphaComponent:0.2];
-    self.countBack.sd_layout.rightSpaceToView(self.contentView, 15).bottomEqualToView(self.photoView).widthIs(30).heightIs(15);
+    self.countBack.sd_layout.rightSpaceToView(self.photoView, 15).bottomEqualToView(self.photoView).widthIs(30).heightIs(15);
     /** 数目 */
     self.countLab.text = @"1/9";
     self.countLab.textColor = KGWhiteColor;
@@ -129,19 +130,116 @@
 }
 /** 点赞 */
 - (void)zansAction:(UIButton *)sender{
-    if ([sender.currentImage isEqual:[UIImage imageNamed:@"dianzan (2)"]]) {
-        [sender setImage:[UIImage imageNamed:@"dianzan"] forState:UIControlStateNormal];
-    }else{
-        [sender setImage:[UIImage imageNamed:@"dianzan (2)"] forState:UIControlStateNormal];
-    }
+    NSArray *tmp = self.userDic[@"imgs"];
+    NSDictionary *tmpDic = [tmp firstObject];
+    [KGRequest postWithUrl:[addLike stringByAppendingString:[NSString stringWithFormat:@"/%@",self.userDic[@"id"]]] parameters:@{@"portraitUri":[KGUserInfo shareInstance].userPortrait,@"rfmImg":tmpDic[@"imageUrl"],@"comName":[KGUserInfo shareInstance].userName} succ:^(id  _Nonnull result) {
+        if ([result[@"status"] integerValue] == 200) {
+            if ([sender.currentImage isEqual:[UIImage imageNamed:@"dianzan (2)"]]) {
+                [sender setImage:[UIImage imageNamed:@"dianzan"] forState:UIControlStateNormal];
+            }else{
+                [sender setImage:[UIImage imageNamed:@"dianzan (2)"] forState:UIControlStateNormal];
+            }
+            [[KGHUD showMessage:@"操作成功"] hideAnimated:YES afterDelay:1];
+        }else{
+            [[KGHUD showMessage:@"操作失败"] hideAnimated:YES afterDelay:1];
+        }
+    } fail:^(NSError * _Nonnull error) {
+        [[KGHUD showMessage:@"操作失败"] hideAnimated:YES afterDelay:1];
+    }];
 }
 /** 获取cell高度 */
 - (CGFloat)rowHeightWithDictionary:(NSDictionary *)dic{
-    return 500;
+    return 140+(KGScreenWidth - 160)/50*69;
 }
 /** 设置内容 */
 - (void)cellDataWithDictionary:(NSDictionary *)dic{
-    
+    NSString *contentStr = dic[@"content"];
+    self.userDic = dic;
+    [self.headerImage sd_setImageWithURL:[NSURL URLWithString:dic[@"userPortraitUri"]]];
+    self.nameLab.text = dic[@"userName"];
+    self.timeLab.text = dic[@"createTimeStr"];
+    [self.locationBtu setTitle:dic[@"location"] forState:UIControlStateNormal];
+    NSArray *imageTmpArr = dic[@"imgs"];
+    self.countLab.text = [NSString stringWithFormat:@"1/%ld",(long)imageTmpArr.count];
+    NSDictionary *imageDic = [imageTmpArr firstObject];
+    [self.photoView sd_setImageWithURL:[NSURL URLWithString:imageDic[@"imageUrl"]]];
+    if ([dic[@"isLike"] integerValue] == 0) {
+        [self.zansBtu setImage:[UIImage imageNamed:@"dianzan (2)"] forState:UIControlStateNormal];
+    }else{
+        [self.zansBtu setImage:[UIImage imageNamed:@"dianzan"] forState:UIControlStateNormal];
+    }
+    [self.commentsBtu setTitle:[NSString stringWithFormat:@"%@",dic[@"rccommentNum"]] forState:UIControlStateNormal];
+    [self.zansBtu setTitle:[NSString stringWithFormat:@"%@",dic[@"likeCount"]] forState:UIControlStateNormal];
+    if ([contentStr rangeOfString:@"。"].location != NSNotFound) {
+        NSArray *endArr = [contentStr componentsSeparatedByString:@"。"];
+        __block NSMutableArray *markArr = [NSMutableArray array];
+        [endArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj rangeOfString:@"！"].location != NSNotFound) {
+                NSArray *tmp = [obj componentsSeparatedByString:@"！"];
+                [markArr addObjectsFromArray:tmp];
+            }else{
+                [markArr addObject:obj];
+            }
+        }];
+        [self setLabelWithArr:markArr];
+    }else if ([contentStr rangeOfString:@"！"].location != NSNotFound) {
+        NSArray *endArr = [contentStr componentsSeparatedByString:@"！"];
+        __block NSMutableArray *markArr = [NSMutableArray array];
+        [endArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj rangeOfString:@"。"].location != NSNotFound) {
+                NSArray *tmp = [obj componentsSeparatedByString:@"。"];
+                [markArr addObjectsFromArray:tmp];
+            }else{
+                [markArr addObject:obj];
+            }
+        }];
+        [self setLabelWithArr:markArr];
+    }else{
+        if (contentStr.length > 20) {
+            NSString *one = [contentStr substringToIndex:20];
+            NSString *oneEnd = [[contentStr componentsSeparatedByString:one] lastObject];
+            if (oneEnd.length > 20) {
+                NSString *two = [oneEnd substringToIndex:20];
+                NSString *twoEnd = [[oneEnd componentsSeparatedByString:two] lastObject];
+                if (twoEnd.length > 20) {
+                    NSString *three = [twoEnd substringToIndex:20];
+                    NSString *threeEnd = [[twoEnd componentsSeparatedByString:three] lastObject];
+                    if (threeEnd.length > 20) {
+                        NSString *four = [threeEnd substringToIndex:20];
+                        NSString *fourEnd = [[threeEnd componentsSeparatedByString:four] lastObject];
+                        if (fourEnd.length > 20) {
+                            NSString *five = [fourEnd substringToIndex:20];
+                            [self setLabelWithArr:@[one,two,three,four,five]];
+                        }else{
+                            [self setLabelWithArr:@[one,two,three,four,fourEnd]];
+                        }
+                    }else{
+                        [self setLabelWithArr:@[one,two,three,threeEnd]];
+                    }
+                }else{
+                    [self setLabelWithArr:@[one,two,twoEnd]];
+                }
+            }else{
+                [self setLabelWithArr:@[one,oneEnd]];
+            }
+        }else{
+            [self setLabelWithArr:@[contentStr]];
+        }
+    }
+}
+/** 创建label */
+- (void)setLabelWithArr:(NSArray *)arr{
+    if (arr.count > 0) {
+        for (int i = 0; i < arr.count; i++) {
+            UILabel *tmp = [[UILabel alloc]initWithFrame:CGRectMake(self.labView.bounds.size.width - 15 - 23*i,0, 13, [arr[i] boundingRectWithSize:CGSizeMake(13, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontFZ(13)} context:nil].size.height)];
+            tmp.text = arr[i];
+            tmp.numberOfLines = 0;
+            tmp.textColor = KGBlackColor;
+            tmp.font = KGFontFZ(13);
+            tmp.textAlignment = NSTextAlignmentLeft;
+            [self.labView addSubview:tmp];
+        }
+    }
 }
 
 - (void)awakeFromNib {
