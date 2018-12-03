@@ -79,11 +79,11 @@
     self.timeLab.font = KGFontSHRegular(12);
     self.timeLab.sd_layout.leftSpaceToView(self.headerImage, 10).bottomEqualToView(self.headerImage).rightSpaceToView(self.contentView, 15).heightIs(12);
     /** labelview */
-    self.labView.sd_layout.topSpaceToView(self.headerImage, 15).rightSpaceToView(self.contentView, 15).widthIs(115).heightIs((KGScreenWidth - 160)/50*6);
+    self.labView.sd_layout.topSpaceToView(self.headerImage, 15).rightSpaceToView(self.contentView, 15).widthIs(115).heightIs((KGScreenWidth - 160)/50*69);
     /** 图片view */
     self.photoView.contentMode = UIViewContentModeScaleAspectFill;
     self.photoView.backgroundColor = KGLineColor;
-    self.photoView.sd_layout.leftEqualToView(self.headerImage).topSpaceToView(self.headerImage, 15).widthIs(KGScreenWidth - 30 - 115).heightIs((KGScreenWidth - 160)/50*69);
+    self.photoView.sd_layout.leftEqualToView(self.headerImage).topSpaceToView(self.headerImage, 15).widthIs(KGScreenWidth - 160).heightIs((KGScreenWidth - 160)/50*69);
     /** 显示照片书view */
     self.countBack.backgroundColor = [KGBlackColor colorWithAlphaComponent:0.2];
     self.countBack.sd_layout.rightSpaceToView(self.photoView, 15).bottomEqualToView(self.photoView).widthIs(30).heightIs(15);
@@ -154,6 +154,7 @@
 /** 设置内容 */
 - (void)cellDataWithDictionary:(NSDictionary *)dic{
     NSString *contentStr = dic[@"content"];
+    [self.labView removeAllSubviews];
     self.userDic = dic;
     [self.headerImage sd_setImageWithURL:[NSURL URLWithString:dic[@"userPortraitUri"]]];
     self.nameLab.text = dic[@"userName"];
@@ -181,7 +182,11 @@
                 [markArr addObject:obj];
             }
         }];
-        [self setLabelWithArr:markArr];
+        if ([dic[@"composing"] integerValue] == 3) {
+            [self setLabelWithArr:markArr];
+        }else{
+            [self setLabWithArr:markArr];
+        }
     }else if ([contentStr rangeOfString:@"！"].location != NSNotFound) {
         NSArray *endArr = [contentStr componentsSeparatedByString:@"！"];
         __block NSMutableArray *markArr = [NSMutableArray array];
@@ -193,7 +198,11 @@
                 [markArr addObject:obj];
             }
         }];
-        [self setLabelWithArr:markArr];
+        if ([dic[@"composing"] integerValue] == 3) {
+            [self setLabelWithArr:markArr];
+        }else{
+            [self setLabWithArr:markArr];
+        }
     }else{
         if (contentStr.length > 20) {
             NSString *one = [contentStr substringToIndex:20];
@@ -209,21 +218,45 @@
                         NSString *fourEnd = [[threeEnd componentsSeparatedByString:four] lastObject];
                         if (fourEnd.length > 20) {
                             NSString *five = [fourEnd substringToIndex:20];
-                            [self setLabelWithArr:@[one,two,three,four,five]];
+                            if ([dic[@"composing"] integerValue] == 3) {
+                                [self setLabelWithArr:@[one,two,three,four,five]];
+                            }else{
+                                [self setLabWithArr:@[one,two,three,four,five]];
+                            }
                         }else{
-                            [self setLabelWithArr:@[one,two,three,four,fourEnd]];
+                            if ([dic[@"composing"] integerValue] == 3) {
+                                [self setLabelWithArr:@[one,two,three,four,fourEnd]];
+                            }else{
+                                [self setLabWithArr:@[one,two,three,four,fourEnd]];
+                            }
                         }
                     }else{
-                        [self setLabelWithArr:@[one,two,three,threeEnd]];
+                        if ([dic[@"composing"] integerValue] == 3) {
+                            [self setLabelWithArr:@[one,two,three,threeEnd]];
+                        }else{
+                            [self setLabWithArr:@[one,two,three,threeEnd]];
+                        }
                     }
                 }else{
-                    [self setLabelWithArr:@[one,two,twoEnd]];
+                    if ([dic[@"composing"] integerValue] == 3) {
+                        [self setLabelWithArr:@[one,two,twoEnd]];
+                    }else{
+                        [self setLabWithArr:@[one,two,twoEnd]];
+                    }
                 }
             }else{
-                [self setLabelWithArr:@[one,oneEnd]];
+                if ([dic[@"composing"] integerValue] == 3) {
+                    [self setLabelWithArr:@[one,oneEnd]];
+                }else{
+                    [self setLabWithArr:@[one,oneEnd]];
+                }
             }
         }else{
-            [self setLabelWithArr:@[contentStr]];
+            if ([dic[@"composing"] integerValue] == 3) {
+                [self setLabelWithArr:@[contentStr]];
+            }else{
+                [self setLabWithArr:@[contentStr]];
+            }
         }
     }
 }
@@ -231,7 +264,22 @@
 - (void)setLabelWithArr:(NSArray *)arr{
     if (arr.count > 0) {
         for (int i = 0; i < arr.count; i++) {
-            UILabel *tmp = [[UILabel alloc]initWithFrame:CGRectMake(self.labView.bounds.size.width - 15 - 23*i,0, 13, [arr[i] boundingRectWithSize:CGSizeMake(13, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontFZ(13)} context:nil].size.height)];
+            UILabel *tmp = [[UILabel alloc]initWithFrame:CGRectMake(115 - 28 - 23*i,0, 13, [arr[i] boundingRectWithSize:CGSizeMake(13, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontFZ(13)} context:nil].size.height)];
+            tmp.text = arr[i];
+            tmp.numberOfLines = 0;
+            tmp.textColor = KGBlackColor;
+            tmp.font = KGFontFZ(13);
+            tmp.textAlignment = NSTextAlignmentLeft;
+            [self.labView addSubview:tmp];
+        }
+    }
+}
+/** 居中文本 */
+- (void)setLabWithArr:(NSArray *)arr{
+    if (arr.count > 0) {
+        for (int i = 0; i < arr.count; i++) {
+            UILabel *tmp = [[UILabel alloc]initWithFrame:CGRectMake(115 - 28 - 23*i,0, 13,[arr[i] boundingRectWithSize:CGSizeMake(13, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontFZ(13)} context:nil].size.height)];
+            tmp.center = CGPointMake(115 - 28 - 23*i + 7, self.labView.frame.size.height/2);
             tmp.text = arr[i];
             tmp.numberOfLines = 0;
             tmp.textColor = KGBlackColor;

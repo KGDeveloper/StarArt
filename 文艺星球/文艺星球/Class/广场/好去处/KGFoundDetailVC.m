@@ -37,6 +37,9 @@
 @property (nonatomic,strong) UIView *header;
 /** 评论 */
 @property (nonatomic,strong) UIButton *commentBtu;
+@property (nonatomic,strong) NSDictionary *detailDic;
+/** 评论列表 */
+@property (nonatomic,copy) NSArray *commentArr;
 
 @end
 
@@ -56,8 +59,23 @@
     
     self.view.backgroundColor = KGWhiteColor;
     
-    [self setUI];
-    [self setUpCommentView];
+    [self requestDetail];
+}
+/** 请求详情 */
+- (void)requestDetail{
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:FindGoodPlaceById parameters:@{@"id":self.detailId} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            weakSelf.detailDic = result[@"data"];
+        }
+        [weakSelf setUI];
+        [weakSelf setUpCommentView];
+        [weakSelf.listView reloadData];
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+    }];
 }
 /** 左侧点击事件 */
 - (void)leftNavAction{
@@ -83,23 +101,20 @@
 - (UIView *)headerView{
     self.header = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, KGScreenWidth/764*479 + 145)];
     /** 滚动图 */
-    self.scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, KGScreenWidth/764*479)];
-    self.scrollView.bounces = NO;
-    self.scrollView.pagingEnabled = YES;
-    self.scrollView.showsVerticalScrollIndicator = NO;
-    self.scrollView.showsHorizontalScrollIndicator = NO;
-    self.scrollView.delegate = self;
-    [self setScrollView];
-    [self.header addSubview:self.scrollView];
+    UIImageView *coverImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, KGScreenWidth/764*479)];
+    coverImage.backgroundColor = KGBlueColor;
+    [coverImage sd_setImageWithURL:[NSURL URLWithString:self.detailDic[@"image"]]];
+    [self.header addSubview:coverImage];
     /** 小点 */
-    self.pageView = [[UIPageControl alloc]initWithFrame:CGRectMake(0, self.scrollView.bounds.size.height - 22, KGScreenWidth, 7)];
-    self.pageView.numberOfPages = 3;
+    self.pageView = [[UIPageControl alloc]initWithFrame:CGRectMake(0, coverImage.bounds.size.height - 22, KGScreenWidth, 7)];
+    NSArray *imagesArr = self.detailDic[@"images"];
+    self.pageView.numberOfPages = imagesArr.count;
     self.pageView.pageIndicatorTintColor = KGWhiteColor;
     self.pageView.currentPageIndicatorTintColor = KGBlueColor;
     [self.header addSubview:self.pageView];
     /** 标签 */
-    self.classLab = [[UILabel alloc]initWithFrame:CGRectMake(KGScreenWidth - 150, self.scrollView.bounds.size.height - 27, 135, 12)];
-    self.classLab.text = @"艺术展览";
+    self.classLab = [[UILabel alloc]initWithFrame:CGRectMake(KGScreenWidth - 150, coverImage.bounds.size.height - 27, 135, 12)];
+    self.classLab.text = self.detailDic[@"typeName"];
     self.classLab.textColor = KGWhiteColor;
     self.classLab.font = KGFontSHRegular(12);
     self.classLab.textAlignment = NSTextAlignmentRight;
@@ -107,63 +122,64 @@
     /** 图标 */
     NSArray *imageArr = @[[UIImage imageNamed:@"定位"],[UIImage imageNamed:@"电话"],[UIImage imageNamed:@"时间"],[UIImage imageNamed:@"人均"]];
     for (int i = 0; i < 4; i++) {
-        UIImageView *imageview = [[UIImageView alloc]initWithFrame:CGRectMake(15, self.scrollView.bounds.size.height + 15 + 30*i, 15, 15)];
+        UIImageView *imageview = [[UIImageView alloc]initWithFrame:CGRectMake(15, coverImage.bounds.size.height + 15 + 30*i, 15, 15)];
         imageview.image = imageArr[i];
         [self.header addSubview:imageview];
     }
     /** 地址 */
-    self.addressLab = [[UILabel alloc]initWithFrame:CGRectMake(45, self.scrollView.bounds.size.height + 15, KGScreenWidth - 60, 14)];
-    self.addressLab.text = @"北京市798艺术园区";
+    self.addressLab = [[UILabel alloc]initWithFrame:CGRectMake(45, coverImage.bounds.size.height + 15, KGScreenWidth - 60, 14)];
+    self.addressLab.text = self.detailDic[@"location"];
     self.addressLab.textColor = KGBlackColor;
     self.addressLab.font = KGFontSHRegular(14);
     self.addressLab.textAlignment = NSTextAlignmentLeft;
     [self.header addSubview:self.addressLab];
     /** 电话 */
-    self.phoneLab = [[UILabel alloc]initWithFrame:CGRectMake(45, self.scrollView.bounds.size.height + 45, KGScreenWidth - 60, 14)];
-    self.phoneLab.text = @"010-87647586";
+    self.phoneLab = [[UILabel alloc]initWithFrame:CGRectMake(45, coverImage.bounds.size.height + 45, KGScreenWidth - 60, 14)];
+    self.phoneLab.text = self.detailDic[@"tel"];
     self.phoneLab.textColor = KGBlackColor;
     self.phoneLab.font = KGFontSHRegular(14);
     self.phoneLab.textAlignment = NSTextAlignmentLeft;
     [self.header addSubview:self.phoneLab];
     /** 时间 */
-    self.timeLab = [[UILabel alloc]initWithFrame:CGRectMake(45, self.scrollView.bounds.size.height + 75, KGScreenWidth - 60, 14)];
-    self.timeLab.text = @"周二到周六 10:00-18:00";
+    self.timeLab = [[UILabel alloc]initWithFrame:CGRectMake(45, coverImage.bounds.size.height + 75, KGScreenWidth - 60, 14)];
+    self.timeLab.text = self.detailDic[@"businessHours"];
     self.timeLab.textColor = KGBlackColor;
     self.timeLab.font = KGFontSHRegular(14);
     self.timeLab.textAlignment = NSTextAlignmentLeft;
     [self.header addSubview:self.timeLab];
     /** 人均 */
-    self.payLab = [[UILabel alloc]initWithFrame:CGRectMake(45, self.scrollView.bounds.size.height + 105, KGScreenWidth - 60, 14)];
-    self.payLab.text = @"人均消费：CNY90/人";
+    self.payLab = [[UILabel alloc]initWithFrame:CGRectMake(45, coverImage.bounds.size.height + 105, KGScreenWidth - 60, 14)];
+    self.payLab.text = [NSString stringWithFormat:@"人均消费：CNY%@/人",self.detailDic[@"consumption"]];
     self.payLab.textColor = KGBlackColor;
     self.payLab.font = KGFontSHRegular(14);
     self.payLab.textAlignment = NSTextAlignmentLeft;
     [self.header addSubview:self.payLab];
     /** 直线 */
-    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0,self.scrollView.bounds.size.height + 135, KGScreenWidth, 10)];
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0,coverImage.bounds.size.height + 135, KGScreenWidth, 10)];
     line.backgroundColor = KGLineColor;
     [self.header addSubview:line];
     /** 名称 */
-    self.nameLab = [[UILabel alloc]initWithFrame:CGRectMake(15, self.scrollView.bounds.size.height + 165, KGScreenWidth - 30, 14)];
-    self.nameLab.text = @"雅玛哈琴行：中国国家博物馆";
+    self.nameLab = [[UILabel alloc]initWithFrame:CGRectMake(15, coverImage.bounds.size.height + 165, KGScreenWidth - 30, 14)];
+    self.nameLab.text = self.detailDic[@"placenameca"];
     self.nameLab.textColor = KGBlackColor;
     self.nameLab.font = KGFontSHBold(14);
     self.nameLab.textAlignment = NSTextAlignmentLeft;
     [self.header addSubview:self.nameLab];
     /** 名称 */
-    NSMutableAttributedString *attributeString = [self setAttributeWithString:@"在iOS开发过程中，经常会用到给字体加下划线，显示不同颜色和大小的字体等需求，经常遇到这种需求都是直接到百度或者谷歌直接把代码粘过来，并没有做系统的整理，今天刚好有时间，把这部分的内容整理一下，便于后续的开发，闲话不说，接下来就跟着我一起来了解一下NSMutableAttributedString吧.NSAttributedString对象管理适用于字符串中单个字符或字符范围的字符串和关联的属性集（例如字体和字距）。NSAttributedString对象的默认字体是Helvetica 12点，可能与平台的默认系统字体不同。因此，您可能希望创建适用于您的应用程序的非默认属性的新字符串。您还可以使用NSParagraphStyle类及其子类NSMutableParagraphStyle来封装NSAttributedString类使用的段落或标尺属性。"];
-    self.introLab = [[UILabel alloc]initWithFrame:CGRectMake(15, self.scrollView.bounds.size.height + 195, KGScreenWidth - 30, [attributeString boundingRectWithSize:CGSizeMake(KGScreenWidth - 30, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height)];
+    NSMutableAttributedString *attributeString = [self setAttributeWithString:self.detailDic[@"introduce"]];
+    self.introLab = [[UILabel alloc]initWithFrame:CGRectMake(15, coverImage.bounds.size.height + 195, KGScreenWidth - 30, [attributeString boundingRectWithSize:CGSizeMake(KGScreenWidth - 30, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height)];
     self.introLab.attributedText = attributeString;
     self.introLab.numberOfLines = 0;
     self.introLab.textColor = KGBlackColor;
     self.introLab.font = KGFontSHRegular(14);
     self.introLab.textAlignment = NSTextAlignmentLeft;
     [self.header addSubview:self.introLab];
-    CGFloat height = self.scrollView.bounds.size.height + 195 + [attributeString boundingRectWithSize:CGSizeMake(KGScreenWidth - 30, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height + 15;
+    CGFloat height = coverImage.bounds.size.height + 195 + [attributeString boundingRectWithSize:CGSizeMake(KGScreenWidth - 30, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height + 15;
     CGFloat width = (KGScreenWidth - 310)/2;
-    for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < imagesArr.count; i++) {
         UIImageView *imageview = [[UIImageView alloc]initWithFrame:CGRectMake(width, height, 100, 100)];
         imageview.backgroundColor = KGBlueColor;
+        [imageview sd_setImageWithURL:[NSURL URLWithString:imagesArr[i]]];
         [self.header addSubview:imageview];
         if ((i+1)%3==0) {
             width = (KGScreenWidth - 310)/2;
@@ -176,7 +192,12 @@
     
     /** 评论数 */
     self.commentLab = [[UILabel alloc]initWithFrame:CGRectMake(15, height + 20, KGScreenWidth - 30, 14)];
-    self.commentLab.text = @"全部评论（300）";
+    if (![self.detailDic[@"goodPlaceComments"] isKindOfClass:[NSNull class]]) {
+        self.commentArr = self.detailDic[@"goodPlaceComments"];
+    }else{
+        self.commentArr = @[];
+    }
+    self.commentLab.text = [NSString stringWithFormat:@"全部评论（%lu）",(unsigned long)self.commentArr.count];
     self.commentLab.textColor = KGBlackColor;
     self.commentLab.font = KGFontSHBold(15);
     self.commentLab.textAlignment = NSTextAlignmentLeft;
@@ -186,28 +207,23 @@
 }
 /** 代理 */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-
-    return 10;
+    return self.commentArr.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return [self.listView cellHeightForIndexPath:indexPath cellContentViewWidth:KGScreenWidth tableView:self.listView];
+    NSDictionary *dic = self.commentArr[indexPath.row];
+    KGFoundDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGFoundDetailCell"];
+    return [cell returnCellHeightWithDic:dic];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     KGFoundDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGFoundDetailCell"];
+    if (self.commentArr.count > 0) {
+        NSDictionary *dic = self.commentArr[indexPath.row];
+        [cell cellWithDic:dic];
+    }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-}
-/** 创建滚动图 */
-- (void)setScrollView{
-    
-    self.scrollView.contentSize = CGSizeMake(KGScreenWidth * 3, KGScreenWidth/764*479);
-    for (int i = 0; i < 3; i++) {
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(i*KGScreenWidth, 0, KGScreenWidth, KGScreenWidth/764*479)];
-        imageView.backgroundColor = KGBlueColor;
-        [self.scrollView addSubview:imageView];
-    }
 }
 /** 滚动视图代理 */
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
@@ -232,8 +248,11 @@
 }
 /** 点击事件 */
 - (void)commentAction{
-    KGCommentOfThePlaceVC *commentVC = [[KGCommentOfThePlaceVC alloc]initWithNibName:@"KGCommentOfThePlaceVC" bundle:nil];
-    [self pushHideenTabbarViewController:commentVC animted:YES];
+    if (self.detailId) {
+        KGCommentOfThePlaceVC *commentVC = [[KGCommentOfThePlaceVC alloc]initWithNibName:@"KGCommentOfThePlaceVC" bundle:nil];
+        commentVC.detailId = self.detailId;
+        [self pushHideenTabbarViewController:commentVC animted:YES];
+    }
 }
 
 /*

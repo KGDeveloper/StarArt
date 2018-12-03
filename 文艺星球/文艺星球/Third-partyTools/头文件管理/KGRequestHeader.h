@@ -8,10 +8,12 @@
 
 #ifndef KGRequestHeader_h
 #define KGRequestHeader_h
+/** 线上 */
+#define POSTURL @"http://iartplanet.com"
 /** zhai */
 //#define POSTURL @"http://192.168.1.119"
 /** zhang */
-#define POSTURL @"http://192.168.1.6"
+//#define POSTURL @"http://192.168.1.6"
 /** 登录发送验证码 */
 #define LoginSMS [POSTURL stringByAppendingString:@"/api/sendMsg"]
 /** 登录验证 */
@@ -66,6 +68,17 @@
 #define AddComment [POSTURL stringByAppendingString:@"/api/releaseFriendComment/addComment"]
 /** 清空通知列表 */
 #define DeleteInform [POSTURL stringByAppendingString:@"/api/inform/deleteInform"]
+/** 发布好去处 */
+#define SaveGoodPlace [POSTURL stringByAppendingString:@"/api/goodPlace/saveGoodPlace"]
+/** 发现好去处 */
+#define FindAllGoodPlace [POSTURL stringByAppendingString:@"/api/goodPlace/findConditionGoodPlace"]
+/** 发现好去处详情 */
+#define FindGoodPlaceById [POSTURL stringByAppendingString:@"/api/goodPlace/findGoodPlaceById"]
+/** 发现好去处的点赞取消点赞 */
+#define SaveUserGoodPlaceCommentLikeStuts [POSTURL stringByAppendingString:@"/api/goodplacecommentuser/saveUserGoodPlaceCommentLikeStuts"]
+/** 发现好去处的评论 */
+#define SaveGoodPlaceComment [POSTURL stringByAppendingString:@"/api/goodplacecomment/saveGoodPlaceComment"]
+
 
 
 #endif /* KGRequestHeader_h */

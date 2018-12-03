@@ -51,7 +51,7 @@
 }
 /** UITextFieldDelegate */
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    if (self.englishTF.text.length > 0 && self.chinaTF.text.length > 0) {
+    if (self.chinaTF.text.length > 0) {
         [self.rightNavItem setTitleColor:KGBlueColor forState:UIControlStateNormal];
         self.rightNavItem.userInteractionEnabled = YES;
     }else{

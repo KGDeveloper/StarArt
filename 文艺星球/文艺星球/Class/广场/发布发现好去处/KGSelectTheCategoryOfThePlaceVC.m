@@ -14,6 +14,8 @@
 @property (nonatomic,strong) NSMutableArray *titleArr;
 @property (nonatomic,assign) NSInteger chooseRow;
 @property (nonatomic,copy) NSString *imageStr;
+@property (nonatomic,assign) NSInteger typeId;
+@property (nonatomic,copy) NSString *typeName;
 
 @end
 
@@ -39,6 +41,8 @@
     self.titleArr = [NSMutableArray arrayWithArray:@[@"餐厅",@"咖啡",@"茗茶",@"糕点面包",@"酒店民宿",@"书店",@"夜蒲",@"影像音乐",@"展览艺术",@"花店",@"度假胜地",@"集成店",@"剧院"]];
     self.chooseRow = 0;
     self.imageStr = @"http://image.iartplanet.com/canting.png";
+    self.typeId = 1;
+    self.typeName = @"餐厅";
     [self setUpListView];
 }
 /** 导航栏左侧点击事件 */
@@ -48,7 +52,7 @@
 /** 导航栏右侧点击事件 */
 - (void)rightNavAction{
     if (self.sendChooseSelectString) {
-        self.sendChooseSelectString(self.imageStr);
+        self.sendChooseSelectString(self.imageStr,self.typeId,self.typeName);
     }
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -87,33 +91,47 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     self.chooseRow = indexPath.row;
+    self.typeName = self.titleArr[indexPath.row];
     [self.listView reloadData];
     if (indexPath.row == 0) {
         self.imageStr = @"http://image.iartplanet.com/canting.png";
+        self.typeId = 1;
     }else if (indexPath.row == 1){
         self.imageStr = @"http://image.iartplanet.com/kafei.png";
+        self.typeId = 2;
     }else if (indexPath.row == 2){
         self.imageStr = @"http://image.iartplanet.com/mingcha.png";
+        self.typeId = 3;
     }else if (indexPath.row == 3){
         self.imageStr = @"http://image.iartplanet.com/gaodianmianbao.png";
+        self.typeId = 4;
     }else if (indexPath.row == 4){
         self.imageStr = @"http://image.iartplanet.com/jiudianmingsu.png";
+        self.typeId = 5;
     }else if (indexPath.row == 5){
         self.imageStr = @"http://image.iartplanet.com/shudian.png";
+        self.typeId = 6;
     }else if (indexPath.row == 6){
         self.imageStr = @"http://image.iartplanet.com/yepu.png";
+        self.typeId = 7;
     }else if (indexPath.row == 7){
         self.imageStr = @"http://image.iartplanet.com/yingxiangyinyue.png";
+        self.typeId = 8;
     }else if (indexPath.row == 8){
         self.imageStr = @"http://image.iartplanet.com/zhanlanyishu.png";
+        self.typeId = 9;
     }else if (indexPath.row == 9){
         self.imageStr = @"http://image.iartplanet.com/huadian.png";
+        self.typeId = 10;
     }else if (indexPath.row == 10){
         self.imageStr = @"http://image.iartplanet.com/dujiashengdi.png";
+        self.typeId = 11;
     }else if (indexPath.row == 11){
         self.imageStr = @"http://image.iartplanet.com/jichengdian.png";
+        self.typeId = 12;
     }else if (indexPath.row == 12){
         self.imageStr = @"http://image.iartplanet.com/13.png";
+        self.typeId = 13;
     }
 }
 

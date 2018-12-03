@@ -10,6 +10,51 @@
 
 @implementation KGFoundCell
 
+/** 数据填充 */
+- (void)sendModelToCell:(NSDictionary *)dic{
+    [self.backImage sd_setImageWithURL:[NSURL URLWithString:dic[@"image"]]];
+    [self.headerImage sd_setImageWithURL:[NSURL URLWithString:dic[@"icon"]]];
+    NSArray *tmpImageArr = dic[@"images"];
+    [self.leftImage sd_setImageWithURL:[NSURL URLWithString:tmpImageArr[0]]];
+    [self.centerImage sd_setImageWithURL:[NSURL URLWithString:tmpImageArr[1]]];
+    [self.rightImage sd_setImageWithURL:[NSURL URLWithString:tmpImageArr[2]]];
+    self.nameLab.text = dic[@"placenameca"];
+    self.englishLab.text = dic[@"placenameeh"];
+    self.classLab.text = dic[@"typeName"];
+    if ([dic[@"graded"] integerValue] < 2) {
+        self.oneStar.image = [UIImage imageNamed:@"xing"];
+        self.twoStar.image = [UIImage imageNamed:@"xingxing"];
+        self.threeStar.image = [UIImage imageNamed:@"xingxing"];
+        self.fourStar.image = [UIImage imageNamed:@"xingxing"];
+        self.fiveStar.image = [UIImage imageNamed:@"xingxing"];
+    }else if ([dic[@"graded"] integerValue] < 3){
+        self.oneStar.image = [UIImage imageNamed:@"xing"];
+        self.twoStar.image = [UIImage imageNamed:@"xing"];
+        self.threeStar.image = [UIImage imageNamed:@"xingxing"];
+        self.fourStar.image = [UIImage imageNamed:@"xingxing"];
+        self.fiveStar.image = [UIImage imageNamed:@"xingxing"];
+    }else if ([dic[@"graded"] integerValue] < 4){
+        self.oneStar.image = [UIImage imageNamed:@"xing"];
+        self.twoStar.image = [UIImage imageNamed:@"xing"];
+        self.threeStar.image = [UIImage imageNamed:@"xing"];
+        self.fourStar.image = [UIImage imageNamed:@"xingxing"];
+        self.fiveStar.image = [UIImage imageNamed:@"xingxing"];
+    }else if ([dic[@"graded"] integerValue] < 5){
+        self.oneStar.image = [UIImage imageNamed:@"xing"];
+        self.twoStar.image = [UIImage imageNamed:@"xing"];
+        self.threeStar.image = [UIImage imageNamed:@"xing"];
+        self.fourStar.image = [UIImage imageNamed:@"xing"];
+        self.fiveStar.image = [UIImage imageNamed:@"xingxing"];
+    }else{
+        self.oneStar.image = [UIImage imageNamed:@"xing"];
+        self.twoStar.image = [UIImage imageNamed:@"xing"];
+        self.threeStar.image = [UIImage imageNamed:@"xing"];
+        self.fourStar.image = [UIImage imageNamed:@"xing"];
+        self.fiveStar.image = [UIImage imageNamed:@"xing"];
+    }
+}
+
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code

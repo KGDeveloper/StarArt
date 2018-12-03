@@ -22,6 +22,7 @@
 @property (nonatomic,strong) UILabel *nameLab;
 /** 签名 */
 @property (nonatomic,strong) UILabel *signaturlLab;
+@property (nonatomic,strong) NSMutableArray *dataArr;
 
 @end
 
@@ -45,15 +46,21 @@
         self.rightNavItem.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     }
     self.view.backgroundColor = KGWhiteColor;
+    self.dataArr = [NSMutableArray array];
     
     [self requestData];
     [self setUpListView];
 }
 /** 查看动态 */
 - (void)requestData{
+    __weak typeof(self) weakSelf = self;
     [KGRequest postWithUrl:ListMessage parameters:@{@"pageSize":@"20",@"pageIndex":@"1",@"uid":[KGUserInfo shareInstance].userId} succ:^(id  _Nonnull result) {
         if ([result[@"status"] integerValue] == 200) {
-            
+            NSDictionary *dic = result[@"data"];
+            NSArray *tmp = dic[@"list"];
+            if (tmp.count > 0 ) {
+                [weakSelf.dataArr addObjectsFromArray:tmp];
+            }
         }
     } fail:^(NSError * _Nonnull error) {
         

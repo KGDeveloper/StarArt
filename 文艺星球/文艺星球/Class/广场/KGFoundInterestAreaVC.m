@@ -30,6 +30,12 @@
 @property (nonatomic,copy) NSString *sortString;
 /** 是否是品类选择 */
 @property (nonatomic,assign) BOOL isLeft;
+/** 好去处 */
+@property (nonatomic,strong) NSMutableArray *dataArr;
+@property (nonatomic,strong) MBProgressHUD *hud;
+@property (nonatomic,assign) NSInteger page;
+@property (nonatomic,assign) NSInteger leftPage;
+@property (nonatomic,assign) NSInteger rightPage;
 
 @end
 
@@ -50,9 +56,35 @@
     self.view.backgroundColor = KGWhiteColor;
     self.screenArr = [NSMutableArray array];
     self.isLeft = YES;
+    self.dataArr = [NSMutableArray array];
+    self.page = 1;
+    self.leftPage = 0;
+    self.rightPage = 0;
     
+    [self requestData];
     [self setUpListView];
     [self setUpScreeningView];
+}
+/** 请求数据 */
+- (void)requestData{
+    __weak typeof(self) weakSelf = self;
+    weakSelf.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [KGRequest postWithUrl:FindAllGoodPlace parameters:@{@"pageIndex":@(self.page),@"type":@(self.leftPage),@"condition":@(self.rightPage),@"latitude":[NSNumber numberWithDouble:[[KGRequest shareInstance] requestYourLocation].latitude],@"longitude":[NSNumber numberWithDouble:[[KGRequest shareInstance] requestYourLocation].longitude]} succ:^(id  _Nonnull result) {
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            NSArray *tmp = dic[@"list"];
+            if (tmp.count > 0) {
+                [weakSelf.dataArr addObjectsFromArray:tmp];
+            }
+        }
+        [weakSelf.listView.mj_header endRefreshing];
+        [weakSelf.listView.mj_footer endRefreshing];
+        [weakSelf.listView reloadData];
+        [weakSelf.hud hideAnimated:YES];
+    } fail:^(NSError * _Nonnull error) {
+        [weakSelf.listView reloadData];
+        [weakSelf.hud hideAnimated:YES];
+    }];
 }
 /** 创建显示列表 */
 - (void)setUpListView{
@@ -65,6 +97,18 @@
     self.listView.tableHeaderView = [self setHeaderView];
     self.listView.showsVerticalScrollIndicator = NO;
     self.listView.showsHorizontalScrollIndicator = NO;
+    __weak typeof(self) weakSelf = self;
+    self.listView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        weakSelf.page = 1;
+        weakSelf.dataArr = [NSMutableArray array];
+        [weakSelf requestData];
+        [weakSelf.listView.mj_header beginRefreshing];
+    }];
+    self.listView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        weakSelf.page ++;
+        [weakSelf requestData];
+        [weakSelf.listView.mj_footer beginRefreshing];
+    }];
     self.listView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.listView];
     
@@ -159,7 +203,7 @@
 /** 代理 */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (tableView == self.listView) {
-        return 10;
+        return self.dataArr.count;
     }else{
         return self.screenArr.count;
     }
@@ -174,6 +218,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.listView) {
         KGFoundCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGFoundCell"];
+        if (self.dataArr.count > 0) {
+            NSDictionary *dic = self.dataArr[indexPath.row];
+            [cell sendModelToCell:dic];
+        }
         return cell;
     }else{
         KGFoundInterestAreaCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGFoundInterestAreaCell"];
@@ -192,15 +240,24 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.listView) {
-        [self pushHideenTabbarViewController:[[KGFoundDetailVC alloc]init] animted:YES];
+        NSDictionary *dic = self.dataArr[indexPath.row];
+        KGFoundDetailVC *vc = [[KGFoundDetailVC alloc]init];
+        vc.detailId = dic[@"id"];
+        [self pushHideenTabbarViewController:vc animted:YES];
     }else{
         self.selectIndexRow = indexPath.row;
         [self.screenView reloadData];
         if (self.isLeft == YES) {
-            self.classString = self.screenArr[indexPath.row];
+            self.leftPage = indexPath.row;
         }else{
-            self.sortString = self.screenArr[indexPath.row];
+            self.rightPage = indexPath.row;
         }
+        self.screenView.hidden = YES;
+        [self.classBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
+        [self.sortBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
+        [self.classBtu setImage:[UIImage imageNamed:@"liwozuijin"] forState:UIControlStateNormal];
+        [self.sortBtu setImage:[UIImage imageNamed:@"liwozuijin"] forState:UIControlStateNormal];
+        [self.listView.mj_header beginRefreshing];
     }
 }
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
@@ -230,7 +287,7 @@
     return [[NSAttributedString alloc] initWithString:buttonTitle attributes:attributes];
 }
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
-    
+    [self.listView.mj_header beginRefreshing];
 }
 
 

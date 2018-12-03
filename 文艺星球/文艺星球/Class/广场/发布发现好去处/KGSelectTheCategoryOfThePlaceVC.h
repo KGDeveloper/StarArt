@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface KGSelectTheCategoryOfThePlaceVC : KGBaseViewController
 /** 选择品类 */
-@property (nonatomic,copy) void(^sendChooseSelectString)(NSString *imageUrl);
+@property (nonatomic,copy) void(^sendChooseSelectString)(NSString *imageUrl,NSInteger typeId,NSString *name);
 
 @end
 

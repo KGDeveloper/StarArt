@@ -11,6 +11,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface KGFoundDetailCell : UITableViewCell
+/** 计算高度 */
+- (CGFloat)returnCellHeightWithDic:(NSDictionary *)dic;
+/** 填充 */
+- (void)cellWithDic:(NSDictionary *)dic;
 
 @end
 

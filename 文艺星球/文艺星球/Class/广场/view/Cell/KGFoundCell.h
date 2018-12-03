@@ -24,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *englishLab;
 @property (weak, nonatomic) IBOutlet UIImageView *headerImage;
 @property (weak, nonatomic) IBOutlet UILabel *classLab;
+/** 数据填充 */
+- (void)sendModelToCell:(NSDictionary *)dic;
 
 @end
 

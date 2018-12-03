@@ -9,6 +9,8 @@
 #import "KGRequest.h"
 #import <AVFoundation/AVFoundation.h>
 #import "QiniuSDK.h"
+#import <AMapFoundationKit/AMapFoundationKit.h>
+#import <AMapLocationKit/AMapLocationKit.h>
 
 @implementation KGRequest
 
@@ -241,6 +243,22 @@
     
     return timeSp;
     
+}
+/** 获取当前位置 */
+- (CLLocationCoordinate2D)requestYourLocation{
+    AMapLocationManager *manager = [[AMapLocationManager alloc]init];
+    [manager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
+    manager.locationTimeout = 2;
+    manager.reGeocodeTimeout = 2;
+    __block CLLocationCoordinate2D yourLocation;
+    [manager requestLocationWithReGeocode:YES completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
+        if (error) {
+            yourLocation = CLLocationCoordinate2DMake(39.990461,116.497558);
+            return;
+        }
+        yourLocation = location.coordinate;
+    }];
+    return yourLocation;
 }
 
 @end

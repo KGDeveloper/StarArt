@@ -23,6 +23,8 @@
 /** 保存选择的照片 */
 @property (nonatomic,strong) NSMutableSet *imageSet;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *addBtuLeft;
+@property (nonatomic,assign) NSInteger scroe;
+@property (nonatomic,strong) MBProgressHUD *hud;
 
 @end
 
@@ -42,8 +44,10 @@
     /** 导航栏标题 */
     self.title = @"评论好去处";
     self.view.backgroundColor = KGWhiteColor;
+    self.submitBtu.userInteractionEnabled = NO;
     
     self.ideaTV.delegate = self;
+    self.scroe = 0;
     self.imageSet = [[NSMutableSet alloc]init];
     
 }
@@ -57,6 +61,7 @@
     [self.threeBtu setImage:[UIImage imageNamed:@"xingxing"] forState:UIControlStateNormal];
     [self.fourBtu setImage:[UIImage imageNamed:@"xingxing"] forState:UIControlStateNormal];
     [self.fiveBtu setImage:[UIImage imageNamed:@"xingxing"] forState:UIControlStateNormal];
+    self.scroe = 1;
 }
 - (IBAction)twoAction:(UIButton *)sender {
     [sender setImage:[UIImage imageNamed:@"xing"] forState:UIControlStateNormal];
@@ -64,6 +69,7 @@
     [self.threeBtu setImage:[UIImage imageNamed:@"xingxing"] forState:UIControlStateNormal];
     [self.fourBtu setImage:[UIImage imageNamed:@"xingxing"] forState:UIControlStateNormal];
     [self.fiveBtu setImage:[UIImage imageNamed:@"xingxing"] forState:UIControlStateNormal];
+    self.scroe = 2;
 }
 - (IBAction)threeAction:(UIButton *)sender {
     [sender setImage:[UIImage imageNamed:@"xing"] forState:UIControlStateNormal];
@@ -71,6 +77,7 @@
     [self.oneBtu setImage:[UIImage imageNamed:@"xing"] forState:UIControlStateNormal];
     [self.fourBtu setImage:[UIImage imageNamed:@"xingxing"] forState:UIControlStateNormal];
     [self.fiveBtu setImage:[UIImage imageNamed:@"xingxing"] forState:UIControlStateNormal];
+    self.scroe = 3;
 }
 - (IBAction)fourAction:(UIButton *)sender {
     [sender setImage:[UIImage imageNamed:@"xing"] forState:UIControlStateNormal];
@@ -78,6 +85,7 @@
     [self.threeBtu setImage:[UIImage imageNamed:@"xing"] forState:UIControlStateNormal];
     [self.oneBtu setImage:[UIImage imageNamed:@"xing"] forState:UIControlStateNormal];
     [self.fiveBtu setImage:[UIImage imageNamed:@"xingxing"] forState:UIControlStateNormal];
+    self.scroe = 4;
 }
 - (IBAction)fiveAction:(UIButton *)sender {
     [sender setImage:[UIImage imageNamed:@"xing"] forState:UIControlStateNormal];
@@ -85,9 +93,46 @@
     [self.threeBtu setImage:[UIImage imageNamed:@"xing"] forState:UIControlStateNormal];
     [self.fourBtu setImage:[UIImage imageNamed:@"xing"] forState:UIControlStateNormal];
     [self.oneBtu setImage:[UIImage imageNamed:@"xing"] forState:UIControlStateNormal];
+    self.scroe = 5;
 }
 - (IBAction)submitAction:(UIButton *)sender {
-    
+    if (self.ideaTV.text.length > 0 || ![self.ideaTV.text isEqualToString:@"分享你对这里的评价和感受吧！（至少15个字）"]) {
+        self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        dispatch_queue_t queue = dispatch_queue_create("上传图片", DISPATCH_QUEUE_SERIAL);
+        dispatch_sync(queue, ^{
+            if (self.imageSet.count > 0) {
+                NSArray *tmp = [self.imageSet allObjects];
+                __block NSMutableArray *finishArr = [NSMutableArray array];
+                __weak typeof(self) weakSelf = self;
+                for (int i = 0; i < tmp.count; i++) {
+                    [[KGRequest shareInstance] uploadImageToQiniuWithFile:[[KGRequest shareInstance] getImagePath:tmp[i]] result:^(NSString * _Nonnull strPath) {
+                        [finishArr addObject:strPath];
+                        [weakSelf requestDataWith:finishArr.copy];
+                    }];
+                }
+            }else{
+                [self requestDataWith:@[]];
+            }
+        });
+    }
+}
+/** 开始请求 */
+- (void)requestDataWith:(NSArray *)arr{
+    if (arr.count == self.imageSet.count) {
+        __weak typeof(self) weakSelf = self;
+        [KGRequest postWithUrl:SaveGoodPlaceComment parameters:@{@"uid":[KGUserInfo shareInstance].userId,@"pid":self.detailId,@"comment":self.ideaTV.text,@"score":@(self.scroe),@"images":arr} succ:^(id  _Nonnull result) {
+            [weakSelf.hud hideAnimated:YES];
+            if ([result[@"status"] integerValue] == 200) {
+                [[KGHUD showMessage:@"评论成功"] hideAnimated:YES afterDelay:1];
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            }else{
+                [[KGHUD showMessage:@"评论失败"] hideAnimated:YES afterDelay:1];
+            }
+        } fail:^(NSError * _Nonnull error) {
+            [weakSelf.hud hideAnimated:YES];
+            [[KGHUD showMessage:@"评论失败"] hideAnimated:YES afterDelay:1];
+        }];
+    }
 }
 - (IBAction)addImageAction:(UIButton *)sender {
     self.photoAlbm.hidden = NO;
@@ -155,6 +200,11 @@
     if (self.ideaTV.text.length < 1) {
         self.ideaTV.textColor = KGGrayColor;
         self.ideaTV.text = @"分享你对这里的评价和感受吧！（至少15个字）";
+        self.submitBtu.backgroundColor = KGLineColor;
+        self.submitBtu.userInteractionEnabled = NO;
+    }else{
+        self.submitBtu.backgroundColor = KGBlueColor;
+        self.submitBtu.userInteractionEnabled = YES;
     }
 }
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{

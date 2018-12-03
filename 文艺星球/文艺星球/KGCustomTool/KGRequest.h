@@ -26,6 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)uploadImageToQiniuWithFile:(NSString *)filePath result:(void(^)(NSString *strPath))uploadData;
 /** 照片获取本地路径转换 */
 - (NSString *)getImagePath:(UIImage *)Image;
+/** 获取当前位置 */
+- (CLLocationCoordinate2D)requestYourLocation;
 
 @end
 

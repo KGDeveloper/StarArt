@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface KGCommentOfThePlaceVC : KGBaseViewController
 
+@property (nonatomic,copy) NSString *detailId;
+
 @end
 
 NS_ASSUME_NONNULL_END

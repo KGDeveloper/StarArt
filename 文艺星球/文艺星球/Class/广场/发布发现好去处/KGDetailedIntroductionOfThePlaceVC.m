@@ -51,10 +51,15 @@
 }
 /** 导航栏右侧点击事件 */
 - (void)rightNavAction{
-    if (self.sendDetailedIntroduction) {
-        self.sendDetailedIntroduction(self.introduceTV.text, self.photosArr.copy);
+    if (self.photosArr.count > 3) {
+        if (self.sendDetailedIntroduction) {
+            NSArray *tmp = [self.photosArr allObjects];
+            self.sendDetailedIntroduction(self.introduceTV.text, tmp);
+        }
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        [[KGHUD showMessage:@"描述照片不得少于3张"] hideAnimated:YES afterDelay:1];
     }
-    [self.navigationController popViewControllerAnimated:YES];
 }
 /** 页面 */
 - (void)setUI{

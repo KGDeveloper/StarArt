@@ -17,6 +17,8 @@
 @property (nonatomic,copy) NSString *address;
 /** 截图 */
 @property (nonatomic,copy) UIImage *resultImage;
+@property(assign, nonatomic) CLLocationCoordinate2D coordinate;
+
 
 @end
 
@@ -62,9 +64,9 @@
 - (void)sendImageAndString{
     if (self.sendDetailedAddress) {
         if (self.resultImage) {
-            self.sendDetailedAddress(self.address,self.resultImage);
+            self.sendDetailedAddress(self.address,self.resultImage,self.coordinate);
         }else{
-            self.sendDetailedAddress(self.address,[UIImage imageNamed:@"好去处实例地图"]);
+            self.sendDetailedAddress(self.address,[UIImage imageNamed:@"好去处实例地图"],self.coordinate);
         }
     }
     [self.navigationController popViewControllerAnimated:YES];
@@ -79,6 +81,7 @@
             [[KGHUD showMessage:@"定位失败"] hideAnimated:YES afterDelay:1];
             return;
         }
+        weakSelf.coordinate = location.coordinate;
         weakSelf.address = [NSString stringWithFormat:@"%@%@%@%@",regeocode.province,regeocode.city,regeocode.district,regeocode.street];
         weakSelf.mapView.centerCoordinate = location.coordinate;
         

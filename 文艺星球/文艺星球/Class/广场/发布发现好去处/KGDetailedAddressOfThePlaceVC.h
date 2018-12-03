@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface KGDetailedAddressOfThePlaceVC : KGBaseViewController
 
 /** 地址信息 */
-@property (nonatomic,copy) void(^sendDetailedAddress)(NSString *address,UIImage *resultImage);
+@property (nonatomic,copy) void(^sendDetailedAddress)(NSString *address,UIImage *resultImage,CLLocationCoordinate2D location);
 
 @end
 

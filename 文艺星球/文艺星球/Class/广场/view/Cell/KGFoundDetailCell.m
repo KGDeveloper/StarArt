@@ -19,6 +19,7 @@
 @property (nonatomic,strong) UIImageView *threeImage;
 @property (nonatomic,strong) UIButton *zansBtu;
 @property (nonatomic,strong) UIView *line;
+@property (nonatomic,copy) NSDictionary *dataDic;
 
 @end
 
@@ -133,11 +134,119 @@
     .topSpaceToView(self.timeLab, 15)
     .heightIs(1);
     
-    [self setupAutoHeightWithBottomView:self.line bottomMargin:0];
 }
 /** 点赞 */
 - (void)zansAction:(UIButton *)sender{
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self animated:YES];
+    [KGRequest postWithUrl:SaveUserGoodPlaceCommentLikeStuts parameters:@{@"cid":self.dataDic[@"id"],@"uid":[KGUserInfo shareInstance].userId,@"likeStatus":self.dataDic[@"likeStatus"]} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            if ([sender.currentImage isEqual:[UIImage imageNamed:@"dianzan"]]) {
+                [sender setImage:[UIImage imageNamed:@"dianzan (2)"] forState:UIControlStateNormal];
+                [[KGHUD showMessage:@"取消点赞成功"] hideAnimated:YES afterDelay:1];
+            }else{
+                [sender setImage:[UIImage imageNamed:@"dianzan"] forState:UIControlStateNormal];
+                [[KGHUD showMessage:@"点赞成功"] hideAnimated:YES afterDelay:1];
+            }
+        }else{
+            [[KGHUD showMessage:@"操作失败"] hideAnimated:YES afterDelay:1];
+        }
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+        [[KGHUD showMessage:@"操作失败"] hideAnimated:YES afterDelay:1];
+    }];
+}
+/** 计算高度 */
+- (CGFloat)returnCellHeightWithDic:(NSDictionary *)dic{
+    NSMutableArray *ImageArr = [NSMutableArray array];
+    if (![dic[@"images"] isKindOfClass:[NSNull class]]) {
+        NSArray *tmp = dic[@"images"];
+        if (tmp.count > 0) {
+            [ImageArr addObjectsFromArray:tmp];
+        }
+    }
     
+    if (ImageArr.count > 0) {
+        return 200 + [dic[@"comment"] boundingRectWithSize:CGSizeMake(KGScreenWidth - 60, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontSHRegular(12)} context:nil].size.height;
+    }else{
+        return 100 + [dic[@"comment"] boundingRectWithSize:CGSizeMake(KGScreenWidth - 60, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontSHRegular(12)} context:nil].size.height;
+    }
+}
+/** 填充 */
+- (void)cellWithDic:(NSDictionary *)dic{
+    self.dataDic = dic;
+    NSDictionary *userDic = dic[@"user"];
+    [self.headerImage sd_setImageWithURL:[NSURL URLWithString:userDic[@"portraitUri"]]];
+    self.nameLab.text = userDic[@"username"];
+    self.detailLab.text = dic[@"comment"];
+    self.detailLab.sd_layout
+    .leftEqualToView(self.nameLab)
+    .rightSpaceToView(self.contentView, 15)
+    .topSpaceToView(self.headerImage, 15)
+    .autoHeightRatio(0);
+    NSMutableArray *ImageArr = [NSMutableArray array];
+    if (![dic[@"images"] isKindOfClass:[NSNull class]]) {
+        NSArray *tmp = dic[@"images"];
+        if (tmp.count > 0) {
+            [ImageArr addObjectsFromArray:tmp];
+        }
+    }
+    if (ImageArr.count > 0) {
+        if (ImageArr.count == 1) {
+            self.oneImage.hidden = NO;
+            [self.oneImage sd_setImageWithURL:[NSURL URLWithString:[ImageArr firstObject]]];
+            self.twoImage.hidden = YES;
+            self.threeImage.hidden = YES;
+        }else if (ImageArr.count == 2){
+            self.oneImage.hidden = NO;
+            self.twoImage.hidden = NO;
+            [self.oneImage sd_setImageWithURL:[NSURL URLWithString:[ImageArr firstObject]]];
+            [self.twoImage sd_setImageWithURL:[NSURL URLWithString:[ImageArr lastObject]]];
+            self.threeImage.hidden = YES;
+        }else{
+            self.oneImage.hidden = NO;
+            self.twoImage.hidden = NO;
+            self.threeImage.hidden = NO;
+            [self.oneImage sd_setImageWithURL:[NSURL URLWithString:[ImageArr firstObject]]];
+            [self.twoImage sd_setImageWithURL:[NSURL URLWithString:ImageArr[1]]];
+            [self.threeImage sd_setImageWithURL:[NSURL URLWithString:[ImageArr lastObject]]];
+        }
+        self.zansBtu.sd_layout
+        .rightSpaceToView(self.contentView, 15)
+        .topSpaceToView(self.oneImage, 15)
+        .widthIs(100)
+        .heightIs(15);
+        self.line.sd_layout
+        .leftSpaceToView(self.contentView, 15)
+        .rightSpaceToView(self.contentView, 15)
+        .topSpaceToView(self.timeLab, 15)
+        .heightIs(1);
+    }else{
+        self.oneImage.hidden = YES;
+        self.twoImage.hidden = YES;
+        self.threeImage.hidden = YES;
+        self.zansBtu.sd_layout
+        .rightSpaceToView(self.contentView, 15)
+        .topSpaceToView(self.detailLab, 15)
+        .widthIs(100)
+        .heightIs(15);
+        self.line.sd_layout
+        .leftSpaceToView(self.contentView, 15)
+        .rightSpaceToView(self.contentView, 15)
+        .topSpaceToView(self.timeLab, 15)
+        .heightIs(1);
+    }
+    self.timeLab.text = dic[@"createTimeStr"];
+    self.timeLab.sd_layout
+    .leftEqualToView(self.detailLab)
+    .topSpaceToView(self.oneImage, 15)
+    .widthIs(150)
+    .heightIs(10);
+    if ([dic[@"likeStatus"] integerValue] == 0) {
+        [self.zansBtu setImage:[UIImage imageNamed:@"dianzan (2)"] forState:UIControlStateNormal];
+    }else{
+        [self.zansBtu setImage:[UIImage imageNamed:@"dianzan"] forState:UIControlStateNormal];
+    }
 }
 
 - (void)awakeFromNib {
