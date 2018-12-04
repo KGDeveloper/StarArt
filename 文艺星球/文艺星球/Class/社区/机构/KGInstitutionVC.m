@@ -9,8 +9,9 @@
 #import "KGInstitutionVC.h"
 #import "KGAgencyHomePageVC.h"
 #import "KGInstitutionDramaVC.h"
+#import "KGAgencyHomePageCell.h"
 
-@interface KGInstitutionVC ()<UITextFieldDelegate,UIScrollViewDelegate>
+@interface KGInstitutionVC ()<UITextFieldDelegate,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 /** 底部加载 */
 @property (nonatomic,strong) UIScrollView *backScroll;
 /** 顶部滚动 */
@@ -23,6 +24,9 @@
 @property (nonatomic,strong) UIScrollView *hotScroll;
 /** 最新活动 */
 @property (nonatomic,strong) UIScrollView *newsScroll;
+@property (nonatomic,strong) UITableView *listView;
+@property (nonatomic,strong) NSArray *topListArr;
+@property (nonatomic,strong) NSArray *lowListArr;
 
 @end
 
@@ -43,16 +47,53 @@
     self.view.backgroundColor = KGWhiteColor;
     self.title = @"机构";
     
-    [self setUI];
+    [self requestData];
+    [self setUpListView];
+}
+/** 首页请求数据 */
+- (void)requestData{
+    NSString *cityId = nil;
+    if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"北京市"]) {
+        cityId = @"1";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"天津市"]){
+        cityId = @"43";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"西安市"]){
+        cityId = @"54";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"广州市"]){
+        cityId = @"28";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"成都市"]){
+        cityId = @"65";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"上海市"]){
+        cityId = @"13";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"深圳市"]){
+        cityId = @"36";
+    }else{
+        cityId = @"1";
+    }
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:SelectCommunityPlaceHome parameters:@{@"cityID":cityId,@"userLongitude":@([KGRequest shareInstance].requestYourLocation.longitude),@"userLatitude":@([KGRequest shareInstance].requestYourLocation.latitude)} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            weakSelf.topListArr = dic[@"exhibitionLists"];
+            weakSelf.lowListArr = dic[@"exhibitionList"];
+        }
+        [weakSelf setScrollView];
+        [weakSelf.listView reloadData];
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+    }];
 }
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{
     [self.navigationController popViewControllerAnimated:YES];
 }
 /** 创建ui */
-- (void)setUI{
-    self.backScroll = [[UIScrollView alloc]initWithFrame:self.view.bounds];
-    self.backScroll.contentSize = self.view.bounds.size;
+- (UIView *)setUI{
+    self.backScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, 420)];
+    self.backScroll.backgroundColor = KGWhiteColor;
+    self.backScroll.contentSize = CGSizeMake(KGScreenWidth, 420);
     self.backScroll.showsVerticalScrollIndicator = NO;
     self.backScroll.showsHorizontalScrollIndicator = NO;
     if (@available(iOS 11.0, *)) {
@@ -62,12 +103,12 @@
     [self.view addSubview:self.backScroll];
     
     /** 蓝色背景 */
-    UIView *backBlue = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, 175 + KGRectNavAndStatusHight)];
+    UIView *backBlue = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, 175)];
     backBlue.backgroundColor = KGBlueColor;
     [self.backScroll addSubview:backBlue];
     /** 搜索框 */
     UIButton *searchBtu = [UIButton buttonWithType:UIButtonTypeCustom];
-    searchBtu.frame = CGRectMake(15, KGRectNavAndStatusHight + 25, KGScreenWidth - 30, 30);
+    searchBtu.frame = CGRectMake(15,25, KGScreenWidth - 30, 30);
     [searchBtu setTitle:@"搜索喜欢的场馆" forState:UIControlStateNormal];
     [searchBtu setImage:[UIImage imageNamed:@"sousuo"] forState:UIControlStateNormal];
     [searchBtu setTitleColor:KGWhiteColor forState:UIControlStateNormal];
@@ -77,7 +118,7 @@
     searchBtu.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
     [self.backScroll addSubview:searchBtu];
     /** 顶部滚动图 */
-    self.topScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(10, KGRectNavAndStatusHight + 65, KGScreenWidth - 20 , 120)];
+    self.topScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(10,65, KGScreenWidth - 20 , 120)];
     self.topScroll.contentSize = CGSizeMake((KGScreenWidth - 20)*5, 120);
     self.topScroll.showsVerticalScrollIndicator = NO;
     self.topScroll.showsHorizontalScrollIndicator = NO;
@@ -88,9 +129,8 @@
     self.topScroll.layer.masksToBounds = YES;
     [self.backScroll addSubview:self.topScroll];
     
-    [self setScrollView];
     /** 页码 */
-    self.pageCol = [[UIPageControl alloc]initWithFrame:CGRectMake(0, KGRectNavAndStatusHight + 165, KGScreenWidth, 5)];
+    self.pageCol = [[UIPageControl alloc]initWithFrame:CGRectMake(0,165, KGScreenWidth, 5)];
     self.pageCol.numberOfPages = 5;
     self.pageCol.currentPage = 0;
     self.pageCol.pageIndicatorTintColor = KGWhiteColor;
@@ -98,7 +138,7 @@
     [self.backScroll addSubview:self.pageCol];
     /** 选择机构类型 */
     UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 345, 190)];
-    backView.center = CGPointMake(KGScreenWidth/2, 270 + KGRectNavAndStatusHight);
+    backView.center = CGPointMake(KGScreenWidth/2, 270);
     backView.backgroundColor = KGWhiteColor;
     backView.layer.cornerRadius = 5;
     backView.layer.borderColor = KGLineColor.CGColor;
@@ -116,42 +156,41 @@
         }
     }
     /** 近期热门 */
-    UILabel *hotLab = [[UILabel alloc]initWithFrame:CGRectMake(15, 395 + KGRectNavAndStatusHight, KGScreenWidth - 30, 15)];
+    UILabel *hotLab = [[UILabel alloc]initWithFrame:CGRectMake(15, 395, KGScreenWidth - 30, 15)];
     hotLab.textColor = KGBlackColor;
     hotLab.text = @"近期热门";
     hotLab.font = KGFontSHBold(15);
     [self.backScroll addSubview:hotLab];
-    /** 最新活动 */
-    UILabel *newsLab = [[UILabel alloc]initWithFrame:CGRectMake(15, 545 + KGRectNavAndStatusHight, KGScreenWidth - 30, 15)];
-    newsLab.textColor = KGBlackColor;
-    newsLab.text = @"最新活动";
-    newsLab.font = KGFontSHBold(15);
-    [self.backScroll addSubview:newsLab];
-    /** 热门滚动 */
-    self.hotScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(15, 425 + KGRectNavAndStatusHight, KGScreenWidth - 15 , 100)];
-    self.hotScroll.contentSize = CGSizeMake(540, 100);
-    self.hotScroll.showsVerticalScrollIndicator = NO;
-    self.hotScroll.showsHorizontalScrollIndicator = NO;
-    self.hotScroll.pagingEnabled = YES;
-    self.hotScroll.bounces = NO;
-    [self.backScroll addSubview:self.hotScroll];
-    for (int i = 0; i < 5; i++) {
-        [self.hotScroll addSubview:[self createImageAndTitleWithFrame:CGRectMake(110*i, 0, 100, 100) title:@"你好啊" image:nil tag:1999+i]];
-    }
-    /** 活动滚动 */
-    self.newsScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(15, 575 + KGRectNavAndStatusHight, KGScreenWidth - 15 , 100)];
-    self.newsScroll.contentSize = CGSizeMake(540, 100);
-    self.newsScroll.showsVerticalScrollIndicator = NO;
-    self.newsScroll.showsHorizontalScrollIndicator = NO;
-    self.newsScroll.pagingEnabled = YES;
-    self.newsScroll.bounces = NO;
-    [self.backScroll addSubview:self.newsScroll];
-    for (int i = 0; i < 5; i++) {
-        [self.newsScroll addSubview:[self createImageAndTitleWithFrame:CGRectMake(110*i, 0, 100, 100) title:@"哈哈哈" image:nil tag:2999+i]];
-    }
-    
-    self.backScroll.contentSize = CGSizeMake(KGScreenWidth, 690 + KGRectNavAndStatusHight);
-    
+//    /** 最新活动 */
+//    UILabel *newsLab = [[UILabel alloc]initWithFrame:CGRectMake(15, 545 + KGRectNavAndStatusHight, KGScreenWidth - 30, 15)];
+//    newsLab.textColor = KGBlackColor;
+//    newsLab.text = @"最新活动";
+//    newsLab.font = KGFontSHBold(15);
+//    [self.backScroll addSubview:newsLab];
+//    /** 热门滚动 */
+//    self.hotScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(15, 425 + KGRectNavAndStatusHight, KGScreenWidth - 15 , 100)];
+//    self.hotScroll.contentSize = CGSizeMake(540, 100);
+//    self.hotScroll.showsVerticalScrollIndicator = NO;
+//    self.hotScroll.showsHorizontalScrollIndicator = NO;
+//    self.hotScroll.pagingEnabled = YES;
+//    self.hotScroll.bounces = NO;
+//    [self.backScroll addSubview:self.hotScroll];
+//    for (int i = 0; i < 5; i++) {
+//        [self.hotScroll addSubview:[self createImageAndTitleWithFrame:CGRectMake(110*i, 0, 100, 100) title:@"你好啊" image:nil tag:1999+i]];
+//    }
+//    /** 活动滚动 */
+//    self.newsScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(15, 575 + KGRectNavAndStatusHight, KGScreenWidth - 15 , 100)];
+//    self.newsScroll.contentSize = CGSizeMake(540, 100);
+//    self.newsScroll.showsVerticalScrollIndicator = NO;
+//    self.newsScroll.showsHorizontalScrollIndicator = NO;
+//    self.newsScroll.pagingEnabled = YES;
+//    self.newsScroll.bounces = NO;
+//    [self.backScroll addSubview:self.newsScroll];
+//    for (int i = 0; i < 5; i++) {
+//        [self.newsScroll addSubview:[self createImageAndTitleWithFrame:CGRectMake(110*i, 0, 100, 100) title:@"哈哈哈" image:nil tag:2999+i]];
+//    }
+//
+    return self.backScroll;
 }
 /** 监听输入 */
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
@@ -166,11 +205,32 @@
 }
 /** 创建滚动图 */
 - (void)setScrollView{
-    for (int i = 0; i < 5; i++) {
-        KGImageView *imageView = [[KGImageView alloc]initWithFrame:CGRectMake((KGScreenWidth - 20)*i, 0, KGScreenWidth - 20, 120)];
-        imageView.deleteBtu.hidden = YES;
-        imageView.backgroundColor = KGLineColor;
+    for (int i = 0; i < self.topListArr.count; i++) {
+        NSDictionary *dic = self.topListArr[i];
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake((KGScreenWidth - 20)*i, 0, KGScreenWidth - 20, 120)];
+        if (![dic[@"image"] isKindOfClass:[NSNull class]]) {
+            [imageView sd_setImageWithURL:[NSURL URLWithString:[[dic[@"image"] componentsSeparatedByString:@"#"] firstObject]]];
+        }else{
+            imageView.backgroundColor = [KGLineColor colorWithAlphaComponent:0.2];
+        }
+        imageView.userInteractionEnabled = YES;
+        imageView.tag = 300 + i;
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
         [self.topScroll addSubview:imageView];
+        
+        UITapGestureRecognizer *tag = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(selectImageView:)];
+        [imageView addGestureRecognizer:tag];
+    }
+}
+/** 点击事件 */
+- (void)selectImageView:(UITapGestureRecognizer *)tag{
+    NSDictionary *dic = self.topListArr[tag.view.tag - 300];
+    if ([dic[@"type"] integerValue] == 2 && [dic[@"type"] integerValue] == 7 && [dic[@"type"] integerValue] == 12) {
+        
+    }else if ([dic[@"type"] integerValue] == 5){
+        
+    }else{
+        
     }
 }
 /** 滚动视图代理 */
@@ -289,6 +349,51 @@
     [btuView addSubview:btu];
     
     return btuView;
+}
+/** 列表 */
+- (void)setUpListView{
+    self.listView = [[UITableView alloc]initWithFrame:CGRectMake(0, KGRectNavAndStatusHight, KGScreenWidth, KGScreenHeight - KGRectNavAndStatusHight)];
+    self.listView.delegate = self;
+    self.listView.dataSource = self;
+    self.listView.emptyDataSetSource = self;
+    self.listView.emptyDataSetDelegate = self;
+    self.listView.tableFooterView = [UIView new];
+    self.listView.tableHeaderView = [self setUI];
+    self.listView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.listView.showsVerticalScrollIndicator = NO;
+    self.listView.showsHorizontalScrollIndicator = NO;
+    [self.view addSubview:self.listView];
+    [self.listView registerNib:[UINib nibWithNibName:@"KGAgencyHomePageCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"KGAgencyHomePageCell"];
+}
+/** 空页面 */
+- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView{
+    return [UIImage imageNamed:@"kongyemian"];
+}
+// MARK: --UITableViewDelegate--
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 137;
+}
+// MARK :--UITableViewDataSource--
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return self.lowListArr.count;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    KGAgencyHomePageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGAgencyHomePageCell" forIndexPath:indexPath];
+    if (self.lowListArr.count > 0) {
+        NSDictionary *dic = self.lowListArr[indexPath.row];
+        [cell cellDetailWithDictionary:dic];
+    }
+    return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSDictionary *dic = self.lowListArr[indexPath.row];
+    if ([dic[@"type"] integerValue] == 2 && [dic[@"type"] integerValue] == 7 && [dic[@"type"] integerValue] == 12) {
+        
+    }else if ([dic[@"type"] integerValue] == 5){
+        
+    }else{
+        
+    }
 }
 
 /*

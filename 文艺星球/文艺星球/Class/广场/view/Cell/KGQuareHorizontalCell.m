@@ -84,6 +84,7 @@
     /** 图片view */
     self.photoView.contentMode = UIViewContentModeScaleAspectFill;
     self.photoView.backgroundColor = KGLineColor;
+    self.photoView.layer.masksToBounds = YES;
     self.photoView.sd_layout.leftEqualToView(self.labView).rightEqualToView(self.labView).topSpaceToView(self.labView, 15).heightIs((KGScreenWidth - 30)/69*46);
     /** 显示照片书view */
     self.countBack.backgroundColor = [KGBlackColor colorWithAlphaComponent:0.2];
@@ -232,6 +233,7 @@
 /** 设置内容 */
 - (void)cellDataWithDictionary:(NSDictionary *)dic{
     NSString *contentStr = dic[@"content"];
+    [self.labView removeAllSubviews];
     self.userDic = dic;
     [self.headerImage sd_setImageWithURL:[NSURL URLWithString:dic[@"userPortraitUri"]]];
     self.nameLab.text = dic[@"userName"];

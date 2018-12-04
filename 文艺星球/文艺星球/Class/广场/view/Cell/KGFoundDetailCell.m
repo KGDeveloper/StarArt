@@ -85,6 +85,7 @@
     .autoHeightRatio(0);
     /** 图片 */
     self.oneImage.contentMode = UIViewContentModeScaleAspectFill;
+    self.oneImage.layer.masksToBounds = YES;
     self.oneImage.backgroundColor = KGLineColor;
     self.oneImage.sd_layout
     .topSpaceToView(self.detailLab, 10)
@@ -92,6 +93,7 @@
     .widthIs(80)
     .heightEqualToWidth();
     self.twoImage.contentMode = UIViewContentModeScaleAspectFill;
+    self.twoImage.layer.masksToBounds = YES;
     self.twoImage.backgroundColor = KGLineColor;
     self.twoImage.sd_layout
     .topSpaceToView(self.detailLab, 10)
@@ -99,6 +101,7 @@
     .widthIs(80)
     .heightEqualToWidth();
     self.threeImage.contentMode = UIViewContentModeScaleAspectFill;
+    self.threeImage.layer.masksToBounds = YES;
     self.threeImage.backgroundColor = KGLineColor;
     self.threeImage.sd_layout
     .topSpaceToView(self.detailLab, 10)

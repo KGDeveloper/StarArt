@@ -274,7 +274,7 @@ typedef NS_ENUM(NSInteger,DATASTYLE) {
     if (arr.count > 0) {
         switch (self.style) {
             case DATASTYLE_LeftAliment:/** 横向排版居左 */
-                self.listView.tableHeaderView = [self headerHorizontalView:(KGScreenWidth - 30)/69*46 + arr.count*23 + 160];
+                self.listView.tableHeaderView = [self headerHorizontalView:(KGScreenWidth - 30)/69*46 + arr.count*23 + 190];
                 for (int i = 0; i < arr.count; i++) {
                     UILabel *tmp = [[UILabel alloc]initWithFrame:CGRectMake(15,23*i, KGScreenWidth - 30, 13)];
                     tmp.text = arr[i];
@@ -286,7 +286,7 @@ typedef NS_ENUM(NSInteger,DATASTYLE) {
                 [self setLabAligment:NSTextAlignmentLeft];
                 break;
             case DATASTYLE_CenterAliment:/** 横向排版居中 */
-                self.listView.tableHeaderView = [self headerHorizontalView:(KGScreenWidth - 30)/69*46+arr.count*23 + 160];
+                self.listView.tableHeaderView = [self headerHorizontalView:(KGScreenWidth - 30)/69*46+arr.count*23 + 190];
                 for (int i = 0; i < arr.count; i++) {
                     UILabel *tmp = [[UILabel alloc]initWithFrame:CGRectMake(15,23*i, KGScreenWidth - 30, 13)];
                     tmp.text = arr[i];
@@ -298,7 +298,7 @@ typedef NS_ENUM(NSInteger,DATASTYLE) {
                 [self setLabAligment:NSTextAlignmentCenter];
                 break;
             case DATASTYLE_RightTopAliment:/** 竖向排版居上 */
-                self.listView.tableHeaderView = [self headerVerticalView:(KGScreenWidth - 160)/5*7 + 160];
+                self.listView.tableHeaderView = [self headerVerticalView:(KGScreenWidth - 160)/5*7 + 190];
                 for (int i = 0; i < arr.count; i++) {
                     UILabel *tmp = [[UILabel alloc]initWithFrame:CGRectMake(self.contextView.bounds.size.width - 28 - 23*i,0, 13, [arr[i] boundingRectWithSize:CGSizeMake(13, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontFZ(13)} context:nil].size.height)];
                     tmp.text = arr[i];
@@ -311,7 +311,7 @@ typedef NS_ENUM(NSInteger,DATASTYLE) {
                 break;
             
             case DATASTYLE_RightCenterAliment:/** 竖向排版居中 */
-                self.listView.tableHeaderView = [self headerVerticalView:(KGScreenWidth - 160)/5*7 + 160];
+                self.listView.tableHeaderView = [self headerVerticalView:(KGScreenWidth - 160)/5*7 + 190];
                 for (int i = 0; i < arr.count; i++) {
                     UILabel *tmp = [[UILabel alloc]initWithFrame:CGRectMake(self.contextView.bounds.size.width - 28 - 23*i,0, 13,[arr[i] boundingRectWithSize:CGSizeMake(13, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontFZ(13)} context:nil].size.height)];
                     tmp.center = CGPointMake(self.contextView.bounds.size.width - 28 - 23*i + 7, self.contextView.bounds.origin.y + self.contextView.bounds.size.height/2);
@@ -324,7 +324,7 @@ typedef NS_ENUM(NSInteger,DATASTYLE) {
                 }
                 break;
             case DATASTYLE_RoundAliment:/** 横向排版居中 */
-                self.listView.tableHeaderView = [self headerHorizontalView:230+arr.count*23 + 160];
+                self.listView.tableHeaderView = [self headerRoundView:230+arr.count*23 + 190];
                 for (int i = 0; i < arr.count; i++) {
                     UILabel *tmp = [[UILabel alloc]initWithFrame:CGRectMake(15,23*i, KGScreenWidth - 30, 13)];
                     tmp.text = arr[i];

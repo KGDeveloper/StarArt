@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface KGSeeFriendsVC : KGBaseViewController
 /** 是否显示关注按钮 */
 @property (nonatomic,copy) NSString *isShow;
+/** 是否关注 */
+@property (nonatomic,copy) NSString *isAttention;
 
 @end
 

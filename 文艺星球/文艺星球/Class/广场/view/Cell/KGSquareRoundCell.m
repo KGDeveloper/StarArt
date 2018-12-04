@@ -225,6 +225,7 @@
 /** 设置内容 */
 - (void)cellDataWithDictionary:(NSDictionary *)dic{
     NSString *contentStr = dic[@"content"];
+    [self.labView removeAllSubviews];
     self.userDic = dic;
     [self.headerImage sd_setImageWithURL:[NSURL URLWithString:dic[@"userPortraitUri"]]];
     self.nameLab.text = dic[@"userName"];

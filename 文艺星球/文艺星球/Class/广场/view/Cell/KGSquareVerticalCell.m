@@ -83,6 +83,7 @@
     /** 图片view */
     self.photoView.contentMode = UIViewContentModeScaleAspectFill;
     self.photoView.backgroundColor = KGLineColor;
+    self.photoView.layer.masksToBounds = YES;
     self.photoView.sd_layout.leftEqualToView(self.headerImage).topSpaceToView(self.headerImage, 15).widthIs(KGScreenWidth - 160).heightIs((KGScreenWidth - 160)/50*69);
     /** 显示照片书view */
     self.countBack.backgroundColor = [KGBlackColor colorWithAlphaComponent:0.2];

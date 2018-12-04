@@ -260,5 +260,21 @@
     }];
     return yourLocation;
 }
+/** 获取当前城市 */
+- (NSString *)userLocationCity{
+    AMapLocationManager *manager = [[AMapLocationManager alloc]init];
+    [manager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
+    manager.locationTimeout = 2;
+    manager.reGeocodeTimeout = 2;
+    __block NSString *userCity = nil;
+    [manager requestLocationWithReGeocode:YES completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
+        if (error) {
+            userCity = @"北京市";
+            return;
+        }
+        userCity = regeocode.city;
+    }];
+    return userCity;
+}
 
 @end

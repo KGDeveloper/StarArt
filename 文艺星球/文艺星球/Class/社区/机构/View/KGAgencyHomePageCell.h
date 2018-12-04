@@ -33,6 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *addressLab;
 /** 介绍 */
 @property (weak, nonatomic) IBOutlet UILabel *detailLab;
+/** 内容填充 */
+- (void)cellDetailWithDictionary:(NSDictionary *)dic;
 
 @end
 

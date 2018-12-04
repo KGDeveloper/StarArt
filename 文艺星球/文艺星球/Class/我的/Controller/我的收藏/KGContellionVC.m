@@ -105,10 +105,10 @@
 }
 /** 顶部滚动按钮 */
 - (void)setTopView{
-    NSArray *titleArr = @[@"机构",@"展览",@"广场",@"文章",@"图书"];
-    for (int i = 0; i < 5; i++) {
+    NSArray *titleArr = @[@"机构",@"展览",@"文章",@"图书"];
+    for (int i = 0; i < 4; i++) {
         UIButton *touchBtu = [UIButton buttonWithType:UIButtonTypeCustom];
-        touchBtu.frame = CGRectMake(KGScreenWidth/5*i, KGRectNavAndStatusHight, KGScreenWidth/5, 50);
+        touchBtu.frame = CGRectMake(KGScreenWidth/4*i, KGRectNavAndStatusHight, KGScreenWidth/4, 50);
         [touchBtu setTitle:titleArr[i] forState:UIControlStateNormal];
         touchBtu.titleLabel.font = KGFontSHRegular(14);
         [touchBtu setTitleColor:KGGrayColor forState:UIControlStateNormal];
@@ -120,12 +120,14 @@
     }
     self.line = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 30, 2)];
     self.line.backgroundColor = KGBlueColor;
-    self.line.center = CGPointMake(KGScreenWidth/10,KGRectNavAndStatusHight + 49);
+    self.line.center = CGPointMake(KGScreenWidth/8,KGRectNavAndStatusHight + 49);
     [self.view addSubview:self.line];
     
 }
 /** 顶部按钮点击事件 */
 - (void)touchAction:(UIButton *)sender{
+    self.deleteArr = [NSMutableArray array];
+    self.dataArr = [NSMutableArray array];
     [UIView animateWithDuration:0.2 animations:^{
         self.line.center = CGPointMake(sender.center.x, self.line.center.y);
     }];
@@ -157,7 +159,6 @@
         [self requestDataWithType:4];
         self.type = 4;
     }
-    self.deleteArr = [NSMutableArray array];
     [self.allChooseBtu setImage:[UIImage imageNamed:@"weixuanzhong"] forState:UIControlStateNormal];
     [self.listView reloadData];
 }

@@ -28,6 +28,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)getImagePath:(UIImage *)Image;
 /** 获取当前位置 */
 - (CLLocationCoordinate2D)requestYourLocation;
+/** 获取当前城市 */
+- (NSString *)userLocationCity;
 
 @end
 

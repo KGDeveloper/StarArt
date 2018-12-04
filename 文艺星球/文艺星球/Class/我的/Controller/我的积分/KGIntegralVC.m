@@ -105,6 +105,7 @@
     [btu setTitle:title forState:UIControlStateNormal];
     [btu setTitleColor:color forState:UIControlStateNormal];
     if ([backColor isEqual:KGWhiteColor]) {
+        btu.backgroundColor = backColor;
         btu.layer.borderColor = KGBlueColor.CGColor;
     }else{
         btu.backgroundColor = backColor;

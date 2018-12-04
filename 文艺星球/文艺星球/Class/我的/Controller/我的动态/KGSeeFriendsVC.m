@@ -10,6 +10,7 @@
 #import "KGSquareRoundCell.h"
 #import "KGSquareVerticalCell.h"
 #import "KGQuareHorizontalCell.h"
+#import "KGSquareDetailVC.h"
 
 @interface KGSeeFriendsVC ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 /** 消息 */
@@ -23,6 +24,7 @@
 /** 签名 */
 @property (nonatomic,strong) UILabel *signaturlLab;
 @property (nonatomic,strong) NSMutableArray *dataArr;
+@property (nonatomic,assign) NSInteger page;
 
 @end
 
@@ -47,6 +49,7 @@
     }
     self.view.backgroundColor = KGWhiteColor;
     self.dataArr = [NSMutableArray array];
+    self.page = 1;
     
     [self requestData];
     [self setUpListView];
@@ -54,16 +57,26 @@
 /** 查看动态 */
 - (void)requestData{
     __weak typeof(self) weakSelf = self;
-    [KGRequest postWithUrl:ListMessage parameters:@{@"pageSize":@"20",@"pageIndex":@"1",@"uid":[KGUserInfo shareInstance].userId} succ:^(id  _Nonnull result) {
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    [KGRequest postWithUrl:ListMessage parameters:@{@"pageSize":@"20",@"pageIndex":@(self.page),@"uid":[KGUserInfo shareInstance].userId} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
         if ([result[@"status"] integerValue] == 200) {
             NSDictionary *dic = result[@"data"];
             NSArray *tmp = dic[@"list"];
             if (tmp.count > 0 ) {
                 [weakSelf.dataArr addObjectsFromArray:tmp];
+                NSDictionary *dic = [weakSelf.dataArr firstObject];
+                [weakSelf.backHeaderImage sd_setImageWithURL:[NSURL URLWithString:dic[@"userPortraitUri"]]];
+                [weakSelf.headerImage sd_setImageWithURL:[NSURL URLWithString:dic[@"userPortraitUri"]]];
+                weakSelf.nameLab.text = dic[@"userName"];
+                weakSelf.signaturlLab.text = dic[@"personalitySignature"];
             }
         }
+        [weakSelf.listView.mj_header endRefreshing];
+        [weakSelf.listView.mj_footer beginRefreshing];
+        [weakSelf.listView reloadData];
     } fail:^(NSError * _Nonnull error) {
-        
+        [hud hideAnimated:YES];
     }];
 }
 /** 导航栏返回按钮点击事件 */
@@ -87,6 +100,18 @@
     self.listView.tableFooterView = [UIView new];
     self.listView.tableHeaderView = [self setUpHeaderView];
     self.listView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    __weak typeof(self) weakSelf = self;
+    self.listView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        weakSelf.page = 1;
+        weakSelf.dataArr = [NSMutableArray array];
+        [weakSelf.listView.mj_header beginRefreshing];
+        [weakSelf requestData];
+    }];
+    self.listView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        weakSelf.page++;
+        [weakSelf.listView.mj_footer beginRefreshing];
+        [weakSelf requestData];
+    }];
     [self.view addSubview:self.listView];
     
     [self.listView registerClass:[KGSquareRoundCell class] forCellReuseIdentifier:@"KGSquareRoundCell"];
@@ -120,7 +145,7 @@
     [hedaerView addSubview:self.nameLab];
     /** 签名 */
     self.signaturlLab = [[UILabel alloc]initWithFrame:CGRectMake(0, self.nameLab.frame.origin.y + 24, KGScreenWidth, 11)];
-    self.signaturlLab.text = @"曾经沧海难为水，除却巫山不是云";
+    self.signaturlLab.text = @"";
     self.signaturlLab.textColor = KGWhiteColor;
     self.signaturlLab.font = KGFontSHRegular(11);
     self.signaturlLab.textAlignment = NSTextAlignmentCenter;
@@ -128,22 +153,42 @@
     return hedaerView;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 0;
+    return self.dataArr.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 500;
+    NSDictionary *dic = self.dataArr[indexPath.row];
+    if ([dic[@"composing"] integerValue] == 2) {
+        KGSquareRoundCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGSquareRoundCell"];
+        return [cell rowHeightWithDictionary:dic];
+    }else if ([dic[@"composing"] integerValue] == 0 || [dic[@"composing"] integerValue] == 1){
+        KGQuareHorizontalCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGQuareHorizontalCell"];
+        return [cell rowHeightWithDictionary:dic];
+    }else{
+        KGSquareVerticalCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGSquareVerticalCell"];
+        return [cell rowHeightWithDictionary:dic];
+    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0) {
+    NSDictionary *dic = self.dataArr[indexPath.row];
+    if ([dic[@"composing"] integerValue] == 2) {
         KGSquareRoundCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGSquareRoundCell"];
+        [cell cellDataWithDictionary:dic];
         return cell;
-    }else if (indexPath.row == 1){
+    }else if ([dic[@"composing"] integerValue] == 0 || [dic[@"composing"] integerValue] == 1){
         KGQuareHorizontalCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGQuareHorizontalCell"];
+        [cell cellDataWithDictionary:dic];
         return cell;
     }else{
         KGSquareVerticalCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGSquareVerticalCell"];
+        [cell cellDataWithDictionary:dic];
         return cell;
     }
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSDictionary *dic = self.dataArr[indexPath.row];
+    KGSquareDetailVC *vc = [[KGSquareDetailVC alloc]init];
+    vc.newsId = [NSString stringWithFormat:@"%@",dic[@"id"]];
+    [self pushHideenTabbarViewController:vc animted:YES];
 }
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView{
     return [UIImage imageNamed:@"kongyemian"];
