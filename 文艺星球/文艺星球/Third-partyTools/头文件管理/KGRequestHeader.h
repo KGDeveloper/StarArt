@@ -86,8 +86,8 @@
 
 /** 社区场所首页 */
 #define SelectCommunityPlaceHome [POSTURL stringByAppendingString:@"/api/merchants/selectCommunityPlaceHome"]
-
-
+/** 普通场所详情 */
+#define SelectCommunityPlaceByID [POSTURL stringByAppendingString:@"/api/merchants/selectCommunityPlaceByID"]
 
 
 

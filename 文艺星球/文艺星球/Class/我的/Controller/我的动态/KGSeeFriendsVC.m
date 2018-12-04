@@ -125,6 +125,7 @@
     /** 背景头像 */
     self.backHeaderImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, KGScreenWidth/750*470 - 10)];
     self.backHeaderImage.contentMode = UIViewContentModeScaleAspectFill;
+    self.backHeaderImage.layer.masksToBounds = YES;
     self.backHeaderImage.backgroundColor = KGGrayColor;
     [hedaerView addSubview:self.backHeaderImage];
     /** 头像 */

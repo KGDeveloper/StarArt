@@ -10,6 +10,8 @@
 #import "KGAgencyHomePageVC.h"
 #import "KGInstitutionDramaVC.h"
 #import "KGAgencyHomePageCell.h"
+#import "KGAgencyDetailVC.h"
+#import "KGInstitutionDramaDetailVC.h"
 
 @interface KGInstitutionVC ()<UITextFieldDelegate,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 /** 底部加载 */
@@ -228,9 +230,13 @@
     if ([dic[@"type"] integerValue] == 2 && [dic[@"type"] integerValue] == 7 && [dic[@"type"] integerValue] == 12) {
         
     }else if ([dic[@"type"] integerValue] == 5){
-        
+        KGInstitutionDramaDetailVC *vc = [[KGInstitutionDramaDetailVC alloc]initWithNibName:@"KGInstitutionDramaDetailVC" bundle:nil];
+        vc.sendID = [NSString stringWithFormat:@"%@",dic[@"id"]];
+        [self pushHideenTabbarViewController:vc animted:YES];
     }else{
-        
+        KGAgencyDetailVC *vc = [[KGAgencyDetailVC alloc]init];
+        vc.sendID = [NSString stringWithFormat:@"%@",dic[@"id"]];
+        [self pushHideenTabbarViewController:vc animted:YES];
     }
 }
 /** 滚动视图代理 */
@@ -303,26 +309,6 @@
         KGAgencyHomePageVC *vc = [[KGAgencyHomePageVC alloc]init];
         vc.scenarioStyle = KGScenarioStyleTheatre;
         [self pushHideenTabbarViewController:vc animted:YES];
-    }else if (sender.tag == 1999){
-        
-    }else if (sender.tag == 2000){
-        
-    }else if (sender.tag == 2001){
-        
-    }else if (sender.tag == 2002){
-        
-    }else if (sender.tag == 2003){
-        
-    }else if (sender.tag == 2999){
-        
-    }else if (sender.tag == 3000){
-        
-    }else if (sender.tag == 3001){
-        
-    }else if (sender.tag == 3002){
-        
-    }else if (sender.tag == 3003){
-        
     }
 }
 /** 图片文字 */
@@ -390,9 +376,13 @@
     if ([dic[@"type"] integerValue] == 2 && [dic[@"type"] integerValue] == 7 && [dic[@"type"] integerValue] == 12) {
         
     }else if ([dic[@"type"] integerValue] == 5){
-        
+        KGInstitutionDramaDetailVC *vc = [[KGInstitutionDramaDetailVC alloc]initWithNibName:@"KGInstitutionDramaDetailVC" bundle:nil];
+        vc.sendID = [NSString stringWithFormat:@"%@",dic[@"id"]];
+        [self pushHideenTabbarViewController:vc animted:YES];
     }else{
-        
+        KGAgencyDetailVC *vc = [[KGAgencyDetailVC alloc]init];
+        vc.sendID = [NSString stringWithFormat:@"%@",dic[@"id"]];
+        [self pushHideenTabbarViewController:vc animted:YES];
     }
 }
 

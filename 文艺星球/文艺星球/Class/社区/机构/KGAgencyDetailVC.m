@@ -38,6 +38,7 @@
 @property (nonatomic,strong) UIScrollView *aboutScrollView;
 /** 展览 */
 @property (nonatomic,strong) UITableView *rightListView;
+@property (nonatomic,strong) NSDictionary *detailDic;
 
 @end
 
@@ -55,7 +56,21 @@
     [self setLeftNavItemWithFrame:CGRectMake(15, 0, 50, 30) title:nil image:[UIImage imageNamed:@"fanhuibai"] font:nil color:nil select:@selector(leftNavAction)];
     self.view.backgroundColor = KGWhiteColor;
     
+    [self requestData];
     [self setUpListView];
+}
+/** 请求详情 */
+- (void)requestData{
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:SelectCommunityPlaceByID parameters:@{@"id":self.sendID} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            weakSelf.detailDic = result[@"data"];
+        }
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+    }];
 }
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{
