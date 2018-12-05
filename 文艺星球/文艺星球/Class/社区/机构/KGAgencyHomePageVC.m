@@ -45,6 +45,8 @@ DZNEmptyDataSetDelegate
 @property (nonatomic,assign) NSInteger threeListCellRow;
 /** 左侧列表标题 */
 @property (nonatomic,copy) NSArray *oneArr;
+@property (nonatomic,strong) NSMutableArray *dataArr;
+@property (nonatomic,assign) NSInteger page;
 
 @end
 
@@ -67,9 +69,63 @@ DZNEmptyDataSetDelegate
     self.twoListCellRow = 0;
     self.threeListCellRow = 0;
     self.oneArr = @[@"全部",@"北京",@"上海",@"广州",@"深圳",@"天津",@"成都",@"西安"];
+    self.dataArr = [NSMutableArray array];
+    self.page = 1;
+    [self requestData];
     [self setNavCenterView];
     [self setUpListView];
     [self setUpScreeningView];
+}
+/** 请求数据 */
+- (void)requestData{
+    NSString *cityId = nil;
+    if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"北京市"]) {
+        cityId = @"1";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"天津市"]){
+        cityId = @"43";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"西安市"]){
+        cityId = @"54";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"广州市"]){
+        cityId = @"28";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"成都市"]){
+        cityId = @"65";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"上海市"]){
+        cityId = @"13";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"深圳市"]){
+        cityId = @"36";
+    }else{
+        cityId = @"1";
+    }
+    NSString *typeID = nil;
+    if (self.scenarioStyle == KGScenarioStyleArts) {
+        typeID = @"1";
+    }else if (self.scenarioStyle == KGScenarioStyleDesign){
+        typeID = @"4";
+    }else if (self.scenarioStyle == KGScenarioStylePhotography){
+        typeID = @"6";
+    }else if (self.scenarioStyle == KGScenarioStyleTheatre){
+        typeID = @"13";
+    }
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:SelectCommunityPlaceList parameters:@{@"pageIndex":@(self.page),@"pageSize":@"20",@"userLongitude":@([[KGRequest shareInstance] requestYourLocation].longitude),@"userLatitude":@([KGRequest shareInstance].requestYourLocation.latitude),@"typeID":typeID,@"cityID":cityId,@"cityproperid":@"",@"mohu":@"",@"navigation":@""} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            NSArray *tmp = dic[@"list"];
+            if (tmp.count > 0) {
+                [weakSelf.dataArr addObjectsFromArray:tmp];
+            }
+        }
+        [weakSelf.listView reloadData];
+        [weakSelf.listView.mj_footer endRefreshing];
+        [weakSelf.listView.mj_header endRefreshing];
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+        [weakSelf.listView reloadData];
+        [weakSelf.listView.mj_footer endRefreshing];
+        [weakSelf.listView.mj_header endRefreshing];
+    }];
 }
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{
@@ -221,6 +277,18 @@ DZNEmptyDataSetDelegate
     self.listView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.listView.showsVerticalScrollIndicator = NO;
     self.listView.showsHorizontalScrollIndicator = NO;
+    __weak typeof(self) weakSelf = self;
+    self.listView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        weakSelf.page = 1;
+        weakSelf.dataArr = [NSMutableArray array];
+        [weakSelf requestData];
+        [weakSelf.listView.mj_header beginRefreshing];
+    }];
+    self.listView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        weakSelf.page++;
+        [weakSelf requestData];
+        [weakSelf.listView.mj_footer beginRefreshing];
+    }];
     [self.view addSubview:self.listView];
     
     [self.listView registerNib:[UINib nibWithNibName:@"KGAgencyHomePageCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"KGAgencyHomePageCell"];
@@ -236,7 +304,7 @@ DZNEmptyDataSetDelegate
 // MARK :--UITableViewDataSource--
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (tableView == self.listView) {
-        return 10;
+        return self.dataArr.count;
     }else if (tableView == self.leftListView){
         return 8;
     }else if (tableView == self.onlyListView){
@@ -248,6 +316,10 @@ DZNEmptyDataSetDelegate
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.listView) {
         KGAgencyHomePageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGAgencyHomePageCell" forIndexPath:indexPath];
+        if (self.dataArr.count > 0) {
+            NSDictionary *dic = self.dataArr[indexPath.row];
+            [cell cellDetailWithDictionary:dic];
+        }
         return cell;
     }else if (tableView == self.leftListView){
         KGAgencyHomePageScreeningCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGAgencyHomePageScreeningCell"];
@@ -289,7 +361,9 @@ DZNEmptyDataSetDelegate
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.listView) {
+        NSDictionary *dic = self.dataArr[indexPath.row];
         KGAgencyDetailVC *vc = [[KGAgencyDetailVC alloc]init];
+        vc.sendID = [NSString stringWithFormat:@"%@",dic[@"id"]];
         [self pushHideenTabbarViewController:vc animted:YES];
     }else if (tableView == self.leftListView){
         self.oneListCellRow = indexPath.row;

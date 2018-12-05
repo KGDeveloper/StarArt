@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *detailLab;
 @property (weak, nonatomic) IBOutlet UILabel *timeLab;
 @property (weak, nonatomic) IBOutlet UIButton *zansBtu;
+/** 数据填充 */
+- (void)cellDetailWithDictionary:(NSDictionary *)dic;
 
 @end
 

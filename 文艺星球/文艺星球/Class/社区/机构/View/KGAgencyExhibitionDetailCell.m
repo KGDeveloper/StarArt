@@ -15,4 +15,9 @@
     // Initialization code
 }
 
+- (void)cellDetailWithDictionary:(NSDictionary *)dic{
+    [self.customImage sd_setImageWithURL:[NSURL URLWithString:[[dic[@"worksPhoto"] componentsSeparatedByString:@"#"] firstObject]]];
+    self.titleLab.text = [NSString stringWithFormat:@"作者：%@",dic[@"worksAuthor"]];
+}
+
 @end

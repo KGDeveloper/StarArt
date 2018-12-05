@@ -13,6 +13,8 @@
 @interface KGAgencyExhibitionDetailVC ()<UICollectionViewDelegate,UICollectionViewDataSource>
 /** 详情 */
 @property (nonatomic,strong) UICollectionView *cllectionView;
+@property (nonatomic,copy) NSDictionary *userDic;
+@property (nonatomic,copy) NSArray *listArr;
 
 @end
 
@@ -30,8 +32,24 @@
     [self setLeftNavItemWithFrame:CGRectMake(15, 0, 50, 30) title:nil image:[UIImage imageNamed:@"fanhuibai"] font:nil color:nil select:@selector(leftNavAction)];
     self.view.backgroundColor = KGWhiteColor;
 
-    
+    [self requestData];
     [self setUpCollectionView];
+}
+/** 请求展览详情 */
+- (void)requestData{
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:SelectExhibitionByEID parameters:@{@"id":self.sendID,@"pageIndex":@"1",@"pageSize":@"20"} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            weakSelf.userDic = result[@"data"];
+            weakSelf.listArr = weakSelf.userDic[@"worksList"];
+        }
+        [weakSelf.cllectionView reloadData];
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+        [weakSelf.cllectionView reloadData];
+    }];
 }
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{
@@ -59,15 +77,53 @@
     return 1;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return 7;
+    return self.listArr.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     KGAgencyExhibitionDetailCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"KGAgencyExhibitionDetailCell" forIndexPath:indexPath];
+    if (self.listArr.count > 0) {
+        NSDictionary *dic = self.listArr[indexPath.row];
+        [cell cellDetailWithDictionary:dic];
+    }
     return cell;
 }
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
         KGAgencyExhibitionDetailHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"KGAgencyExhibitionDetailHeaderView" forIndexPath:indexPath];
+        [headerView.backImageView sd_setImageWithURL:[NSURL URLWithString:[[self.userDic[@"exhibitionCover"] componentsSeparatedByString:@"#"] firstObject]]];
+        headerView.backImageView.layer.masksToBounds = YES;
+        headerView.maskView.backgroundColor = [KGBlackColor colorWithAlphaComponent:0.8];
+        [headerView.customImage sd_setImageWithURL:[NSURL URLWithString:[[self.userDic[@"exhibitionCover"] componentsSeparatedByString:@"#"] firstObject]]];
+        headerView.customImage.layer.masksToBounds = YES;
+        headerView.nameLab.text = self.userDic[@"exhibitionTitle"];
+        headerView.userTimeLab.text = self.userDic[@"exhibitionTime"];
+        headerView.userNameLab.text = self.userDic[@"exhibitionPlace"];
+        headerView.userAddressLab.text = self.userDic[@"exhibitionAddres"];
+        headerView.detailLab.text = self.userDic[@"exhibitionIntroduction"];
+        NSArray *tmp = self.userDic[@"worksList"];
+        headerView.worksCount.text = [NSString stringWithFormat:@"作品（%ld）",tmp.count];
+        NSArray *arterArr = self.userDic[@"artistList"];
+        if (arterArr.count > 0) {
+            UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(15, 0, KGScreenWidth - 30, 95)];
+            scrollView.contentSize = CGSizeMake(90*arterArr.count, 95);
+            scrollView.bounces = NO;
+            scrollView.showsVerticalScrollIndicator = NO;
+            scrollView.showsHorizontalScrollIndicator = NO;
+            [headerView.scrollBack addSubview:scrollView];
+            for (int i = 0; i < arterArr.count; i++) {
+                NSDictionary *dic = arterArr[i];
+                UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(90*i, 0, 75, 75)];
+                [imageView sd_setImageWithURL:[NSURL URLWithString:[[dic[@"artistPhoto"] componentsSeparatedByString:@"#"] firstObject]]];
+                [scrollView addSubview:imageView];
+                
+                UILabel *nameLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 75, 75, 20)];
+                nameLab.text = dic[@"artistName"];
+                nameLab.textAlignment = NSTextAlignmentCenter;
+                nameLab.textColor = KGBlackColor;
+                nameLab.font = KGFontSHRegular(11);
+                [scrollView addSubview:nameLab];
+            }
+        }
         return headerView;
     }
     return nil;

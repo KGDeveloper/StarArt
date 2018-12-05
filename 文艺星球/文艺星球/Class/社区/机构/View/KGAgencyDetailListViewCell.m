@@ -21,4 +21,10 @@
     // Configure the view for the selected state
 }
 
+- (void)cellDetailWithDictionary:(NSDictionary *)dic{
+    [self.customImage sd_setImageWithURL:[NSURL URLWithString:[[dic[@"cover"] componentsSeparatedByString:@"#"] firstObject]]];
+    self.nameLab.text = dic[@"title"];
+    self.timeLab.text = dic[@"openDate"];
+}
+
 @end

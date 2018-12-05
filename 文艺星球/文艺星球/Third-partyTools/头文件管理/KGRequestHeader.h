@@ -88,10 +88,16 @@
 #define SelectCommunityPlaceHome [POSTURL stringByAppendingString:@"/api/merchants/selectCommunityPlaceHome"]
 /** 普通场所详情 */
 #define SelectCommunityPlaceByID [POSTURL stringByAppendingString:@"/api/merchants/selectCommunityPlaceByID"]
-
-
-
-
+/** 普通场所详情查看评论 */
+#define SelectCommunityPlaceCommentByMid [POSTURL stringByAppendingString:@"/api/merchants/selectCommunityPlaceCommentByMid"]
+/** 普通场所详情添加评论 */
+#define AddCommunityPlaceCommentByMid [POSTURL stringByAppendingString:@"/api/merchants/addCommunityPlaceCommentByMid"]
+/** 查询机构列表 */
+#define SelectCommunityPlaceList [POSTURL stringByAppendingString:@"/api/merchants/selectCommunityPlaceList"]
+/** 对机构评论点赞 */
+#define UpPlaceCommentLikeStatusByCid [POSTURL stringByAppendingString:@"/api/merchants/upPlaceCommentLikeStatusByCid"]
+/** 根据id查询展览详情 */
+#define SelectExhibitionByEID [POSTURL stringByAppendingString:@"/api/aCommunityExhibition/selectExhibitionByEID"]
 
 
 

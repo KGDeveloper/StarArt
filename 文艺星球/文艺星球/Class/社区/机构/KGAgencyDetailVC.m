@@ -10,6 +10,7 @@
 #import "KGAgencyDetailTableViewCell.h"
 #import "KGAgencyDetailListViewCell.h"
 #import "KGAgencyExhibitionDetailVC.h"
+#import "KGAgencyDetailAddCommentVC.h"
 
 @interface KGAgencyDetailVC ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
 
@@ -39,6 +40,8 @@
 /** 展览 */
 @property (nonatomic,strong) UITableView *rightListView;
 @property (nonatomic,strong) NSDictionary *detailDic;
+@property (nonatomic,strong) NSMutableArray *dataArr;
+@property (nonatomic,assign) NSInteger page;
 
 @end
 
@@ -55,7 +58,9 @@
     /** 定制左侧返回按钮 */
     [self setLeftNavItemWithFrame:CGRectMake(15, 0, 50, 30) title:nil image:[UIImage imageNamed:@"fanhuibai"] font:nil color:nil select:@selector(leftNavAction)];
     self.view.backgroundColor = KGWhiteColor;
-    
+    self.dataArr = [NSMutableArray array];
+    self.page = 1;
+    [self requestCommentData];
     [self requestData];
     [self setUpListView];
 }
@@ -67,9 +72,35 @@
         [hud hideAnimated:YES];
         if ([result[@"status"] integerValue] == 200) {
             weakSelf.detailDic = result[@"data"];
+            weakSelf.listView.tableHeaderView = [weakSelf setUpTopScrollView];
         }
     } fail:^(NSError * _Nonnull error) {
         [hud hideAnimated:YES];
+    }];
+}
+/** 请求评论 */
+- (void)requestCommentData{
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:SelectCommunityPlaceCommentByMid parameters:@{@"id":self.sendID,@"pageIndex":@(self.page),@"pageSize":@"20"} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            NSArray *tmp = dic[@"list"];
+            if (tmp.count > 0) {
+                [weakSelf.dataArr addObjectsFromArray:tmp];
+            }
+        }
+        [weakSelf.listView reloadData];
+        [weakSelf.rightListView reloadData];
+        [weakSelf.listView.mj_footer endRefreshing];
+        [weakSelf.listView.mj_header endRefreshing];
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+        [weakSelf.listView reloadData];
+        [weakSelf.rightListView reloadData];
+        [weakSelf.listView.mj_footer endRefreshing];
+        [weakSelf.listView.mj_header endRefreshing];
     }];
 }
 /** 导航栏左侧点击事件 */
@@ -82,13 +113,24 @@
     self.listView.delegate = self;
     self.listView.dataSource = self;
     self.listView.tableFooterView = [UIView new];
-    self.listView.tableHeaderView = [self setUpTopScrollView];
     self.listView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.listView.showsVerticalScrollIndicator = NO;
     self.listView.showsHorizontalScrollIndicator = NO;
     if (@available(iOS 11.0, *)) {
         self.listView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     }
+    __weak typeof(self) weakSelf = self;
+    self.listView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        weakSelf.page = 1;
+        weakSelf.dataArr = [NSMutableArray array];
+        [weakSelf requestCommentData];
+        [weakSelf.listView.mj_header beginRefreshing];
+    }];
+    self.listView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        weakSelf.page++;
+        [weakSelf requestCommentData];
+        [weakSelf.listView.mj_footer beginRefreshing];
+    }];
     [self.view addSubview:self.listView];
  
     [self.listView registerNib:[UINib nibWithNibName:@"KGAgencyDetailTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"KGAgencyDetailTableViewCell"];
@@ -100,7 +142,12 @@
     self.topScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, KGScreenWidth/75*47)];
     self.topScrollView.delegate = self;
     self.topScrollView.backgroundColor = KGLineColor;
-    self.topScrollView.contentSize = CGSizeMake(KGScreenWidth*3, KGScreenWidth/75*47);
+    self.topScrollView.contentSize = CGSizeMake(KGScreenWidth, KGScreenWidth/75*47);
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, KGScreenWidth/75*47)];
+    [imageView sd_setImageWithURL:[NSURL URLWithString:[[self.detailDic[@"image"] componentsSeparatedByString:@"#"]firstObject]]];
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
+    imageView.layer.masksToBounds = YES;
+    [self.topScrollView addSubview:imageView];
     self.topScrollView.bounces = NO;
     self.topScrollView.pagingEnabled = YES;
     self.topScrollView.showsVerticalScrollIndicator = NO;
@@ -123,19 +170,19 @@
     }
     /** 地址 */
     self.addressLab = [[UILabel alloc]initWithFrame:CGRectMake(45, KGScreenWidth/75*47 + 15, KGScreenWidth - 60, 15)];
-    self.addressLab.text = @"北京市朝阳区酒仙桥路798艺术区";
+    self.addressLab.text = self.detailDic[@"address"];
     self.addressLab.textColor = [UIColor blackColor];
     self.addressLab.font = KGFontSHRegular(14);
     [topView addSubview:self.addressLab];
     /** 电话 */
     self.telPhoneLab = [[UILabel alloc]initWithFrame:CGRectMake(45, KGScreenWidth/75*47 + 45, KGScreenWidth - 60, 15)];
-    self.telPhoneLab.text = @"010-87645765";
+    self.telPhoneLab.text = self.detailDic[@"telphone"];
     self.telPhoneLab.textColor = [UIColor blackColor];
     self.telPhoneLab.font = KGFontSHRegular(14);
     [topView addSubview:self.telPhoneLab];
     /** 时间 */
     self.timeLab = [[UILabel alloc]initWithFrame:CGRectMake(45, KGScreenWidth/75*47 + 75, KGScreenWidth - 60, 15)];
-    self.timeLab.text = @"周二到周六 10:00-18:00";
+    self.timeLab.text = self.detailDic[@"potime"];
     self.timeLab.textColor = [UIColor blackColor];
     self.timeLab.font = KGFontSHRegular(14);
     [topView addSubview:self.timeLab];
@@ -154,7 +201,16 @@
     /** 右侧按钮 */
     self.rightBtu = [UIButton buttonWithType:UIButtonTypeCustom];
     self.rightBtu.frame = CGRectMake(KGScreenWidth/2, KGScreenWidth/75*47 + 115, KGScreenWidth/2, 50);
-    [self.rightBtu setTitle:@"展览(3)" forState:UIControlStateNormal];
+    if (self.detailDic[@"relatedList"]) {
+        NSArray *tmp = self.detailDic[@"relatedList"];
+        if (tmp.count > 0) {
+            [self.rightBtu setTitle:[NSString stringWithFormat:@"相关(%ld)",tmp.count] forState:UIControlStateNormal];
+        }else{
+            [self.rightBtu setTitle:@"相关(暂无)" forState:UIControlStateNormal];
+        }
+    }else{
+        [self.rightBtu setTitle:@"相关(暂无)" forState:UIControlStateNormal];
+    }
     [self.rightBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
     self.rightBtu.titleLabel.font = KGFontSHRegular(15);
     [self.rightBtu addTarget:self action:@selector(rightAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -163,8 +219,18 @@
     UIView *lowline = [[UIView alloc]initWithFrame:CGRectMake(0, KGScreenWidth/75*47 + 154, KGScreenWidth, 1)];
     lowline.backgroundColor = KGLineColor;
     [topView addSubview:lowline];
+    NSString *detailStr = nil;
     /** 机构信息 */
-    NSMutableAttributedString *attributeString = [self setAttributeWithString:@"在iOS开发过程中，经常会用到给字体加下划线，显示不同颜色和大小的字体等需求，经常遇到这种需求都是直接到百度或者谷歌直接把代码粘过来，并没有做系统的整理，今天刚好有时间，把这部分的内容整理一下，便于后续的开发，闲话不说，接下来就跟着我一起来了解一下NSMutableAttributedString吧.NSAttributedString对象管理适用于字符串中单个字符或字符范围的字符串和关联的属性集（例如字体和字距）。NSAttributedString对象的默认字体是Helvetica 12点，可能与平台的默认系统字体不同。因此，您可能希望创建适用于您的应用程序的非默认属性的新字符串。您还可以使用NSParagraphStyle类及其子类NSMutableParagraphStyle来封装NSAttributedString类使用的段落或标尺属性。"];
+    if (![self.detailDic[@"blurb"] isKindOfClass:[NSNull class]]) {
+        if (![self.detailDic[@"blurb"] isEqualToString:@""]) {
+            detailStr = self.detailDic[@"blurb"];
+        }else{
+            detailStr = @"暂无";
+        }
+    }else{
+        detailStr = @"暂无";
+    }
+    NSMutableAttributedString *attributeString = [self setAttributeWithString:detailStr];
     self.detailLab = [[UILabel alloc]initWithFrame:CGRectMake(15, KGScreenWidth/75*47 + 170, KGScreenWidth - 30, [attributeString boundingRectWithSize:CGSizeMake(KGScreenWidth - 30, 200) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height)];
     self.detailLab.attributedText = attributeString;
     self.detailLab.numberOfLines = 0;
@@ -191,17 +257,26 @@
     /** 相关图片 */
     self.imageCountLab = [[UILabel alloc]initWithFrame:CGRectMake(15, KGScreenWidth/75*47 + 380, KGScreenWidth - 30, 50)];
     self.imageCountLab.textColor = KGBlackColor;
-    self.imageCountLab.text = @"相关图片（300）";
+    if (self.detailDic[@"mimages"]) {
+        NSArray *tmp = self.detailDic[@"mimages"];
+        if (tmp.count > 0) {
+            self.imageCountLab.text = [NSString stringWithFormat:@"相关图片（%ld）",tmp.count];
+        }else{
+            self.imageCountLab.text = @"相关图片（0）";
+        }
+    }else{
+        self.imageCountLab.text = @"相关图片（0）";
+    }
     self.imageCountLab.font = KGFontSHBold(15);
     [topView addSubview:self.imageCountLab];
     /** 图片 */
     self.aboutScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(15, KGScreenWidth/75*47 + 430, KGScreenWidth - 30, 75)];
-    self.aboutScrollView.contentSize = CGSizeMake(90*5, 75);
     self.aboutScrollView.bounces = NO;
     self.aboutScrollView.pagingEnabled = YES;
     self.aboutScrollView.showsVerticalScrollIndicator = NO;
     self.aboutScrollView.showsHorizontalScrollIndicator = NO;
     [topView addSubview:self.aboutScrollView];
+    [self setImageView];
     /** 直线 */
     UIView *iamgeLine = [[UIView alloc]initWithFrame:CGRectMake(0, KGScreenWidth/75*47 + 525, KGScreenWidth, 10)];
     iamgeLine.backgroundColor = KGLineColor;
@@ -209,12 +284,30 @@
     /** 全部评价 */
     self.commentCountLab = [[UILabel alloc]initWithFrame:CGRectMake(15, KGScreenWidth/75*47 + 535, 120, 50)];
     self.commentCountLab.textColor = KGBlackColor;
-    self.commentCountLab.text = @"全部评论（300）";
+    self.commentCountLab.text = @"全部评论";
     self.commentCountLab.font = KGFontSHBold(15);
     [topView addSubview:self.commentCountLab];
     
+    UIButton *scroeBtu = [UIButton buttonWithType:UIButtonTypeCustom];
+    scroeBtu.frame = CGRectMake(KGScreenWidth - 95,KGScreenWidth/75*47 + 555,80, 20);
+    [scroeBtu setTitle:@"我要评分" forState:UIControlStateNormal];
+    scroeBtu.titleLabel.font = KGFontSHRegular(12);
+    [scroeBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
+    scroeBtu.layer.cornerRadius = 10;
+    scroeBtu.layer.borderWidth = 1;
+    scroeBtu.layer.borderColor = KGBlackColor.CGColor;
+    scroeBtu.layer.masksToBounds = YES;
+    [scroeBtu addTarget:self action:@selector(addCommentAction) forControlEvents:UIControlEventTouchUpInside];
+    [topView addSubview:scroeBtu];
+    
     topView.frame = CGRectMake(0, 0, KGScreenWidth, KGScreenWidth/75*47 + 585);
     return topView;
+}
+/** 添加评论 */
+- (void)addCommentAction{
+    KGAgencyDetailAddCommentVC *vc = [[KGAgencyDetailAddCommentVC alloc]initWithNibName:@"KGAgencyDetailAddCommentVC" bundle:[NSBundle mainBundle]];
+    vc.sendID = self.sendID;
+    [self pushHideenTabbarViewController:vc animted:YES];
 }
 /** 设置富文本 */
 - (NSMutableAttributedString *)setAttributeWithString:(NSString *)string{
@@ -251,22 +344,50 @@
 // MARK :--UITableViewDataSource--
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (tableView == self.listView) {
-        return 10;
+        return self.dataArr.count;
     }
-    return 10;
+    if (self.detailDic[@"relatedList"]) {
+        NSArray *tmp = self.detailDic[@"relatedList"];
+        if (tmp.count > 0) {
+            return tmp.count;
+        }else{
+            return 0;
+        }
+    }else{
+        return 0;
+    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.listView) {
         KGAgencyDetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGAgencyDetailTableViewCell" forIndexPath:indexPath];
+        if (self.dataArr.count > 0) {
+            NSDictionary *dic = self.dataArr[indexPath.row];
+            [cell cellDetailWithDictionary:dic];
+        }
         return cell;
     }else{
         KGAgencyDetailListViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGAgencyDetailListViewCell"];
+        if (self.detailDic[@"relatedList"]) {
+            NSArray *tmp = self.detailDic[@"relatedList"];
+            if (tmp.count > 0) {
+                NSDictionary *dic = tmp[indexPath.row];
+                [cell cellDetailWithDictionary:dic];
+            }
+        }
         return cell;
     }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.rightListView) {
-        [self pushHideenTabbarViewController:[[KGAgencyExhibitionDetailVC alloc]init] animted:YES];
+        if ([self.detailDic[@"type"] integerValue] == 1) {
+            KGAgencyExhibitionDetailVC *vc = [[KGAgencyExhibitionDetailVC alloc]init];
+            NSArray *tmp = self.detailDic[@"relatedList"];
+            if (tmp.count > 0) {
+                NSDictionary *dic = tmp[indexPath.row];
+                vc.sendID = dic[@"id"];
+            }
+            [self pushHideenTabbarViewController:vc animted:YES];
+        }
     }
 }
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
@@ -276,10 +397,17 @@
 }
 /** 创建图片 */
 - (void)setImageView{
-    for (int i = 0; i < 3; i++) {
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(KGScreenWidth * i, 0, KGScreenWidth, KGScreenWidth/75*47)];
-        imageView.backgroundColor = [UIColor colorWithRed:(arc4random()%255)/255 green:(arc4random()%255)/255 blue:(arc4random()%255)/255 alpha:1];
-        [self.topScrollView addSubview:imageView];
+    if (self.detailDic[@"mimages"]) {
+        NSArray *tmp = self.detailDic[@"mimages"];
+        if (tmp.count > 0) {
+            self.aboutScrollView.contentSize = CGSizeMake(90*tmp.count, 75);
+            for (int i = 0; i < tmp.count; i++) {
+                NSDictionary *dic = tmp[i];
+                UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(90*i, 0, 75, 75)];
+                [imageView sd_setImageWithURL:[NSURL URLWithString:[[dic[@"imageurl"] componentsSeparatedByString:@"#"]firstObject]]];
+                [self.aboutScrollView addSubview:imageView];
+            }
+        }
     }
 }
 
