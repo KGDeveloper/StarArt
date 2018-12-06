@@ -23,6 +23,7 @@
 @property (nonatomic,strong) NSMutableSet *photosArr;
 /** 提示 */
 @property (nonatomic,strong) UIView *alertView;
+@property (nonatomic,strong) NSMutableArray *idStrArr;
 
 @end
 
@@ -48,6 +49,7 @@
     
     /** 初始化 */
     self.photosArr = [NSMutableSet set];
+    self.idStrArr = [NSMutableArray array];
     
     [self setUpIdeaView];
     [self setUpChoosePhotosView];
@@ -84,6 +86,7 @@
     self.ideaTV.placeholderTextColor = KGGrayColor;
     self.ideaTV.textColor = KGBlackColor;
     self.ideaTV.font = KGFontFZ(13);
+    self.ideaTV.delegate = self;
     [self.view addSubview:self.ideaTV];
 }
 /** 选择照片 */
@@ -119,12 +122,12 @@
     alertLab.font = KGFontSHRegular(15);
     [self.alertView addSubview:alertLab];
     UILabel *alertOne = [[UILabel alloc]initWithFrame:CGRectMake(0, 25, KGScreenWidth - 30, 12)];
-    alertOne.text = @"每行最多20字，总字数不能超过100字。（包括标点符号）";
+    alertOne.text = @"每行最多16字，总字数不能超过80字。（包括标点符号）";
     alertOne.textColor = KGGrayColor;
     alertOne.font = KGFontSHRegular(12);
     [self.alertView addSubview:alertOne];
     UILabel *alertTwo = [[UILabel alloc]initWithFrame:CGRectMake(0, 47, KGScreenWidth - 30, 12)];
-    alertTwo.text = @"行与行之间用回车或者用“。”或“！”来隔开。（中文字符）";
+    alertTwo.text = @"行与行之间用回车隔开。";
     alertTwo.textColor = KGGrayColor;
     alertTwo.font = KGFontSHRegular(12);
     [self.alertView addSubview:alertTwo];
@@ -205,6 +208,24 @@
 /** 监听键盘 */
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     [self.ideaTV resignFirstResponder];
+}
+- (BOOL)textView:(YYTextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    NSArray *tmp = [textView.text componentsSeparatedByString:@"\n"];
+    if (tmp.count > 0) {
+        if (tmp.count < 6) {
+            NSString *tmpStr = [tmp lastObject];
+            if (tmpStr.length > 16) {
+                if (![text isEqualToString:@""] && ![text isEqualToString:@"\n"]) {
+                    [[KGHUD showMessage:@"最多只能输入16个字"] hideAnimated:YES afterDelay:1];
+                    return NO;
+                }
+            }
+        }else{
+            [[KGHUD showMessage:@"最多只能输入5行"] hideAnimated:YES afterDelay:1];
+            return NO;
+        }
+    }
+    return YES;
 }
 
 /*

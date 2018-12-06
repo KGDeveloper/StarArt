@@ -102,6 +102,8 @@
 		5A4408DD219AE1F100393CAF /* KGBestSellingBooksVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4408DC219AE1F100393CAF /* KGBestSellingBooksVC.m */; };
 		5A45F8D721B7B52C00CEC4BD /* KGAgencyDetailAddCommentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A45F8D521B7B52C00CEC4BD /* KGAgencyDetailAddCommentVC.m */; };
 		5A45F8D821B7B52C00CEC4BD /* KGAgencyDetailAddCommentVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A45F8D621B7B52C00CEC4BD /* KGAgencyDetailAddCommentVC.xib */; };
+		5A4614BF21B9328300B3FC80 /* KGInstitutionSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4614BE21B9328300B3FC80 /* KGInstitutionSearchView.m */; };
+		5A4614C121B9329400B3FC80 /* KGInstitutionSearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A4614C021B9329400B3FC80 /* KGInstitutionSearchView.xib */; };
 		5A4A53B4218A9B0700ABC7C9 /* KGSquare.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A4A53B3218A9B0700ABC7C9 /* KGSquare.xcassets */; };
 		5A4A53B7218AAB7500ABC7C9 /* KGReleaseVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4A53B6218AAB7500ABC7C9 /* KGReleaseVC.m */; };
 		5A4A53BA218AE15800ABC7C9 /* KGChooseYourLocationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4A53B9218AE15800ABC7C9 /* KGChooseYourLocationVC.m */; };
@@ -400,6 +402,9 @@
 		5A45F8D421B7B52C00CEC4BD /* KGAgencyDetailAddCommentVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGAgencyDetailAddCommentVC.h; sourceTree = "<group>"; };
 		5A45F8D521B7B52C00CEC4BD /* KGAgencyDetailAddCommentVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGAgencyDetailAddCommentVC.m; sourceTree = "<group>"; };
 		5A45F8D621B7B52C00CEC4BD /* KGAgencyDetailAddCommentVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGAgencyDetailAddCommentVC.xib; sourceTree = "<group>"; };
+		5A4614BD21B9328300B3FC80 /* KGInstitutionSearchView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGInstitutionSearchView.h; sourceTree = "<group>"; };
+		5A4614BE21B9328300B3FC80 /* KGInstitutionSearchView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGInstitutionSearchView.m; sourceTree = "<group>"; };
+		5A4614C021B9329400B3FC80 /* KGInstitutionSearchView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGInstitutionSearchView.xib; sourceTree = "<group>"; };
 		5A4A53B3218A9B0700ABC7C9 /* KGSquare.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = KGSquare.xcassets; sourceTree = "<group>"; };
 		5A4A53B5218AAB7500ABC7C9 /* KGReleaseVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGReleaseVC.h; sourceTree = "<group>"; };
 		5A4A53B6218AAB7500ABC7C9 /* KGReleaseVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGReleaseVC.m; sourceTree = "<group>"; };
@@ -1281,6 +1286,9 @@
 				5A543E61219986440085B1E0 /* KGInstitutionHotDramaCell.h */,
 				5A543E62219986440085B1E0 /* KGInstitutionHotDramaCell.m */,
 				5A543E63219986440085B1E0 /* KGInstitutionHotDramaCell.xib */,
+				5A4614BD21B9328300B3FC80 /* KGInstitutionSearchView.h */,
+				5A4614BE21B9328300B3FC80 /* KGInstitutionSearchView.m */,
+				5A4614C021B9329400B3FC80 /* KGInstitutionSearchView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1580,6 +1588,7 @@
 				5AED6C0D217DC84A000657C9 /* SourceHanSansCN-Bold.otf in Resources */,
 				5A0D323A219BCEAA00A49AE7 /* KGBooksDetailHeaderView.xib in Resources */,
 				5A543E5521995BA70085B1E0 /* KGAgencyExhibitionDetailCell.xib in Resources */,
+				5A4614C121B9329400B3FC80 /* KGInstitutionSearchView.xib in Resources */,
 				5A92745D219D3BE100998281 /* KGNewsCell.xib in Resources */,
 				5A543E5A21995D090085B1E0 /* KGAgencyExhibitionDetailHeaderView.xib in Resources */,
 				5ACA150321A2B8B800DC9C64 /* KGArtisticPeopleDetailVC.xib in Resources */,
@@ -1795,6 +1804,7 @@
 				5ACC9644219EBBBF00E838A8 /* KGPerformanceVC.m in Sources */,
 				5A2D89982175EDFA003411DC /* KGDatingView.m in Sources */,
 				5A6E865A21831B4B00937450 /* KGMyLabelVC.m in Sources */,
+				5A4614BF21B9328300B3FC80 /* KGInstitutionSearchView.m in Sources */,
 				5A2D84372192831E00CBC727 /* KGLockUserInfoVC.m in Sources */,
 				5A3089CD21A511D7007D08F3 /* KGExhibitionVCListViewCell.m in Sources */,
 				5A927460219D474700998281 /* KGNewsDetailVC.m in Sources */,

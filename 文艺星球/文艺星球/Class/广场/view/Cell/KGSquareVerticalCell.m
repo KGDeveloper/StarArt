@@ -172,93 +172,11 @@
     }
     [self.commentsBtu setTitle:[NSString stringWithFormat:@"%@",dic[@"rccommentNum"]] forState:UIControlStateNormal];
     [self.zansBtu setTitle:[NSString stringWithFormat:@"%@",dic[@"likeCount"]] forState:UIControlStateNormal];
-    if ([contentStr rangeOfString:@"。"].location != NSNotFound) {
-        NSArray *endArr = [contentStr componentsSeparatedByString:@"。"];
-        __block NSMutableArray *markArr = [NSMutableArray array];
-        [endArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj rangeOfString:@"！"].location != NSNotFound) {
-                NSArray *tmp = [obj componentsSeparatedByString:@"！"];
-                [markArr addObjectsFromArray:tmp];
-            }else{
-                [markArr addObject:obj];
-            }
-        }];
-        if ([dic[@"composing"] integerValue] == 3) {
-            [self setLabelWithArr:markArr];
-        }else{
-            [self setLabWithArr:markArr];
-        }
-    }else if ([contentStr rangeOfString:@"！"].location != NSNotFound) {
-        NSArray *endArr = [contentStr componentsSeparatedByString:@"！"];
-        __block NSMutableArray *markArr = [NSMutableArray array];
-        [endArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj rangeOfString:@"。"].location != NSNotFound) {
-                NSArray *tmp = [obj componentsSeparatedByString:@"。"];
-                [markArr addObjectsFromArray:tmp];
-            }else{
-                [markArr addObject:obj];
-            }
-        }];
-        if ([dic[@"composing"] integerValue] == 3) {
-            [self setLabelWithArr:markArr];
-        }else{
-            [self setLabWithArr:markArr];
-        }
+    NSArray *markArr = [contentStr componentsSeparatedByString:@"@"];
+    if ([dic[@"composing"] integerValue] == 3) {
+        [self setLabelWithArr:markArr];
     }else{
-        if (contentStr.length > 20) {
-            NSString *one = [contentStr substringToIndex:20];
-            NSString *oneEnd = [[contentStr componentsSeparatedByString:one] lastObject];
-            if (oneEnd.length > 20) {
-                NSString *two = [oneEnd substringToIndex:20];
-                NSString *twoEnd = [[oneEnd componentsSeparatedByString:two] lastObject];
-                if (twoEnd.length > 20) {
-                    NSString *three = [twoEnd substringToIndex:20];
-                    NSString *threeEnd = [[twoEnd componentsSeparatedByString:three] lastObject];
-                    if (threeEnd.length > 20) {
-                        NSString *four = [threeEnd substringToIndex:20];
-                        NSString *fourEnd = [[threeEnd componentsSeparatedByString:four] lastObject];
-                        if (fourEnd.length > 20) {
-                            NSString *five = [fourEnd substringToIndex:20];
-                            if ([dic[@"composing"] integerValue] == 3) {
-                                [self setLabelWithArr:@[one,two,three,four,five]];
-                            }else{
-                                [self setLabWithArr:@[one,two,three,four,five]];
-                            }
-                        }else{
-                            if ([dic[@"composing"] integerValue] == 3) {
-                                [self setLabelWithArr:@[one,two,three,four,fourEnd]];
-                            }else{
-                                [self setLabWithArr:@[one,two,three,four,fourEnd]];
-                            }
-                        }
-                    }else{
-                        if ([dic[@"composing"] integerValue] == 3) {
-                            [self setLabelWithArr:@[one,two,three,threeEnd]];
-                        }else{
-                            [self setLabWithArr:@[one,two,three,threeEnd]];
-                        }
-                    }
-                }else{
-                    if ([dic[@"composing"] integerValue] == 3) {
-                        [self setLabelWithArr:@[one,two,twoEnd]];
-                    }else{
-                        [self setLabWithArr:@[one,two,twoEnd]];
-                    }
-                }
-            }else{
-                if ([dic[@"composing"] integerValue] == 3) {
-                    [self setLabelWithArr:@[one,oneEnd]];
-                }else{
-                    [self setLabWithArr:@[one,oneEnd]];
-                }
-            }
-        }else{
-            if ([dic[@"composing"] integerValue] == 3) {
-                [self setLabelWithArr:@[contentStr]];
-            }else{
-                [self setLabWithArr:@[contentStr]];
-            }
-        }
+        [self setLabWithArr:markArr];
     }
 }
 /** 创建label */

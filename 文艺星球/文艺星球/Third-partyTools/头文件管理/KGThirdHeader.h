@@ -32,5 +32,6 @@
 #import "PhotosLibraryView.h"
 #import "KGLabel.h"
 #import "KGRequest.h"
+#import "KGInstitutionSearchView.h"
 
 #endif /* KGThirdHeader_h */

@@ -31,6 +31,7 @@ typedef NS_ENUM(NSInteger,KGScenarioStyle) {
 @interface KGAgencyHomePageVC : KGBaseViewController
 /** 场景 */
 @property (nonatomic,assign) KGScenarioStyle scenarioStyle;
+@property (nonatomic,copy) NSString *searchResultStr;
 
 @end
 

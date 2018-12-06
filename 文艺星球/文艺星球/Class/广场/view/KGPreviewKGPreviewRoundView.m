@@ -31,45 +31,24 @@
 /** 创建文本显示 */
 - (void)setContentStr:(NSString *)contentStr{
     _contentStr = contentStr;
-    if ([contentStr rangeOfString:@"。"].location != NSNotFound) {
-        NSArray *endArr = [contentStr componentsSeparatedByString:@"。"];
-        __block NSMutableArray *markArr = [NSMutableArray array];
-        [endArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj rangeOfString:@"！"].location != NSNotFound) {
-                NSArray *tmp = [obj componentsSeparatedByString:@"！"];
-                [markArr addObjectsFromArray:tmp];
-            }else{
-                [markArr addObject:obj];
-            }
-        }];
-        [self setLabelWithArr:markArr];
-    }else if ([contentStr rangeOfString:@"！"].location != NSNotFound) {
-        NSArray *endArr = [contentStr componentsSeparatedByString:@"！"];
-        __block NSMutableArray *markArr = [NSMutableArray array];
-        [endArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj rangeOfString:@"。"].location != NSNotFound) {
-                NSArray *tmp = [obj componentsSeparatedByString:@"。"];
-                [markArr addObjectsFromArray:tmp];
-            }else{
-                [markArr addObject:obj];
-            }
-        }];
-        [self setLabelWithArr:markArr];
+    if ([contentStr rangeOfString:@"\n"].location != NSNotFound) {
+        NSArray *endArr = [contentStr componentsSeparatedByString:@"\n"];
+        [self setLabelWithArr:endArr];
     }else{
-        if (contentStr.length > 20) {
-            NSString *one = [contentStr substringToIndex:20];
+        if (contentStr.length > 16) {
+            NSString *one = [contentStr substringToIndex:16];
             NSString *oneEnd = [[contentStr componentsSeparatedByString:one] lastObject];
-            if (oneEnd.length > 20) {
-                NSString *two = [oneEnd substringToIndex:20];
+            if (oneEnd.length > 16) {
+                NSString *two = [oneEnd substringToIndex:16];
                 NSString *twoEnd = [[oneEnd componentsSeparatedByString:two] lastObject];
-                if (twoEnd.length > 20) {
-                    NSString *three = [twoEnd substringToIndex:20];
+                if (twoEnd.length > 16) {
+                    NSString *three = [twoEnd substringToIndex:16];
                     NSString *threeEnd = [[twoEnd componentsSeparatedByString:three] lastObject];
-                    if (threeEnd.length > 20) {
-                        NSString *four = [threeEnd substringToIndex:20];
+                    if (threeEnd.length > 16) {
+                        NSString *four = [threeEnd substringToIndex:16];
                         NSString *fourEnd = [[threeEnd componentsSeparatedByString:four] lastObject];
-                        if (fourEnd.length > 20) {
-                            NSString *five = [fourEnd substringToIndex:20];
+                        if (fourEnd.length > 16) {
+                            NSString *five = [fourEnd substringToIndex:16];
                             [self setLabelWithArr:@[one,two,three,four,five]];
                         }else{
                             [self setLabelWithArr:@[one,two,three,four,fourEnd]];

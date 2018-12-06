@@ -152,61 +152,8 @@
 /** 获取cell高度 */
 - (CGFloat)rowHeightWithDictionary:(NSDictionary *)dic{
     NSString *contentStr = dic[@"content"];
-    if ([contentStr rangeOfString:@"。"].location != NSNotFound) {
-        NSArray *endArr = [contentStr componentsSeparatedByString:@"。"];
-        __block NSMutableArray *markArr = [NSMutableArray array];
-        [endArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj rangeOfString:@"！"].location != NSNotFound) {
-                NSArray *tmp = [obj componentsSeparatedByString:@"！"];
-                [markArr addObjectsFromArray:tmp];
-            }else{
-                [markArr addObject:obj];
-            }
-        }];
-        return 130+markArr.count*23+(KGScreenWidth - 30)/69*46;
-    }else if ([contentStr rangeOfString:@"！"].location != NSNotFound) {
-        NSArray *endArr = [contentStr componentsSeparatedByString:@"！"];
-        __block NSMutableArray *markArr = [NSMutableArray array];
-        [endArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj rangeOfString:@"。"].location != NSNotFound) {
-                NSArray *tmp = [obj componentsSeparatedByString:@"。"];
-                [markArr addObjectsFromArray:tmp];
-            }else{
-                [markArr addObject:obj];
-            }
-        }];
-        return 130+markArr.count*23+(KGScreenWidth - 30)/69*46;
-    }else{
-        if (contentStr.length > 20) {
-            NSString *one = [contentStr substringToIndex:20];
-            NSString *oneEnd = [[contentStr componentsSeparatedByString:one] lastObject];
-            if (oneEnd.length > 20) {
-                NSString *two = [oneEnd substringToIndex:20];
-                NSString *twoEnd = [[oneEnd componentsSeparatedByString:two] lastObject];
-                if (twoEnd.length > 20) {
-                    NSString *three = [twoEnd substringToIndex:20];
-                    NSString *threeEnd = [[twoEnd componentsSeparatedByString:three] lastObject];
-                    if (threeEnd.length > 20) {
-                        NSString *four = [threeEnd substringToIndex:20];
-                        NSString *fourEnd = [[threeEnd componentsSeparatedByString:four] lastObject];
-                        if (fourEnd.length > 20) {
-                            return 23*5+140+(KGScreenWidth - 30)/69*46;
-                        }else{
-                            return 23*5+140+(KGScreenWidth - 30)/69*46;
-                        }
-                    }else{
-                        return 23*4+140+(KGScreenWidth - 30)/69*46;
-                    }
-                }else{
-                    return 23*3+140+(KGScreenWidth - 30)/69*46;
-                }
-            }else{
-                return 23*2+140+(KGScreenWidth - 30)/69*46;
-            }
-        }else{
-            return 23+140+(KGScreenWidth - 30)/69*46;
-        }
-    }
+    NSArray *endArr = [contentStr componentsSeparatedByString:@"@"];
+    return 130+endArr.count*23+230;
 }
 /** 创建label */
 - (void)setLabelWithArr:(NSArray *)arr{
@@ -242,62 +189,8 @@
     }
     [self.commentsBtu setTitle:[NSString stringWithFormat:@"%@",dic[@"rccommentNum"]] forState:UIControlStateNormal];
     [self.zansBtu setTitle:[NSString stringWithFormat:@"%@",dic[@"likeCount"]] forState:UIControlStateNormal];
-    if ([contentStr rangeOfString:@"。"].location != NSNotFound) {
-        NSArray *endArr = [contentStr componentsSeparatedByString:@"。"];
-        __block NSMutableArray *markArr = [NSMutableArray array];
-        [endArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj rangeOfString:@"！"].location != NSNotFound) {
-                NSArray *tmp = [obj componentsSeparatedByString:@"！"];
-                [markArr addObjectsFromArray:tmp];
-            }else{
-                [markArr addObject:obj];
-            }
-        }];
-        [self setLabelWithArr:markArr];
-    }else if ([contentStr rangeOfString:@"！"].location != NSNotFound) {
-        NSArray *endArr = [contentStr componentsSeparatedByString:@"！"];
-        __block NSMutableArray *markArr = [NSMutableArray array];
-        [endArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj rangeOfString:@"。"].location != NSNotFound) {
-                NSArray *tmp = [obj componentsSeparatedByString:@"。"];
-                [markArr addObjectsFromArray:tmp];
-            }else{
-                [markArr addObject:obj];
-            }
-        }];
-        [self setLabelWithArr:markArr];
-    }else{
-        if (contentStr.length > 20) {
-            NSString *one = [contentStr substringToIndex:20];
-            NSString *oneEnd = [[contentStr componentsSeparatedByString:one] lastObject];
-            if (oneEnd.length > 20) {
-                NSString *two = [oneEnd substringToIndex:20];
-                NSString *twoEnd = [[oneEnd componentsSeparatedByString:two] lastObject];
-                if (twoEnd.length > 20) {
-                    NSString *three = [twoEnd substringToIndex:20];
-                    NSString *threeEnd = [[twoEnd componentsSeparatedByString:three] lastObject];
-                    if (threeEnd.length > 20) {
-                        NSString *four = [threeEnd substringToIndex:20];
-                        NSString *fourEnd = [[threeEnd componentsSeparatedByString:four] lastObject];
-                        if (fourEnd.length > 20) {
-                            NSString *five = [fourEnd substringToIndex:20];
-                            [self setLabelWithArr:@[one,two,three,four,five]];
-                        }else{
-                            [self setLabelWithArr:@[one,two,three,four,fourEnd]];
-                        }
-                    }else{
-                        [self setLabelWithArr:@[one,two,three,threeEnd]];
-                    }
-                }else{
-                    [self setLabelWithArr:@[one,two,twoEnd]];
-                }
-            }else{
-                [self setLabelWithArr:@[one,oneEnd]];
-            }
-        }else{
-            [self setLabelWithArr:@[contentStr]];
-        }
-    }
+    NSArray *endArr = [contentStr componentsSeparatedByString:@"@"];
+    [self setLabelWithArr:endArr];
 }
 
 - (void)awakeFromNib {

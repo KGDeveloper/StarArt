@@ -98,10 +98,14 @@
 #define UpPlaceCommentLikeStatusByCid [POSTURL stringByAppendingString:@"/api/merchants/upPlaceCommentLikeStatusByCid"]
 /** 根据id查询展览详情 */
 #define SelectExhibitionByEID [POSTURL stringByAppendingString:@"/api/aCommunityExhibition/selectExhibitionByEID"]
-
-
-
-
+/** 根据城市id查询城市二级区域 */
+#define FindAllMerchantCity [POSTURL stringByAppendingString:@"/api/merchantCity/findAllMerchantCity"]
+/** 查询5条广告 */
+#define SelectEightFood [POSTURL stringByAppendingString:@"/api/merchants/selectEightFood"]
+/** 查询搜索记录 */
+#define SelectCommunitySearchByUid [POSTURL stringByAppendingString:@"/api/communitysearch/selectCommunitySearchByUid"]
+/** 清空搜索记录 */
+#define DeleteCommunitySearchByUid [POSTURL stringByAppendingString:@"/api/communitysearch/deleteCommunitySearchByUid"]
 
 
 

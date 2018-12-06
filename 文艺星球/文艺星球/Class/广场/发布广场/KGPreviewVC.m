@@ -62,7 +62,42 @@
     [self.userDic setObject:[KGUserInfo shareInstance].userName forKey:@"userName"];
     [self.userDic setObject:[KGUserInfo shareInstance].userPortrait forKey:@"userPortraitUri"];
     [self.userDic setObject:[NSString stringWithFormat:@"%ld",(long)self.scaleIndex] forKey:@"composing"];
-    [self.userDic setObject:self.contentStr forKey:@"content"];
+    NSString *content = nil;
+    if ([self.contentStr rangeOfString:@"\n"].location != NSNotFound) {
+        content = [self.contentStr stringByReplacingOccurrencesOfString:@"\n" withString:@"@"];
+    }else{
+        if (self.contentStr.length > 16) {
+            NSString *one = [self.contentStr substringToIndex:16];
+            NSString *oneEnd = [[self.contentStr componentsSeparatedByString:one] lastObject];
+            if (oneEnd.length > 16) {
+                NSString *two = [oneEnd substringToIndex:16];
+                NSString *twoEnd = [[oneEnd componentsSeparatedByString:two] lastObject];
+                if (twoEnd.length > 16) {
+                    NSString *three = [twoEnd substringToIndex:16];
+                    NSString *threeEnd = [[twoEnd componentsSeparatedByString:three] lastObject];
+                    if (threeEnd.length > 16) {
+                        NSString *four = [threeEnd substringToIndex:16];
+                        NSString *fourEnd = [[threeEnd componentsSeparatedByString:four] lastObject];
+                        if (fourEnd.length > 16) {
+                            NSString *five = [fourEnd substringToIndex:16];
+                            content = [self createStringWithArray:@[one,two,three,four,five]];
+                        }else{
+                            content = [self createStringWithArray:@[one,two,three,four,fourEnd]];
+                        }
+                    }else{
+                        content = [self createStringWithArray:@[one,two,three,threeEnd]];
+                    }
+                }else{
+                    content = [self createStringWithArray:@[one,two,twoEnd]];
+                }
+            }else{
+                content = [self createStringWithArray:@[one,oneEnd]];
+            }
+        }else{
+            content = [self createStringWithArray:@[self.contentStr]];
+        }
+    }
+    [self.userDic setObject:content forKey:@"content"];
     [self.userDic setObject:self.locationStr forKey:@"location"];
     self.hud = [KGHUD showMessage:@"正在发布..."];
     self.imgs = [NSMutableSet set];
@@ -76,6 +111,14 @@
             }];
         });
     }
+}
+/** 创建字符创 */
+- (NSString *)createStringWithArray:(NSArray *)arr{
+    NSString *str = [arr firstObject];
+    for (int i = 0; i < arr.count; i++) {
+        str = [str stringByAppendingString:arr[i]];
+    }
+    return str;
 }
 /** 请求 */
 - (void)RequestData{

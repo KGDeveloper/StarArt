@@ -29,6 +29,9 @@
 @property (nonatomic,strong) UITableView *listView;
 @property (nonatomic,strong) NSArray *topListArr;
 @property (nonatomic,strong) NSArray *lowListArr;
+/** 搜索页面 */
+@property (nonatomic,strong) KGInstitutionSearchView *searchView;
+@property (nonatomic,copy) NSString *mohuStr;
 
 @end
 
@@ -118,6 +121,7 @@
     searchBtu.layer.cornerRadius = 15;
     searchBtu.layer.masksToBounds = YES;
     searchBtu.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
+    [searchBtu addTarget:self action:@selector(searchHoistryData) forControlEvents:UIControlEventTouchUpInside];
     [self.backScroll addSubview:searchBtu];
     /** 顶部滚动图 */
     self.topScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(10,65, KGScreenWidth - 20 , 120)];
@@ -384,6 +388,27 @@
         vc.sendID = [NSString stringWithFormat:@"%@",dic[@"id"]];
         [self pushHideenTabbarViewController:vc animted:YES];
     }
+}
+/** 点击搜索 */
+- (void)searchHoistryData{
+    self.searchView.hidden = NO;
+}
+- (KGInstitutionSearchView *)searchView{
+    if (!_searchView) {
+        _searchView = [[KGInstitutionSearchView alloc] shareInstanceWithType:@"场所"];
+        __weak typeof(self) weakSelf = self;
+        _searchView.sendSearchResult = ^(NSString * _Nonnull result) {
+            [weakSelf pushControllerWithSearchResult:result];
+        };
+        [self.navigationController.view addSubview:_searchView];
+    }
+    return _searchView;
+}
+/** 跳转页面加载 */
+- (void)pushControllerWithSearchResult:(NSString *)result{
+    KGAgencyHomePageVC *vc = [[KGAgencyHomePageVC alloc]init];
+    vc.scenarioStyle = KGScenarioStyleArts;
+    [self pushHideenTabbarViewController:vc animted:YES];
 }
 
 /*

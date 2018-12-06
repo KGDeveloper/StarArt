@@ -47,6 +47,13 @@ DZNEmptyDataSetDelegate
 @property (nonatomic,copy) NSArray *oneArr;
 @property (nonatomic,strong) NSMutableArray *dataArr;
 @property (nonatomic,assign) NSInteger page;
+@property (nonatomic,strong) NSMutableArray *cityListArr;
+@property (nonatomic,copy) NSString *citylistStr;
+@property (nonatomic,copy) NSString *navigationStr;
+/** 广告 */
+@property (nonatomic,copy) NSArray *topAdvertisingArr;
+/** 搜索页面 */
+@property (nonatomic,strong) KGInstitutionSearchView *searchView;
 
 @end
 
@@ -68,13 +75,35 @@ DZNEmptyDataSetDelegate
     self.oneListCellRow = 0;
     self.twoListCellRow = 0;
     self.threeListCellRow = 0;
-    self.oneArr = @[@"全部",@"北京",@"上海",@"广州",@"深圳",@"天津",@"成都",@"西安"];
+    self.citylistStr = @"";
+    self.oneArr = @[@{@"city":@"北京",@"id":@"1"},@{@"city":@"上海",@"id":@"13"},@{@"city":@"广州",@"id":@"28"},@{@"city":@"深圳",@"id":@"36"},@{@"city":@"天津",@"id":@"43"},@{@"city":@"成都",@"id":@"65"},@{@"city":@"西安",@"id":@"54"}];
     self.dataArr = [NSMutableArray array];
+    self.cityListArr = [NSMutableArray array];
     self.page = 1;
+    self.navigationStr = @"";
+    
+    [self requestAdvertising];
     [self requestData];
     [self setNavCenterView];
     [self setUpListView];
     [self setUpScreeningView];
+}
+/** 请求广告 */
+- (void)requestAdvertising{
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:SelectEightFood parameters:@{} succ:^(id  _Nonnull result) {
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            NSArray *tmp = dic[@"list"];
+            if (tmp.count > 0) {
+                weakSelf.topAdvertisingArr = tmp.copy;
+            }
+        }
+        [weakSelf setScrollViewImage];
+    } fail:^(NSError * _Nonnull error) {
+        
+        
+    }];
 }
 /** 请求数据 */
 - (void)requestData{
@@ -106,9 +135,13 @@ DZNEmptyDataSetDelegate
     }else if (self.scenarioStyle == KGScenarioStyleTheatre){
         typeID = @"13";
     }
+    NSString *mohuStr = @"";
+    if (self.searchResultStr) {
+        mohuStr = self.searchResultStr;
+    }
     __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     __weak typeof(self) weakSelf = self;
-    [KGRequest postWithUrl:SelectCommunityPlaceList parameters:@{@"pageIndex":@(self.page),@"pageSize":@"20",@"userLongitude":@([[KGRequest shareInstance] requestYourLocation].longitude),@"userLatitude":@([KGRequest shareInstance].requestYourLocation.latitude),@"typeID":typeID,@"cityID":cityId,@"cityproperid":@"",@"mohu":@"",@"navigation":@""} succ:^(id  _Nonnull result) {
+    [KGRequest postWithUrl:SelectCommunityPlaceList parameters:@{@"pageIndex":@(self.page),@"pageSize":@"20",@"userLongitude":@([[KGRequest shareInstance] requestYourLocation].longitude),@"userLatitude":@([KGRequest shareInstance].requestYourLocation.latitude),@"typeID":typeID,@"cityID":cityId,@"cityproperid":self.citylistStr,@"mohu":mohuStr,@"navigation":self.navigationStr} succ:^(id  _Nonnull result) {
         [hud hideAnimated:YES];
         if ([result[@"status"] integerValue] == 200) {
             NSDictionary *dic = result[@"data"];
@@ -125,6 +158,25 @@ DZNEmptyDataSetDelegate
         [weakSelf.listView reloadData];
         [weakSelf.listView.mj_footer endRefreshing];
         [weakSelf.listView.mj_header endRefreshing];
+    }];
+}
+- (void)requestCityProperidDataWithType:(NSString *)type{
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    self.cityListArr = [NSMutableArray array];
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:FindAllMerchantCity parameters:@{@"id":type} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            NSArray *tmp = dic[@"list"];
+            if (tmp.count > 0) {
+                [weakSelf.cityListArr addObjectsFromArray:tmp];
+            }
+        }
+        [weakSelf.rightListView reloadData];
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+        [weakSelf.rightListView reloadData];
     }];
 }
 /** 导航栏左侧点击事件 */
@@ -147,7 +199,19 @@ DZNEmptyDataSetDelegate
 }
 /** 搜索框点击事件 */
 - (void)searchAction{
-    
+    self.searchView.hidden = NO;
+}
+- (KGInstitutionSearchView *)searchView{
+    if (!_searchView) {
+        _searchView = [[KGInstitutionSearchView alloc] shareInstanceWithType:@"场所"];
+        __weak typeof(self) weakSelf = self;
+        _searchView.sendSearchResult = ^(NSString * _Nonnull result) {
+            weakSelf.searchResultStr = result;
+            [weakSelf requestData];
+        };
+        [self.navigationController.view addSubview:_searchView];
+    }
+    return _searchView;
 }
 /** 顶部滚动页 */
 - (UIView *)setUpTopScrollView{
@@ -200,19 +264,23 @@ DZNEmptyDataSetDelegate
     lowLine.backgroundColor = KGLineColor;
     [topView addSubview:lowLine];
     
-    [self setScrollViewImage];
-    
     return topView;
 }
 /** 添加图片 */
 - (void)setScrollViewImage{
-    for (int i = 0; i < 5; i++) {
-        UIButton *tmp = [UIButton buttonWithType:UIButtonTypeCustom];
-        tmp.frame = CGRectMake((KGScreenWidth - 30)*i, 0, KGScreenWidth - 30, (KGScreenWidth - 30)/69*16);
-        tmp.imageView.contentMode = UIViewContentModeScaleAspectFill;
-        tmp.backgroundColor = KGLineColor;
-        [tmp addTarget:self action:@selector(advertisingAction:) forControlEvents:UIControlEventTouchUpInside];
-        [self.topScrollView addSubview:tmp];
+    for (int i = 0; i < self.topAdvertisingArr.count; i++) {
+        NSDictionary *dic = self.topAdvertisingArr[i];
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake((KGScreenWidth - 30)*i, 0, KGScreenWidth - 30, (KGScreenWidth - 30)/69*16)];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:[[dic[@"cover"] componentsSeparatedByString:@"#"] firstObject]]];
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        imageView.layer.masksToBounds = YES;
+        [self.topScrollView addSubview:imageView];
+//        UIButton *tmp = [UIButton buttonWithType:UIButtonTypeCustom];
+//        tmp.frame = CGRectMake((KGScreenWidth - 30)*i, 0, KGScreenWidth - 30, (KGScreenWidth - 30)/69*16);
+//        tmp.imageView.contentMode = UIViewContentModeScaleAspectFill;
+//        tmp.backgroundColor = KGLineColor;
+//        [tmp addTarget:self action:@selector(advertisingAction:) forControlEvents:UIControlEventTouchUpInside];
+//        [self.topScrollView addSubview:tmp];
     }
 }
 /** 点击事件 */
@@ -227,43 +295,32 @@ DZNEmptyDataSetDelegate
 }
 /** 品类筛选点击事件 */
 - (void)areaAction:(UIButton *)sender{
-    if ([sender.currentTitleColor isEqual:KGBlueColor]) {
-        [sender setTitleColor:KGBlackColor forState:UIControlStateNormal];
-        [sender setImage:[UIImage imageNamed:@"liwozuijin"] forState:UIControlStateNormal];
-        self.screenView.hidden = YES;
-    }else{
-        [sender setTitleColor:KGBlueColor forState:UIControlStateNormal];
-        [sender setImage:[UIImage imageNamed:@"quancheng"] forState:UIControlStateNormal];
-        [self.sortBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
-        [self.sortBtu setImage:[UIImage imageNamed:@"liwozuijin"] forState:UIControlStateNormal];
-        self.screenView.hidden = NO;
-        /** 先获取到点击按钮在controllerview中的坐标位置，然后加上导航栏高度，然后减去列表视图滚动的距离，得到筛选页面的起始点坐标，同理得到筛选view的高度 */
-        CGPoint point = [self.view convertPoint:CGPointMake(sender.frame.origin.x, sender.frame.origin.y+sender.frame.size.height) toView:self.view];
-        self.screenView.frame = CGRectMake(0,KGRectNavAndStatusHight + point.y - self.listView.contentOffset.y, KGScreenWidth, KGScreenHeight - point.y - KGRectNavAndStatusHight + self.listView.contentOffset.y);
-        self.leftListView.hidden = NO;
-        self.rightListView.hidden = NO;
-        self.onlyListView.hidden = YES;
-    }
+    [sender setTitleColor:KGBlueColor forState:UIControlStateNormal];
+    [sender setImage:[UIImage imageNamed:@"quancheng"] forState:UIControlStateNormal];
+    [self.sortBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
+    [self.sortBtu setImage:[UIImage imageNamed:@"liwozuijin"] forState:UIControlStateNormal];
+    self.screenView.hidden = NO;
+    /** 先获取到点击按钮在controllerview中的坐标位置，然后加上导航栏高度，然后减去列表视图滚动的距离，得到筛选页面的起始点坐标，同理得到筛选view的高度 */
+    CGPoint point = [self.view convertPoint:CGPointMake(sender.frame.origin.x, sender.frame.origin.y+sender.frame.size.height) toView:self.view];
+    self.screenView.frame = CGRectMake(0,KGRectNavAndStatusHight + point.y - self.listView.contentOffset.y, KGScreenWidth, KGScreenHeight - point.y - KGRectNavAndStatusHight + self.listView.contentOffset.y);
+    self.leftListView.hidden = NO;
+    self.rightListView.hidden = NO;
+    self.onlyListView.hidden = YES;
+    [self requestCityProperidDataWithType:@"1"];
 }
 /** 排序筛选点击事件 */
 - (void)sortAction:(UIButton *)sender{
-    if ([sender.currentTitleColor isEqual:KGBlueColor]) {
-        [sender setTitleColor:KGBlackColor forState:UIControlStateNormal];
-        [sender setImage:[UIImage imageNamed:@"liwozuijin"] forState:UIControlStateNormal];
-        self.screenView.hidden = YES;
-    }else{
-        [sender setTitleColor:KGBlueColor forState:UIControlStateNormal];
-        [sender setImage:[UIImage imageNamed:@"quancheng"] forState:UIControlStateNormal];
-        [self.areaBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
-        [self.areaBtu setImage:[UIImage imageNamed:@"liwozuijin"] forState:UIControlStateNormal];
-        self.screenView.hidden = NO;
-        /** 先获取到点击按钮在controllerview中的坐标位置，然后加上导航栏高度，然后减去列表视图滚动的距离，得到筛选页面的起始点坐标，同理得到筛选view的高度 */
-        CGPoint point = [self.view convertPoint:CGPointMake(sender.frame.origin.x, sender.frame.origin.y+sender.frame.size.height) toView:self.view];
-        self.screenView.frame = CGRectMake(0,KGRectNavAndStatusHight + point.y - self.listView.contentOffset.y, KGScreenWidth, KGScreenHeight - point.y - KGRectNavAndStatusHight + self.listView.contentOffset.y);
-        self.leftListView.hidden = YES;
-        self.rightListView.hidden = YES;
-        self.onlyListView.hidden = NO;
-    }
+    [sender setTitleColor:KGBlueColor forState:UIControlStateNormal];
+    [sender setImage:[UIImage imageNamed:@"quancheng"] forState:UIControlStateNormal];
+    [self.areaBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
+    [self.areaBtu setImage:[UIImage imageNamed:@"liwozuijin"] forState:UIControlStateNormal];
+    self.screenView.hidden = NO;
+    /** 先获取到点击按钮在controllerview中的坐标位置，然后加上导航栏高度，然后减去列表视图滚动的距离，得到筛选页面的起始点坐标，同理得到筛选view的高度 */
+    CGPoint point = [self.view convertPoint:CGPointMake(sender.frame.origin.x, sender.frame.origin.y+sender.frame.size.height) toView:self.view];
+    self.screenView.frame = CGRectMake(0,KGRectNavAndStatusHight + point.y - self.listView.contentOffset.y, KGScreenWidth, KGScreenHeight - point.y - KGRectNavAndStatusHight + self.listView.contentOffset.y);
+    self.leftListView.hidden = YES;
+    self.rightListView.hidden = YES;
+    self.onlyListView.hidden = NO;
 }
 // MARK: --创建机构列表--
 - (void)setUpListView{
@@ -306,11 +363,11 @@ DZNEmptyDataSetDelegate
     if (tableView == self.listView) {
         return self.dataArr.count;
     }else if (tableView == self.leftListView){
-        return 8;
+        return self.oneArr.count;
     }else if (tableView == self.onlyListView){
         return 2;
     }else{
-        return 0;
+        return self.cityListArr.count;
     }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -330,7 +387,8 @@ DZNEmptyDataSetDelegate
             cell.backgroundColor = KGLineColor;
             cell.titleLab.textColor = KGGrayColor;
         }
-        cell.titleLab.text = self.oneArr[indexPath.row];
+        NSDictionary *dic = self.oneArr[indexPath.row];
+        cell.titleLab.text = dic[@"city"];
         return cell;
     }else if (tableView == self.onlyListView){
         KGAgencyHomePageScreeningCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGAgencyHomePageScreeningCell"];
@@ -349,12 +407,16 @@ DZNEmptyDataSetDelegate
         return cell;
     }else{
         KGAgencyHomePageScreeningCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGAgencyHomePageScreeningCell"];
-        if (indexPath.row == self.oneListCellRow) {
+        if (indexPath.row == self.twoListCellRow) {
             cell.backgroundColor = KGWhiteColor;
             cell.titleLab.textColor = KGBlackColor;
         }else{
             cell.backgroundColor = KGWhiteColor;
             cell.titleLab.textColor = KGGrayColor;
+        }
+        if (self.cityListArr.count  > 0) {
+            NSDictionary *dic = self.cityListArr[indexPath.row];
+            cell.titleLab.text = dic[@"cname"];
         }
         return cell;
     }
@@ -368,12 +430,28 @@ DZNEmptyDataSetDelegate
     }else if (tableView == self.leftListView){
         self.oneListCellRow = indexPath.row;
         [self.leftListView reloadData];
+        self.cityListArr = [NSMutableArray array];
+        NSDictionary *dic = self.oneArr[indexPath.row];
+        [self requestCityProperidDataWithType:dic[@"id"]];
     }else if (tableView == self.onlyListView){
         self.threeListCellRow = indexPath.row;
+        if (indexPath.row == 0) {
+            self.navigationStr = @"离我最近";
+        }else{
+            self.navigationStr = @"好评优先";
+        }
         [self.onlyListView reloadData];
+        self.screenView.hidden = YES;
+        self.dataArr = [NSMutableArray array];
+        [self requestData];
     }else{
         self.twoListCellRow = indexPath.row;
         [self.rightListView reloadData];
+        NSDictionary *dic = self.cityListArr[indexPath.row];
+        self.citylistStr = [NSString stringWithFormat:@"%@",dic[@"id"]];
+        self.screenView.hidden = YES;
+        self.dataArr = [NSMutableArray array];
+        [self requestData];
     }
 }
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView{
@@ -423,7 +501,7 @@ DZNEmptyDataSetDelegate
         [self.screenView addSubview:_rightListView];
         [_rightListView registerNib:[UINib nibWithNibName:@"KGAgencyHomePageScreeningCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"KGAgencyHomePageScreeningCell"];
     }
-    return _leftListView;
+    return _rightListView;
 }
 /** 左侧筛选右边栏 */
 - (UITableView *)onlyListView{

@@ -65,8 +65,10 @@
         if ([result[@"status"] integerValue] == 200) {
             NSDictionary *dic = result[@"data"];
             NSArray *tmp = dic[@"list"];
-            if (tmp.count > 0) {
-                [weakSelf.dataArr addObjectsFromArray:tmp];
+            if (![tmp isKindOfClass:[NSNull class]]) {
+                if (tmp.count > 0) {
+                    [weakSelf.dataArr addObjectsFromArray:tmp];
+                }
             }
         }
         [weakSelf.listView.mj_header endRefreshing];

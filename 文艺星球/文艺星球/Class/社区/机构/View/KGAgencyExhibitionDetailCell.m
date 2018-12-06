@@ -17,6 +17,8 @@
 
 - (void)cellDetailWithDictionary:(NSDictionary *)dic{
     [self.customImage sd_setImageWithURL:[NSURL URLWithString:[[dic[@"worksPhoto"] componentsSeparatedByString:@"#"] firstObject]]];
+    self.customImage.contentMode = UIViewContentModeScaleAspectFill;
+    self.customImage.layer.masksToBounds = YES;
     self.titleLab.text = [NSString stringWithFormat:@"作者：%@",dic[@"worksAuthor"]];
 }
 
