@@ -106,9 +106,12 @@
 #define SelectCommunitySearchByUid [POSTURL stringByAppendingString:@"/api/communitysearch/selectCommunitySearchByUid"]
 /** 清空搜索记录 */
 #define DeleteCommunitySearchByUid [POSTURL stringByAppendingString:@"/api/communitysearch/deleteCommunitySearchByUid"]
-
-
-
+/** 戏剧热门5条 */
+#define SelectShowListFives [POSTURL stringByAppendingString:@"/api/aCommunityShow/selectShowListFives"]
+/** 戏剧列表查询 */
+#define SelectShowList [POSTURL stringByAppendingString:@"/api/aCommunityShow/selectShowList"]
+/** 戏剧详情查询 */
+#define SelectShowBySID [POSTURL stringByAppendingString:@"/api/aCommunityShow/selectShowBySID"]
 
 
 

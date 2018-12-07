@@ -18,9 +18,12 @@
             <connections>
                 <outlet property="addressLab" destination="tr0-s5-UoT" id="Sig-yB-gss"/>
                 <outlet property="customBackImage" destination="nOM-9Q-2sa" id="5Pj-70-VNa"/>
+                <outlet property="detailHeight" destination="QDL-ad-ZSH" id="NaI-zw-EZE"/>
                 <outlet property="detailLab" destination="0fv-hb-Q5l" id="LXU-PI-74l"/>
                 <outlet property="dramaNameLab" destination="Zfh-iH-EdX" id="87F-Ie-tSD"/>
                 <outlet property="headerImage" destination="spl-hu-8z2" id="q3Z-C1-qB6"/>
+                <outlet property="lowHeight" destination="tRq-hy-lqb" id="bEQ-ZM-32b"/>
+                <outlet property="maskView" destination="YWn-kx-r0w" id="KNe-J5-Jmn"/>
                 <outlet property="nameLab" destination="Ebh-0X-eyQ" id="D2Z-Nz-tKc"/>
                 <outlet property="presonLab" destination="rKy-Zm-H89" id="awF-7K-fKe"/>
                 <outlet property="timeLab" destination="dPP-2u-IVH" id="HJf-jS-jJm"/>
@@ -32,7 +35,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nOM-9Q-2sa">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nOM-9Q-2sa">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="215"/>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -124,7 +127,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="250" id="QDL-ad-ZSH"/>
                     </constraints>
-                    <mutableString key="text">阿打算大空间的拿手机到那时的卡上的纳税会计的纳税会计的你卡上到哪看打卡电脑卡十多年看奥斯卡电脑爱是可敬的那看电视剧那就卡十多年萨克的那斯柯达那斯柯达奥斯卡的奥斯卡大家拿思考的难度侃大山卡迪那是可敬的纳斯达克就爱上你的卡死的那斯柯达你奥斯卡单啥都看奥斯卡的那可是电脑奥斯卡的纳斯卡但打开手机到那时空间的那可是见到你奥斯卡电脑爱空间的纳税会计但斯柯达那斯柯达你奥斯卡鸡蛋打开氨基酸电脑卡死的纳税会计但是可敬的那斯柯达那是可敬的那斯柯达阿萨德科技啊那斯柯达那可就电脑看到撒叫你啥空间电脑萨克的那可就电脑奥斯卡那就得三点卡时间段内奥斯卡大家那斯柯达暗示可能大是可敬的那斯柯达暗时刻但是可敬的那是可敬的那是看得见三的卡十多年奥斯卡的那是电脑奥斯卡的那卡十多年萨科技电脑爱是可敬的那斯柯达金属卡的加上电脑三点可能卡萨丁</mutableString>
+                    <string key="text">阿打算大空间的拿手机到那时的卡上的纳税会计的纳税会计的你卡上到哪看打卡电脑卡十多年看奥斯卡电脑爱是可敬的那看电视剧那就卡十多年萨克的那斯柯达那斯柯达奥斯卡的奥斯卡大家拿思考的难度侃大山卡迪那是可敬的纳斯达克就爱上你的卡死的那斯柯达你奥斯卡单啥都看奥斯卡的那可是电脑奥斯卡的纳斯卡但打开手机到那时空间的那可是见到你奥斯卡电脑爱空间的纳税会计但斯柯达那斯柯达你奥斯卡鸡蛋打开氨基酸电脑卡死的纳税会计但是可敬的那斯柯达那是可敬的那斯柯达阿萨德科技啊那斯柯达那可就电脑看到撒叫你啥空间电脑萨克的那可就电脑奥斯卡那就得三点卡时间段内奥斯卡大家那斯柯达暗示可能大是可敬的那斯柯达暗时刻但是可敬的那是可敬的那是看得见三的卡十多年奥斯卡的那是电脑奥斯卡的那卡十多年萨科技电脑爱是可敬的那斯柯达金属卡的加上电脑三点可能卡萨丁</string>
                     <fontDescription key="fontDescription" name="SourceHanSansCN-Regular" family="Source Han Sans CN" pointSize="13"/>
                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -136,15 +139,19 @@
                         <constraint firstAttribute="height" constant="10" id="zJL-9l-TGX"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="演出演员" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rKy-Zm-H89">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="演出演员" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rKy-Zm-H89">
                     <rect key="frame" x="15" y="485" width="345" height="45"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="45" id="tRq-hy-lqb"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="SourceHanSansCN-Regular" family="Source Han Sans CN" pointSize="15"/>
+                    <fontDescription key="fontDescription" name="SourceHanSansCN-Regular" family="Source Han Sans CN" pointSize="13"/>
                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YWn-kx-r0w">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="215"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -153,9 +160,12 @@
                 <constraint firstItem="zFs-wD-rPi" firstAttribute="leading" secondItem="tr0-s5-UoT" secondAttribute="leading" id="2gD-4i-nDY"/>
                 <constraint firstItem="vys-vb-WJ0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="4gY-U8-jXa"/>
                 <constraint firstItem="beR-dW-UdC" firstAttribute="top" secondItem="Ebh-0X-eyQ" secondAttribute="bottom" constant="15" id="59f-Dw-qBH"/>
+                <constraint firstItem="YWn-kx-r0w" firstAttribute="trailing" secondItem="nOM-9Q-2sa" secondAttribute="trailing" id="5Uf-ao-rKI"/>
                 <constraint firstAttribute="trailing" secondItem="beR-dW-UdC" secondAttribute="trailing" constant="15" id="5zr-fm-0TJ"/>
+                <constraint firstItem="YWn-kx-r0w" firstAttribute="top" secondItem="nOM-9Q-2sa" secondAttribute="top" id="72o-Tj-bc3"/>
                 <constraint firstAttribute="trailing" secondItem="tr0-s5-UoT" secondAttribute="trailing" constant="60" id="72u-V2-c20"/>
                 <constraint firstAttribute="trailing" secondItem="Zfh-iH-EdX" secondAttribute="trailing" constant="15" id="AaK-ls-SfX"/>
+                <constraint firstItem="YWn-kx-r0w" firstAttribute="bottom" secondItem="nOM-9Q-2sa" secondAttribute="bottom" id="BDk-Wu-1JW"/>
                 <constraint firstItem="0fv-hb-Q5l" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="15" id="Cs0-We-M5Z"/>
                 <constraint firstItem="Zfh-iH-EdX" firstAttribute="leading" secondItem="spl-hu-8z2" secondAttribute="trailing" constant="15" id="FOZ-zz-Z3I"/>
                 <constraint firstItem="zFs-wD-rPi" firstAttribute="trailing" secondItem="beR-dW-UdC" secondAttribute="trailing" id="FUD-2H-EDt"/>
@@ -175,6 +185,7 @@
                 <constraint firstAttribute="trailing" secondItem="0fv-hb-Q5l" secondAttribute="trailing" constant="15" id="fRB-WR-QRd"/>
                 <constraint firstItem="spl-hu-8z2" firstAttribute="bottom" secondItem="nOM-9Q-2sa" secondAttribute="bottom" constant="-15" id="hxf-kb-h86"/>
                 <constraint firstItem="hQ5-1N-EPL" firstAttribute="leading" secondItem="spl-hu-8z2" secondAttribute="trailing" constant="15" id="iIU-xK-yOw"/>
+                <constraint firstItem="YWn-kx-r0w" firstAttribute="leading" secondItem="nOM-9Q-2sa" secondAttribute="leading" id="jH7-Nk-Lcf"/>
                 <constraint firstItem="vys-vb-WJ0" firstAttribute="top" secondItem="0fv-hb-Q5l" secondAttribute="bottom" id="lqr-rY-Z9w"/>
                 <constraint firstItem="Ebh-0X-eyQ" firstAttribute="top" secondItem="dPP-2u-IVH" secondAttribute="bottom" constant="15" id="n9o-Qd-6Jr"/>
                 <constraint firstItem="Ebh-0X-eyQ" firstAttribute="leading" secondItem="hQ5-1N-EPL" secondAttribute="trailing" constant="10" id="nId-8C-bxi"/>

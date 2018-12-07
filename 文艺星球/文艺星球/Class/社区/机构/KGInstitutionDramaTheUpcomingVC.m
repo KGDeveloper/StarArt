@@ -17,6 +17,12 @@
 @property (nonatomic,strong) UIButton *leftBtu;
 /** 导航右侧 */
 @property (nonatomic,strong) UIButton *rightBtu;
+/** 页码 */
+@property (nonatomic,assign) NSInteger page;
+/** 近期热门 */
+@property (nonatomic,copy) NSString *navigationStr;
+/** 数据源 */
+@property (nonatomic,strong) NSMutableArray *dataArr;
 
 @end
 
@@ -33,10 +39,55 @@
     /** 定制左侧返回按钮 */
     [self setLeftNavItemWithFrame:CGRectZero title:nil image:[UIImage imageNamed:@"fanhui"] font:nil color:nil select:@selector(leftNavAction)];
     /** 导航栏标题 */
-    self.title = @"近期热门";
+    self.title = @"即将上映";
     self.view.backgroundColor = KGAreaGrayColor;
+    self.navigationStr = @"即将上映";
+    self.page = 1;
+    self.dataArr = [NSMutableArray array];
     
+    [self requestData];
     [self setUpListView];
+}
+/** 请求数据 */
+- (void)requestData{
+    NSString *cityId = nil;
+    if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"北京市"]) {
+        cityId = @"1";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"天津市"]){
+        cityId = @"43";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"西安市"]){
+        cityId = @"54";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"广州市"]){
+        cityId = @"28";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"成都市"]){
+        cityId = @"65";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"上海市"]){
+        cityId = @"13";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"深圳市"]){
+        cityId = @"36";
+    }else{
+        cityId = @"1";
+    }
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:SelectShowList parameters:@{@"pageIndex":@(self.page),@"pageSize":@"20",@"typeID":@"5",@"cityID":cityId,@"mohu":@"",@"navigation":self.navigationStr} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            NSArray *tmp = dic[@"list"];
+            if (tmp.count > 0) {
+                [weakSelf.dataArr addObjectsFromArray:tmp];
+            }
+        }
+        [weakSelf.listView reloadData];
+        [weakSelf.listView.mj_footer endRefreshing];
+        [weakSelf.listView.mj_header endRefreshing];
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+        [weakSelf.listView reloadData];
+        [weakSelf.listView.mj_footer endRefreshing];
+        [weakSelf.listView.mj_header endRefreshing];
+    }];
 }
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{
@@ -53,6 +104,18 @@
     self.listView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.listView.showsVerticalScrollIndicator = NO;
     self.listView.showsHorizontalScrollIndicator = NO;
+    __weak typeof(self) weakSelf = self;
+    self.listView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        weakSelf.page = 1;
+        weakSelf.dataArr = [NSMutableArray array];
+        [weakSelf requestData];
+        [weakSelf.listView.mj_header beginRefreshing];
+    }];
+    self.listView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        weakSelf.page++;
+        [weakSelf requestData];
+        [weakSelf.listView.mj_footer beginRefreshing];
+    }];
     [self.view addSubview:self.listView];
     [self.listView registerNib:[UINib nibWithNibName:@"KGInstitutionHotDramaCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"KGInstitutionHotDramaCell"];
 }
@@ -66,14 +129,21 @@
 }
 // MARK :--UITableViewDataSource--
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    return self.dataArr.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     KGInstitutionHotDramaCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGInstitutionHotDramaCell" forIndexPath:indexPath];
+    if (self.dataArr.count > 0) {
+        NSDictionary *dic = self.dataArr[indexPath.row];
+        [cell cellDetailWithDictionary:dic];
+    }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self pushHideenTabbarViewController:[[KGInstitutionDramaDetailVC alloc]initWithNibName:@"KGInstitutionDramaDetailVC" bundle:nil] animted:YES];
+    KGInstitutionDramaDetailVC *vc = [[KGInstitutionDramaDetailVC alloc]initWithNibName:@"KGInstitutionDramaDetailVC" bundle:nil];
+    NSDictionary *dic = self.dataArr[indexPath.row];
+    vc.sendID = [NSString stringWithFormat:@"%@",dic[@"id"]];
+    [self pushHideenTabbarViewController:vc animted:YES];
 }
 
 /*

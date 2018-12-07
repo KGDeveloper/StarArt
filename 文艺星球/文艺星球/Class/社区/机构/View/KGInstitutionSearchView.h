@@ -11,11 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface KGInstitutionSearchView : UIView
-@property (weak, nonatomic) IBOutlet UIButton *returnBtu;
-@property (weak, nonatomic) IBOutlet UITextField *searchTF;
-@property (weak, nonatomic) IBOutlet UIView *hoistryView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topHeight;
-@property (strong, nonatomic) IBOutlet UIView *customView;
+
 @property (nonatomic,copy) NSString *type;
 @property (nonatomic,copy) void(^sendSearchResult)(NSString *result);
 

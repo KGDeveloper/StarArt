@@ -17,6 +17,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *dramaNameLab;
 @property (weak, nonatomic) IBOutlet UILabel *detailLab;
 @property (weak, nonatomic) IBOutlet UILabel *presonLab;
+@property (nonatomic,copy) NSDictionary *userDic;
+@property (weak, nonatomic) IBOutlet UIView *maskView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *detailHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lowHeight;
 
 @end
 
@@ -34,12 +38,50 @@
     [self setLeftNavItemWithFrame:CGRectZero title:nil image:[UIImage imageNamed:@"fanhuibai"] font:nil color:nil select:@selector(leftNavAction)];
     self.view.backgroundColor = KGAreaGrayColor;
     
+    [self requestData];
+}
+/** 请求数据 */
+- (void)requestData{
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:SelectShowBySID parameters:@{@"id":self.sendID} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            weakSelf.userDic = result[@"data"];
+        }
+        [weakSelf changeUIData];
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+        [weakSelf changeUIData];
+    }];
 }
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)locationAction:(UIButton *)sender {
+    
+}
+/** 设置内容 */
+- (void)changeUIData{
+    [self.customBackImage sd_setImageWithURL:[NSURL URLWithString:[[self.userDic[@"showCover"] componentsSeparatedByString:@"#"] firstObject]]];
+    [self.headerImage sd_setImageWithURL:[NSURL URLWithString:[[self.userDic[@"showCover"] componentsSeparatedByString:@"#"] firstObject]]];
+    self.nameLab.text = self.userDic[@"showPlace"];
+    self.timeLab.text = self.userDic[@"showTime"];
+    self.addressLab.text = self.userDic[@"showAddress"];
+    self.dramaNameLab.text = self.userDic[@"showTitle"];
+    self.detailLab.text = self.userDic[@"showIntroduction"];
+    self.detailHeight.constant = [self.userDic[@"showIntroduction"] boundingRectWithSize:CGSizeMake(KGScreenWidth - 30, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontSHRegular(13)} context:nil].size.height + 30;
+    self.maskView.backgroundColor = [KGBlackColor colorWithAlphaComponent:0.6];
+    [self.view sendSubviewToBack:self.maskView];
+    [self.view sendSubviewToBack:self.customBackImage];
+    
+    NSData *jsonData = [self.userDic[@"showPrecautions"] dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:nil];
+    NSArray *tmpArr = dic[@"showPrecautions"];
+    NSString *presonStr = [NSString stringWithFormat:@"注意事项：\n演出时长：%@\n演出地点：%@\n演出时间：%@\n其他注意事项：%@",dic[@"showDuration"],dic[@"showPlace"],dic[@"showTime"],[tmpArr firstObject]];
+    self.presonLab.text = presonStr;
+    self.lowHeight.constant = [presonStr boundingRectWithSize:CGSizeMake(KGScreenWidth - 30, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontSHRegular(13)} context:nil].size.height + 30;
     
 }
 

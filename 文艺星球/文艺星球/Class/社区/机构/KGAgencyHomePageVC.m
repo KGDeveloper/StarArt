@@ -101,8 +101,6 @@ DZNEmptyDataSetDelegate
         }
         [weakSelf setScrollViewImage];
     } fail:^(NSError * _Nonnull error) {
-        
-        
     }];
 }
 /** 请求数据 */
@@ -134,6 +132,12 @@ DZNEmptyDataSetDelegate
         typeID = @"6";
     }else if (self.scenarioStyle == KGScenarioStyleTheatre){
         typeID = @"13";
+    }else if (self.scenarioStyle == KGScenarioStyleMovies){
+        typeID = @"12";
+    }else if (self.scenarioStyle == KGScenarioStyleMusic){
+        typeID = @"2";
+    }else if (self.scenarioStyle == KGScenarioStyleFood){
+        typeID = @"7";
     }
     NSString *mohuStr = @"";
     if (self.searchResultStr) {
@@ -207,6 +211,7 @@ DZNEmptyDataSetDelegate
         __weak typeof(self) weakSelf = self;
         _searchView.sendSearchResult = ^(NSString * _Nonnull result) {
             weakSelf.searchResultStr = result;
+            weakSelf.dataArr = [NSMutableArray array];
             [weakSelf requestData];
         };
         [self.navigationController.view addSubview:_searchView];
@@ -424,9 +429,13 @@ DZNEmptyDataSetDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.listView) {
         NSDictionary *dic = self.dataArr[indexPath.row];
-        KGAgencyDetailVC *vc = [[KGAgencyDetailVC alloc]init];
-        vc.sendID = [NSString stringWithFormat:@"%@",dic[@"id"]];
-        [self pushHideenTabbarViewController:vc animted:YES];
+        if ([dic[@"type"] integerValue] == 2 && [dic[@"type"] integerValue] == 7 && [dic[@"type"] integerValue] == 12) {
+            
+        }else{
+            KGAgencyDetailVC *vc = [[KGAgencyDetailVC alloc]init];
+            vc.sendID = [NSString stringWithFormat:@"%@",dic[@"id"]];
+            [self pushHideenTabbarViewController:vc animted:YES];
+        }
     }else if (tableView == self.leftListView){
         self.oneListCellRow = indexPath.row;
         [self.leftListView reloadData];

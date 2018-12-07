@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface KGInstitutionDramaVC : KGBaseViewController
 
+@property (nonatomic,copy) NSString *searchResultStr;
+
 @end
 
 NS_ASSUME_NONNULL_END

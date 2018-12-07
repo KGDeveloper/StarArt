@@ -53,6 +53,7 @@
     self.title = @"机构";
     
     [self requestData];
+    [self requestAdvertising];
     [self setUpListView];
 }
 /** 首页请求数据 */
@@ -81,13 +82,26 @@
         [hud hideAnimated:YES];
         if ([result[@"status"] integerValue] == 200) {
             NSDictionary *dic = result[@"data"];
-            weakSelf.topListArr = dic[@"exhibitionLists"];
             weakSelf.lowListArr = dic[@"exhibitionList"];
         }
-        [weakSelf setScrollView];
         [weakSelf.listView reloadData];
     } fail:^(NSError * _Nonnull error) {
         [hud hideAnimated:YES];
+    }];
+}
+/** 请求广告 */
+- (void)requestAdvertising{
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:SelectEightFood parameters:@{} succ:^(id  _Nonnull result) {
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            NSArray *tmp = dic[@"list"];
+            if (tmp.count > 0) {
+                weakSelf.topListArr = tmp.copy;
+            }
+        }
+        [weakSelf setScrollView];
+    } fail:^(NSError * _Nonnull error) {
     }];
 }
 /** 导航栏左侧点击事件 */
@@ -214,14 +228,11 @@
     for (int i = 0; i < self.topListArr.count; i++) {
         NSDictionary *dic = self.topListArr[i];
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake((KGScreenWidth - 20)*i, 0, KGScreenWidth - 20, 120)];
-        if (![dic[@"image"] isKindOfClass:[NSNull class]]) {
-            [imageView sd_setImageWithURL:[NSURL URLWithString:[[dic[@"image"] componentsSeparatedByString:@"#"] firstObject]]];
-        }else{
-            imageView.backgroundColor = [KGLineColor colorWithAlphaComponent:0.2];
-        }
+        [imageView sd_setImageWithURL:[NSURL URLWithString:[[dic[@"cover"] componentsSeparatedByString:@"#"] firstObject]]];
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        imageView.layer.masksToBounds = YES;
         imageView.userInteractionEnabled = YES;
         imageView.tag = 300 + i;
-        imageView.contentMode = UIViewContentModeScaleAspectFill;
         [self.topScroll addSubview:imageView];
         
         UITapGestureRecognizer *tag = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(selectImageView:)];
@@ -408,6 +419,7 @@
 - (void)pushControllerWithSearchResult:(NSString *)result{
     KGAgencyHomePageVC *vc = [[KGAgencyHomePageVC alloc]init];
     vc.scenarioStyle = KGScenarioStyleArts;
+    vc.searchResultStr = result;
     [self pushHideenTabbarViewController:vc animted:YES];
 }
 
