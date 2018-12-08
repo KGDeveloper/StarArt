@@ -12,6 +12,7 @@
 #import "KGAgencyHomePageCell.h"
 #import "KGAgencyDetailVC.h"
 #import "KGInstitutionDramaDetailVC.h"
+#import "KGInstitutionMoviesDetailVC.h"
 
 @interface KGInstitutionVC ()<UITextFieldDelegate,UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate>
 /** 底部加载 */
@@ -388,8 +389,10 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSDictionary *dic = self.lowListArr[indexPath.row];
-    if ([dic[@"type"] integerValue] == 2 && [dic[@"type"] integerValue] == 7 && [dic[@"type"] integerValue] == 12) {
-        
+    if ([dic[@"type"] integerValue] == 7 || [dic[@"type"] integerValue] == 2 || [dic[@"type"] integerValue] == 12 || [dic[@"type"] integerValue] == 8 || [dic[@"type"] integerValue] == 9 || [dic[@"type"] integerValue] == 10 || [dic[@"type"] integerValue] == 11) {
+        KGInstitutionMoviesDetailVC *vc = [[KGInstitutionMoviesDetailVC alloc]init];
+        vc.sendID = [NSString stringWithFormat:@"%@",dic[@"id"]];
+        [self pushHideenTabbarViewController:vc animted:YES];
     }else if ([dic[@"type"] integerValue] == 5){
         KGInstitutionDramaDetailVC *vc = [[KGInstitutionDramaDetailVC alloc]initWithNibName:@"KGInstitutionDramaDetailVC" bundle:nil];
         vc.sendID = [NSString stringWithFormat:@"%@",dic[@"id"]];

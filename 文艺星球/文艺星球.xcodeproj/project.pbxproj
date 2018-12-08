@@ -86,6 +86,9 @@
 		5A33ABA621A4065C0046E296 /* KGArtisticPeopleDetailSperadtrumView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A33ABA521A4065C0046E296 /* KGArtisticPeopleDetailSperadtrumView.m */; };
 		5A33ABAA21A408EF0046E296 /* KGArtisticPeopleDetailSpeardtrumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A33ABA821A408EF0046E296 /* KGArtisticPeopleDetailSpeardtrumCell.m */; };
 		5A33ABAB21A408EF0046E296 /* KGArtisticPeopleDetailSpeardtrumCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A33ABA921A408EF0046E296 /* KGArtisticPeopleDetailSpeardtrumCell.xib */; };
+		5A3683E821BB6C23004AFCF5 /* KGInstitutionMoviesDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3683E721BB6C23004AFCF5 /* KGInstitutionMoviesDetailVC.m */; };
+		5A3683EC21BB731F004AFCF5 /* KGInstitutionMoviesDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3683EA21BB731F004AFCF5 /* KGInstitutionMoviesDetailCell.m */; };
+		5A3683ED21BB731F004AFCF5 /* KGInstitutionMoviesDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A3683EB21BB731F004AFCF5 /* KGInstitutionMoviesDetailCell.xib */; };
 		5A4408B6219A6FDC00393CAF /* KGInstitutionDramaDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4408B4219A6FDC00393CAF /* KGInstitutionDramaDetailVC.m */; };
 		5A4408B7219A6FDC00393CAF /* KGInstitutionDramaDetailVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A4408B5219A6FDC00393CAF /* KGInstitutionDramaDetailVC.xib */; };
 		5A4408BB219A82FB00393CAF /* KGDatingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4408BA219A82FB00393CAF /* KGDatingVC.m */; };
@@ -375,6 +378,11 @@
 		5A33ABA721A408EF0046E296 /* KGArtisticPeopleDetailSpeardtrumCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGArtisticPeopleDetailSpeardtrumCell.h; sourceTree = "<group>"; };
 		5A33ABA821A408EF0046E296 /* KGArtisticPeopleDetailSpeardtrumCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGArtisticPeopleDetailSpeardtrumCell.m; sourceTree = "<group>"; };
 		5A33ABA921A408EF0046E296 /* KGArtisticPeopleDetailSpeardtrumCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGArtisticPeopleDetailSpeardtrumCell.xib; sourceTree = "<group>"; };
+		5A3683E621BB6C23004AFCF5 /* KGInstitutionMoviesDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGInstitutionMoviesDetailVC.h; sourceTree = "<group>"; };
+		5A3683E721BB6C23004AFCF5 /* KGInstitutionMoviesDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGInstitutionMoviesDetailVC.m; sourceTree = "<group>"; };
+		5A3683E921BB731F004AFCF5 /* KGInstitutionMoviesDetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGInstitutionMoviesDetailCell.h; sourceTree = "<group>"; };
+		5A3683EA21BB731F004AFCF5 /* KGInstitutionMoviesDetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGInstitutionMoviesDetailCell.m; sourceTree = "<group>"; };
+		5A3683EB21BB731F004AFCF5 /* KGInstitutionMoviesDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGInstitutionMoviesDetailCell.xib; sourceTree = "<group>"; };
 		5A4408B3219A6FDC00393CAF /* KGInstitutionDramaDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGInstitutionDramaDetailVC.h; sourceTree = "<group>"; };
 		5A4408B4219A6FDC00393CAF /* KGInstitutionDramaDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGInstitutionDramaDetailVC.m; sourceTree = "<group>"; };
 		5A4408B5219A6FDC00393CAF /* KGInstitutionDramaDetailVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGInstitutionDramaDetailVC.xib; sourceTree = "<group>"; };
@@ -947,6 +955,8 @@
 				5A543E5F219984D40085B1E0 /* KGInstitutionHotDramaVC.m */,
 				5A543E6621998AB10085B1E0 /* KGInstitutionDramaTheUpcomingVC.h */,
 				5A543E6721998AB10085B1E0 /* KGInstitutionDramaTheUpcomingVC.m */,
+				5A3683E621BB6C23004AFCF5 /* KGInstitutionMoviesDetailVC.h */,
+				5A3683E721BB6C23004AFCF5 /* KGInstitutionMoviesDetailVC.m */,
 				5A4408B3219A6FDC00393CAF /* KGInstitutionDramaDetailVC.h */,
 				5A4408B4219A6FDC00393CAF /* KGInstitutionDramaDetailVC.m */,
 				5A4408B5219A6FDC00393CAF /* KGInstitutionDramaDetailVC.xib */,
@@ -1286,6 +1296,9 @@
 				5A543E63219986440085B1E0 /* KGInstitutionHotDramaCell.xib */,
 				5A4614BD21B9328300B3FC80 /* KGInstitutionSearchView.h */,
 				5A4614BE21B9328300B3FC80 /* KGInstitutionSearchView.m */,
+				5A3683E921BB731F004AFCF5 /* KGInstitutionMoviesDetailCell.h */,
+				5A3683EA21BB731F004AFCF5 /* KGInstitutionMoviesDetailCell.m */,
+				5A3683EB21BB731F004AFCF5 /* KGInstitutionMoviesDetailCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1585,6 +1598,7 @@
 				5AED6C0D217DC84A000657C9 /* SourceHanSansCN-Bold.otf in Resources */,
 				5A0D323A219BCEAA00A49AE7 /* KGBooksDetailHeaderView.xib in Resources */,
 				5A543E5521995BA70085B1E0 /* KGAgencyExhibitionDetailCell.xib in Resources */,
+				5A3683ED21BB731F004AFCF5 /* KGInstitutionMoviesDetailCell.xib in Resources */,
 				5A92745D219D3BE100998281 /* KGNewsCell.xib in Resources */,
 				5A543E5A21995D090085B1E0 /* KGAgencyExhibitionDetailHeaderView.xib in Resources */,
 				5ACA150321A2B8B800DC9C64 /* KGArtisticPeopleDetailVC.xib in Resources */,
@@ -1752,6 +1766,7 @@
 				5A79E40E2181C73E0015AC91 /* KGAboutOurVC.m in Sources */,
 				5A543E6821998AB10085B1E0 /* KGInstitutionDramaTheUpcomingVC.m in Sources */,
 				5A3089B921A4FF9D007D08F3 /* KGArtisticPeopleDetailArtisticViewCell.m in Sources */,
+				5A3683E821BB6C23004AFCF5 /* KGInstitutionMoviesDetailVC.m in Sources */,
 				5A4408CE219AC69E00393CAF /* KGBooksCell.m in Sources */,
 				5A5631E421800E460007127C /* KGMineVC.m in Sources */,
 				5A2620ED219043B80047A319 /* KGReleaseTF.m in Sources */,
@@ -1766,6 +1781,7 @@
 				5A5A7295218C40E00081F173 /* KGSquareRoundCell.m in Sources */,
 				5A4408DD219AE1F100393CAF /* KGBestSellingBooksVC.m in Sources */,
 				5A8FA63221899BB300498307 /* KGExhibitionCell.m in Sources */,
+				5A3683EC21BB731F004AFCF5 /* KGInstitutionMoviesDetailCell.m in Sources */,
 				5A2D844C2192C44900CBC727 /* KGSubmitLocationCell.m in Sources */,
 				5ACA14F821A2A91E00DC9C64 /* KGArtisticPeopleVC.m in Sources */,
 				5A4B19BD2193DC240054E732 /* KGDetailedAddressOfThePlaceVC.m in Sources */,

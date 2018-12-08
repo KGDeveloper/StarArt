@@ -10,6 +10,7 @@
 #import "KGAgencyHomePageCell.h"
 #import "KGAgencyHomePageScreeningCell.h"
 #import "KGAgencyDetailVC.h"
+#import "KGInstitutionMoviesDetailVC.h"
 
 @interface KGAgencyHomePageVC ()
 <
@@ -429,8 +430,10 @@ DZNEmptyDataSetDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.listView) {
         NSDictionary *dic = self.dataArr[indexPath.row];
-        if ([dic[@"type"] integerValue] == 2 && [dic[@"type"] integerValue] == 7 && [dic[@"type"] integerValue] == 12) {
-            
+        if ([dic[@"type"] integerValue] == 7 || [dic[@"type"] integerValue] == 2 || [dic[@"type"] integerValue] == 12 || [dic[@"type"] integerValue] == 8 || [dic[@"type"] integerValue] == 9 || [dic[@"type"] integerValue] == 10 || [dic[@"type"] integerValue] == 11) {
+            KGInstitutionMoviesDetailVC *vc = [[KGInstitutionMoviesDetailVC alloc]init];
+            vc.sendID = [NSString stringWithFormat:@"%@",dic[@"id"]];
+            [self pushHideenTabbarViewController:vc animted:YES];
         }else{
             KGAgencyDetailVC *vc = [[KGAgencyDetailVC alloc]init];
             vc.sendID = [NSString stringWithFormat:@"%@",dic[@"id"]];

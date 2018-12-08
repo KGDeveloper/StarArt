@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceHanSansCN-Bold.otf">
+            <string>SourceHanSansCN-Bold</string>
+        </array>
+        <array key="SourceHanSansCN-Regular.otf">
+            <string>SourceHanSansCN-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="116" id="KGk-i7-Jjw" customClass="KGInstitutionMoviesDetailCell">
+            <rect key="frame" x="0.0" y="0.0" width="352" height="116"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="352" height="115.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="COS-Q4-aRr">
+                        <rect key="frame" x="15" y="10" width="65" height="80"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="65" id="FYx-LU-xzi"/>
+                            <constraint firstAttribute="height" constant="80" id="Zzq-8Q-BCl"/>
+                        </constraints>
+                    </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PIP-bj-x3W">
+                        <rect key="frame" x="15" y="114.5" width="322" height="1"/>
+                        <color key="backgroundColor" red="0.92941176469999998" green="0.92941176469999998" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="8kU-bp-RV9"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="一代宗师" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="duV-xX-GUV">
+                        <rect key="frame" x="95" y="15" width="242" height="13"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="13" id="Aeb-nQ-PSI"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SourceHanSansCN-Bold" family="Source Han Sans CN" pointSize="13"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="动作，武侠" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="McY-77-MXo">
+                        <rect key="frame" x="95" y="38" width="242" height="11"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="11" id="a72-LU-7lM"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SourceHanSansCN-Regular" family="Source Han Sans CN" pointSize="11"/>
+                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="动作，武侠" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yah-l5-iBt">
+                        <rect key="frame" x="95" y="59" width="242" height="11"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="11" id="nna-fj-Tia"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SourceHanSansCN-Regular" family="Source Han Sans CN" pointSize="11"/>
+                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="PIP-bj-x3W" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="01b-6f-eo3"/>
+                    <constraint firstItem="duV-xX-GUV" firstAttribute="top" secondItem="COS-Q4-aRr" secondAttribute="top" constant="5" id="1RD-41-QGz"/>
+                    <constraint firstItem="Yah-l5-iBt" firstAttribute="leading" secondItem="COS-Q4-aRr" secondAttribute="trailing" constant="15" id="57z-ac-9aZ"/>
+                    <constraint firstAttribute="trailing" secondItem="McY-77-MXo" secondAttribute="trailing" constant="15" id="8uW-eU-o1R"/>
+                    <constraint firstAttribute="trailing" secondItem="Yah-l5-iBt" secondAttribute="trailing" constant="15" id="B64-6b-8VH"/>
+                    <constraint firstItem="McY-77-MXo" firstAttribute="top" secondItem="duV-xX-GUV" secondAttribute="bottom" constant="10" id="I2p-Wk-RW4"/>
+                    <constraint firstItem="McY-77-MXo" firstAttribute="leading" secondItem="COS-Q4-aRr" secondAttribute="trailing" constant="15" id="Pce-kO-pRx"/>
+                    <constraint firstAttribute="bottom" secondItem="PIP-bj-x3W" secondAttribute="bottom" id="TPV-5Z-7cM"/>
+                    <constraint firstItem="duV-xX-GUV" firstAttribute="leading" secondItem="COS-Q4-aRr" secondAttribute="trailing" constant="15" id="ZH6-BL-TuD"/>
+                    <constraint firstAttribute="trailing" secondItem="PIP-bj-x3W" secondAttribute="trailing" constant="15" id="lmD-Gz-rRV"/>
+                    <constraint firstItem="COS-Q4-aRr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="mgi-J7-yxA"/>
+                    <constraint firstItem="COS-Q4-aRr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="n7K-wC-L0u"/>
+                    <constraint firstItem="Yah-l5-iBt" firstAttribute="top" secondItem="McY-77-MXo" secondAttribute="bottom" constant="10" id="nIv-6T-EVy"/>
+                    <constraint firstAttribute="trailing" secondItem="duV-xX-GUV" secondAttribute="trailing" constant="15" id="wZh-uL-0Fd"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="classLab" destination="McY-77-MXo" id="wen-VX-gvQ"/>
+                <outlet property="cusImage" destination="COS-Q4-aRr" id="9t7-6b-2lL"/>
+                <outlet property="locationLab" destination="Yah-l5-iBt" id="m2m-3z-ZES"/>
+                <outlet property="nameLab" destination="duV-xX-GUV" id="mjy-ib-iDz"/>
+            </connections>
+            <point key="canvasLocation" x="163.19999999999999" y="187.1064467766117"/>
+        </tableViewCell>
+    </objects>
+</document>
