@@ -20,6 +20,12 @@
 @property (nonatomic,strong) UIScrollView *recommendScrollView;
 /** 畅销图书榜 */
 @property (nonatomic,strong) UIScrollView *hotScrollView;
+/** 今日推荐 */
+@property (nonatomic,copy) NSArray *topArr;
+/** 畅销 */
+@property (nonatomic,copy) NSArray *hotArr;
+/** 感兴趣 */
+@property (nonatomic,copy) NSArray *dataArr;
 
 @end
 
@@ -37,9 +43,30 @@
     [self setLeftNavItemWithFrame:CGRectMake(15, 0, 50, 30) title:nil image:[UIImage imageNamed:@"fanhui"] font:nil color:nil select:@selector(leftNavAction)];
     self.view.backgroundColor = KGWhiteColor;
     
+    [self requestData];
     [self setNavCenterView];
     [self setUpListView];
-
+}
+/** 请求数据 */
+- (void)requestData{
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:SelectBookList parameters:@{} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            weakSelf.topArr = dic[@"recommendedList"];
+            weakSelf.hotArr = dic[@"bestSellerList"];
+            weakSelf.dataArr = dic[@"interestedList"];
+            weakSelf.hotScrollView.contentSize = CGSizeMake(weakSelf.hotArr.count*115, 195);
+            weakSelf.recommendScrollView.contentSize = CGSizeMake(weakSelf.topArr.count*115, 195);
+            [weakSelf setRecommendScrollViewSubViews];
+            [weakSelf setHotScrollViewSubViews];
+        }
+        [weakSelf.listView reloadData];
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+    }];
 }
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{
@@ -85,13 +112,17 @@
 }
 /** 代理方法以及数据源 */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 20;
+    return self.dataArr.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 170;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     KGBooksCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGBooksCell"];
+    if (self.dataArr.count > 0) {
+        NSDictionary *dic = self.dataArr[indexPath.row];
+        [cell cellDetailWithDactionary:dic];
+    }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -100,6 +131,7 @@
 /** 列表头 */
 - (UIView *)setUpTopScrollView{
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, 560)];
+    headerView.backgroundColor = KGWhiteColor;
     /** 今日推荐 */
     UILabel *recommendLab = [[UILabel alloc]initWithFrame:CGRectMake(15,0 , KGScreenWidth, 50)];
     recommendLab.text = @"今日推荐";
@@ -122,7 +154,7 @@
     self.recommendScrollView.showsVerticalScrollIndicator = NO;
     self.recommendScrollView.showsHorizontalScrollIndicator = NO;
     [headerView addSubview:self.recommendScrollView];
-    [self setRecommendScrollViewSubViews];
+    
     /** 顶部直线 */
     UIView *topLine = [[UIView alloc]initWithFrame:CGRectMake(0, 245, KGScreenWidth, 10)];
     topLine.backgroundColor = KGLineColor;
@@ -144,12 +176,11 @@
     [headerView addSubview:lowRightBtu];
     /** 畅销图书榜滚动 */
     self.hotScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 305, KGScreenWidth, 195)];
-    self.hotScrollView.contentSize = CGSizeMake(575, 195);
     self.hotScrollView.pagingEnabled = YES;
     self.hotScrollView.showsVerticalScrollIndicator = NO;
     self.hotScrollView.showsHorizontalScrollIndicator = NO;
     [headerView addSubview:self.hotScrollView];
-    [self setHotScrollViewSubViews];
+    
     /** 低部直线 */
     UIView *lowLine = [[UIView alloc]initWithFrame:CGRectMake(0, 500, KGScreenWidth, 10)];
     lowLine.backgroundColor = KGLineColor;
@@ -173,16 +204,86 @@
 }
 /** 顶部滚动 */
 - (void)setRecommendScrollViewSubViews{
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < self.topArr.count; i++) {
         KGBooksView *booksView = [[KGBooksView alloc]initWithFrame:CGRectMake(15+115*i, 0, 100, 195)];
         [self.recommendScrollView addSubview:booksView];
+        NSDictionary *dic = self.topArr[i];
+        [booksView.customView.booksImage sd_setImageWithURL:[NSURL URLWithString:[[dic[@"bookCover"] componentsSeparatedByString:@"#"] firstObject]]];
+        booksView.customView.nameLab.text = dic[@"bookName"];
+        booksView.customView.socreLab.text = [NSString stringWithFormat:@"%@",dic[@"bookScore"]];
+        if ([dic[@"bookScore"] integerValue] < 2) {
+            booksView.customView.oneStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.twoStar.image = [UIImage imageNamed:@"xingxing"];
+            booksView.customView.threeStar.image = [UIImage imageNamed:@"xingxing"];
+            booksView.customView.fourStar.image = [UIImage imageNamed:@"xingxing"];
+            booksView.customView.fiveStar.image = [UIImage imageNamed:@"xingxing"];
+        }else if ([dic[@"bookScore"] integerValue] < 3){
+            booksView.customView.oneStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.twoStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.threeStar.image = [UIImage imageNamed:@"xingxing"];
+            booksView.customView.fourStar.image = [UIImage imageNamed:@"xingxing"];
+            booksView.customView.fiveStar.image = [UIImage imageNamed:@"xingxing"];
+        }else if ([dic[@"bookScore"] integerValue] < 4){
+            booksView.customView.oneStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.twoStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.threeStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.fourStar.image = [UIImage imageNamed:@"xingxing"];
+            booksView.customView.fiveStar.image = [UIImage imageNamed:@"xingxing"];
+        }else if ([dic[@"bookScore"] integerValue] < 5){
+            booksView.customView.oneStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.twoStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.threeStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.fourStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.fiveStar.image = [UIImage imageNamed:@"xingxing"];
+        }else if ([dic[@"bookScore"] integerValue] < 6){
+            booksView.customView.oneStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.twoStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.threeStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.fourStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.fiveStar.image = [UIImage imageNamed:@"xing"];
+        }
     }
 }
 /** 畅销滚动 */
 - (void)setHotScrollViewSubViews{
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < self.hotArr.count; i++) {
         KGBooksView *booksView = [[KGBooksView alloc]initWithFrame:CGRectMake(15+115*i, 0, 100, 195)];
         [self.hotScrollView addSubview:booksView];
+        NSDictionary *dic = self.hotArr[i];
+        [booksView.customView.booksImage sd_setImageWithURL:[NSURL URLWithString:[[dic[@"bookCover"] componentsSeparatedByString:@"#"] firstObject]]];
+        booksView.customView.nameLab.text = dic[@"bookName"];
+        booksView.customView.socreLab.text = [NSString stringWithFormat:@"%@",dic[@"bookScore"]];
+        if ([dic[@"bookScore"] integerValue] < 2) {
+            booksView.customView.oneStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.twoStar.image = [UIImage imageNamed:@"xingxing"];
+            booksView.customView.threeStar.image = [UIImage imageNamed:@"xingxing"];
+            booksView.customView.fourStar.image = [UIImage imageNamed:@"xingxing"];
+            booksView.customView.fiveStar.image = [UIImage imageNamed:@"xingxing"];
+        }else if ([dic[@"bookScore"] integerValue] < 3){
+            booksView.customView.oneStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.twoStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.threeStar.image = [UIImage imageNamed:@"xingxing"];
+            booksView.customView.fourStar.image = [UIImage imageNamed:@"xingxing"];
+            booksView.customView.fiveStar.image = [UIImage imageNamed:@"xingxing"];
+        }else if ([dic[@"bookScore"] integerValue] < 4){
+            booksView.customView.oneStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.twoStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.threeStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.fourStar.image = [UIImage imageNamed:@"xingxing"];
+            booksView.customView.fiveStar.image = [UIImage imageNamed:@"xingxing"];
+        }else if ([dic[@"bookScore"] integerValue] < 5){
+            booksView.customView.oneStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.twoStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.threeStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.fourStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.fiveStar.image = [UIImage imageNamed:@"xingxing"];
+        }else if ([dic[@"bookScore"] integerValue] < 6){
+            booksView.customView.oneStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.twoStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.threeStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.fourStar.image = [UIImage imageNamed:@"xing"];
+            booksView.customView.fiveStar.image = [UIImage imageNamed:@"xing"];
+        }
     }
 }
 

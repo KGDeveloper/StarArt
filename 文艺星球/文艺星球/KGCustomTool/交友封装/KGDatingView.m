@@ -119,7 +119,7 @@
     if (pan.direction == UISwipeGestureRecognizerDirectionRight) {
         /** 向控制器发送通知，跳转聊天页面 */
         if (self.rightMoveStarChat) {
-            self.rightMoveStarChat(@"开始聊天");
+            self.rightMoveStarChat([NSString stringWithFormat:@"%@",self.userInfo[@"id"]]);
         }
         [self removeFromSuperview];
     }
@@ -137,6 +137,78 @@
     }
 }
 
+/** 填充数据 */
+- (void)setUserInfo:(NSDictionary *)userInfo{
+    _userInfo = userInfo;
+    [self.backImageView sd_setImageWithURL:[NSURL URLWithString:userInfo[@""]] placeholderImage:[UIImage imageNamed:@"默认背景图"]];
+    self.nameLab.text = userInfo[@"username"];
+    self.ageLab.text = [NSString stringWithFormat:@"%@岁",userInfo[@"age"]];
+    if (![userInfo[@"industry"] isKindOfClass:[NSNull class]]) {
+        self.professionalLab.text = userInfo[@"industry"];
+    }else{
+        self.professionalLab.text = @"未知";
+    }
+    if ([userInfo[@"sex"] integerValue] == 0) {
+        self.compatibilityBtu.backgroundColor = KGWomanColor;
+        [self.compatibilityBtu setImage:[UIImage imageNamed:@"xingbienv"] forState:UIControlStateNormal];
+    }else if ([userInfo[@"sex"] integerValue] == 1){
+        self.compatibilityBtu.backgroundColor = KGManColor;
+        [self.compatibilityBtu setImage:[UIImage imageNamed:@"xingbienan"] forState:UIControlStateNormal];
+    }else{
+        self.compatibilityBtu.backgroundColor = KGManColor;
+        [self.compatibilityBtu setImage:[UIImage imageNamed:@"xingbiebaomi"] forState:UIControlStateNormal];
+    }
+    [self.compatibilityBtu setTitle:userInfo[@"match"] forState:UIControlStateNormal];
+    
+    NSArray *labelArr = [userInfo[@"labelName"] componentsSeparatedByString:@","];
+    CGFloat width = 0;
+    if (labelArr.count > 3) {
+        for (int i = 0; i < 3; i++) {
+            width += [labelArr[i] boundingRectWithSize:CGSizeMake(KGScreenWidth, 25) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontSHRegular(13)} context:nil].size.width + 45;
+        }
+    }else{
+        for (int i = 0; i < labelArr.count; i++) {
+            width += [labelArr[i] boundingRectWithSize:CGSizeMake(KGScreenWidth, 25) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontSHRegular(13)} context:nil].size.width + 45;
+        }
+    }
+    [self setLabelWithWidth:width arr:labelArr];
+    
+}
+/** 创建标签 */
+- (void)setLabelWithWidth:(CGFloat)width arr:(NSArray *)tmpArr{
+    CGFloat tmpWidth = self.centerX - width/2;
+    if (tmpArr.count > 3) {
+        for (int i = 0; i < 3; i++) {
+            UILabel *tmp = [[UILabel alloc]initWithFrame:CGRectMake(tmpWidth , self.bounds.size.height - 55, [tmpArr[i] boundingRectWithSize:CGSizeMake(KGScreenWidth, 25) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontSHRegular(13)} context:nil].size.width + 30, 25)];
+            tmp.textAlignment = NSTextAlignmentCenter;
+            tmp.text = tmpArr[i];
+            tmp.textColor = KGWhiteColor;
+            tmp.font = KGFontSHRegular(13);
+            tmp.backgroundColor = KGBlueColor;
+            tmp.layer.cornerRadius = 12.5;
+            tmp.layer.masksToBounds = YES;
+            [self addSubview:tmp];
+            
+            tmpWidth += [tmpArr[i] boundingRectWithSize:CGSizeMake(KGScreenWidth, 25) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontSHRegular(13)} context:nil].size.width + 45;
+        }
+    }else{
+        for (int i = 0; i < tmpArr.count; i++) {
+            UILabel *tmp = [[UILabel alloc]initWithFrame:CGRectMake(tmpWidth , self.bounds.size.height - 55, [tmpArr[i] boundingRectWithSize:CGSizeMake(KGScreenWidth, 25) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontSHRegular(13)} context:nil].size.width + 30, 25)];
+            tmp.textAlignment = NSTextAlignmentCenter;
+            tmp.text = tmpArr[i];
+            tmp.textColor = KGWhiteColor;
+            tmp.font = KGFontSHRegular(13);
+            tmp.backgroundColor = KGBlueColor;
+            tmp.layer.cornerRadius = 12.5;
+            tmp.layer.masksToBounds = YES;
+            [self addSubview:tmp];
+            
+            tmpWidth += [tmpArr[i] boundingRectWithSize:CGSizeMake(KGScreenWidth, 25) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontSHRegular(13)} context:nil].size.width + 45;
+        }
+    }
+    
+    
+}
 
 /*
 // Only override drawRect: if you perform custom drawing.

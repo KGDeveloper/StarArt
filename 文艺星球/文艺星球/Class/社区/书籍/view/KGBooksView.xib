@@ -115,6 +115,7 @@
             </constraints>
             <connections>
                 <outlet property="booksImage" destination="QiP-QF-Eup" id="af8-wq-Ueh"/>
+                <outlet property="customView" destination="-1" id="42r-9e-eWt"/>
                 <outlet property="fiveStar" destination="sux-V7-wNp" id="jnm-tZ-ISV"/>
                 <outlet property="fourStar" destination="rCP-da-BXS" id="5cj-iJ-uKG"/>
                 <outlet property="nameLab" destination="Viz-0s-HPi" id="HjC-dA-uwI"/>

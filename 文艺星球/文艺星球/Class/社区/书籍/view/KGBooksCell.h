@@ -21,6 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *socreLab;
 @property (weak, nonatomic) IBOutlet UILabel *detailLab;
 
+/** 填充 */
+- (void)cellDetailWithDactionary:(NSDictionary *)dic;
+
 @end
 
 NS_ASSUME_NONNULL_END

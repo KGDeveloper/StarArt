@@ -23,4 +23,44 @@
     // Configure the view for the selected state
 }
 
+/** 填充 */
+- (void)cellDetailWithDactionary:(NSDictionary *)dic{
+    [self.customImage sd_setImageWithURL:[NSURL URLWithString:[[dic[@"bookCover"] componentsSeparatedByString:@"#"] firstObject]]];
+    self.nameLab.text = dic[@"bookName"];
+    self.socreLab.text = [NSString stringWithFormat:@"%@",dic[@"bookScore"]];
+    self.detailLab.text = dic[@"bookIntroduction"];
+    if ([dic[@"bookName"] integerValue] < 2) {
+        self.onrStar.image = [UIImage imageNamed:@"xing"];
+        self.twoStar.image = [UIImage imageNamed:@"xingxing"];
+        self.threeStar.image = [UIImage imageNamed:@"xingxing"];
+        self.fourStar.image = [UIImage imageNamed:@"xingxing"];
+        self.fiveStar.image = [UIImage imageNamed:@"xingxing"];
+    }else if ([dic[@"bookName"] integerValue] < 3){
+        self.onrStar.image = [UIImage imageNamed:@"xing"];
+        self.twoStar.image = [UIImage imageNamed:@"xing"];
+        self.threeStar.image = [UIImage imageNamed:@"xingxing"];
+        self.fourStar.image = [UIImage imageNamed:@"xingxing"];
+        self.fiveStar.image = [UIImage imageNamed:@"xingxing"];
+    }else if ([dic[@"bookName"] integerValue] < 4){
+        self.onrStar.image = [UIImage imageNamed:@"xing"];
+        self.twoStar.image = [UIImage imageNamed:@"xing"];
+        self.threeStar.image = [UIImage imageNamed:@"xing"];
+        self.fourStar.image = [UIImage imageNamed:@"xingxing"];
+        self.fiveStar.image = [UIImage imageNamed:@"xingxing"];
+    }else if ([dic[@"bookName"] integerValue] < 5){
+        self.onrStar.image = [UIImage imageNamed:@"xing"];
+        self.twoStar.image = [UIImage imageNamed:@"xing"];
+        self.threeStar.image = [UIImage imageNamed:@"xing"];
+        self.fourStar.image = [UIImage imageNamed:@"xing"];
+        self.fiveStar.image = [UIImage imageNamed:@"xingxing"];
+    }else if ([dic[@"bookName"] integerValue] < 6){
+        self.onrStar.image = [UIImage imageNamed:@"xing"];
+        self.twoStar.image = [UIImage imageNamed:@"xing"];
+        self.threeStar.image = [UIImage imageNamed:@"xing"];
+        self.fourStar.image = [UIImage imageNamed:@"xing"];
+        self.fiveStar.image = [UIImage imageNamed:@"xing"];
+    }
+}
+
+
 @end

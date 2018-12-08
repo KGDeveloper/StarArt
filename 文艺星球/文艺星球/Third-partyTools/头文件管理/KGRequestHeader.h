@@ -116,6 +116,10 @@
 #define SelectExhibitionList [POSTURL stringByAppendingString:@"/api/aCommunityExhibition/selectExhibitionList"]
 /** 展览顶部5条查询 */
 #define SelectExhibitionListFives [POSTURL stringByAppendingString:@"/api/aCommunityExhibition/selectExhibitionListFives"]
+/** 交友查询 */
+#define SelectUserLabelSame [POSTURL stringByAppendingString:@"/api/user/selectUserLabelSame"]
+/** 书籍首页 */
+#define SelectBookList [POSTURL stringByAppendingString:@"/api/aCommunityBook/selectBookList"]
 
 
 

@@ -12,6 +12,8 @@
 
 @interface KGDatingVC ()
 
+@property (nonatomic,strong) NSMutableArray *firendsArr;
+
 @end
 
 @implementation KGDatingVC
@@ -30,7 +32,26 @@
     
     self.view.backgroundColor = KGWhiteColor;
     self.title = @"交友";
-    [self setDatingView];
+    self.firendsArr = [NSMutableArray array];
+    [self requestData];
+}
+/** 请求数据 */
+- (void)requestData{
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:SelectUserLabelSame parameters:@{} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            NSArray *tmp = dic[@"list"];
+            if (tmp.count > 0) {
+                [weakSelf.firendsArr addObjectsFromArray:tmp];
+            }
+            [weakSelf setDatingView];
+        }
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+    }];
 }
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{
@@ -39,15 +60,22 @@
 /** 创建聊天 */
 - (void)setDatingView{
     __weak typeof(self) weakSelf = self;
-    for (int i = 0; i < 10; i++) {
-        KGDatingView *datingView = [[KGDatingView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, KGScreenHeight)];
-        datingView.leftMoveRemoveSelf = ^{
-            
-        };
-        datingView.rightMoveStarChat = ^(NSString *userID) {
-            [weakSelf pushHideenTabbarViewController:[[KGDatingManagerVC alloc]initWithNibName:@"KGDatingManagerVC" bundle:nil] animted:YES];
-        };
-        [self.view addSubview:datingView];
+    if (self.firendsArr.count > 0) {
+        for (int i = 0; i < self.firendsArr.count; i++) {
+            KGDatingView *datingView = [[KGDatingView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, KGScreenHeight)];
+            NSDictionary *dic = self.firendsArr[i];
+            datingView.userInfo = dic;
+            datingView.leftMoveRemoveSelf = ^{
+                [weakSelf.firendsArr removeFirstObject];
+                if (weakSelf.firendsArr.count == 0) {
+                    [weakSelf requestData];
+                }
+            };
+            datingView.rightMoveStarChat = ^(NSString *userID) {
+                [weakSelf pushHideenTabbarViewController:[[KGDatingManagerVC alloc]initWithNibName:@"KGDatingManagerVC" bundle:nil] animted:YES];
+            };
+            [self.view addSubview:datingView];
+        }
     }
 }
 
