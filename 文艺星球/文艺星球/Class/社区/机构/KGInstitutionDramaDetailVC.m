@@ -36,7 +36,7 @@
     [super viewDidLoad];
     /** 定制左侧返回按钮 */
     [self setLeftNavItemWithFrame:CGRectZero title:nil image:[UIImage imageNamed:@"fanhuibai"] font:nil color:nil select:@selector(leftNavAction)];
-    self.view.backgroundColor = KGAreaGrayColor;
+    self.view.backgroundColor = KGWhiteColor;
     
     [self requestData];
 }

@@ -151,7 +151,7 @@
 }
 - (KGInstitutionSearchView *)searchView{
     if (!_searchView) {
-        _searchView = [[KGInstitutionSearchView alloc] shareInstanceWithType:@"场所"];
+        _searchView = [[KGInstitutionSearchView alloc] shareInstanceWithType:@"展览"];
         __weak typeof(self) weakSelf = self;
         _searchView.sendSearchResult = ^(NSString * _Nonnull result) {
             weakSelf.mohu = result;
@@ -322,6 +322,7 @@
     }];
     self.typeID = @"1";
     self.pageIndex = 1;
+    self.mohu = @"";
     self.dataArr = [NSMutableArray array];
     [self requestData];
 }
@@ -335,6 +336,7 @@
     }];
     self.typeID = @"6";
     self.pageIndex = 1;
+    self.mohu = @"";
     self.dataArr = [NSMutableArray array];
     [self requestData];
 }
@@ -348,6 +350,7 @@
     }];
     self.typeID = @"4";
     self.pageIndex = 1;
+    self.mohu = @"";
     self.dataArr = [NSMutableArray array];
     [self requestData];
 }
@@ -360,6 +363,7 @@
         self.lowMoveLine.center = CGPointMake(sender.centerX, KGScreenWidth/3*2 + 149);
     }];
     self.navigation = @"近期热门";
+    self.mohu = @"";
     self.pageIndex = 1;
     self.dataArr = [NSMutableArray array];
     [self requestData];
@@ -373,6 +377,7 @@
         self.lowMoveLine.center = CGPointMake(sender.centerX, KGScreenWidth/3*2 + 149);
     }];
     self.navigation = @"即将开始";
+    self.mohu = @"";
     self.pageIndex = 1;
     self.dataArr = [NSMutableArray array];
     [self requestData];
@@ -387,6 +392,7 @@
     }];
     self.navigation = @"即将结束";
     self.pageIndex = 1;
+    self.mohu = @"";
     self.dataArr = [NSMutableArray array];
     [self requestData];
 }

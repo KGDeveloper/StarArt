@@ -17,6 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *locationLab;
 @property (weak, nonatomic) IBOutlet UILabel *priceLab;
 
+/** 填充 */
+- (void)cellDetailWithDictionary:(NSDictionary *)dic;
+
 @end
 
 NS_ASSUME_NONNULL_END

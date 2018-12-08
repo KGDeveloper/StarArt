@@ -8,7 +8,7 @@
 
 #import "KGPerformanceVC.h"
 #import "KGPerformanceCell.h"
-#import "KGPerformanceDetailVC.h"
+#import "KGInstitutionDramaDetailVC.h"
 
 @interface KGPerformanceVC ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,UIScrollViewDelegate>
 /** 图书列表 */
@@ -39,6 +39,20 @@
 @property (nonatomic,strong) UIButton *endBtu;
 /** 底部直线 */
 @property (nonatomic,strong) UIView *lowLine;
+/** 页码 */
+@property (nonatomic,assign) NSInteger page;
+/** 类型 */
+@property (nonatomic,copy) NSString *typeID;
+/** 即将开始 */
+@property (nonatomic,copy) NSString *navigationStr;
+/** 搜索条件 */
+@property (nonatomic,copy) NSString *mohu;
+/** 数据源 */
+@property (nonatomic,strong) NSMutableArray *dataArr;
+/** 顶部热门 */
+@property (nonatomic,copy) NSArray *topScrollArr;
+/** 搜索页面 */
+@property (nonatomic,strong) KGInstitutionSearchView *searchView;
 
 @end
 
@@ -56,8 +70,89 @@
     [self setLeftNavItemWithFrame:CGRectMake(15, 0, 50, 30) title:nil image:[UIImage imageNamed:@"fanhui"] font:nil color:nil select:@selector(leftNavAction)];
     self.view.backgroundColor = KGWhiteColor;
     
+    self.page = 1;
+    self.typeID = @"";
+    self.navigationStr = @"即将开始";
+    self.mohu = @"5";
+    self.dataArr = [NSMutableArray array];
+    
+    [self requestTopData];
+    [self requestData];
     [self setNavCenterView];
     [self setUpListView];
+}
+/** 请求头部5条 */
+- (void)requestTopData{
+    NSString *cityId = nil;
+    if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"北京市"]) {
+        cityId = @"1";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"天津市"]){
+        cityId = @"43";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"西安市"]){
+        cityId = @"54";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"广州市"]){
+        cityId = @"28";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"成都市"]){
+        cityId = @"65";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"上海市"]){
+        cityId = @"13";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"深圳市"]){
+        cityId = @"36";
+    }else{
+        cityId = @"1";
+    }
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:SelectShowListFives parameters:@{@"cityID":cityId} succ:^(id  _Nonnull result) {
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            weakSelf.topScrollArr = dic[@"list"];
+        }
+        weakSelf.topScrollView.contentSize = CGSizeMake(KGScreenWidth*weakSelf.topScrollArr.count, KGScreenWidth/3*2 + 40);
+        [weakSelf setTopFiveScrollImage];
+    } fail:^(NSError * _Nonnull error) {
+        
+    }];
+}
+/** 请求数据 */
+- (void)requestData{
+    NSString *cityId = nil;
+    if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"北京市"]) {
+        cityId = @"1";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"天津市"]){
+        cityId = @"43";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"西安市"]){
+        cityId = @"54";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"广州市"]){
+        cityId = @"28";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"成都市"]){
+        cityId = @"65";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"上海市"]){
+        cityId = @"13";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"深圳市"]){
+        cityId = @"36";
+    }else{
+        cityId = @"1";
+    }
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:SelectShowList parameters:@{@"pageIndex":@(self.page),@"pageSize":@"20",@"typeID":self.typeID,@"cityID":cityId,@"mohu":self.mohu,@"navigation":self.navigationStr} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            NSArray *tmp = dic[@"list"];
+            if (tmp.count > 0) {
+                [weakSelf.dataArr addObjectsFromArray:tmp];
+            }
+        }
+        [weakSelf.listView reloadData];
+        [weakSelf.listView.mj_footer endRefreshing];
+        [weakSelf.listView.mj_header endRefreshing];
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+        [weakSelf.listView reloadData];
+        [weakSelf.listView.mj_footer endRefreshing];
+        [weakSelf.listView.mj_header endRefreshing];
+    }];
 }
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{
@@ -79,7 +174,19 @@
 }
 /** 搜索框点击事件 */
 - (void)searchAction{
-    
+    self.searchView.hidden = NO;
+}
+- (KGInstitutionSearchView *)searchView{
+    if (!_searchView) {
+        _searchView = [[KGInstitutionSearchView alloc] shareInstanceWithType:@"演出"];
+        __weak typeof(self) weakSelf = self;
+        _searchView.sendSearchResult = ^(NSString * _Nonnull result) {
+            weakSelf.mohu = result;
+            [weakSelf requestData];
+        };
+        [self.navigationController.view addSubview:_searchView];
+    }
+    return _searchView;
 }
 // MARK: --创建机构列表--
 - (void)setUpListView{
@@ -93,6 +200,18 @@
     self.listView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.listView.showsVerticalScrollIndicator = NO;
     self.listView.showsHorizontalScrollIndicator = NO;
+    __weak typeof(self) weakSelf = self;
+    self.listView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        weakSelf.page = 1;
+        weakSelf.dataArr = [NSMutableArray array];
+        [weakSelf requestData];
+        [weakSelf.listView.mj_header beginRefreshing];
+    }];
+    self.listView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        weakSelf.page++;
+        [weakSelf requestData];
+        [weakSelf.listView.mj_footer beginRefreshing];
+    }];
     [self.view addSubview:self.listView];
     
     [self.listView registerNib:[UINib nibWithNibName:@"KGPerformanceCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"KGPerformanceCell"];
@@ -103,21 +222,29 @@
 }
 /** 代理方法以及数据源 */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 20;
+    return self.dataArr.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 190;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     KGPerformanceCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGPerformanceCell"];
+    if (self.dataArr.count > 0) {
+        NSDictionary *dic = self.dataArr[indexPath.row];
+        [cell cellDetailWithDictionary:dic];
+    }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self pushHideenTabbarViewController:[[KGPerformanceDetailVC alloc]init] animted:YES];
+    NSDictionary *dic = self.dataArr[indexPath.row];
+    KGInstitutionDramaDetailVC *vc = [[KGInstitutionDramaDetailVC alloc]initWithNibName:@"KGInstitutionDramaDetailVC" bundle:[NSBundle mainBundle]];
+    vc.sendID = [NSString stringWithFormat:@"%@",dic[@"id"]];
+    [self pushHideenTabbarViewController:vc animted:YES];
 }
 /** 头视图 */
 - (UIView *)setHeaderView{
     self.headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, KGScreenWidth/3*2 + 150)];
+    self.headerView.backgroundColor = KGWhiteColor;
     /** 按钮 */
     self.leftBtu = [UIButton buttonWithType:UIButtonTypeCustom];
     self.leftBtu.frame  =CGRectMake(0,0, KGScreenWidth/2,50);
@@ -207,6 +334,12 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.line.center = CGPointMake(KGScreenWidth/2 - 55, 49);
     }];
+    self.typeID = @"5";
+    self.mohu = @"";
+    self.page = 1;
+    self.navigationStr = @"即将开始";
+    self.dataArr = [NSMutableArray array];
+    [self requestData];
 }
 /** 音乐点击事件 */
 - (void)rightAction{
@@ -215,6 +348,12 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.line.center = CGPointMake(KGScreenWidth/2 + 55, 49);
     }];
+    self.typeID = @"2";
+    self.mohu = @"";
+    self.page = 1;
+    self.navigationStr = @"即将开始";
+    self.dataArr = [NSMutableArray array];
+    [self requestData];
 }
 /** 近期热门点击事件 */
 - (void)hotAction{
@@ -224,6 +363,11 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.lowLine.center = CGPointMake(self.nearBtu.center.x, KGScreenWidth/3*2 + 149);
     }];
+    self.mohu = @"";
+    self.navigationStr = @"近期热门";
+    self.page = 1;
+    self.dataArr = [NSMutableArray array];
+    [self requestData];
 }
 /** 即将开始点击事件 */
 - (void)willStarAction{
@@ -233,6 +377,11 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.lowLine.center = CGPointMake(self.theBtu.center.x, KGScreenWidth/3*2 + 149);
     }];
+    self.mohu = @"";
+    self.navigationStr = @"即将开始";
+    self.page = 1;
+    self.dataArr = [NSMutableArray array];
+    [self requestData];
 }
 /** 即将结束点击事件 */
 - (void)willEndAction{
@@ -242,30 +391,43 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.lowLine.center = CGPointMake(self.endBtu.center.x, KGScreenWidth/3*2 + 149);
     }];
+    self.mohu = @"";
+    self.navigationStr = @"即将结束";
+    self.page = 1;
+    self.dataArr = [NSMutableArray array];
+    [self requestData];
 }
-/** 创建滚动广告 */
-- (UIView *)createNewsViewWithImage:(UIImage *)image labTitle:(NSString *)title frame:(CGRect)frame tag:(NSInteger)tag{
-    UIView *addView = [[UIView alloc]initWithFrame:frame];
-    /** 按钮 */
-    UIButton *tmpBtu = [UIButton buttonWithType:UIButtonTypeCustom];
-    tmpBtu.frame = CGRectMake(0, 0, KGScreenWidth,KGScreenWidth/3*2);
-    [tmpBtu setImage:image forState:UIControlStateNormal];
-    tmpBtu.imageView.contentMode = UIViewContentModeScaleAspectFill;
-    [tmpBtu addTarget:self action:@selector(topBtuAction:) forControlEvents:UIControlEventTouchUpInside];
-    tmpBtu.tag = tag;
-    [addView addSubview:tmpBtu];
-    /** lab */
-    UILabel *tmpLab = [[UILabel alloc]initWithFrame:CGRectMake(15, KGScreenWidth/3*2, KGScreenWidth - 100, 40)];
-    tmpLab.text = title;
-    tmpLab.textColor = KGBlackColor;
-    tmpLab.font = KGFontSHRegular(14);
-    [addView addSubview:tmpLab];
-    return addView;
+/** 顶部5条数据 */
+- (void)setTopFiveScrollImage{
+    if (self.topScrollArr.count > 0) {
+        for (int i = 0; i < self.topScrollArr.count; i++) {
+            NSDictionary *dic = self.topScrollArr[i];
+            UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(KGScreenWidth*i, 0, KGScreenWidth, KGScreenWidth/3*2)];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:[[dic[@"showCover"] componentsSeparatedByString:@"#"] firstObject]]];
+            imageView.contentMode = UIViewContentModeScaleAspectFill;
+            imageView.layer.masksToBounds = YES;
+            imageView.userInteractionEnabled = YES;
+            imageView.tag = [dic[@"id"] integerValue];
+            [self.topScrollView addSubview:imageView];
+            
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tagScrollViewLookDetail:)];
+            [imageView addGestureRecognizer:tap];
+            
+            UILabel *titleLab = [[UILabel alloc]initWithFrame:CGRectMake(KGScreenWidth*i + 15, KGScreenWidth/3*2, KGScreenWidth - 15, 40)];
+            titleLab.textColor = KGBlackColor;
+            titleLab.font = KGFontSHRegular(13);
+            titleLab.text = dic[@"showTitle"];
+            [self.topScrollView addSubview:titleLab];
+        }
+    }
 }
-/** 广告点击事件 */
-- (void)topBtuAction:(UIButton *)sender{
-    
+/** 点击事件 */
+- (void)tagScrollViewLookDetail:(UITapGestureRecognizer *)tap{
+    KGInstitutionDramaDetailVC *vc = [[KGInstitutionDramaDetailVC alloc]initWithNibName:@"KGInstitutionDramaDetailVC" bundle:[NSBundle mainBundle]];
+    vc.sendID = [NSString stringWithFormat:@"%lu",tap.view.tag];
+    [self pushHideenTabbarViewController:vc animted:YES];
 }
+
 
 /*
 #pragma mark - Navigation

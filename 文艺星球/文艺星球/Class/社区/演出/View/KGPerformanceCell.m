@@ -21,4 +21,13 @@
     // Configure the view for the selected state
 }
 
+- (void)cellDetailWithDictionary:(NSDictionary *)dic{
+    [self.headerImage sd_setImageWithURL:[NSURL URLWithString:[[dic[@"showCover"] componentsSeparatedByString:@"#"] firstObject]]];
+    self.nameLab.text = dic[@"showTitle"];
+    self.timeLab.text = dic[@"showTime"];
+    self.locationLab.text = dic[@"showPlace"];
+    self.priceLab.text = [NSString stringWithFormat:@"￥%@",dic[@"showPrice"]];
+}
+
+
 @end
