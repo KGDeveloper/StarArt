@@ -112,7 +112,10 @@
 #define SelectShowList [POSTURL stringByAppendingString:@"/api/aCommunityShow/selectShowList"]
 /** 戏剧详情查询 */
 #define SelectShowBySID [POSTURL stringByAppendingString:@"/api/aCommunityShow/selectShowBySID"]
-
+/** 展览列表查询 */
+#define SelectExhibitionList [POSTURL stringByAppendingString:@"/api/aCommunityExhibition/selectExhibitionList"]
+/** 展览顶部5条查询 */
+#define SelectExhibitionListFives [POSTURL stringByAppendingString:@"/api/aCommunityExhibition/selectExhibitionListFives"]
 
 
 

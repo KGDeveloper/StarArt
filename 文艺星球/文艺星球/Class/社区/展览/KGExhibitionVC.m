@@ -33,6 +33,20 @@
 @property (nonatomic,strong) UIButton *endBtu;
 /** 底部滚动线条 */
 @property (nonatomic,strong) UIView *lowMoveLine;
+/** 城市类型 */
+@property (nonatomic,copy) NSString *typeID;
+/** 近期分类 */
+@property (nonatomic,copy) NSString *navigation;
+/** 模糊条件 */
+@property (nonatomic,copy) NSString *mohu;
+/** 搜索页面 */
+@property (nonatomic,strong) KGInstitutionSearchView *searchView;
+/** 分页 */
+@property (nonatomic,assign) NSInteger pageIndex;
+/** 数据源 */
+@property (nonatomic,strong) NSMutableArray *dataArr;
+/** 顶部5条 */
+@property (nonatomic,copy) NSArray *topScrollArr;
 
 @end
 
@@ -50,9 +64,68 @@
     [self setLeftNavItemWithFrame:CGRectMake(15, 0, 50, 30) title:nil image:[UIImage imageNamed:@"fanhui"] font:nil color:nil select:@selector(leftNavAction)];
     self.view.backgroundColor = KGWhiteColor;
     
+    self.typeID = @"1";
+    self.navigation = @"近期热门";
+    self.mohu = @"";
+    self.pageIndex = 1;
+    self.dataArr = [NSMutableArray array];
+    
+    [self requestTopData];
+    [self requestData];
     [self setNavCenterView];
     [self setUpListView];
     
+}
+/** 请求数据 */
+- (void)requestData{
+    NSString *cityId = nil;
+    if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"北京市"]) {
+        cityId = @"1";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"天津市"]){
+        cityId = @"43";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"西安市"]){
+        cityId = @"54";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"广州市"]){
+        cityId = @"28";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"成都市"]){
+        cityId = @"65";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"上海市"]){
+        cityId = @"13";
+    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"深圳市"]){
+        cityId = @"36";
+    }else{
+        cityId = @"1";
+    }
+    __weak typeof(self) weakSelf = self;
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    [KGRequest postWithUrl:SelectExhibitionList parameters:@{@"cityID":cityId,@"typeID":self.typeID,@"navigation":self.navigation,@"mohu":self.mohu,@"pageIndex":@(self.pageIndex),@"pageSize":@"20"} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            NSArray *tmp = dic[@"list"];
+            if (tmp.count > 0) {
+                [weakSelf.dataArr addObjectsFromArray:tmp];
+            }
+        }
+        [weakSelf.listView reloadData];
+        [weakSelf.listView.mj_header endRefreshing];
+        [weakSelf.listView.mj_footer endRefreshing];
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+    }];
+}
+/** 请求5条顶部 */
+- (void)requestTopData{
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:SelectExhibitionListFives parameters:@{} succ:^(id  _Nonnull result) {
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            weakSelf.topScrollArr = dic[@"list"];
+        }
+        [weakSelf setTopFiveScrollImage];
+    } fail:^(NSError * _Nonnull error) {
+        
+    }];
 }
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{
@@ -74,7 +147,19 @@
 }
 /** 搜索框点击事件 */
 - (void)searchAction{
-    
+    self.searchView.hidden = NO;
+}
+- (KGInstitutionSearchView *)searchView{
+    if (!_searchView) {
+        _searchView = [[KGInstitutionSearchView alloc] shareInstanceWithType:@"场所"];
+        __weak typeof(self) weakSelf = self;
+        _searchView.sendSearchResult = ^(NSString * _Nonnull result) {
+            weakSelf.mohu = result;
+            [weakSelf requestData];
+        };
+        [self.navigationController.view addSubview:_searchView];
+    }
+    return _searchView;
 }
 // MARK: --创建展览列表--
 - (void)setUpListView{
@@ -88,6 +173,18 @@
     self.listView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.listView.showsVerticalScrollIndicator = NO;
     self.listView.showsHorizontalScrollIndicator = NO;
+    __weak typeof(self) weakSelf = self;
+    self.listView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        weakSelf.pageIndex = 1;
+        weakSelf.dataArr = [NSMutableArray array];
+        [weakSelf requestData];
+        [weakSelf.listView.mj_header beginRefreshing];
+    }];
+    self.listView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        weakSelf.pageIndex++;
+        [weakSelf requestData];
+        [weakSelf.listView.mj_footer beginRefreshing];
+    }];
     [self.view addSubview:self.listView];
     
     [self.listView registerNib:[UINib nibWithNibName:@"KGExhibitionVCListViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"KGExhibitionVCListViewCell"];
@@ -98,21 +195,29 @@
 }
 /** 代理方法以及数据源 */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 20;
+    return self.dataArr.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return (KGScreenWidth - 30)/69*40 + 110;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     KGExhibitionVCListViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGExhibitionVCListViewCell"];
+    if (self.dataArr.count > 0) {
+        NSDictionary *dic = self.dataArr[indexPath.row];
+        [cell cellDetailWithDictionary:dic];
+    }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self pushHideenTabbarViewController:[[KGAgencyExhibitionDetailVC alloc]init] animted:YES];
+    NSDictionary *dic = self.dataArr[indexPath.row];
+    KGAgencyExhibitionDetailVC *vc = [[KGAgencyExhibitionDetailVC alloc]init];
+    vc.sendID = [NSString stringWithFormat:@"%@",dic[@"id"]];
+    [self pushHideenTabbarViewController:vc animted:YES];
 }
 /** 头视图 */
 - (UIView *)setUpHeaderView{
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, KGScreenWidth/3*2 + 150)];
+    headerView.backgroundColor = KGWhiteColor;
 // MARK: --顶部切换按钮--
     /** 美术 */
     self.artsBtu = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -215,6 +320,10 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.moveLine.center = CGPointMake(sender.centerX, 48);
     }];
+    self.typeID = @"1";
+    self.pageIndex = 1;
+    self.dataArr = [NSMutableArray array];
+    [self requestData];
 }
 /** 摄影点击事件 */
 - (void)photographyAction:(UIButton *)sender{
@@ -224,6 +333,10 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.moveLine.center = CGPointMake(sender.centerX, 48);
     }];
+    self.typeID = @"6";
+    self.pageIndex = 1;
+    self.dataArr = [NSMutableArray array];
+    [self requestData];
 }
 /** 设计点击事件 */
 - (void)designAction:(UIButton *)sender{
@@ -233,6 +346,10 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.moveLine.center = CGPointMake(sender.centerX, 48);
     }];
+    self.typeID = @"4";
+    self.pageIndex = 1;
+    self.dataArr = [NSMutableArray array];
+    [self requestData];
 }
 /** 近期热门点击事件 */
 - (void)nearAction:(UIButton *)sender{
@@ -242,6 +359,10 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.lowMoveLine.center = CGPointMake(sender.centerX, KGScreenWidth/3*2 + 149);
     }];
+    self.navigation = @"近期热门";
+    self.pageIndex = 1;
+    self.dataArr = [NSMutableArray array];
+    [self requestData];
 }
 /** 即将开始点击事件 */
 - (void)willSatrAction:(UIButton *)sender{
@@ -251,6 +372,10 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.lowMoveLine.center = CGPointMake(sender.centerX, KGScreenWidth/3*2 + 149);
     }];
+    self.navigation = @"即将开始";
+    self.pageIndex = 1;
+    self.dataArr = [NSMutableArray array];
+    [self requestData];
 }
 /** 即将结束点击事件 */
 - (void)endSatrAction:(UIButton *)sender{
@@ -260,10 +385,44 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.lowMoveLine.center = CGPointMake(sender.centerX, KGScreenWidth/3*2 + 149);
     }];
+    self.navigation = @"即将结束";
+    self.pageIndex = 1;
+    self.dataArr = [NSMutableArray array];
+    [self requestData];
 }
 /** 设置页码 */
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     self.pageControl.currentPage = self.topScrollView.contentOffset.x/KGScreenWidth;
+}
+/** 顶部5条数据 */
+- (void)setTopFiveScrollImage{
+    if (self.topScrollArr.count > 0) {
+        for (int i = 0; i < self.topScrollArr.count; i++) {
+            NSDictionary *dic = self.topScrollArr[i];
+            UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(KGScreenWidth*i, 0, KGScreenWidth, KGScreenWidth/3*2)];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:[[dic[@"exhibitionCover"] componentsSeparatedByString:@"#"] firstObject]]];
+            imageView.contentMode = UIViewContentModeScaleAspectFill;
+            imageView.layer.masksToBounds = YES;
+            imageView.userInteractionEnabled = YES;
+            imageView.tag = [dic[@"id"] integerValue];
+            [self.topScrollView addSubview:imageView];
+            
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tagScrollViewLookDetail:)];
+            [imageView addGestureRecognizer:tap];
+            
+            UILabel *titleLab = [[UILabel alloc]initWithFrame:CGRectMake(KGScreenWidth*i + 15, KGScreenWidth/3*2, KGScreenWidth - 15, 40)];
+            titleLab.textColor = KGBlackColor;
+            titleLab.font = KGFontSHRegular(13);
+            titleLab.text = dic[@"exhibitionTitle"];
+            [self.topScrollView addSubview:titleLab];
+        }
+    }
+}
+/** 点击事件 */
+- (void)tagScrollViewLookDetail:(UITapGestureRecognizer *)tap{
+    KGAgencyExhibitionDetailVC *vc = [[KGAgencyExhibitionDetailVC alloc]init];
+    vc.sendID = [NSString stringWithFormat:@"%ld",tap.view.tag];
+    [self pushHideenTabbarViewController:vc animted:YES];
 }
 
 /*

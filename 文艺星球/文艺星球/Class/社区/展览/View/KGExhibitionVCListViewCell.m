@@ -21,4 +21,11 @@
     // Configure the view for the selected state
 }
 
+/** 填充cell内容 */
+- (void)cellDetailWithDictionary:(NSDictionary *)dic{
+    [self.customImage sd_setImageWithURL:[NSURL URLWithString:[[dic[@"exhibitionCover"] componentsSeparatedByString:@"#"] firstObject]]];
+    self.titleLab.text = dic[@"exhibitionTitle"];
+    self.detailLab.text = dic[@"exhibitionAddres"];
+}
+
 @end

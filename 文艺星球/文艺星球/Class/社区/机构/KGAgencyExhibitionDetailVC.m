@@ -116,7 +116,7 @@
                 [imageView sd_setImageWithURL:[NSURL URLWithString:[[dic[@"artistPhoto"] componentsSeparatedByString:@"#"] firstObject]]];
                 [scrollView addSubview:imageView];
                 
-                UILabel *nameLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 75, 75, 20)];
+                UILabel *nameLab = [[UILabel alloc]initWithFrame:CGRectMake(90*i, 75, 75, 20)];
                 nameLab.text = dic[@"artistName"];
                 nameLab.textAlignment = NSTextAlignmentCenter;
                 nameLab.textColor = KGBlackColor;
