@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIButton *commendBtu;
 @property (weak, nonatomic) IBOutlet UIButton *zansBtu;
 
+- (void)cellDetailWithDictionary:(NSDictionary *)dic;
+
 @end
 
 NS_ASSUME_NONNULL_END

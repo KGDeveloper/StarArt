@@ -32,20 +32,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *pressLab;
 /** 出版时间 */
 @property (weak, nonatomic) IBOutlet UILabel *pressTimeLab;
-/** 想读 */
-@property (weak, nonatomic) IBOutlet UIButton *wantToReadBtu;
-/** 在读 */
-@property (weak, nonatomic) IBOutlet UIButton *readingBtu;
-/** 评分 */
-@property (weak, nonatomic) IBOutlet UIButton *scoreBtu;
-/** 书评view */
-@property (weak, nonatomic) IBOutlet UIView *bookReviewView;
-/** 书籍状态 */
-@property (weak, nonatomic) IBOutlet UIButton *bookStateBtu;
-/** 书评 */
-@property (weak, nonatomic) IBOutlet UILabel *reviewLab;
-/** 读过 */
-@property (weak, nonatomic) IBOutlet UIButton *finishReadBtu;
 /** 简介 */
 @property (weak, nonatomic) IBOutlet UILabel *bookIntroudceLab;
 /** 作者照片 */
@@ -76,6 +62,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) void(^writeMyReview)(NSString *stateStr);
 /** 查看评论 */
 @property (nonatomic,copy) void(^lockAllCommend)(void);
+/** 评分 */
+@property (weak, nonatomic) IBOutlet UILabel *scroeLab;
+
+- (void)viewDetailWithDictionary:(NSDictionary *)dic;
 
 @end
 

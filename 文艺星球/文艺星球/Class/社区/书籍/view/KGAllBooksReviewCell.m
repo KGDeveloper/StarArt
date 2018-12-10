@@ -57,6 +57,8 @@
     /** 头像 */
     self.headerImage.contentMode = UIViewContentModeScaleAspectFill;
     self.headerImage.backgroundColor = KGLineColor;
+    self.headerImage.layer.cornerRadius = 10;
+    self.headerImage.layer.masksToBounds = YES;
     self.headerImage.sd_layout
     .topSpaceToView(self.contentView, 20)
     .leftSpaceToView(self.contentView, 15)
@@ -142,14 +144,118 @@
     .topSpaceToView(self.timeLab, 15)
     .heightIs(10);
     
-    [self setupAutoHeightWithBottomView:self.line bottomMargin:0];
-    
+}
+- (CGFloat)cellHeightWithDictionary:(NSDictionary *)dic{
+    return [dic[@"comment"] boundingRectWithSize:CGSizeMake(KGScreenWidth - 60, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontSHRegular(13)} context:nil].size.height + 100;
 }
 /** 点赞 */
 - (void)zansAction:(UIButton *)sender{
-    
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self animated:YES];
+    [KGRequest postWithUrl:AddCommentLikeStatusByCid parameters:@{@"cid":@(sender.tag)} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            [[KGHUD showMessage:@"操作成功"] hideAnimated:YES afterDelay:1];
+            if ([sender.currentImage isEqual:[UIImage imageNamed:@"dianzan"]]) {
+                [sender setImage:[UIImage imageNamed:@"dianzan (2)"] forState:UIControlStateNormal];
+            }else{
+                [sender setImage:[UIImage imageNamed:@"dianzan"] forState:UIControlStateNormal];
+            }
+        }else{
+            [[KGHUD showMessage:@"操作失败"] hideAnimated:YES afterDelay:1];
+        }
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+        [[KGHUD showMessage:@"操作失败"] hideAnimated:YES afterDelay:1];
+    }];
 }
-
+- (void)cellDetailWithDictionary:(NSDictionary *)dic{
+    [self.headerImage sd_setImageWithURL:[NSURL URLWithString:[[dic[@"portraituri"] componentsSeparatedByString:@"#"] firstObject]]];
+    self.nameLab.text = dic[@"username"];
+    self.nameLab.sd_layout
+    .leftSpaceToView(self.headerImage, 10)
+    .centerYEqualToView(self.headerImage)
+    .widthIs([dic[@"username"] boundingRectWithSize:CGSizeMake(KGScreenWidth/2,MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontSHRegular(12)} context:nil].size.width)
+    .heightIs(12);
+    if ([dic[@"score"] integerValue] < 2) {
+        self.oneStar.image = [UIImage imageNamed:@"xing"];
+        self.twoStar.image = [UIImage imageNamed:@"xingxing"];
+        self.threeStar.image = [UIImage imageNamed:@"xingxing"];
+        self.fourStar.image = [UIImage imageNamed:@"xingxing"];
+        self.fiveStar.image = [UIImage imageNamed:@"xingxing"];
+    }else if ([dic[@"score"] integerValue] < 3) {
+        self.oneStar.image = [UIImage imageNamed:@"xing"];
+        self.twoStar.image = [UIImage imageNamed:@"xing"];
+        self.threeStar.image = [UIImage imageNamed:@"xingxing"];
+        self.fourStar.image = [UIImage imageNamed:@"xingxing"];
+        self.fiveStar.image = [UIImage imageNamed:@"xingxing"];
+    }else if ([dic[@"score"] integerValue] < 4) {
+        self.oneStar.image = [UIImage imageNamed:@"xing"];
+        self.twoStar.image = [UIImage imageNamed:@"xing"];
+        self.threeStar.image = [UIImage imageNamed:@"xing"];
+        self.fourStar.image = [UIImage imageNamed:@"xingxing"];
+        self.fiveStar.image = [UIImage imageNamed:@"xingxing"];
+    }else if ([dic[@"score"] integerValue] < 5) {
+        self.oneStar.image = [UIImage imageNamed:@"xing"];
+        self.twoStar.image = [UIImage imageNamed:@"xing"];
+        self.threeStar.image = [UIImage imageNamed:@"xing"];
+        self.fourStar.image = [UIImage imageNamed:@"xing"];
+        self.fiveStar.image = [UIImage imageNamed:@"xingxing"];
+    }else if ([dic[@"score"] integerValue] < 6) {
+        self.oneStar.image = [UIImage imageNamed:@"xing"];
+        self.twoStar.image = [UIImage imageNamed:@"xing"];
+        self.threeStar.image = [UIImage imageNamed:@"xing"];
+        self.fourStar.image = [UIImage imageNamed:@"xing"];
+        self.fiveStar.image = [UIImage imageNamed:@"xing"];
+    }
+    self.oneStar.sd_layout
+    .leftSpaceToView(self.nameLab, 30)
+    .centerYEqualToView(self.nameLab)
+    .widthIs(12)
+    .heightIs(12);
+    self.twoStar.sd_layout
+    .leftSpaceToView(self.oneStar, 5)
+    .centerYEqualToView(self.oneStar)
+    .widthIs(12)
+    .heightIs(12);
+    self.threeStar.sd_layout
+    .leftSpaceToView(self.twoStar, 5)
+    .centerYEqualToView(self.twoStar)
+    .widthIs(12)
+    .heightIs(12);
+    self.fourStar.sd_layout
+    .leftSpaceToView(self.threeStar, 5)
+    .centerYEqualToView(self.threeStar)
+    .widthIs(12)
+    .heightIs(12);
+    self.fiveStar.sd_layout
+    .leftSpaceToView(self.fourStar, 5)
+    .centerYEqualToView(self.fourStar)
+    .widthIs(12)
+    .heightIs(12);
+    if ([dic[@"likeStatus"] integerValue] == 0) {
+        [self.zansBtu setImage:[UIImage imageNamed:@"dianzan (2)"] forState:UIControlStateNormal];
+    }else{
+        [self.zansBtu setImage:[UIImage imageNamed:@"dianzan"] forState:UIControlStateNormal];
+    }
+    [self.zansBtu setTitle:[NSString stringWithFormat:@"%@",dic[@"goodSum"]] forState:UIControlStateNormal];
+    self.detailLab.text = dic[@"comment"];
+    self.detailLab.sd_layout
+    .leftEqualToView(self.nameLab)
+    .rightEqualToView(self.zansBtu)
+    .topSpaceToView(self.headerImage, 15)
+    .heightIs([dic[@"comment"] boundingRectWithSize:CGSizeMake(KGScreenWidth - 60, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontSHRegular(13)} context:nil].size.height);
+    self.timeLab.text = dic[@"commentTime"];
+    self.timeLab.sd_layout
+    .leftEqualToView(self.detailLab)
+    .topSpaceToView(self.detailLab, 11)
+    .rightSpaceToView(self.contentView, 15)
+    .heightIs(10);
+    self.line.sd_layout
+    .leftEqualToView(self.contentView)
+    .rightEqualToView(self.contentView)
+    .topSpaceToView(self.timeLab, 15)
+    .heightIs(10);
+}
 
 - (void)awakeFromNib {
     [super awakeFromNib];

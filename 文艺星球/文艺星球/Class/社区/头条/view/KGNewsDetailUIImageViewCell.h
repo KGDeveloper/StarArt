@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface KGNewsDetailUIImageViewCell : UITableViewCell
 
+- (void)cellDetailWithImage:(NSString *)url;
+
 @end
 
 NS_ASSUME_NONNULL_END

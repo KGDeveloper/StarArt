@@ -120,7 +120,24 @@
 #define SelectUserLabelSame [POSTURL stringByAppendingString:@"/api/user/selectUserLabelSame"]
 /** 书籍首页 */
 #define SelectBookList [POSTURL stringByAppendingString:@"/api/aCommunityBook/selectBookList"]
-
+/** 书籍查看更多 */
+#define SelectBookListMore [POSTURL stringByAppendingString:@"/api/aCommunityBook/selectBookListMore"]
+/** 书籍根据id查看详情 */
+#define SelectBookByID [POSTURL stringByAppendingString:@"/api/aCommunityBook/selectBookByID"]
+/** 书籍评论点赞 */
+#define AddCommentLikeStatusByCid [POSTURL stringByAppendingString:@"/api/aCommunityBook/addCommentLikeStatusByCid"]
+/** 书籍添加评论 */
+#define AddCommentByCidAndUid [POSTURL stringByAppendingString:@"/api/aCommunityBook/addCommentByCidAndUid"]
+/** 书籍查看评论 */
+#define SelectBookCommetnByCid [POSTURL stringByAppendingString:@"/api/aCommunityBook/selectBookCommetnByCid"]
+/** 新闻列表 */
+#define SelectNewsList [POSTURL stringByAppendingString:@"/api/communityNews/selectNewsList"]
+/** 新闻头部列表 */
+#define SelectNewsListFives [POSTURL stringByAppendingString:@"/api/communityNews/selectNewsListFives"]
+/** 新闻点赞 */
+#define AddNewsLikeStatusByUid [POSTURL stringByAppendingString:@"/api/communityNews/addNewsLikeStatusByUid"]
+/** 新闻详情 */
+#define SelectNewsByNid [POSTURL stringByAppendingString:@"/api/communityNews/selectNewsByNid"]
 
 
 #endif /* KGRequestHeader_h */

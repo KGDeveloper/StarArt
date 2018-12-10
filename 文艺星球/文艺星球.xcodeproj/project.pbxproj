@@ -14,6 +14,7 @@
 		5A0D323F219C148C00A49AE7 /* KGWriteReviewVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A0D323D219C148C00A49AE7 /* KGWriteReviewVC.xib */; };
 		5A0D3242219C279B00A49AE7 /* KGAllBooksReviewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D3241219C279B00A49AE7 /* KGAllBooksReviewVC.m */; };
 		5A0D3245219C2B0F00A49AE7 /* KGAllBooksReviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A0D3244219C2B0F00A49AE7 /* KGAllBooksReviewCell.m */; };
+		5A25087021BE7BBB00EE8220 /* KGNewsWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25086F21BE7BBB00EE8220 /* KGNewsWebVC.m */; };
 		5A25210A21913978006D642B /* KGFoundInterestAreaCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25210821913978006D642B /* KGFoundInterestAreaCell.m */; };
 		5A25210B21913978006D642B /* KGFoundInterestAreaCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A25210921913978006D642B /* KGFoundInterestAreaCell.xib */; };
 		5A25210F21914A0C006D642B /* KGFoundCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25210D21914A0C006D642B /* KGFoundCell.m */; };
@@ -263,6 +264,8 @@
 		5A0D3241219C279B00A49AE7 /* KGAllBooksReviewVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGAllBooksReviewVC.m; sourceTree = "<group>"; };
 		5A0D3243219C2B0F00A49AE7 /* KGAllBooksReviewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGAllBooksReviewCell.h; sourceTree = "<group>"; };
 		5A0D3244219C2B0F00A49AE7 /* KGAllBooksReviewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGAllBooksReviewCell.m; sourceTree = "<group>"; };
+		5A25086E21BE7BBB00EE8220 /* KGNewsWebVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGNewsWebVC.h; sourceTree = "<group>"; };
+		5A25086F21BE7BBB00EE8220 /* KGNewsWebVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGNewsWebVC.m; sourceTree = "<group>"; };
 		5A25210721913978006D642B /* KGFoundInterestAreaCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGFoundInterestAreaCell.h; sourceTree = "<group>"; };
 		5A25210821913978006D642B /* KGFoundInterestAreaCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGFoundInterestAreaCell.m; sourceTree = "<group>"; };
 		5A25210921913978006D642B /* KGFoundInterestAreaCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGFoundInterestAreaCell.xib; sourceTree = "<group>"; };
@@ -1308,6 +1311,8 @@
 				5A927456219D1F5900998281 /* KGNewsVC.m */,
 				5A92745E219D474700998281 /* KGNewsDetailVC.h */,
 				5A92745F219D474700998281 /* KGNewsDetailVC.m */,
+				5A25086E21BE7BBB00EE8220 /* KGNewsWebVC.h */,
+				5A25086F21BE7BBB00EE8220 /* KGNewsWebVC.m */,
 			);
 			path = "头条";
 			sourceTree = "<group>";
@@ -1854,6 +1859,7 @@
 				5A2D898F2175CB19003411DC /* MBProgressHUD.m in Sources */,
 				5A927457219D1F5900998281 /* KGNewsVC.m in Sources */,
 				5A2620F7219050140047A319 /* KGReleaseChooseVC.m in Sources */,
+				5A25087021BE7BBB00EE8220 /* KGNewsWebVC.m in Sources */,
 				5A2D846A2192F4B700CBC727 /* KGBusinessHoursOfThePlaceVC.m in Sources */,
 				5AA0536121952E5300D2CE49 /* KGAgencyHomePageVC.m in Sources */,
 				5A33AB9621A3B79C0046E296 /* KGArtisticPeopleDetailTheEndCell.m in Sources */,

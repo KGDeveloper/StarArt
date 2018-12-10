@@ -17,6 +17,10 @@
 @property (nonatomic,strong) UITableView *listView;
 /** 头视图 */
 @property (nonatomic,strong) KGBooksDetailHeaderView *headerView;
+/** 书籍详情 */
+@property (nonatomic,copy) NSDictionary *booksDetailDic;
+/** 推荐 */
+@property (nonatomic,copy) NSArray *dataArr;
 
 @end
 
@@ -35,6 +39,24 @@
     self.view.backgroundColor = KGWhiteColor;
     
     [self setUpListView];
+    [self requestData];
+}
+/** 请求数据 */
+- (void)requestData{
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:SelectBookByID parameters:@{@"id":self.sendID,@"pageIndex":@"1",@"pageSize":@"20"} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            weakSelf.booksDetailDic = result[@"data"];
+            [weakSelf.headerView viewDetailWithDictionary:weakSelf.booksDetailDic];
+            weakSelf.dataArr = weakSelf.booksDetailDic[@"interestedList"];
+        }
+        [weakSelf.listView reloadData];
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+        [weakSelf.listView reloadData];
+    }];
 }
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{
@@ -42,13 +64,17 @@
 }
 /** 头视图 */
 - (UIView *)setUpHeaderView{
-    self.headerView = [[KGBooksDetailHeaderView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, 1090)];
+    self.headerView = [[KGBooksDetailHeaderView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, 835)];
     __weak typeof(self) weakSelf = self;
-    self.headerView.writeMyReview = ^(NSString *stateStr) {
-        [weakSelf pushHideenTabbarViewController:[[KGWriteReviewVC alloc]initWithNibName:@"KGWriteReviewVC" bundle:nil] animted:YES];
+    self.headerView.writeMyReview = ^(NSString * _Nonnull stateStr) {
+        KGWriteReviewVC *vc = [[KGWriteReviewVC alloc]initWithNibName:@"KGWriteReviewVC" bundle:[NSBundle mainBundle]];
+        vc.sendID = weakSelf.sendID;
+        [weakSelf pushHideenTabbarViewController:vc animted:YES];
     };
     self.headerView.lockAllCommend = ^{
-        [weakSelf pushHideenTabbarViewController:[[KGAllBooksReviewVC alloc]init] animted:YES];
+        KGAllBooksReviewVC *vc = [[KGAllBooksReviewVC alloc]init];
+        vc.sendID = weakSelf.sendID;
+        [weakSelf pushHideenTabbarViewController:vc animted:YES];
     };
     return self.headerView;
 }
@@ -77,17 +103,24 @@
 }
 /** 代理方法以及数据源 */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 20;
+    return self.dataArr.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 170;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     KGBooksCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGBooksCell"];
+    if (self.dataArr.count > 0) {
+        NSDictionary *dic = self.dataArr[indexPath.row];
+        [cell cellDetailWithDactionary:dic];
+    }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    KGBooksDetailVC *vc = [[KGBooksDetailVC alloc]init];
+    NSDictionary *dic = self.dataArr[indexPath.row];
+    vc.sendID = [NSString stringWithFormat:@"%@",dic[@"id"]];
+    [self pushHideenTabbarViewController:vc animted:YES];
 }
 
 /*

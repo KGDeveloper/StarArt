@@ -16,42 +16,9 @@
         [[NSBundle mainBundle] loadNibNamed:@"KGBooksDetailHeaderView" owner:self options:nil];
         self.contentView.frame = self.bounds;
         [self addSubview:self.contentView];
-        
-        self.wantToReadBtu.layer.borderColor = KGBlackColor.CGColor;
-        self.wantToReadBtu.layer.borderWidth = 1;
-        self.readingBtu.layer.borderColor = KGBlackColor.CGColor;
-        self.readingBtu.layer.borderWidth = 1;
-        self.finishReadBtu.layer.borderColor = KGBlackColor.CGColor;
-        self.finishReadBtu.layer.borderWidth = 1;
-        self.scoreBtu.layer.borderColor = KGBlackColor.CGColor;
-        self.scoreBtu.layer.borderWidth = 1;
         self.markView.backgroundColor = [KGBlackColor colorWithAlphaComponent:0.2];
     }
     return self;
-}
-/** 想要读书 */
-- (IBAction)wantToReadAction:(UIButton *)sender {
-    if (self.writeMyReview) {
-        self.writeMyReview(@"想读");
-    }
-}
-/** 在读书 */
-- (IBAction)readingAction:(UIButton *)sender {
-    if (self.writeMyReview) {
-        self.writeMyReview(@"在读");
-    }
-}
-/** 读过 */
-- (IBAction)finishAction:(UIButton *)sender {
-    if (self.writeMyReview) {
-        self.writeMyReview(@"读过");
-    }
-}
-/** 评分 */
-- (IBAction)scoreAction:(UIButton *)sender {
-    if (self.writeMyReview) {
-        self.writeMyReview(@"评分");
-    }
 }
 /** 我要评分 */
 - (IBAction)wantToScroeAction:(UIButton *)sender {
@@ -63,6 +30,84 @@
 - (IBAction)lockAllCommendAction:(UIButton *)sender {
     if (self.lockAllCommend) {
         self.lockAllCommend();
+    }
+}
+/** 填写内容 */
+- (void)viewDetailWithDictionary:(NSDictionary *)dic{
+    [self.customBackImage sd_setImageWithURL:[NSURL URLWithString:[[dic[@"bookCover"] componentsSeparatedByString:@"#"] firstObject]]];
+    self.markView.backgroundColor = [KGBlackColor colorWithAlphaComponent:0.8];
+    [self.booksImage sd_setImageWithURL:[NSURL URLWithString:[[dic[@"bookCover"] componentsSeparatedByString:@"#"] firstObject]]];
+    self.workerNameLab.text = [NSString stringWithFormat:@"作者：%@",dic[@"bookAuthor"]];
+    self.pressLab.text = [NSString stringWithFormat:@"出版社：%@",dic[@"bookPress"]];
+    self.pressTimeLab.text = [NSString stringWithFormat:@"出版时间：%@",dic[@"bookTime"]];
+    self.bookName.text = dic[@"bookName"];
+    self.bookIntroudceLab.text = dic[@"bookIntroduction"];
+    [self.workerPhotoImage sd_setImageWithURL:[NSURL URLWithString:[[dic[@"authorPhoto"] componentsSeparatedByString:@"#"] firstObject]]];
+    self.workerLab.text = [NSString stringWithFormat:@"作者：%@",dic[@"bookAuthor"]];
+    self.brithdayLab.text = [NSString stringWithFormat:@"出生日期：%@",dic[@"authorTime"]];
+    self.magnumOpusLab.text = [NSString stringWithFormat:@"代表作：%@",dic[@"authorMasterpiece"]];
+    self.commendLab.text = [NSString stringWithFormat:@"全部评论（%@）",dic[@"commentSum"]];
+    NSDictionary *userDic = dic[@"comment"];
+    [self.userImage sd_setImageWithURL:[NSURL URLWithString:[[userDic[@"portraituri"] componentsSeparatedByString:@"#"] firstObject]]];
+    self.userNameLab.text = userDic[@"username"];
+    self.userCommendLab.text = userDic[@"comment"];
+    self.userTimeLab.text = userDic[@"commentTime"];
+    self.scroeLab.text = [NSString stringWithFormat:@"%@",dic[@"bookScore"]];
+    [self.userZansBtu setTitle:[NSString stringWithFormat:@"%@",userDic[@"goodSum"]] forState:UIControlStateNormal];
+    if (![userDic[@"id"] isKindOfClass:[NSNull class]]) {
+        self.userZansBtu.tag = [userDic[@"id"] integerValue];
+    }
+    if ([dic[@"bookScore"] integerValue] < 2) {
+        self.oneStar.image = [UIImage imageNamed:@"xing"];
+        self.twoStar.image = [UIImage imageNamed:@"xingxing"];
+        self.threeStar.image = [UIImage imageNamed:@"xingxing"];
+        self.fourStar.image = [UIImage imageNamed:@"xingxing"];
+        self.fiveStar.image = [UIImage imageNamed:@"xingxing"];
+    }else if ([dic[@"bookScore"] integerValue] < 3){
+        self.oneStar.image = [UIImage imageNamed:@"xing"];
+        self.twoStar.image = [UIImage imageNamed:@"xing"];
+        self.threeStar.image = [UIImage imageNamed:@"xingxing"];
+        self.fourStar.image = [UIImage imageNamed:@"xingxing"];
+        self.fiveStar.image = [UIImage imageNamed:@"xingxing"];
+    }else if ([dic[@"bookScore"] integerValue] < 4){
+        self.oneStar.image = [UIImage imageNamed:@"xing"];
+        self.twoStar.image = [UIImage imageNamed:@"xing"];
+        self.threeStar.image = [UIImage imageNamed:@"xing"];
+        self.fourStar.image = [UIImage imageNamed:@"xingxing"];
+        self.fiveStar.image = [UIImage imageNamed:@"xingxing"];
+    }else if ([dic[@"bookScore"] integerValue] < 5){
+        self.oneStar.image = [UIImage imageNamed:@"xing"];
+        self.twoStar.image = [UIImage imageNamed:@"xing"];
+        self.threeStar.image = [UIImage imageNamed:@"xing"];
+        self.fourStar.image = [UIImage imageNamed:@"xing"];
+        self.fiveStar.image = [UIImage imageNamed:@"xingxing"];
+    }else if ([dic[@"bookScore"] integerValue] < 6){
+        self.oneStar.image = [UIImage imageNamed:@"xing"];
+        self.twoStar.image = [UIImage imageNamed:@"xing"];
+        self.threeStar.image = [UIImage imageNamed:@"xing"];
+        self.fourStar.image = [UIImage imageNamed:@"xing"];
+        self.fiveStar.image = [UIImage imageNamed:@"xing"];
+    }
+}
+- (IBAction)zansAction:(UIButton *)sender {
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self animated:YES];
+    if (sender.tag != nil) {
+        [KGRequest postWithUrl:AddCommentLikeStatusByCid parameters:@{@"cid":@(sender.tag)} succ:^(id  _Nonnull result) {
+            [hud hideAnimated:YES];
+            if ([result[@"status"] integerValue] == 200) {
+                [[KGHUD showMessage:@"操作成功"] hideAnimated:YES afterDelay:1];
+                if ([sender.currentImage isEqual:[UIImage imageNamed:@"dianzan"]]) {
+                    [sender setImage:[UIImage imageNamed:@"dianzan (2)"] forState:UIControlStateNormal];
+                }else{
+                    [sender setImage:[UIImage imageNamed:@"dianzan"] forState:UIControlStateNormal];
+                }
+            }else{
+                [[KGHUD showMessage:@"操作失败"] hideAnimated:YES afterDelay:1];
+            }
+        } fail:^(NSError * _Nonnull error) {
+            [hud hideAnimated:YES];
+            [[KGHUD showMessage:@"操作失败"] hideAnimated:YES afterDelay:1];
+        }];
     }
 }
 

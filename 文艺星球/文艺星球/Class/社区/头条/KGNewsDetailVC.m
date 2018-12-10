@@ -11,6 +11,7 @@
 #import "KGNewsDetailUILabCell.h"
 #import "KGAgencyDetailTableViewCell.h"
 #import "KGLrregularView.h"
+#import "KGNewsWebVC.h"
 
 @interface KGNewsDetailVC ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,UITextViewDelegate>
 /** 图书列表 */
@@ -25,6 +26,19 @@
 @property (nonatomic,strong) UITextView *ideaView;
 /** 字数统计 */
 @property (nonatomic,strong) UILabel *countLab;
+@property (nonatomic,strong) NSDictionary *detailDic;
+@property (nonatomic,strong) UIView *headerView;
+@property (nonatomic,strong) UIView *footerView;
+/** 顶部组件 */
+@property (nonatomic,strong) UILabel *titleLab;
+@property (nonatomic,strong) UILabel *socureLab;
+@property (nonatomic,strong) UILabel *timeLab;
+/** 低部组件 */
+@property (nonatomic,strong) YYLabel *socureNameLab;
+@property (nonatomic,strong) UILabel *detailLab;
+@property (nonatomic,strong) UILabel *commentLab;
+
+@property (nonatomic,copy) NSArray *contentArr;
 
 @end
 
@@ -48,11 +62,29 @@
     [self setRightNavItemWithFrame:CGRectZero title:nil image:[UIImage imageNamed:@"more"] font:nil color:nil select:@selector(rightNavAction)];
     self.view.backgroundColor = KGWhiteColor;
     
+    [self requestData];
     [self setUpListView];
     [self setUpLowView];
     [self setUpMoreView];
     
 }
+/** 新闻详情页 */
+- (void)requestData{
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:SelectNewsByNid parameters:@{@"value":self.sendID} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            weakSelf.detailDic = result[@"data"];
+            weakSelf.contentArr = weakSelf.detailDic[@"newsContentList"];
+            [weakSelf changeUIDetail];
+        }
+        [weakSelf.listView reloadData];
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+    }];
+}
+/** 评论列表 */
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{
     [self.navigationController popViewControllerAnimated:YES];
@@ -65,6 +97,73 @@
         self.moreView.hidden = NO;
     }
 }
+/** 新闻头 */
+- (UIView *)setUpHeaderView{
+    self.headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, 100)];
+    self.titleLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 20, KGScreenWidth, 15)];
+    self.titleLab.textColor = KGBlackColor;
+    self.titleLab.font = KGFontSHBold(15);
+    self.titleLab.textAlignment = NSTextAlignmentCenter;
+    self.titleLab.numberOfLines = 0;
+    [self.headerView addSubview:self.titleLab];
+    
+    self.socureLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 55, KGScreenWidth, 15)];
+    self.socureLab.textColor = KGGrayColor;
+    self.socureLab.font = KGFontSHRegular(12);
+    self.socureLab.textAlignment = NSTextAlignmentCenter;
+    [self.headerView addSubview:self.socureLab];
+    
+    self.timeLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 85, KGScreenWidth, 15)];
+    self.timeLab.textColor = KGGrayColor;
+    self.timeLab.font = KGFontSHRegular(12);
+    self.timeLab.textAlignment = NSTextAlignmentCenter;
+    [self.headerView addSubview:self.timeLab];
+    
+    return self.headerView;
+}
+/** 新闻尾 */
+- (UIView *)setUpFooterView{
+    self.footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, 100)];
+    self.socureNameLab = [[YYLabel alloc]initWithFrame:CGRectMake(15, 0, KGScreenWidth - 30, 15)];
+    self.socureNameLab.textColor = KGGrayColor;
+    self.socureNameLab.font = KGFontSHRegular(12);
+    self.socureNameLab.textAlignment = NSTextAlignmentCenter;
+    self.socureNameLab.numberOfLines = 0;
+    [self.footerView addSubview:self.socureNameLab];
+    /** 设置富文本 */
+    NSString *string = [NSString stringWithFormat:@"来源：%@    点击跳转原文",self.detailDic[@"newsSource"]];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc]initWithString:string];
+    attributedString.alignment = NSTextAlignmentLeft;
+    attributedString.font = KGFontSHRegular(12);
+    attributedString.color = KGBlackColor;
+    [attributedString setColor:KGBlueColor range:[string rangeOfString:@"跳转原文"]];
+    __weak typeof(self) weakSelf = self;
+    /** 点击用户协议 */
+    [attributedString setTextHighlightRange:[string rangeOfString:@"跳转原文"] color:KGBlueColor backgroundColor:[UIColor clearColor] tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            KGNewsWebVC *vc = [[KGNewsWebVC alloc]init];
+            vc.webUrl = weakSelf.detailDic[@"newsDetailUrl"];
+            [weakSelf pushHideenTabbarViewController:vc animted:YES];
+        });
+    }];
+    self.socureNameLab.attributedText = attributedString;
+    
+    self.detailLab = [[UILabel alloc]initWithFrame:CGRectMake(15, 35, KGScreenWidth - 30, 15)];
+    self.detailLab.textColor = KGGrayColor;
+    self.detailLab.font = KGFontSHRegular(12);
+    self.detailLab.textAlignment = NSTextAlignmentCenter;
+    self.detailLab.numberOfLines = 0;
+    self.detailLab.text = @"文章与图片均来源于网络，言论与观点不代表本站意愿，如有任何意见和疑义等，请联系本站。";
+    [self.footerView addSubview:self.detailLab];
+    
+    self.commentLab = [[UILabel alloc]initWithFrame:CGRectMake(15,self.footerView.frame.size.height - 15, KGScreenWidth - 30, 15)];
+    self.commentLab.textColor = KGBlackColor;
+    self.commentLab.font = KGFontSHRegular(14);
+    self.commentLab.text = @"评论列表";
+    [self.footerView addSubview:self.commentLab];
+    
+    return self.footerView;
+}
 // MARK: --创建机构列表--
 - (void)setUpListView{
     self.listView = [[UITableView alloc]initWithFrame:CGRectMake(0, KGRectNavAndStatusHight, KGScreenWidth, KGScreenHeight - KGRectNavAndStatusHight)];
@@ -73,6 +172,7 @@
     self.listView.emptyDataSetSource = self;
     self.listView.emptyDataSetDelegate = self;
     self.listView.tableFooterView = [UIView new];
+    self.listView.tableHeaderView = [self setUpHeaderView];
     self.listView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.listView.showsVerticalScrollIndicator = NO;
     self.listView.showsHorizontalScrollIndicator = NO;
@@ -92,26 +192,64 @@
 /** 代理方法以及数据源 */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
-        return 10;
+        return self.contentArr.count;
     }else{
         return 5;
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-//        return [tableView cellHeightForIndexPath:indexPath cellContentViewWidth:KGScreenWidth tableView:self.listView];
+        if (self.contentArr.count > 0) {
+            NSDictionary *dic = self.contentArr[indexPath.row];
+            if (dic[@"img"]) {
+                NSString *lastObjStr = [[dic[@"img"] componentsSeparatedByString:@"#"] lastObject];
+                NSArray *tmp = [lastObjStr componentsSeparatedByString:@"|"];
+                if (tmp.count > 0) {
+                    NSInteger widthStr = [[[lastObjStr componentsSeparatedByString:@"|"] lastObject] integerValue];
+                    NSInteger heightStr = [[[lastObjStr componentsSeparatedByString:@"|"] firstObject] integerValue];
+                    return (KGScreenWidth - 30)/widthStr*heightStr + 30;
+                }else{
+                    return 400;
+                }
+            }else{
+                NSString *str = dic[@"content"];
+                return [str boundingRectWithSize:CGSizeMake(KGScreenWidth - 30, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontSHRegular(14)} context:nil].size.height + 30;
+            }
+        }
         return 220;
     }else{
         return 120;
     }
 }
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    if (section == 0) {
+        return nil;
+    }else{
+        return [self setUpFooterView];
+    }
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (section == 0) {
+        return 0;
+    }else{
+        return 100;
+    }
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        if (indexPath.row%2==0) {
-            KGNewsDetailUILabCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGNewsDetailUILabCell"];
-            return cell;
+        if (self.contentArr.count > 0) {
+            NSDictionary *dic = self.contentArr[indexPath.row];
+            if (dic[@"img"]) {
+                KGNewsDetailUIImageViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGNewsDetailUIImageViewCell"];
+                [cell cellDetailWithImage:dic[@"img"]];
+                return cell;
+            }else{
+                KGNewsDetailUILabCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGNewsDetailUILabCell"];
+                [cell cellDetailWithString:dic[@"content"]];
+                return cell;
+            }
         }else{
-            KGNewsDetailUIImageViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGNewsDetailUIImageViewCell"];
+            KGNewsDetailUILabCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGNewsDetailUILabCell"];
             return cell;
         }
     }else{
@@ -285,6 +423,18 @@
     if (touch.view == self.commentView) {
         self.commentView.hidden = YES;
     }
+}
+/** 修改UI */
+- (void)changeUIDetail{
+    self.titleLab.text = self.detailDic[@"newsTitle"];
+    self.titleLab.frame = CGRectMake(0, 20, KGScreenWidth, [self.detailDic[@"newsTitle"] boundingRectWithSize:CGSizeMake(KGScreenWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontSHBold(15)} context:nil].size.height);
+    self.socureLab.text = [NSString stringWithFormat:@"%@  %@ 著",self.detailDic[@"newsSource"],self.detailDic[@"newsAuthor"]];
+    self.timeLab.text = self.detailDic[@"newsTime"];
+    self.socureLab.frame = CGRectMake(0, self.titleLab.frame.origin.y+self.titleLab.frame.size.height + 20, KGScreenWidth, 15);
+    self.timeLab.frame = CGRectMake(0, self.socureLab.frame.origin.y+self.socureLab.frame.size.height + 15, KGScreenWidth, 15);
+    self.headerView.frame = CGRectMake(0, 0, KGScreenWidth, self.timeLab.frame.origin.y+self.timeLab.frame.size.height + 20);
+    
+    [self.listView reloadData];
 }
 
 

@@ -40,8 +40,17 @@
     .rightSpaceToView(self.contentView, 15)
     .heightIs(200);
     
-    [self.contentView setupAutoHeightWithBottomView:self.detailLab bottomMargin:30];
+}
+
+- (void)cellDetailWithString:(NSString *)str{
     
+    self.detailLab.text = str;
+    
+    self.detailLab.sd_layout
+    .leftSpaceToView(self.contentView, 15)
+    .topSpaceToView(self.contentView, 15)
+    .rightSpaceToView(self.contentView, 15)
+    .heightIs([str boundingRectWithSize:CGSizeMake(KGScreenWidth - 30, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontSHRegular(13)} context:nil].size.height);
 }
 
 - (void)awakeFromNib {

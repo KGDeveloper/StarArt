@@ -208,40 +208,7 @@
         KGBooksView *booksView = [[KGBooksView alloc]initWithFrame:CGRectMake(15+115*i, 0, 100, 195)];
         [self.recommendScrollView addSubview:booksView];
         NSDictionary *dic = self.topArr[i];
-        [booksView.customView.booksImage sd_setImageWithURL:[NSURL URLWithString:[[dic[@"bookCover"] componentsSeparatedByString:@"#"] firstObject]]];
-        booksView.customView.nameLab.text = dic[@"bookName"];
-        booksView.customView.socreLab.text = [NSString stringWithFormat:@"%@",dic[@"bookScore"]];
-        if ([dic[@"bookScore"] integerValue] < 2) {
-            booksView.customView.oneStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.twoStar.image = [UIImage imageNamed:@"xingxing"];
-            booksView.customView.threeStar.image = [UIImage imageNamed:@"xingxing"];
-            booksView.customView.fourStar.image = [UIImage imageNamed:@"xingxing"];
-            booksView.customView.fiveStar.image = [UIImage imageNamed:@"xingxing"];
-        }else if ([dic[@"bookScore"] integerValue] < 3){
-            booksView.customView.oneStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.twoStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.threeStar.image = [UIImage imageNamed:@"xingxing"];
-            booksView.customView.fourStar.image = [UIImage imageNamed:@"xingxing"];
-            booksView.customView.fiveStar.image = [UIImage imageNamed:@"xingxing"];
-        }else if ([dic[@"bookScore"] integerValue] < 4){
-            booksView.customView.oneStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.twoStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.threeStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.fourStar.image = [UIImage imageNamed:@"xingxing"];
-            booksView.customView.fiveStar.image = [UIImage imageNamed:@"xingxing"];
-        }else if ([dic[@"bookScore"] integerValue] < 5){
-            booksView.customView.oneStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.twoStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.threeStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.fourStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.fiveStar.image = [UIImage imageNamed:@"xingxing"];
-        }else if ([dic[@"bookScore"] integerValue] < 6){
-            booksView.customView.oneStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.twoStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.threeStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.fourStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.fiveStar.image = [UIImage imageNamed:@"xing"];
-        }
+        [booksView viewDetailWithDictionary:dic];
     }
 }
 /** 畅销滚动 */
@@ -250,40 +217,7 @@
         KGBooksView *booksView = [[KGBooksView alloc]initWithFrame:CGRectMake(15+115*i, 0, 100, 195)];
         [self.hotScrollView addSubview:booksView];
         NSDictionary *dic = self.hotArr[i];
-        [booksView.customView.booksImage sd_setImageWithURL:[NSURL URLWithString:[[dic[@"bookCover"] componentsSeparatedByString:@"#"] firstObject]]];
-        booksView.customView.nameLab.text = dic[@"bookName"];
-        booksView.customView.socreLab.text = [NSString stringWithFormat:@"%@",dic[@"bookScore"]];
-        if ([dic[@"bookScore"] integerValue] < 2) {
-            booksView.customView.oneStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.twoStar.image = [UIImage imageNamed:@"xingxing"];
-            booksView.customView.threeStar.image = [UIImage imageNamed:@"xingxing"];
-            booksView.customView.fourStar.image = [UIImage imageNamed:@"xingxing"];
-            booksView.customView.fiveStar.image = [UIImage imageNamed:@"xingxing"];
-        }else if ([dic[@"bookScore"] integerValue] < 3){
-            booksView.customView.oneStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.twoStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.threeStar.image = [UIImage imageNamed:@"xingxing"];
-            booksView.customView.fourStar.image = [UIImage imageNamed:@"xingxing"];
-            booksView.customView.fiveStar.image = [UIImage imageNamed:@"xingxing"];
-        }else if ([dic[@"bookScore"] integerValue] < 4){
-            booksView.customView.oneStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.twoStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.threeStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.fourStar.image = [UIImage imageNamed:@"xingxing"];
-            booksView.customView.fiveStar.image = [UIImage imageNamed:@"xingxing"];
-        }else if ([dic[@"bookScore"] integerValue] < 5){
-            booksView.customView.oneStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.twoStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.threeStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.fourStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.fiveStar.image = [UIImage imageNamed:@"xingxing"];
-        }else if ([dic[@"bookScore"] integerValue] < 6){
-            booksView.customView.oneStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.twoStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.threeStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.fourStar.image = [UIImage imageNamed:@"xing"];
-            booksView.customView.fiveStar.image = [UIImage imageNamed:@"xing"];
-        }
+        [booksView viewDetailWithDictionary:dic];
     }
 }
 

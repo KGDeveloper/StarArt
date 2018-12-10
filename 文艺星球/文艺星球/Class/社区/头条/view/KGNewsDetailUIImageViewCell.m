@@ -39,10 +39,19 @@
     .leftSpaceToView(self.contentView, 15)
     .topSpaceToView(self.contentView, 15)
     .rightSpaceToView(self.contentView, 15)
-    .heightIs(200);
+    .bottomSpaceToView(self.contentView, 15);
     
-    [self.contentView setupAutoHeightWithBottomView:self.customImage bottomMargin:30];
-    
+}
+
+- (void)cellDetailWithImage:(NSString *)url{
+    [self.customImage sd_setImageWithURL:[NSURL URLWithString:[[url componentsSeparatedByString:@"#"] firstObject]]];
+    self.customImage.contentMode = UIViewContentModeScaleAspectFill;
+    self.customImage.layer.masksToBounds = YES;
+    self.customImage.sd_layout
+    .leftSpaceToView(self.contentView, 15)
+    .topSpaceToView(self.contentView, 15)
+    .rightSpaceToView(self.contentView, 15)
+    .bottomSpaceToView(self.contentView, 15);
 }
 
 

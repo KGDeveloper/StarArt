@@ -27,6 +27,11 @@
 @property (nonatomic,strong) UIView *topLine;
 /** 页码 */
 @property (nonatomic,strong) UIPageControl *pageControl;
+@property (nonatomic,copy) NSString *valueStr;
+@property (nonatomic,copy) NSString *wordStr;
+@property (nonatomic,assign) NSInteger pageIndex;
+@property (nonatomic,strong) NSMutableArray *dataArr;
+@property (nonatomic,copy) NSArray *topArr;
 
 @end
 
@@ -44,10 +49,54 @@
     [self setLeftNavItemWithFrame:CGRectMake(15, 0, 50, 30) title:nil image:[UIImage imageNamed:@"fanhui"] font:nil color:nil select:@selector(leftNavAction)];
     self.view.backgroundColor = KGWhiteColor;
     
+    self.valueStr = @"";
+    self.wordStr = @"";
+    self.pageIndex = 1;
+    self.dataArr = [NSMutableArray array];
+    
+    [self requestData];
+    [self requestFiveData];
     [self setNavCenterView];
     self.selectBtu = 0;
     [self setUpListView];
     
+}
+/** 请求数据 */
+- (void)requestData{
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:SelectNewsList parameters:@{@"value":self.valueStr,@"valueWord":self.wordStr,@"pageIndex":@(self.pageIndex),@"pageSize":@"20"} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            NSArray *tmp = dic[@"list"];
+            if (tmp.count > 0) {
+                [weakSelf.dataArr addObjectsFromArray:tmp];
+            }
+        }
+        [weakSelf.listView reloadData];
+        [weakSelf.listView.mj_header endRefreshing];
+        [weakSelf.listView.mj_footer endRefreshing];
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+        [weakSelf.listView reloadData];
+        [weakSelf.listView.mj_header endRefreshing];
+        [weakSelf.listView.mj_footer endRefreshing];
+    }];
+}
+/** 请求顶部5条 */
+- (void)requestFiveData{
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:SelectNewsListFives parameters:@{} succ:^(id  _Nonnull result) {
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            weakSelf.topArr = dic[@"list"];
+        }
+        [weakSelf setUpTopScrollView];
+        [weakSelf.listView reloadData];
+    } fail:^(NSError * _Nonnull error) {
+        
+    }];
 }
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{
@@ -100,7 +149,6 @@
     [self.headerView addSubview:self.topView];
     /** 滚动图 */
     self.topScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, KGScreenWidth/3*2 + 40)];
-    self.topScrollView.contentSize = CGSizeMake(KGScreenWidth*5, KGScreenWidth/3*2 + 40);
     self.topScrollView.showsVerticalScrollIndicator = NO;
     self.topScrollView.showsHorizontalScrollIndicator = NO;
     self.topScrollView.bounces = NO;
@@ -144,7 +192,14 @@
         self.headerView.frame = CGRectMake(0, 0, KGScreenWidth, 50);
         self.topLine.frame  = CGRectMake(0, 50, KGScreenWidth, 10);
     }
-    [self.listView reloadData];
+    self.valueStr = sender.currentTitle;
+    if ([sender.currentTitle isEqualToString:@"全部"]) {
+        self.valueStr = @"";
+    }
+    self.wordStr = @"";
+    self.pageIndex = 1;
+    self.dataArr = [NSMutableArray array];
+    [self requestData];
 }
 // MARK: --创建机构列表--
 - (void)setUpListView{
@@ -158,6 +213,18 @@
     self.listView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.listView.showsVerticalScrollIndicator = NO;
     self.listView.showsHorizontalScrollIndicator = NO;
+    __weak typeof(self) weakSelf = self;
+    self.listView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        weakSelf.pageIndex = 1;
+        weakSelf.dataArr = [NSMutableArray array];
+        [weakSelf requestData];
+        [weakSelf.listView.mj_header beginRefreshing];
+    }];
+    self.listView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        weakSelf.pageIndex++;
+        [weakSelf requestData];
+        [weakSelf.listView.mj_footer beginRefreshing];
+    }];
     [self.view addSubview:self.listView];
     
     [self.listView registerNib:[UINib nibWithNibName:@"KGNewsCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"KGNewsCell"];
@@ -168,17 +235,24 @@
 }
 /** 代理方法以及数据源 */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 20;
+    return self.dataArr.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 380;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     KGNewsCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGNewsCell"];
+    if (self.dataArr.count > 0) {
+        NSDictionary *dic = self.dataArr[indexPath.row];
+        [cell cellDetailWithDictionary:dic];
+    }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self pushHideenTabbarViewController:[[KGNewsDetailVC alloc]init] animted:YES];
+    NSDictionary *dic = self.dataArr[indexPath.row];
+    KGNewsDetailVC *vc = [[KGNewsDetailVC alloc]init];
+    vc.sendID = [NSString stringWithFormat:@"%@",dic[@"nid"]];
+    [self pushHideenTabbarViewController:vc animted:YES];
 }
 /** 滚动视图代理 */
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
@@ -187,27 +261,33 @@
     }
 }
 /** 创建滚动广告 */
-- (UIView *)createNewsViewWithImage:(UIImage *)image labTitle:(NSString *)title frame:(CGRect)frame tag:(NSInteger)tag{
-    UIView *addView = [[UIView alloc]initWithFrame:frame];
-    /** 按钮 */
-    UIButton *tmpBtu = [UIButton buttonWithType:UIButtonTypeCustom];
-    tmpBtu.frame = CGRectMake(0, 0, KGScreenWidth,KGScreenWidth/3*2);
-    [tmpBtu setImage:image forState:UIControlStateNormal];
-    tmpBtu.imageView.contentMode = UIViewContentModeScaleAspectFill;
-    [tmpBtu addTarget:self action:@selector(topBtuAction:) forControlEvents:UIControlEventTouchUpInside];
-    tmpBtu.tag = tag;
-    [addView addSubview:tmpBtu];
-    /** lab */
-    UILabel *tmpLab = [[UILabel alloc]initWithFrame:CGRectMake(15, KGScreenWidth/3*2, KGScreenWidth - 100, 40)];
-    tmpLab.text = title;
-    tmpLab.textColor = KGBlackColor;
-    tmpLab.font = KGFontSHRegular(14);
-    [addView addSubview:tmpLab];
-    return addView;
+- (void)setUpTopScrollView{
+    self.topScrollView.contentSize = CGSizeMake(KGScreenWidth*self.topArr.count, KGScreenWidth/3*2 + 40);
+    for (int i = 0; i < self.topArr.count; i++) {
+        NSDictionary *dic = self.topArr[i];
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(KGScreenWidth*i, 0, KGScreenWidth, KGScreenWidth/3*2)];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:[[dic[@"newsCover"] componentsSeparatedByString:@"#"] firstObject]]];
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        imageView.layer.masksToBounds = YES;
+        imageView.userInteractionEnabled = YES;
+        imageView.tag = [dic[@"nid"] integerValue];
+        [self.topScrollView addSubview:imageView];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(lookNewsDetailAction:)];
+        [imageView addGestureRecognizer:tap];
+        
+        UILabel *tmpLab = [[UILabel alloc]initWithFrame:CGRectMake(KGScreenWidth*i + 15, KGScreenWidth/3*2, KGScreenWidth - 75, 40)];
+        tmpLab.text = dic[@"newsTitle"];
+        tmpLab.textColor = KGBlackColor;
+        tmpLab.font = KGFontSHRegular(14);
+        [self.topScrollView addSubview:tmpLab];
+    }
 }
-/** 广告点击事件 */
-- (void)topBtuAction:(UIButton *)sender{
-    
+/** 点击查看详情 */
+- (void)lookNewsDetailAction:(UITapGestureRecognizer *)tap{
+    KGNewsDetailVC *vc = [[KGNewsDetailVC alloc]init];
+    vc.sendID = [NSString stringWithFormat:@"%ld",tap.view.tag];
+    [self pushHideenTabbarViewController:vc animted:YES];
 }
 
 

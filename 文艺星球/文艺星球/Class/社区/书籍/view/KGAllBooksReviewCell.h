@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface KGAllBooksReviewCell : UITableViewCell
 
+- (CGFloat)cellHeightWithDictionary:(NSDictionary *)dic;
+- (void)cellDetailWithDictionary:(NSDictionary *)dic;
+
 @end
 
 NS_ASSUME_NONNULL_END

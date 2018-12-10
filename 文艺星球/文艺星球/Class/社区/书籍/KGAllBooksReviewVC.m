@@ -17,6 +17,10 @@
 @property (nonatomic,strong) UIButton *allReviewBtu;
 /** 热门书评 */
 @property (nonatomic,strong) UIButton *hotReviewBtu;
+/** 数据源 */
+@property (nonatomic,strong) NSMutableArray *dataArr;
+@property (nonatomic,assign) NSInteger pageIndex;
+@property (nonatomic,copy) NSString *navigations;
 
 @end
 
@@ -35,11 +39,41 @@
     [self setRightNavItemWithFrame:CGRectZero title:@"写书评" image:nil font:KGFontSHRegular(14) color:KGBlueColor select:@selector(rightNavAction)];
     self.view.backgroundColor = KGWhiteColor;
     
+    self.dataArr = [NSMutableArray array];
+    self.pageIndex = 1;
+    self.navigations = @"全部评论";
+    
+    [self reuqestData];
     [self setUpListView];
+}
+/** 请求数据 */
+- (void)reuqestData{
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:SelectBookCommetnByCid parameters:@{@"id":self.sendID,@"navigations":self.navigations,@"navigation":@"查看全部评论",@"pageIndex":@(self.pageIndex),@"pageSize":@"20"} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            NSArray *tmp = dic[@"list"];
+            if (tmp.count > 0) {
+                [weakSelf.dataArr addObjectsFromArray:tmp];
+            }
+        }
+        [weakSelf.listView reloadData];
+        [weakSelf.listView.mj_header endRefreshing];
+        [weakSelf.listView.mj_footer endRefreshing];
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+        [weakSelf.listView reloadData];
+        [weakSelf.listView.mj_header endRefreshing];
+        [weakSelf.listView.mj_footer endRefreshing];
+    }];
 }
 /** 导航栏右侧按钮点击事件 */
 - (void)rightNavAction{
-    [self pushHideenTabbarViewController:[[KGWriteReviewVC alloc]initWithNibName:@"KGWriteReviewVC" bundle:nil] animted:YES];
+    KGWriteReviewVC *vc = [[KGWriteReviewVC alloc]initWithNibName:@"KGWriteReviewVC" bundle:[NSBundle mainBundle]];
+    vc.sendID = self.sendID;
+    [self pushHideenTabbarViewController:vc animted:YES];
 }
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{
@@ -80,6 +114,10 @@
     sender.backgroundColor = KGBlueColor;
     [self.hotReviewBtu setTitleColor:KGGrayColor forState:UIControlStateNormal];
     self.hotReviewBtu.backgroundColor = KGWhiteColor;
+    self.dataArr = [NSMutableArray array];
+    self.pageIndex = 1;
+    self.navigations = @"全部评论";
+    [self reuqestData];
 }
 /** 热门书评点击事件 */
 - (void)hotReviewAction:(UIButton *)sender{
@@ -87,10 +125,14 @@
     sender.backgroundColor = KGBlueColor;
     [self.allReviewBtu setTitleColor:KGGrayColor forState:UIControlStateNormal];
     self.allReviewBtu.backgroundColor = KGWhiteColor;
+    self.dataArr = [NSMutableArray array];
+    self.pageIndex = 1;
+    self.navigations = @"热门书评";
+    [self reuqestData];
 }
 // MARK: --创建机构列表--
 - (void)setUpListView{
-    self.listView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, KGScreenHeight)];
+    self.listView = [[UITableView alloc]initWithFrame:CGRectMake(0, KGRectNavAndStatusHight, KGScreenWidth, KGScreenHeight - KGRectNavAndStatusHight)];
     self.listView.delegate = self;
     self.listView.dataSource = self;
     self.listView.emptyDataSetSource = self;
@@ -100,6 +142,18 @@
     self.listView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.listView.showsVerticalScrollIndicator = NO;
     self.listView.showsHorizontalScrollIndicator = NO;
+    __weak typeof(self) weakSelf = self;
+    self.listView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        weakSelf.pageIndex = 1;
+        weakSelf.dataArr = [NSMutableArray array];
+        [weakSelf reuqestData];
+        [weakSelf.listView.mj_header beginRefreshing];
+    }];
+    self.listView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        weakSelf.pageIndex++;
+        [weakSelf reuqestData];
+        [weakSelf.listView.mj_footer beginRefreshing];
+    }];
     [self.view addSubview:self.listView];
     
     [self.listView registerClass:[KGAllBooksReviewCell class] forCellReuseIdentifier:@"KGAllBooksReviewCell"];
@@ -110,13 +164,19 @@
 }
 /** 代理方法以及数据源 */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 20;
+    return self.dataArr.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return [self.listView cellHeightForIndexPath:indexPath cellContentViewWidth:KGScreenWidth tableView:self.listView];
+    KGAllBooksReviewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGAllBooksReviewCell"];
+    NSDictionary *dic = self.dataArr[indexPath.row];
+    return [cell cellHeightWithDictionary:dic];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     KGAllBooksReviewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGAllBooksReviewCell"];
+    if (self.dataArr.count > 0) {
+        NSDictionary *dic = self.dataArr[indexPath.row];
+        [cell cellDetailWithDictionary:dic];
+    }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
