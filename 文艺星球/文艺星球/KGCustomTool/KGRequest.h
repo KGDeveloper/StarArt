@@ -27,9 +27,11 @@ NS_ASSUME_NONNULL_BEGIN
 /** 照片获取本地路径转换 */
 - (NSString *)getImagePath:(UIImage *)Image;
 /** 获取当前位置 */
-- (CLLocationCoordinate2D)requestYourLocation;
+- (void)requestYourLocation:(void(^)(CLLocationCoordinate2D location))yourLocation;
 /** 获取当前城市 */
-- (NSString *)userLocationCity;
+- (void)userLocationCity:(void(^)(NSString *city))city;
+
+@property (nonatomic,strong) AMapLocationManager *manager;
 
 @end
 

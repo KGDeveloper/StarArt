@@ -29,31 +29,31 @@
     self.nameLab.text = dic[@"bookName"];
     self.socreLab.text = [NSString stringWithFormat:@"%@",dic[@"bookScore"]];
     self.detailLab.text = dic[@"bookIntroduction"];
-    if ([dic[@"bookName"] integerValue] < 2) {
+    if ([dic[@"bookScore"] integerValue] < 2) {
         self.onrStar.image = [UIImage imageNamed:@"xing"];
         self.twoStar.image = [UIImage imageNamed:@"xingxing"];
         self.threeStar.image = [UIImage imageNamed:@"xingxing"];
         self.fourStar.image = [UIImage imageNamed:@"xingxing"];
         self.fiveStar.image = [UIImage imageNamed:@"xingxing"];
-    }else if ([dic[@"bookName"] integerValue] < 3){
+    }else if ([dic[@"bookScore"] integerValue] < 3){
         self.onrStar.image = [UIImage imageNamed:@"xing"];
         self.twoStar.image = [UIImage imageNamed:@"xing"];
         self.threeStar.image = [UIImage imageNamed:@"xingxing"];
         self.fourStar.image = [UIImage imageNamed:@"xingxing"];
         self.fiveStar.image = [UIImage imageNamed:@"xingxing"];
-    }else if ([dic[@"bookName"] integerValue] < 4){
+    }else if ([dic[@"bookScore"] integerValue] < 4){
         self.onrStar.image = [UIImage imageNamed:@"xing"];
         self.twoStar.image = [UIImage imageNamed:@"xing"];
         self.threeStar.image = [UIImage imageNamed:@"xing"];
         self.fourStar.image = [UIImage imageNamed:@"xingxing"];
         self.fiveStar.image = [UIImage imageNamed:@"xingxing"];
-    }else if ([dic[@"bookName"] integerValue] < 5){
+    }else if ([dic[@"bookScore"] integerValue] < 5){
         self.onrStar.image = [UIImage imageNamed:@"xing"];
         self.twoStar.image = [UIImage imageNamed:@"xing"];
         self.threeStar.image = [UIImage imageNamed:@"xing"];
         self.fourStar.image = [UIImage imageNamed:@"xing"];
         self.fiveStar.image = [UIImage imageNamed:@"xingxing"];
-    }else if ([dic[@"bookName"] integerValue] < 6){
+    }else if ([dic[@"bookScore"] integerValue] < 6){
         self.onrStar.image = [UIImage imageNamed:@"xing"];
         self.twoStar.image = [UIImage imageNamed:@"xing"];
         self.threeStar.image = [UIImage imageNamed:@"xing"];

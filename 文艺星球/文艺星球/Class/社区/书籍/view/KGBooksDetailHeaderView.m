@@ -90,8 +90,8 @@
     }
 }
 - (IBAction)zansAction:(UIButton *)sender {
-    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self animated:YES];
-    if (sender.tag != nil) {
+    if (sender.tag != 0) {
+        __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self animated:YES];
         [KGRequest postWithUrl:AddCommentLikeStatusByCid parameters:@{@"cid":@(sender.tag)} succ:^(id  _Nonnull result) {
             [hud hideAnimated:YES];
             if ([result[@"status"] integerValue] == 200) {

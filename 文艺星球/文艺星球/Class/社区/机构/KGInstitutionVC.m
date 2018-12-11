@@ -59,27 +59,41 @@
 }
 /** 首页请求数据 */
 - (void)requestData{
-    NSString *cityId = nil;
-    if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"北京市"]) {
-        cityId = @"1";
-    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"天津市"]){
-        cityId = @"43";
-    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"西安市"]){
-        cityId = @"54";
-    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"广州市"]){
-        cityId = @"28";
-    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"成都市"]){
-        cityId = @"65";
-    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"上海市"]){
-        cityId = @"13";
-    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"深圳市"]){
-        cityId = @"36";
-    }else{
-        cityId = @"1";
-    }
+    __block NSString *cityId = nil;
+    __weak typeof(self) weakSelf = self;
+    [[KGRequest shareInstance] userLocationCity:^(NSString * _Nonnull city) {
+        if ([city isEqualToString:@"北京市"]) {
+            cityId = @"1";
+        }else if ([city isEqualToString:@"天津市"]){
+            cityId = @"43";
+        }else if ([city isEqualToString:@"西安市"]){
+            cityId = @"54";
+        }else if ([city isEqualToString:@"广州市"]){
+            cityId = @"28";
+        }else if ([city isEqualToString:@"成都市"]){
+            cityId = @"65";
+        }else if ([city isEqualToString:@"上海市"]){
+            cityId = @"13";
+        }else if ([city isEqualToString:@"深圳市"]){
+            cityId = @"36";
+        }else{
+            cityId = @"1";
+        }
+        [weakSelf requestWithCity:cityId];
+    }];
+}
+/** 请求 */
+- (void)requestWithCity:(NSString *)cityID{
+    __weak typeof(self) weakSelf = self;
+    [[KGRequest shareInstance] requestYourLocation:^(CLLocationCoordinate2D location) {
+        [weakSelf requestWithLocation:location city:cityID];
+    }];
+}
+/** 请求数据 */
+- (void)requestWithLocation:(CLLocationCoordinate2D)location city:(NSString *)cityID{
     __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     __weak typeof(self) weakSelf = self;
-    [KGRequest postWithUrl:SelectCommunityPlaceHome parameters:@{@"cityID":cityId,@"userLongitude":@([KGRequest shareInstance].requestYourLocation.longitude),@"userLatitude":@([KGRequest shareInstance].requestYourLocation.latitude)} succ:^(id  _Nonnull result) {
+    [KGRequest postWithUrl:SelectCommunityPlaceHome parameters:@{@"cityID":cityID,@"userLongitude":@(location.longitude),@"userLatitude":@(location.latitude)} succ:^(id  _Nonnull result) {
         [hud hideAnimated:YES];
         if ([result[@"status"] integerValue] == 200) {
             NSDictionary *dic = result[@"data"];

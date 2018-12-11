@@ -238,6 +238,7 @@
         [self.zansBtu setImage:[UIImage imageNamed:@"dianzan"] forState:UIControlStateNormal];
     }
     [self.zansBtu setTitle:[NSString stringWithFormat:@"%@",dic[@"goodSum"]] forState:UIControlStateNormal];
+    self.zansBtu.tag = [dic[@"id"] integerValue];
     self.detailLab.text = dic[@"comment"];
     self.detailLab.sd_layout
     .leftEqualToView(self.nameLab)

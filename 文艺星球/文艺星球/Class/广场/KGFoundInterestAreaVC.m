@@ -68,8 +68,16 @@
 /** 请求数据 */
 - (void)requestData{
     __weak typeof(self) weakSelf = self;
+    [[KGRequest shareInstance] requestYourLocation:^(CLLocationCoordinate2D location) {
+        [weakSelf requestWithLocation:location];
+    }];
+    
+}
+/** 请求 */
+- (void)requestWithLocation:(CLLocationCoordinate2D)location{
+    __weak typeof(self) weakSelf = self;
     weakSelf.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [KGRequest postWithUrl:FindAllGoodPlace parameters:@{@"pageIndex":@(self.page),@"type":@(self.leftPage),@"condition":@(self.rightPage),@"latitude":[NSNumber numberWithDouble:[[KGRequest shareInstance] requestYourLocation].latitude],@"longitude":[NSNumber numberWithDouble:[[KGRequest shareInstance] requestYourLocation].longitude]} succ:^(id  _Nonnull result) {
+    [KGRequest postWithUrl:FindAllGoodPlace parameters:@{@"pageIndex":@(self.page),@"type":@(self.leftPage),@"condition":@(self.rightPage),@"latitude":[NSNumber numberWithDouble:location.latitude],@"longitude":[NSNumber numberWithDouble:location.longitude]} succ:^(id  _Nonnull result) {
         if ([result[@"status"] integerValue] == 200) {
             NSDictionary *dic = result[@"data"];
             NSArray *tmp = dic[@"list"];

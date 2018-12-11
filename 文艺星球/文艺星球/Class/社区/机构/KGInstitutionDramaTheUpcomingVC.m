@@ -50,24 +50,31 @@
 }
 /** 请求数据 */
 - (void)requestData{
-    NSString *cityId = nil;
-    if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"北京市"]) {
-        cityId = @"1";
-    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"天津市"]){
-        cityId = @"43";
-    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"西安市"]){
-        cityId = @"54";
-    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"广州市"]){
-        cityId = @"28";
-    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"成都市"]){
-        cityId = @"65";
-    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"上海市"]){
-        cityId = @"13";
-    }else if ([[KGRequest shareInstance].userLocationCity isEqualToString:@"深圳市"]){
-        cityId = @"36";
-    }else{
-        cityId = @"1";
-    }
+    __block NSString *cityId = nil;
+    __weak typeof(self) weakSelf = self;
+    [[KGRequest shareInstance] userLocationCity:^(NSString * _Nonnull city) {
+        if ([city isEqualToString:@"北京市"]) {
+            cityId = @"1";
+        }else if ([city isEqualToString:@"天津市"]){
+            cityId = @"43";
+        }else if ([city isEqualToString:@"西安市"]){
+            cityId = @"54";
+        }else if ([city isEqualToString:@"广州市"]){
+            cityId = @"28";
+        }else if ([city isEqualToString:@"成都市"]){
+            cityId = @"65";
+        }else if ([city isEqualToString:@"上海市"]){
+            cityId = @"13";
+        }else if ([city isEqualToString:@"深圳市"]){
+            cityId = @"36";
+        }else{
+            cityId = @"1";
+        }
+        [weakSelf requestWithCity:cityId];
+    }];
+}
+/** 请求 */
+- (void)requestWithCity:(NSString *)cityId{
     __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     __weak typeof(self) weakSelf = self;
     [KGRequest postWithUrl:SelectShowList parameters:@{@"pageIndex":@(self.page),@"pageSize":@"20",@"typeID":@"5",@"cityID":cityId,@"mohu":@"",@"navigation":self.navigationStr} succ:^(id  _Nonnull result) {

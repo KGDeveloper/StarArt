@@ -31,7 +31,6 @@
     [self registRongIM];
     return YES;
 }
-
 /** 注册高德地图 */
 - (void)registGeodo{
     [AMapServices sharedServices].apiKey = @"5a8e15e6edaf329a1716b6ab48a5f266";

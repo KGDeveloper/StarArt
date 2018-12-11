@@ -7,13 +7,20 @@
 //
 
 #import "KGMapVC.h"
+#import "KGNearInstatutionVC.h"
+#import "KGNearConsumptionVC.h"
 
-@interface KGMapVC ()
+
+@interface KGMapVC ()<CLLocationManagerDelegate>
 
 @property (nonatomic,strong) UIButton *leftBtu;
 @property (nonatomic,strong) UIButton *centerBtu;
 @property (nonatomic,strong) UIButton *rightBtu;
 @property (nonatomic,strong) UIView *line;
+@property (nonatomic,strong) KGNearInstatutionVC *instatutionVC;
+@property (nonatomic,strong) KGNearConsumptionVC *consumptionVC;
+/** 当前显示页面 */
+@property (nonatomic,assign) NSInteger selectIndex;
 
 @end
 
@@ -22,7 +29,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     /** 导航栏标题颜色 */
-    [self changeNavBackColor:[UIColor clearColor] controller:self];
+    [self changeNavBackColor:KGWhiteColor controller:self];
 }
 
 - (void)viewDidLoad {
@@ -31,9 +38,27 @@
     [self setLeftNavItemWithFrame:CGRectZero title:@"北京市" image:[UIImage imageNamed:@"shouyedingwei"] font:KGFontSHRegular(13) color:KGBlackColor select:@selector(leftNavAction)];
     [self setRightNavItemWithFrame:CGRectZero title:@"筛选" image:nil font:KGFontSHRegular(13) color:KGBlueColor select:@selector(rightNavAction)];
     self.view.backgroundColor = KGWhiteColor;
+    self.selectIndex = 0;
     
+    [self requestLocationManager];
     [self setNavCenterView];
     
+}
+/** 请求权限 */
+- (void)requestLocationManager{
+    CLLocationManager *manager = [CLLocationManager new];
+    manager.delegate = self;
+    [manager requestAlwaysAuthorization];
+}
+/** 返回结果 */
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status{
+    switch (status) {
+        case kCLAuthorizationStatusDenied:
+            [[KGHUD showMessage:@"无法定位，因为你拒绝位置访问"] hideAnimated:YES afterDelay:1];
+            break;
+        default:
+            break;
+    }
 }
 /** 导航栏返回按钮点击事件 */
 - (void)leftNavAction{
@@ -41,7 +66,21 @@
 }
 /** 导航栏右侧点击事件 */
 - (void)rightNavAction{
-    
+    switch (self.selectIndex) {
+        case 0:
+            
+            break;
+            
+        case 1:
+            [self.instatutionVC addScreenViewToSupView:self.tabBarController.view topViewHeight:KGRectNavAndStatusHight];
+            break;
+            
+        case 2:
+            
+            break;
+        default:
+            break;
+    }
 }
 /** 导航栏设置 */
 - (void)setNavCenterView{
@@ -84,6 +123,9 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.line.centerX = self.leftBtu.centerX;
     }];
+    [self.instatutionVC.view removeFromSuperview];
+    [self.consumptionVC.view removeFromSuperview];
+    self.selectIndex = 0;
 }
 /** 中间按钮 */
 - (void)centerAction:(UIButton *)leftBtu{
@@ -93,6 +135,9 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.line.centerX = self.centerBtu.centerX;
     }];
+    [self.view addSubview:self.instatutionVC.view];
+    [self.consumptionVC.view removeFromSuperview];
+    self.selectIndex = 1;
 }
 /** 右侧按钮 */
 - (void)rightAction:(UIButton *)leftBtu{
@@ -102,10 +147,26 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.line.centerX = self.rightBtu.centerX;
     }];
+    [self.view addSubview:self.consumptionVC.view];
+    [self.instatutionVC.view removeFromSuperview];
+    self.selectIndex = 2;
 }
-
-
-
+/** 文化场所 */
+- (KGNearInstatutionVC *)instatutionVC{
+    if (!_instatutionVC) {
+        _instatutionVC = [[KGNearInstatutionVC alloc]init];
+        [self.view addSubview:_instatutionVC.view];
+    }
+    return _instatutionVC;
+}
+/** 文化消费 */
+- (KGNearConsumptionVC *)consumptionVC{
+    if (!_consumptionVC) {
+        _consumptionVC = [[KGNearConsumptionVC alloc]init];
+        [self.view addSubview:_consumptionVC.view];
+    }
+    return _consumptionVC;
+}
 
 
 

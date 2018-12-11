@@ -245,36 +245,35 @@
     
 }
 /** 获取当前位置 */
-- (CLLocationCoordinate2D)requestYourLocation{
-    AMapLocationManager *manager = [[AMapLocationManager alloc]init];
-    [manager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
-    manager.locationTimeout = 2;
-    manager.reGeocodeTimeout = 2;
-    __block CLLocationCoordinate2D yourLocation;
-    [manager requestLocationWithReGeocode:YES completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
+- (void)requestYourLocation:(void(^)(CLLocationCoordinate2D location))yourLocation{
+    _manager = [[AMapLocationManager alloc]init];
+    [_manager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
+    _manager.locationTimeout = 2;
+    _manager.reGeocodeTimeout = 2;
+    __block CLLocationCoordinate2D tmpLocation;
+    [_manager requestLocationWithReGeocode:YES completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
         if (error) {
-            yourLocation = CLLocationCoordinate2DMake(39.990461,116.497558);
-            return;
+            tmpLocation = CLLocationCoordinate2DMake(39.990461,116.497558);
         }
-        yourLocation = location.coordinate;
+        tmpLocation = location.coordinate;
+        yourLocation(tmpLocation);
     }];
-    return yourLocation;
 }
 /** 获取当前城市 */
-- (NSString *)userLocationCity{
-    AMapLocationManager *manager = [[AMapLocationManager alloc]init];
-    [manager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
-    manager.locationTimeout = 2;
-    manager.reGeocodeTimeout = 2;
+- (void)userLocationCity:(void(^)(NSString *city))city{
+    _manager = [[AMapLocationManager alloc]init];
+    [_manager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
+    _manager.locationTimeout = 2;
+    _manager.reGeocodeTimeout = 2;
     __block NSString *userCity = nil;
-    [manager requestLocationWithReGeocode:YES completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
+    [_manager requestLocationWithReGeocode:YES completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
         if (error) {
             userCity = @"北京市";
             return;
         }
         userCity = regeocode.city;
+        city(userCity);
     }];
-    return userCity;
 }
 
 @end
