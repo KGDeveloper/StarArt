@@ -90,6 +90,8 @@
 		5A3683E821BB6C23004AFCF5 /* KGInstitutionMoviesDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3683E721BB6C23004AFCF5 /* KGInstitutionMoviesDetailVC.m */; };
 		5A3683EC21BB731F004AFCF5 /* KGInstitutionMoviesDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3683EA21BB731F004AFCF5 /* KGInstitutionMoviesDetailCell.m */; };
 		5A3683ED21BB731F004AFCF5 /* KGInstitutionMoviesDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A3683EB21BB731F004AFCF5 /* KGInstitutionMoviesDetailCell.xib */; };
+		5A376DC021BF84A400ED64A3 /* KGChatVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A376DBF21BF84A400ED64A3 /* KGChatVC.m */; };
+		5A376DC221BFA0A800ED64A3 /* KGMap.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A376DC121BFA0A800ED64A3 /* KGMap.xcassets */; };
 		5A4408B6219A6FDC00393CAF /* KGInstitutionDramaDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4408B4219A6FDC00393CAF /* KGInstitutionDramaDetailVC.m */; };
 		5A4408B7219A6FDC00393CAF /* KGInstitutionDramaDetailVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A4408B5219A6FDC00393CAF /* KGInstitutionDramaDetailVC.xib */; };
 		5A4408BB219A82FB00393CAF /* KGDatingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A4408BA219A82FB00393CAF /* KGDatingVC.m */; };
@@ -385,6 +387,9 @@
 		5A3683E921BB731F004AFCF5 /* KGInstitutionMoviesDetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGInstitutionMoviesDetailCell.h; sourceTree = "<group>"; };
 		5A3683EA21BB731F004AFCF5 /* KGInstitutionMoviesDetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGInstitutionMoviesDetailCell.m; sourceTree = "<group>"; };
 		5A3683EB21BB731F004AFCF5 /* KGInstitutionMoviesDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGInstitutionMoviesDetailCell.xib; sourceTree = "<group>"; };
+		5A376DBE21BF84A400ED64A3 /* KGChatVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGChatVC.h; sourceTree = "<group>"; };
+		5A376DBF21BF84A400ED64A3 /* KGChatVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGChatVC.m; sourceTree = "<group>"; };
+		5A376DC121BFA0A800ED64A3 /* KGMap.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = KGMap.xcassets; sourceTree = "<group>"; };
 		5A4408B3219A6FDC00393CAF /* KGInstitutionDramaDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGInstitutionDramaDetailVC.h; sourceTree = "<group>"; };
 		5A4408B4219A6FDC00393CAF /* KGInstitutionDramaDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGInstitutionDramaDetailVC.m; sourceTree = "<group>"; };
 		5A4408B5219A6FDC00393CAF /* KGInstitutionDramaDetailVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGInstitutionDramaDetailVC.xib; sourceTree = "<group>"; };
@@ -995,6 +1000,7 @@
 			children = (
 				5A5631D621800D7B0007127C /* KGMapVC.h */,
 				5A5631D721800D7B0007127C /* KGMapVC.m */,
+				5A376DC121BFA0A800ED64A3 /* KGMap.xcassets */,
 			);
 			path = "地图";
 			sourceTree = "<group>";
@@ -1041,6 +1047,8 @@
 			children = (
 				5A3089ED21A539B0007D08F3 /* KGFriendsVC.h */,
 				5A3089EE21A539B0007D08F3 /* KGFriendsVC.m */,
+				5A376DBE21BF84A400ED64A3 /* KGChatVC.h */,
+				5A376DBF21BF84A400ED64A3 /* KGChatVC.m */,
 			);
 			path = "通讯录";
 			sourceTree = "<group>";
@@ -1595,6 +1603,7 @@
 				5A543E4D219930F90085B1E0 /* KGAgencyDetailListViewCell.xib in Resources */,
 				5AED6C0E217DC84A000657C9 /* FZYingXueJW.TTF in Resources */,
 				5A4408D4219ACD3B00393CAF /* KGBooksView.xib in Resources */,
+				5A376DC221BFA0A800ED64A3 /* KGMap.xcassets in Resources */,
 				5AED6C0D217DC84A000657C9 /* SourceHanSansCN-Bold.otf in Resources */,
 				5A0D323A219BCEAA00A49AE7 /* KGBooksDetailHeaderView.xib in Resources */,
 				5A543E5521995BA70085B1E0 /* KGAgencyExhibitionDetailCell.xib in Resources */,
@@ -1759,6 +1768,7 @@
 				5A5A728F218C40A60081F173 /* KGQuareHorizontalCell.m in Sources */,
 				5A5A7283218BEC590081F173 /* KGPreviewVC.m in Sources */,
 				5A927466219D5A8300998281 /* KGNewsDetailUIImageViewCell.m in Sources */,
+				5A376DC021BF84A400ED64A3 /* KGChatVC.m in Sources */,
 				5A4408BF219AB96C00393CAF /* KGDatingManagerVC.m in Sources */,
 				5A563203218067380007127C /* KGIntegralVC.m in Sources */,
 				5A2620E521901AFC0047A319 /* KGFoundInterestAreaVC.m in Sources */,

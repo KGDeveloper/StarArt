@@ -71,9 +71,9 @@
     self.view.backgroundColor = KGWhiteColor;
     
     self.page = 1;
-    self.typeID = @"";
-    self.navigationStr = @"即将开始";
-    self.mohu = @"5";
+    self.typeID = @"5";
+    self.navigationStr = @"近期热门";
+    self.mohu = @"";
     self.dataArr = [NSMutableArray array];
     
     [self requestTopData];

@@ -14,22 +14,29 @@
 
 @implementation KGFriendsVC
 
+- (id)init{
+    if (self = [super init]) {
+        /** 设置界面需要显示的会话类型 */
+        [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE),
+                                            @(ConversationType_DISCUSSION),
+                                            @(ConversationType_CHATROOM),
+                                            @(ConversationType_GROUP),
+                                            @(ConversationType_APPSERVICE),
+                                            @(ConversationType_SYSTEM)]];
+        /** 设置界面需要那些类型的会话在会话列表中聚合显示 */
+        [self setCollectionConversationType:@[@(ConversationType_DISCUSSION),
+                                              @(ConversationType_GROUP)]];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setChatListViewControllerUI];
 }
 /** 设置聊天列表界面 */
 - (void)setChatListViewControllerUI{
-    /** 设置界面需要显示的会话类型 */
-    [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE),
-                                        @(ConversationType_DISCUSSION),
-                                        @(ConversationType_CHATROOM),
-                                        @(ConversationType_GROUP),
-                                        @(ConversationType_APPSERVICE),
-                                        @(ConversationType_SYSTEM)]];
-    /** 设置界面需要那些类型的会话在会话列表中聚合显示 */
-    [self setCollectionConversationType:@[@(ConversationType_DISCUSSION),
-                                          @(ConversationType_GROUP)]];
     /** 去掉系统默认的横线 */
     self.conversationListTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.conversationListTableView.tableFooterView = [UIView new];
@@ -41,8 +48,21 @@
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     [backView addSubview:imageView];
     self.emptyConversationView = backView;
-    
 }
+//重写RCConversationListViewController的onSelectedTableRow事件
+- (void)onSelectedTableRow:(RCConversationModelType)conversationModelType
+         conversationModel:(RCConversationModel *)model
+               atIndexPath:(NSIndexPath *)indexPath {
+    RCConversationViewController *conversationVC = [[RCConversationViewController alloc]init];
+    conversationVC.conversationType = model.conversationType;
+    conversationVC.targetId = model.targetId;
+    conversationVC.title = model.conversationTitle;
+    conversationVC.hidesBottomBarWhenPushed = YES;
+    UIImage *image = [UIImage new];
+    [self.navigationController.navigationBar setShadowImage:image];
+    [self.navigationController pushViewController:conversationVC animated:YES];
+}
+
 
 /*
 #pragma mark - Navigation

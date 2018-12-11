@@ -9,6 +9,7 @@
 #import "KGDatingVC.h"
 #import "KGDatingView.h"
 #import "KGDatingManagerVC.h"
+#import "KGChatVC.h"
 
 @interface KGDatingVC ()
 
@@ -72,7 +73,20 @@
                 }
             };
             datingView.rightMoveStarChat = ^(NSString *userID) {
-                [weakSelf pushHideenTabbarViewController:[[KGDatingManagerVC alloc]initWithNibName:@"KGDatingManagerVC" bundle:nil] animted:YES];
+                KGChatVC *vc = [[KGChatVC alloc]init];
+                vc.userID = userID;
+                vc.conversationType = ConversationType_PRIVATE;
+                vc.targetId = userID;
+                __block NSString *nameStr = nil;
+                [weakSelf.firendsArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    NSDictionary *dic = obj;
+                    if ([dic[@"id"] integerValue] == [userID integerValue]) {
+                        nameStr = dic[@"username"];
+                        *stop = YES;
+                    }
+                }];
+                vc.title = nameStr;
+                [weakSelf pushHideenTabbarViewController:vc animted:YES];
             };
             [self.view addSubview:datingView];
         }

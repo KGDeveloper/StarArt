@@ -37,10 +37,24 @@
 /** 举报按钮 */
 - (IBAction)reportAction:(UIButton *)sender {
     KGDatingReportVC *vc = [[KGDatingReportVC alloc]initWithNibName:@"KGDatingReportVC" bundle:nil];
+    vc.sendID = self.sendID;
+    vc.typeStr = @"好友";
     [self pushHideenTabbarViewController:vc animted:YES];
 }
 /** 关注按钮 */
 - (IBAction)focusAction:(UIButton *)sender {
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    [KGRequest postWithUrl:Attorcel parameters:@{@"toId":self.sendID} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            [[KGHUD showMessage:@"关注成功"] hideAnimated:YES afterDelay:1];
+        }else{
+            [[KGHUD showMessage:@"关注失败"] hideAnimated:YES afterDelay:1];
+        }
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+        [[KGHUD showMessage:@"访问服务器失败"] hideAnimated:YES afterDelay:1];
+    }];
 }
 
 /*

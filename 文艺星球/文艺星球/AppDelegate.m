@@ -10,7 +10,7 @@
 #import "KGLoginVC.h"
 #import "KGTabbarVC.h"
 
-@interface AppDelegate ()
+@interface AppDelegate ()<RCIMUserInfoDataSource,RCIMGroupInfoDataSource>
 
 @end
 
@@ -42,7 +42,13 @@
     [[RCIM sharedRCIM] initWithAppKey:@"qd46yzrfqimtf"];
     if ([[KGUserInfo shareInstance] rongIMToken]) {
         [[RCIM sharedRCIM] connectWithToken:[KGUserInfo shareInstance].rongIMToken success:^(NSString *userId) {
-            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [RCIM sharedRCIM].userInfoDataSource = self;
+                [RCIM sharedRCIM].groupInfoDataSource = self;
+                [RCIM sharedRCIM].enableMessageRecall = YES;
+                [RCIM sharedRCIM].enableMessageAttachUserInfo = YES;
+                [RCIM sharedRCIM].enablePersistentUserInfoCache = YES;
+            });
         } error:^(RCConnectErrorCode status) {
             
         } tokenIncorrect:^{
@@ -50,7 +56,34 @@
         }];
     }
 }
-
+- (void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion{
+    if ([userId isEqualToString:[KGUserInfo shareInstance].userToken]) {
+        RCUserInfo *userInfo = [[RCUserInfo alloc]init];
+        userInfo.userId = userId;
+        userInfo.name = [KGUserInfo shareInstance].userName;
+        userInfo.portraitUri = [KGUserInfo shareInstance].userPortrait;
+        return completion(userInfo);
+    }else{
+        [KGRequest postWithUrl:[RequestUserInfo stringByAppendingString:[NSString stringWithFormat:@"/%@",[KGUserInfo shareInstance].userId]] parameters:@{} succ:^(id  _Nonnull result) {
+            if ([result[@"status"] integerValue] == 200) {
+                NSDictionary *dic = result[@"data"];
+                RCUserInfo *userInfo = [[RCUserInfo alloc]init];
+                userInfo.userId = userId;
+                userInfo.name = dic[@"username"];
+                userInfo.portraitUri = dic[@"portraitUri"];
+                [[RCIM sharedRCIM] refreshUserInfoCache:userInfo withUserId:userId];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshMessageUI" object:nil];
+            }
+        } fail:^(NSError * _Nonnull error) {
+            
+        }];
+        RCUserInfo *info = [[RCIM sharedRCIM] getUserInfoCache:userId];
+        return completion(info);
+    }
+}
+- (void)getGroupInfoWithGroupId:(NSString *)groupId completion:(void (^)(RCGroup *groupInfo))completion{
+    
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *describeTV;
 @property (weak, nonatomic) IBOutlet UILabel *countLab;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topHeigt;
+@property (nonatomic,copy) NSString *contentStr;
 
 @end
 
@@ -37,6 +38,7 @@
     self.view.backgroundColor = KGWhiteColor;
     self.title = @"举报";
     self.describeTV.delegate = self;
+    self.contentStr = @"";
     
 }
 /** 导航栏左侧点击事件 */
@@ -44,7 +46,35 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)rightNavAction{
-    [self.navigationController popViewControllerAnimated:YES];
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    __weak typeof(self) weakSelf = self;
+    if (![self.typeStr isEqualToString:@"新闻"]) {
+        [KGRequest postWithUrl:SaveUserReport parameters:@{@"bid":self.sendID,@"uid":[KGUserInfo shareInstance].userId,@"report":self.describeTV.text,@"remark":self.contentStr} succ:^(id  _Nonnull result) {
+            [hud hideAnimated:YES];
+            if ([result[@"status"] integerValue] == 200) {
+                [[KGHUD showMessage:@"举报成功"] hideAnimated:YES afterDelay:1];
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            }else{
+                [[KGHUD showMessage:@"举报失败"] hideAnimated:YES afterDelay:1];
+            }
+        } fail:^(NSError * _Nonnull error) {
+            [hud hideAnimated:YES];
+            [[KGHUD showMessage:@"请求失败"] hideAnimated:YES afterDelay:1];
+        }];
+    }else{
+        [KGRequest postWithUrl:AddNewsReportByNid parameters:@{@"nid":self.sendID,@"comment":self.contentStr,@"description":self.describeTV.text} succ:^(id  _Nonnull result) {
+            [hud hideAnimated:YES];
+            if ([result[@"status"] integerValue] == 200) {
+                [[KGHUD showMessage:@"举报成功"] hideAnimated:YES afterDelay:1];
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            }else{
+                [[KGHUD showMessage:@"举报失败"] hideAnimated:YES afterDelay:1];
+            }
+        } fail:^(NSError * _Nonnull error) {
+            [hud hideAnimated:YES];
+            [[KGHUD showMessage:@"请求失败"] hideAnimated:YES afterDelay:1];
+        }];
+    }
 }
 /** 举报淫秽色情 */
 - (IBAction)oneAction:(UIButton *)sender {
@@ -52,9 +82,11 @@
         [sender setTitleColor:KGBlueColor forState:UIControlStateNormal];
         self.returnBtu.hidden = NO;
         self.topHeigt.constant = 0;
+        self.contentStr = sender.currentTitle;
     }else{
         [sender setTitleColor:KGBlackColor forState:UIControlStateNormal];
         self.returnBtu.hidden = YES;
+        self.contentStr = @"";
     }
     [self.twoBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
     [self.threeBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
@@ -66,9 +98,11 @@
         [sender setTitleColor:KGBlueColor forState:UIControlStateNormal];
         self.returnBtu.hidden = NO;
         self.topHeigt.constant = 50;
+        self.contentStr = sender.currentTitle;
     }else{
         [sender setTitleColor:KGBlackColor forState:UIControlStateNormal];
         self.returnBtu.hidden = YES;
+        self.contentStr = @"";
     }
     [self.oneBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
     [self.threeBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
@@ -80,9 +114,11 @@
         [sender setTitleColor:KGBlueColor forState:UIControlStateNormal];
         self.returnBtu.hidden = NO;
         self.topHeigt.constant = 100;
+        self.contentStr = sender.currentTitle;
     }else{
         [sender setTitleColor:KGBlackColor forState:UIControlStateNormal];
         self.returnBtu.hidden = YES;
+        self.contentStr = @"";
     }
     [self.twoBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
     [self.oneBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
@@ -94,9 +130,11 @@
         [sender setTitleColor:KGBlueColor forState:UIControlStateNormal];
         self.returnBtu.hidden = NO;
         self.topHeigt.constant = 150;
+        self.contentStr = sender.currentTitle;
     }else{
         [sender setTitleColor:KGBlackColor forState:UIControlStateNormal];
         self.returnBtu.hidden = YES;
+        self.contentStr = @"";
     }
     [self.twoBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
     [self.threeBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
@@ -116,6 +154,7 @@
     if ([self.fourBtu.currentTitleColor isEqual:KGBlueColor]) {
         [self.fourBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
     }
+    self.contentStr = @"";
     sender.hidden = YES;
 }
 /** 计算字数 */

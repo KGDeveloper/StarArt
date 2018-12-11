@@ -157,7 +157,7 @@
             [[KGHUD showMessage:@"发送失败，请重试"] hideAnimated:YES afterDelay:1];
         }
     } fail:^(NSError * _Nonnull error) {
-        [[KGHUD showMessage:@"发送失败，请重试"] hideAnimated:YES afterDelay:1];
+        [[KGHUD showMessage:@"无法连接服务器，请重试"] hideAnimated:YES afterDelay:1];
     }];
 }
 /** 开始发送验证码倒计时 */

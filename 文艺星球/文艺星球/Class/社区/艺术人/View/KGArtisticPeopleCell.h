@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *professLab;
 @property (weak, nonatomic) IBOutlet UIButton *locationBtu;
 
+- (void)cellDetailWithDictionary:(NSDictionary *)dic;
+
 
 @end
 

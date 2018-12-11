@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface KGDatingManagerVC : KGBaseViewController
 
+@property (nonatomic,copy) NSString *sendID;
+
 @end
 
 NS_ASSUME_NONNULL_END

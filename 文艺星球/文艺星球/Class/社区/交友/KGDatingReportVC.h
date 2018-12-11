@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface KGDatingReportVC : KGBaseViewController
 
+@property (nonatomic,copy) NSString *sendID;
+@property (nonatomic,copy) NSString *typeStr;
+
 @end
 
 NS_ASSUME_NONNULL_END

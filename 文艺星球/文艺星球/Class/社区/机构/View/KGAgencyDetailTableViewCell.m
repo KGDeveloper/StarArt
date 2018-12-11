@@ -28,20 +28,39 @@
 }
 
 - (IBAction)zansAction:(UIButton *)sender {
-    [KGRequest postWithUrl:UpPlaceCommentLikeStatusByCid parameters:@{@"cid":self.userDic[@"id"]} succ:^(id  _Nonnull result) {
-        if ([result[@"status"] integerValue] == 200) {
-            if ([sender.currentImage isEqual:[UIImage imageNamed:@"dianzan (2)"]]) {
-                [sender setImage:[UIImage imageNamed:@"dianzan"] forState:UIControlStateNormal];
+    if ([self.typeStr isEqualToString:@"新闻"]) {
+        __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self animated:YES];
+        [KGRequest postWithUrl:AddNewsLikeStatusByUid parameters:@{@"nid":self.userDic[@"id"],@"cnType":@"1"} succ:^(id  _Nonnull result) {
+            [hud hideAnimated:YES];
+            if ([result[@"status"] integerValue] == 200) {
+                [[KGHUD showMessage:@"操作成功"] hideAnimated:YES afterDelay:1];
+                if ([sender.currentImage isEqual:[UIImage imageNamed:@"dianzan (2)"]]) {
+                    [sender setImage:[UIImage imageNamed:@"dianzan"] forState:UIControlStateNormal];
+                }else{
+                    [sender setImage:[UIImage imageNamed:@"dianzan (2)"] forState:UIControlStateNormal];
+                }
             }else{
-                [sender setImage:[UIImage imageNamed:@"dianzan (2)"] forState:UIControlStateNormal];
+                [[KGHUD showMessage:@"操作失败"] hideAnimated:YES afterDelay:1];
             }
-        }else{
+        } fail:^(NSError * _Nonnull error) {
+            [hud hideAnimated:YES];
             [[KGHUD showMessage:@"操作失败"] hideAnimated:YES afterDelay:1];
-        }
-    } fail:^(NSError * _Nonnull error) {
-        [[KGHUD showMessage:@"操作失败"] hideAnimated:YES afterDelay:1];
-    }];
-    
+        }];
+    }else{
+        [KGRequest postWithUrl:UpPlaceCommentLikeStatusByCid parameters:@{@"cid":self.userDic[@"id"]} succ:^(id  _Nonnull result) {
+            if ([result[@"status"] integerValue] == 200) {
+                if ([sender.currentImage isEqual:[UIImage imageNamed:@"dianzan (2)"]]) {
+                    [sender setImage:[UIImage imageNamed:@"dianzan"] forState:UIControlStateNormal];
+                }else{
+                    [sender setImage:[UIImage imageNamed:@"dianzan (2)"] forState:UIControlStateNormal];
+                }
+            }else{
+                [[KGHUD showMessage:@"操作失败"] hideAnimated:YES afterDelay:1];
+            }
+        } fail:^(NSError * _Nonnull error) {
+            [[KGHUD showMessage:@"操作失败"] hideAnimated:YES afterDelay:1];
+        }];
+    }
 }
 /** 数据填充 */
 - (void)cellDetailWithDictionary:(NSDictionary *)dic{

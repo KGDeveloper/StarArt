@@ -168,10 +168,10 @@ typedef NS_ENUM(NSInteger,DATASTYLE) {
 /** 横向排版 */
 - (UIView *)headerHorizontalView:(CGFloat)height{
     self.backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, height)];
-    self.contextView = [[UIView alloc]initWithFrame:CGRectMake(0, 60, KGScreenWidth, 105)];
+    self.contextView = [[UIView alloc]initWithFrame:CGRectMake(0, 60, KGScreenWidth, height - (KGScreenWidth - 30)/69*46 - 190)];
     [self.backView addSubview:self.contextView];
     
-    self.photosView = [[UIScrollView alloc]initWithFrame:CGRectMake(15, 190, KGScreenWidth - 30, (KGScreenWidth - 30)/69*46)];
+    self.photosView = [[UIScrollView alloc]initWithFrame:CGRectMake(15,height - (KGScreenWidth - 30)/69*46 - 130 , KGScreenWidth - 30, (KGScreenWidth - 30)/69*46)];
     self.photosView.pagingEnabled = YES;
     self.photosView.showsVerticalScrollIndicator = NO;
     self.photosView.showsHorizontalScrollIndicator = NO;
@@ -196,10 +196,10 @@ typedef NS_ENUM(NSInteger,DATASTYLE) {
 /** 圆图排版 */
 - (UIView *)headerRoundView:(CGFloat)height{
     self.backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, height)];
-    self.contextView = [[UIView alloc]initWithFrame:CGRectMake(0, 60, KGScreenWidth, 105)];
+    self.contextView = [[UIView alloc]initWithFrame:CGRectMake(0, 60, KGScreenWidth, height - 420)];
     [self.backView addSubview:self.contextView];
     
-    self.photosView = [[UIScrollView alloc]initWithFrame:CGRectMake((KGScreenWidth - 230)/2, 190, 230, 230)];
+    self.photosView = [[UIScrollView alloc]initWithFrame:CGRectMake((KGScreenWidth - 230)/2, height - 360, 230, 230)];
     self.photosView.pagingEnabled = YES;
     self.photosView.showsVerticalScrollIndicator = NO;
     self.photosView.showsHorizontalScrollIndicator = NO;
@@ -209,65 +209,8 @@ typedef NS_ENUM(NSInteger,DATASTYLE) {
 }
 /** 创建文本显示 */
 - (void)setContentStr:(NSString *)contentStr{
-    /** 如果包含特殊字符句号，就以特殊字符切割 */
-    if ([contentStr rangeOfString:@"。"].location != NSNotFound) {
-        NSArray *endArr = [contentStr componentsSeparatedByString:@"。"];
-        __block NSMutableArray *markArr = [NSMutableArray array];
-        [endArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj rangeOfString:@"！"].location != NSNotFound) {
-                NSArray *tmp = [obj componentsSeparatedByString:@"！"];
-                [markArr addObjectsFromArray:tmp];
-            }else{
-                [markArr addObject:obj];
-            }
-        }];
-        [self setLabelWithArr:markArr];
-        /** 如果包含特殊字符感叹号，就以特殊字符切割 */
-    }else if ([contentStr rangeOfString:@"！"].location != NSNotFound) {
-        NSArray *endArr = [contentStr componentsSeparatedByString:@"！"];
-        __block NSMutableArray *markArr = [NSMutableArray array];
-        [endArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj rangeOfString:@"。"].location != NSNotFound) {
-                NSArray *tmp = [obj componentsSeparatedByString:@"。"];
-                [markArr addObjectsFromArray:tmp];
-            }else{
-                [markArr addObject:obj];
-            }
-        }];
-        [self setLabelWithArr:markArr];
-        /** 如果不包含特殊字符，那就20个字一行切割 */
-    }else{
-        if (contentStr.length > 20) {
-            NSString *one = [contentStr substringToIndex:20];
-            NSString *oneEnd = [[contentStr componentsSeparatedByString:one] lastObject];
-            if (oneEnd.length > 20) {
-                NSString *two = [oneEnd substringToIndex:20];
-                NSString *twoEnd = [[oneEnd componentsSeparatedByString:two] lastObject];
-                if (twoEnd.length > 20) {
-                    NSString *three = [twoEnd substringToIndex:20];
-                    NSString *threeEnd = [[twoEnd componentsSeparatedByString:three] lastObject];
-                    if (threeEnd.length > 20) {
-                        NSString *four = [threeEnd substringToIndex:20];
-                        NSString *fourEnd = [[threeEnd componentsSeparatedByString:four] lastObject];
-                        if (fourEnd.length > 20) {
-                            NSString *five = [fourEnd substringToIndex:20];
-                            [self setLabelWithArr:@[one,two,three,four,five]];
-                        }else{
-                            [self setLabelWithArr:@[one,two,three,four,fourEnd]];
-                        }
-                    }else{
-                        [self setLabelWithArr:@[one,two,three,threeEnd]];
-                    }
-                }else{
-                    [self setLabelWithArr:@[one,two,twoEnd]];
-                }
-            }else{
-                [self setLabelWithArr:@[one,oneEnd]];
-            }
-        }else{
-            [self setLabelWithArr:@[contentStr]];
-        }
-    }
+    NSArray *endArr = [contentStr componentsSeparatedByString:@"@"];
+    [self setLabelWithArr:endArr];
 }
 /** 创建label */
 - (void)setLabelWithArr:(NSArray *)arr{

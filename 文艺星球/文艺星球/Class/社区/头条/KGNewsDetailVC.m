@@ -12,6 +12,7 @@
 #import "KGAgencyDetailTableViewCell.h"
 #import "KGLrregularView.h"
 #import "KGNewsWebVC.h"
+#import "KGDatingReportVC.h"
 
 @interface KGNewsDetailVC ()<UITableViewDelegate,UITableViewDataSource,DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,UITextViewDelegate>
 /** 图书列表 */
@@ -39,6 +40,8 @@
 @property (nonatomic,strong) UILabel *commentLab;
 
 @property (nonatomic,copy) NSArray *contentArr;
+@property (nonatomic,assign) NSInteger pageIndex;
+@property (nonatomic,strong) NSMutableArray *dataArr;
 
 @end
 
@@ -62,7 +65,11 @@
     [self setRightNavItemWithFrame:CGRectZero title:nil image:[UIImage imageNamed:@"more"] font:nil color:nil select:@selector(rightNavAction)];
     self.view.backgroundColor = KGWhiteColor;
     
+    self.pageIndex = 1;
+    self.dataArr = [NSMutableArray array];
+    
     [self requestData];
+    [self requestCommentData];
     [self setUpListView];
     [self setUpLowView];
     [self setUpMoreView];
@@ -85,6 +92,28 @@
     }];
 }
 /** 评论列表 */
+- (void)requestCommentData{
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:SelectNewsCommentListByNid parameters:@{@"nid":self.sendID,@"pageIndex":@(self.pageIndex),@"pageSize":@"20"} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            NSArray *tmp = dic[@"list"];
+            if (tmp.count > 0) {
+                [weakSelf.dataArr addObjectsFromArray:tmp];
+            }
+        }
+        [weakSelf.listView reloadData];
+        [weakSelf.listView.mj_header endRefreshing];
+        [weakSelf.listView.mj_footer endRefreshing];
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+        [weakSelf.listView reloadData];
+        [weakSelf.listView.mj_header endRefreshing];
+        [weakSelf.listView.mj_footer endRefreshing];
+    }];
+}
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{
     [self.navigationController popViewControllerAnimated:YES];
@@ -166,7 +195,7 @@
 }
 // MARK: --创建机构列表--
 - (void)setUpListView{
-    self.listView = [[UITableView alloc]initWithFrame:CGRectMake(0, KGRectNavAndStatusHight, KGScreenWidth, KGScreenHeight - KGRectNavAndStatusHight)];
+    self.listView = [[UITableView alloc]initWithFrame:CGRectMake(0, KGRectNavAndStatusHight, KGScreenWidth, KGScreenHeight - KGRectNavAndStatusHight - 50)];
     self.listView.delegate = self;
     self.listView.dataSource = self;
     self.listView.emptyDataSetSource = self;
@@ -176,6 +205,18 @@
     self.listView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.listView.showsVerticalScrollIndicator = NO;
     self.listView.showsHorizontalScrollIndicator = NO;
+    __weak typeof(self) weakSelf = self;
+    self.listView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        weakSelf.pageIndex = 1;
+        weakSelf.dataArr = [NSMutableArray array];
+        [weakSelf requestCommentData];
+        [weakSelf.listView.mj_header beginRefreshing];
+    }];
+    self.listView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        weakSelf.pageIndex++;
+        [weakSelf requestCommentData];
+        [weakSelf.listView.mj_footer beginRefreshing];
+    }];
     [self.view addSubview:self.listView];
     
     [self.listView registerClass:[KGNewsDetailUILabCell class] forCellReuseIdentifier:@"KGNewsDetailUILabCell"];
@@ -194,7 +235,7 @@
     if (section == 0) {
         return self.contentArr.count;
     }else{
-        return 5;
+        return self.dataArr.count;
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -254,6 +295,11 @@
         }
     }else{
         KGAgencyDetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"KGAgencyDetailTableViewCell"];
+        if (self.dataArr.count > 0) {
+            NSDictionary *dic = self.dataArr[indexPath.row];
+            cell.typeStr = @"新闻";
+            [cell cellDetailWithDictionary:dic];
+        }
         return cell;
     }
 }
@@ -304,11 +350,23 @@
 }
 /** 点赞点击事件 */
 - (void)zansAction:(UIButton *)sender{
-    if ([sender.currentImage isEqual:[UIImage imageNamed:@"dianzan (2)"]]) {
-        [self.zansBtu setImage:[UIImage imageNamed:@"dianzan"] forState:UIControlStateNormal];
-    }else{
-        [self.zansBtu setImage:[UIImage imageNamed:@"dianzan (2)"] forState:UIControlStateNormal];
-    }
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    [KGRequest postWithUrl:AddNewsLikeStatusByUid parameters:@{@"nid":self.sendID,@"cnType":@"0"} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            [[KGHUD showMessage:@"操作成功"] hideAnimated:YES afterDelay:1];
+            if ([sender.currentImage isEqual:[UIImage imageNamed:@"dianzan (2)"]]) {
+                [sender setImage:[UIImage imageNamed:@"dianzan"] forState:UIControlStateNormal];
+            }else{
+                [sender setImage:[UIImage imageNamed:@"dianzan (2)"] forState:UIControlStateNormal];
+            }
+        }else{
+            [[KGHUD showMessage:@"操作失败"] hideAnimated:YES afterDelay:1];
+        }
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+        [[KGHUD showMessage:@"操作失败"] hideAnimated:YES afterDelay:1];
+    }];
 }
 /** 评论 */
 - (void)commentAction{
@@ -355,12 +413,26 @@
 /** 收藏按钮点击事件 */
 - (void)collectionAction{
     self.moreView.hidden = YES;
-    NSLog(@"12131312");
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    [KGRequest postWithUrl:AddPersonCollect parameters:@{@"newsId":self.sendID,@"collectType":@"3",@"newsTitle":self.detailDic[@"newsTitle"],@"newsSource":self.detailDic[@"newsSource"],@"newsType":@"0"} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            [[KGHUD showMessage:@"收藏成功"] hideAnimated:YES afterDelay:1];
+        }else{
+            [[KGHUD showMessage:@"收藏失败"] hideAnimated:YES afterDelay:1];
+        }
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+        [[KGHUD showMessage:@"访问失败"] hideAnimated:YES afterDelay:1];
+    }];
 }
 /** 举报按钮点击事件 */
 - (void)reportAction{
     self.moreView.hidden = YES;
-    NSLog(@"adsadasdsadasdas");
+    KGDatingReportVC *vc = [[KGDatingReportVC alloc]init];
+    vc.sendID = self.sendID;
+    vc.typeStr = @"新闻";
+    [self pushHideenTabbarViewController:vc animted:YES];
 }
 /** 评论view */
 - (UIView *)commentView{
@@ -380,7 +452,7 @@
         [backView addSubview:self.ideaView];
         /** 发布 */
         UIButton *releaseBtu = [UIButton buttonWithType:UIButtonTypeCustom];
-        releaseBtu.frame  =CGRectMake(KGScreenWidth - 50, 75, 35, 20);
+        releaseBtu.frame  =CGRectMake(KGScreenWidth - 65, 50, 50, 30);
         [releaseBtu setTitle:@"发布" forState:UIControlStateNormal];
         [releaseBtu setTitleColor:KGWhiteColor forState:UIControlStateNormal];
         releaseBtu.titleLabel.font = KGFontSHRegular(11);
@@ -400,7 +472,26 @@
 }
 /** 发布 */
 - (void)releaseAction{
-    
+    if (self.ideaView.text.length > 0) {
+        __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        __weak typeof(self) weakSelf = self;
+        [KGRequest postWithUrl:AddNewsCommentByNid parameters:@{@"nid":self.sendID,@"comment":self.ideaView.text} succ:^(id  _Nonnull result) {
+            [hud hideAnimated:YES];
+            if ([result[@"status"] integerValue] == 200) {
+                [[KGHUD showMessage:@"评论成功"] hideAnimated:YES afterDelay:1];
+                weakSelf.pageIndex = 1;
+                weakSelf.dataArr = [NSMutableArray array];
+                [weakSelf requestCommentData];
+                
+            }else{
+                [[KGHUD showMessage:@"评论失败"] hideAnimated:YES afterDelay:1];
+            }
+        } fail:^(NSError * _Nonnull error) {
+            [hud hideAnimated:YES];
+            [[KGHUD showMessage:@"请求失败"] hideAnimated:YES afterDelay:1];
+        }];
+        self.commentView.hidden = YES;
+    }
 }
 /** 监听输入 */
 - (void)textViewDidChange:(UITextView *)textView{

@@ -138,6 +138,21 @@
 #define AddNewsLikeStatusByUid [POSTURL stringByAppendingString:@"/api/communityNews/addNewsLikeStatusByUid"]
 /** 新闻详情 */
 #define SelectNewsByNid [POSTURL stringByAppendingString:@"/api/communityNews/selectNewsByNid"]
+/** 查看新闻评论 */
+#define SelectNewsCommentListByNid [POSTURL stringByAppendingString:@"/api/communityNews/selectNewsCommentListByNid"]
+/** 添加新闻评论 */
+#define AddNewsCommentByNid [POSTURL stringByAppendingString:@"/api/communityNews/addNewsCommentByNid"]
+/** 添加收藏 */
+#define AddPersonCollect [POSTURL stringByAppendingString:@"/api/personCollect/add"]
+/** 新闻举报 */
+#define AddNewsReportByNid [POSTURL stringByAppendingString:@"/api/communityNews/addNewsReportByNid"]
+/** 艺术家列表 */
+#define selectArtistList [POSTURL stringByAppendingString:@"/api/communityArtist/selectArtistList"]
+/** 用户举报 */
+#define SaveUserReport [POSTURL stringByAppendingString:@"/api/report/saveUserReport"]
+/** 用户关注 */
+#define Attorcel [POSTURL stringByAppendingString:@"/api/associated/attorcel"]
+
 
 
 #endif /* KGRequestHeader_h */
