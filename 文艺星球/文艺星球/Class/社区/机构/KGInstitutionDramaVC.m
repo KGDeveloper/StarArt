@@ -11,6 +11,8 @@
 #import "KGAgencyHomePageScreeningCell.h"
 #import "KGInstitutionHotDramaVC.h"
 #import "KGInstitutionDramaDetailVC.h"
+#import "KGAgencyDetailVC.h"
+#import "KGInstitutionMoviesDetailVC.h"
 
 @interface KGInstitutionDramaVC ()
 <
@@ -92,7 +94,6 @@ DZNEmptyDataSetDelegate
     self.dataArr = [NSMutableArray array];
     self.oneArr = @[@{@"city":@"北京",@"id":@"1"},@{@"city":@"上海",@"id":@"13"},@{@"city":@"广州",@"id":@"28"},@{@"city":@"深圳",@"id":@"36"},@{@"city":@"天津",@"id":@"43"},@{@"city":@"成都",@"id":@"65"},@{@"city":@"西安",@"id":@"54"}];
     [self requestAdvertising];
-    [self requestData];
     [self requestListData];
     [self setNavCenterView];
     [self setUpListView];
@@ -140,6 +141,7 @@ DZNEmptyDataSetDelegate
             cityId = @"1";
         }
         [weakSelf requestWithCity:cityId];
+        [weakSelf requestDataWithCity:cityId];
     }];
 }
 /** 请求 */
@@ -188,31 +190,6 @@ DZNEmptyDataSetDelegate
         }
         [weakSelf setScrollViewImage];
     } fail:^(NSError * _Nonnull error) {
-    }];
-}
-/** 请求首页数据 */
-- (void)requestData{
-    __block NSString *cityId = nil;
-    __weak typeof(self) weakSelf = self;
-    [[KGRequest shareInstance] userLocationCity:^(NSString * _Nonnull city) {
-        if ([city isEqualToString:@"北京市"]) {
-            cityId = @"1";
-        }else if ([city isEqualToString:@"天津市"]){
-            cityId = @"43";
-        }else if ([city isEqualToString:@"西安市"]){
-            cityId = @"54";
-        }else if ([city isEqualToString:@"广州市"]){
-            cityId = @"28";
-        }else if ([city isEqualToString:@"成都市"]){
-            cityId = @"65";
-        }else if ([city isEqualToString:@"上海市"]){
-            cityId = @"13";
-        }else if ([city isEqualToString:@"深圳市"]){
-            cityId = @"36";
-        }else{
-            cityId = @"1";
-        }
-        [weakSelf requestDataWithCity:cityId];
     }];
 }
 /** 请求 */
@@ -530,10 +507,16 @@ DZNEmptyDataSetDelegate
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.listView) {
-        KGInstitutionDramaDetailVC *vc = [[KGInstitutionDramaDetailVC alloc]initWithNibName:@"KGInstitutionDramaDetailVC" bundle:nil];
         NSDictionary *dic = self.dataArr[indexPath.row];
-        vc.sendID = [NSString stringWithFormat:@"%@",dic[@"id"]];
-        [self pushHideenTabbarViewController:vc animted:YES];
+        if ([dic[@"type"] integerValue] == 7 || [dic[@"type"] integerValue] == 2 || [dic[@"type"] integerValue] == 12 || [dic[@"type"] integerValue] == 8 || [dic[@"type"] integerValue] == 9 || [dic[@"type"] integerValue] == 10 || [dic[@"type"] integerValue] == 11) {
+            KGInstitutionMoviesDetailVC *vc = [[KGInstitutionMoviesDetailVC alloc]init];
+            vc.sendID = [NSString stringWithFormat:@"%@",dic[@"id"]];
+            [self pushHideenTabbarViewController:vc animted:YES];
+        }else{
+            KGAgencyDetailVC *vc = [[KGAgencyDetailVC alloc]init];
+            vc.sendID = [NSString stringWithFormat:@"%@",dic[@"id"]];
+            [self pushHideenTabbarViewController:vc animted:YES];
+        }
     }else if (tableView == self.leftListView){
         self.oneListCellRow = indexPath.row;
         [self.leftListView reloadData];

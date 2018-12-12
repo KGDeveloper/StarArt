@@ -68,7 +68,12 @@
 }
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{
-    [self.navigationController popViewControllerAnimated:YES];
+    NSArray *viewcontrollers = self.navigationController.viewControllers;
+    if (viewcontrollers.count > 1) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 /** 列表头 */
 - (UIView *)setupHeaderView{

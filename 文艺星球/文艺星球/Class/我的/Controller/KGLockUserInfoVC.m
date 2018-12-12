@@ -8,6 +8,7 @@
 
 #import "KGLockUserInfoVC.h"
 #import "KGSeeFriendsVC.h"
+#import "KGChatVC.h"
 
 @interface KGLockUserInfoVC ()<UIScrollViewDelegate>
 /** 个人信息 */
@@ -44,7 +45,23 @@
     
     [self setLeftNavItemWithFrame:CGRectZero title:nil image:[UIImage imageNamed:@"fanhuibai"] font:nil color:nil select:@selector(leftNavAction)];
     self.view.backgroundColor = KGWhiteColor;
+    
+    [self requestUserInfo];
     [self setUI];
+}
+/** 查看个人资料 */
+- (void)requestUserInfo{
+    __weak typeof(self) weakSelf = self;
+    __block MBProgressHUD *hud = [KGHUD showMessage:@"正在加载......" toView:self.view];
+    [KGRequest postWithUrl:[RequestUserInfo stringByAppendingString:[NSString stringWithFormat:@"/%@",[KGUserInfo shareInstance].userId]] parameters:@{} succ:^(id  _Nonnull result) {
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            [weakSelf changeUIWithDictionary:dic];
+        }
+        [hud hideAnimated:YES];
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+    }];
 }
 /** 导航栏返回按钮点击事件 */
 - (void)leftNavAction{
@@ -181,15 +198,23 @@
 }
 /** 聊天 */
 - (void)chatAction{
-    NSLog(@"聊天");
+    KGChatVC *chatVC = [[KGChatVC alloc]init];
+    chatVC.title = @"";
+    chatVC.conversationType = ConversationType_PRIVATE;
+    chatVC.targetId = self.sendID;
+    chatVC.displayUserNameInCell = YES;
+    [RCIM sharedRCIM].globalMessageAvatarStyle = RC_USER_AVATAR_CYCLE;
+    [self pushHideenTabbarViewController:chatVC animted:YES];
 }
 /** 关注 */
 - (void)focusAction{
-    NSLog(@"关注");
+    [[KGHUD showMessage:@"关注成功"] hideAnimated:YES afterDelay:1];
 }
 /** 查看动态 */
 - (void)seeDyAction{
-    [self pushHideenTabbarViewController:[[KGSeeFriendsVC alloc]init] animted:YES];
+    KGSeeFriendsVC *vc = [[KGSeeFriendsVC alloc]init];
+    vc.sendID = self.sendID;
+    [self pushHideenTabbarViewController:vc animted:YES];
 }
 /** 创建标签 */
 - (void)setLabel{
@@ -219,6 +244,10 @@
     if (scrollView == self.topScrollView) {
         self.pageControl.currentPage = scrollView.contentOffset.x/KGScreenWidth;
     }
+}
+/** 修改页面 */
+- (void)changeUIWithDictionary:(NSDictionary *)dic{
+    
 }
 
 /*

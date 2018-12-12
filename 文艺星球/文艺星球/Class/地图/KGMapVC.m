@@ -9,9 +9,12 @@
 #import "KGMapVC.h"
 #import "KGNearInstatutionVC.h"
 #import "KGNearConsumptionVC.h"
+#import "KGSelectLeftNavChooseCityView.h"
+#import <JavaScriptCore/JavaScriptCore.h>
+#import "KGLockUserInfoVC.h"
+#import "KGScreenNearPersonVC.h"
 
-
-@interface KGMapVC ()<CLLocationManagerDelegate>
+@interface KGMapVC ()<CLLocationManagerDelegate,UIWebViewDelegate>
 
 @property (nonatomic,strong) UIButton *leftBtu;
 @property (nonatomic,strong) UIButton *centerBtu;
@@ -21,6 +24,12 @@
 @property (nonatomic,strong) KGNearConsumptionVC *consumptionVC;
 /** 当前显示页面 */
 @property (nonatomic,assign) NSInteger selectIndex;
+/** 选择城市 */
+@property (nonatomic,strong) KGSelectLeftNavChooseCityView *chooseCityView;
+@property (nonatomic,copy) NSString *chooseCityID;
+/** 附近的人 */
+@property (nonatomic,strong) UIWebView *nearPersonView;
+@property (nonatomic,strong) JSContext *jsContext;
 
 @end
 
@@ -40,35 +49,19 @@
     self.view.backgroundColor = KGWhiteColor;
     self.selectIndex = 0;
     
-    [self requestLocationManager];
     [self setNavCenterView];
+    [self loadHTMLFaile];
     
-}
-/** 请求权限 */
-- (void)requestLocationManager{
-    CLLocationManager *manager = [CLLocationManager new];
-    manager.delegate = self;
-    [manager requestAlwaysAuthorization];
-}
-/** 返回结果 */
-- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status{
-    switch (status) {
-        case kCLAuthorizationStatusDenied:
-            [[KGHUD showMessage:@"无法定位，因为你拒绝位置访问"] hideAnimated:YES afterDelay:1];
-            break;
-        default:
-            break;
-    }
 }
 /** 导航栏返回按钮点击事件 */
 - (void)leftNavAction{
-    
+    self.chooseCityView.hidden = NO;
 }
 /** 导航栏右侧点击事件 */
 - (void)rightNavAction{
     switch (self.selectIndex) {
         case 0:
-            
+            [self pushNearPersonVC];
             break;
             
         case 1:
@@ -81,6 +74,11 @@
         default:
             break;
     }
+}
+/** 附近的人筛选跳转 */
+- (void)pushNearPersonVC{
+    KGScreenNearPersonVC *vc = [[KGScreenNearPersonVC alloc]initWithNibName:@"KGScreenNearPersonVC" bundle:[NSBundle mainBundle]];
+    [self pushHideenTabbarViewController:vc animted:YES];
 }
 /** 导航栏设置 */
 - (void)setNavCenterView{
@@ -167,8 +165,44 @@
     }
     return _consumptionVC;
 }
-
-
+/** 选择城市 */
+- (KGSelectLeftNavChooseCityView *)chooseCityView{
+    if (!_chooseCityView) {
+        _chooseCityView = [[KGSelectLeftNavChooseCityView alloc]initWithFrame:CGRectMake(0, KGRectNavAndStatusHight, 100, 350)];
+        __weak typeof(self) weakSelf = self;
+        _chooseCityView.chooseResult = ^(NSString * _Nonnull result, NSString * _Nonnull cityId) {
+            [weakSelf.leftNavItem setTitle:result forState:UIControlStateNormal];
+            weakSelf.chooseCityID = cityId;
+        };
+        [self.navigationController.view addSubview:_chooseCityView];
+    }
+    return _chooseCityView;
+}
+// MARK: --创建首页加载附近的人HTML文件--
+- (void)loadHTMLFaile{
+    self.nearPersonView = [[UIWebView alloc]initWithFrame:CGRectMake(0, KGRectNavAndStatusHight, kScreenWidth, kScreenHeight - KGRectNavAndStatusHight - KGRectTabbarHeight)];
+    self.nearPersonView.dataDetectorTypes = UIDataDetectorTypeAll;
+    self.nearPersonView.scrollView.scrollEnabled = NO;
+    self.nearPersonView.delegate = self;
+    NSURL *filePath = [[NSBundle mainBundle] URLForResource:[NSString stringWithFormat:@"星球吸引/shandian.html"] withExtension:nil];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"?token=%@",[KGUserInfo shareInstance].userToken] relativeToURL:filePath];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [self.nearPersonView loadRequest:request];
+    [self.view addSubview:self.nearPersonView];
+}
+- (void)webViewDidFinishLoad:(UIWebView *)webView{
+    __weak typeof(self) weakSelf = self;
+    _jsContext = [self.nearPersonView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
+    _jsContext.exceptionHandler = ^(JSContext *context, JSValue *exception) {
+        
+    };
+    _jsContext[@"chatWithUserID"] = ^(NSString *uid,NSString *username) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            
+        });
+    };
+    
+}
 
 
 

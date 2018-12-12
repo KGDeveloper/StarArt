@@ -168,7 +168,7 @@
         [self pushHideenTabbarViewController:[[KGTalentShowVC alloc]initWithNibName:@"KGTalentShowVC" bundle:nil] animted:YES];
     }else if ([title isEqualToString:@"我的动态"]){
         KGSeeFriendsVC *vc = [[KGSeeFriendsVC alloc]init];
-        vc.isShow = @"隐藏";
+        vc.sendID = [KGUserInfo shareInstance].userId;
         [self pushHideenTabbarViewController:vc animted:YES];
     }
 }

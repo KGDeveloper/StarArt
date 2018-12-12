@@ -77,7 +77,6 @@
     self.dataArr = [NSMutableArray array];
     
     [self requestTopData];
-    [self requestData];
     [self setNavCenterView];
     [self setUpListView];
 }
@@ -104,6 +103,7 @@
             cityId = @"1";
         }
         [weakSelf requestWithCity:cityId];
+        [weakSelf requestDataWithCity:cityId];
     }];
 }
 /** 请求 */
@@ -118,31 +118,6 @@
         [weakSelf setTopFiveScrollImage];
     } fail:^(NSError * _Nonnull error) {
         
-    }];
-}
-/** 请求数据 */
-- (void)requestData{
-    __block NSString *cityId = nil;
-    __weak typeof(self) weakSelf = self;
-    [[KGRequest shareInstance] userLocationCity:^(NSString * _Nonnull city) {
-        if ([city isEqualToString:@"北京市"]) {
-            cityId = @"1";
-        }else if ([city isEqualToString:@"天津市"]){
-            cityId = @"43";
-        }else if ([city isEqualToString:@"西安市"]){
-            cityId = @"54";
-        }else if ([city isEqualToString:@"广州市"]){
-            cityId = @"28";
-        }else if ([city isEqualToString:@"成都市"]){
-            cityId = @"65";
-        }else if ([city isEqualToString:@"上海市"]){
-            cityId = @"13";
-        }else if ([city isEqualToString:@"深圳市"]){
-            cityId = @"36";
-        }else{
-            cityId = @"1";
-        }
-        [weakSelf requestWithCity:cityId];
     }];
 }
 - (void)requestDataWithCity:(NSString *)cityId{
@@ -195,7 +170,7 @@
         __weak typeof(self) weakSelf = self;
         _searchView.sendSearchResult = ^(NSString * _Nonnull result) {
             weakSelf.mohu = result;
-            [weakSelf requestData];
+            [weakSelf requestTopData];
         };
         [self.navigationController.view addSubview:_searchView];
     }
@@ -217,12 +192,12 @@
     self.listView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         weakSelf.page = 1;
         weakSelf.dataArr = [NSMutableArray array];
-        [weakSelf requestData];
+        [weakSelf requestTopData];
         [weakSelf.listView.mj_header beginRefreshing];
     }];
     self.listView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         weakSelf.page++;
-        [weakSelf requestData];
+        [weakSelf requestTopData];
         [weakSelf.listView.mj_footer beginRefreshing];
     }];
     [self.view addSubview:self.listView];
@@ -340,6 +315,12 @@
     
     return self.headerView;
 }
+/** 滚动代理 */
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    if (scrollView == self.topScrollView) {
+        self.pageControl.currentPage = scrollView.contentOffset.x/KGScreenWidth;
+    }
+}
 /** 戏剧点击事件 */
 - (void)leftAction{
     [self.leftBtu setTitleColor:KGBlueColor forState:UIControlStateNormal];
@@ -352,7 +333,7 @@
     self.page = 1;
     self.navigationStr = @"即将开始";
     self.dataArr = [NSMutableArray array];
-    [self requestData];
+    [self requestTopData];
 }
 /** 音乐点击事件 */
 - (void)rightAction{
@@ -366,7 +347,7 @@
     self.page = 1;
     self.navigationStr = @"即将开始";
     self.dataArr = [NSMutableArray array];
-    [self requestData];
+    [self requestTopData];
 }
 /** 近期热门点击事件 */
 - (void)hotAction{
@@ -380,7 +361,7 @@
     self.navigationStr = @"近期热门";
     self.page = 1;
     self.dataArr = [NSMutableArray array];
-    [self requestData];
+    [self requestTopData];
 }
 /** 即将开始点击事件 */
 - (void)willStarAction{
@@ -394,7 +375,7 @@
     self.navigationStr = @"即将开始";
     self.page = 1;
     self.dataArr = [NSMutableArray array];
-    [self requestData];
+    [self requestTopData];
 }
 /** 即将结束点击事件 */
 - (void)willEndAction{
@@ -408,7 +389,7 @@
     self.navigationStr = @"即将结束";
     self.page = 1;
     self.dataArr = [NSMutableArray array];
-    [self requestData];
+    [self requestTopData];
 }
 /** 顶部5条数据 */
 - (void)setTopFiveScrollImage{

@@ -155,4 +155,11 @@
 
 
 
+
+
+/** 文化场所首页 */
+#define FindAllMerchant [POSTURL stringByAppendingString:@"/api/merchants/findAllMerchant"]
+
+
+
 #endif /* KGRequestHeader_h */

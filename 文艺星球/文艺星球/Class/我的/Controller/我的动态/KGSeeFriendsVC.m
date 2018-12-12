@@ -40,13 +40,6 @@
     [super viewDidLoad];
     
     [self setLeftNavItemWithFrame:CGRectZero title:nil image:[UIImage imageNamed:@"fanhuibai"] font:nil color:nil select:@selector(leftNavAction)];
-    if (![self.isShow isEqualToString:@"隐藏"]) {
-        [self setRightNavItemWithFrame:CGRectZero title:@"关注" image:nil font:KGFontSHRegular(12) color:KGWhiteColor select:@selector(rightNavAction:)];
-        self.rightNavItem.backgroundColor = KGBlueColor;
-        self.rightNavItem.layer.cornerRadius = 5;
-        self.rightNavItem.layer.masksToBounds = YES;
-        self.rightNavItem.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    }
     self.view.backgroundColor = KGWhiteColor;
     self.dataArr = [NSMutableArray array];
     self.page = 1;
@@ -58,7 +51,7 @@
 - (void)requestData{
     __weak typeof(self) weakSelf = self;
     __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    [KGRequest postWithUrl:ListMessage parameters:@{@"pageSize":@"20",@"pageIndex":@(self.page),@"uid":[KGUserInfo shareInstance].userId} succ:^(id  _Nonnull result) {
+    [KGRequest postWithUrl:ListMessage parameters:@{@"pageSize":@"20",@"pageIndex":@(self.page),@"uid":self.sendID} succ:^(id  _Nonnull result) {
         [hud hideAnimated:YES];
         if ([result[@"status"] integerValue] == 200) {
             NSDictionary *dic = result[@"data"];
@@ -82,10 +75,6 @@
 /** 导航栏返回按钮点击事件 */
 - (void)leftNavAction{
     [self.navigationController popViewControllerAnimated:YES];
-}
-/** 导航栏关注按钮点击事件 */
-- (void)rightNavAction:(UIButton *)sender{
-    
 }
 /** 创建消息列表 */
 - (void)setUpListView{

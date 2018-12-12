@@ -253,7 +253,7 @@
     __block CLLocationCoordinate2D tmpLocation;
     [_manager requestLocationWithReGeocode:YES completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
         if (error) {
-            tmpLocation = CLLocationCoordinate2DMake(39.990461,116.497558);
+            tmpLocation = CLLocationCoordinate2DMake(39.987094,116.491390);
         }
         tmpLocation = location.coordinate;
         yourLocation(tmpLocation);

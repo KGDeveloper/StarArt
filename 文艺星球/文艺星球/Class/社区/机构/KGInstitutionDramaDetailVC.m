@@ -48,11 +48,10 @@
         [hud hideAnimated:YES];
         if ([result[@"status"] integerValue] == 200) {
             weakSelf.userDic = result[@"data"];
+            [weakSelf changeUIData];
         }
-        [weakSelf changeUIData];
     } fail:^(NSError * _Nonnull error) {
         [hud hideAnimated:YES];
-        [weakSelf changeUIData];
     }];
 }
 /** 导航栏左侧点击事件 */
@@ -79,7 +78,7 @@
     NSData *jsonData = [self.userDic[@"showPrecautions"] dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:nil];
     NSArray *tmpArr = dic[@"showPrecautions"];
-    NSString *presonStr = [NSString stringWithFormat:@"注意事项：\n演出时长：%@\n演出地点：%@\n演出时间：%@\n其他注意事项：%@",dic[@"showDuration"],dic[@"showPlace"],dic[@"showTime"],[tmpArr firstObject]];
+    NSString *presonStr = [NSString stringWithFormat:@"演出时长：%@\n演出地点：%@\n演出时间：%@\n其他注意事项：%@",dic[@"showDuration"],dic[@"showPlace"],dic[@"showTime"],[tmpArr firstObject]];
     self.presonLab.text = presonStr;
     self.lowHeight.constant = [presonStr boundingRectWithSize:CGSizeMake(KGScreenWidth - 30, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontSHRegular(13)} context:nil].size.height + 30;
     

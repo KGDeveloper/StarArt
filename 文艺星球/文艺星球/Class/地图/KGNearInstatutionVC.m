@@ -8,8 +8,10 @@
 
 #import "KGNearInstatutionVC.h"
 #import "KGAgencyHomePageScreeningCell.h"
+#import "KGInstitutionMoviesDetailVC.h"
+#import "KGAgencyDetailVC.h"
 
-@interface KGNearInstatutionVC ()<UITableViewDelegate,UITableViewDataSource>
+@interface KGNearInstatutionVC ()<UITableViewDelegate,UITableViewDataSource,MAMapViewDelegate>
 /** 筛选条件 */
 @property (nonatomic,strong) UIView *screenView;
 /** 全城 */
@@ -48,6 +50,9 @@
 @property (nonatomic,copy) NSString *areaStr;
 /** 地图 */
 @property (nonatomic,strong) MAMapView *mapView;
+@property (nonatomic,strong) MBProgressHUD *hud;
+/** 数据源 */
+@property (nonatomic,strong) NSMutableArray *dataArr;
 
 @end
 
@@ -62,7 +67,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = KGWomanColor;
+    self.view.backgroundColor = KGWhiteColor;
     self.oneArr = @[@{@"city":@"北京",@"id":@"1"},@{@"city":@"上海",@"id":@"13"},@{@"city":@"广州",@"id":@"28"},@{@"city":@"深圳",@"id":@"36"},@{@"city":@"天津",@"id":@"43"},@{@"city":@"成都",@"id":@"65"},@{@"city":@"西安",@"id":@"54"}];
     self.typeArr = @[@{@"name":@"美术",@"id":@"1"},@{@"name":@"音乐",@"id":@"2"},@{@"name":@"书店",@"id":@"3"},@{@"name":@"设计",@"id":@"4"},@{@"name":@"戏剧",@"id":@"5"},@{@"name":@"摄影",@"id":@"6"},@{@"name":@"美食",@"id":@"7"},@{@"name":@"咖啡",@"id":@"8"},@{@"name":@"茗茶",@"id":@"9"},@{@"name":@"糕点面包",@"id":@"10"},@{@"name":@"集成店",@"id":@"11"},@{@"name":@"电影",@"id":@"12"},@{@"name":@"剧院",@"id":@"13"}];
     self.cityListArr = [NSMutableArray array];
@@ -70,6 +75,7 @@
     self.oneListCellRow = 0;
     self.twoListCellRow = 0;
     self.threeListCellRow = 0;
+    self.dataArr = [NSMutableArray array];
     
     [self requestData];
     [self setUpMapView];
@@ -77,6 +83,7 @@
 }
 /** 请求数据 */
 - (void)requestData{
+    self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     __weak typeof(self) weakSelf = self;
     __block NSString *cityId = nil;
     [[KGRequest shareInstance] userLocationCity:^(NSString * _Nonnull city) {
@@ -108,15 +115,43 @@
     }];
 }
 - (void)requestDataWithCity:(NSString *)cityId location:(CLLocationCoordinate2D)location{
+    __weak typeof(self) weakSelf = self;
     [KGRequest postWithUrl:FindAllMerchant parameters:@{@"longitude":@(location.longitude),@"latitude":@(location.latitude)} succ:^(id  _Nonnull result) {
-        
+        [weakSelf.hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            NSArray *tmp = dic[@"list"];
+            if (tmp.count > 0) {
+                [weakSelf.dataArr addObjectsFromArray:tmp];
+                [weakSelf mapViewAddOverLay];
+            }
+        }
     } fail:^(NSError * _Nonnull error) {
-        
+        [weakSelf.hud hideAnimated:YES];
     }];
+}
+/** 地图加点 */
+- (void)mapViewAddOverLay{
+    for (int i = 0; i < self.dataArr.count; i++) {
+        NSDictionary *dic = self.dataArr[i];
+        MAPointAnnotation *point = [[MAPointAnnotation alloc]init];
+        point.coordinate = CLLocationCoordinate2DMake([dic[@"latitude"] doubleValue], [dic[@"longitude"] doubleValue]);
+        point.title = [NSString stringWithFormat:@"%@\n%@,%@",dic[@"username"],dic[@"id"],dic[@"type"]];
+        point.subtitle = dic[@"address"];
+        [self.mapView addAnnotation:point];
+    }
+    [self.mapView reloadMap];
 }
 /** 添加地图 */
 - (void)setUpMapView{
     self.mapView = [[MAMapView alloc]initWithFrame:self.view.bounds];
+    self.mapView.zoomLevel = 17;
+    self.mapView.minZoomLevel = 15;
+    self.mapView.maxZoomLevel = 19;
+    self.mapView.rotateCameraEnabled = NO;
+    self.mapView.showsUserLocation = YES;
+    self.mapView.userTrackingMode = MAUserTrackingModeFollow;
+    self.mapView.delegate = self;
     [self.view addSubview:self.mapView];
 }
 /** 添加到主窗体上 */
@@ -135,6 +170,7 @@
     self.leftListView.frame = CGRectMake(0, topHeight, KGScreenWidth/2, KGScreenHeight - topHeight);
     self.rightListView.frame = CGRectMake(KGScreenWidth/2, topHeight, KGScreenWidth/2, KGScreenHeight - topHeight);
     self.onlyListView.frame = CGRectMake(0, topHeight, KGScreenWidth, KGScreenHeight - topHeight);
+    self.mapView.frame = CGRectMake(0, topHeight, KGScreenWidth, KGScreenHeight - topHeight - KGRectTabbarHeight);
     self.onlyListView.hidden = YES;
     self.leftListView.hidden = NO;
     self.rightListView.hidden = NO;
@@ -353,6 +389,39 @@
         [hud hideAnimated:YES];
         [weakSelf.rightListView reloadData];
     }];
+}
+/** 实现代理 */
+- (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id<MAAnnotation>)annotation{
+    if ([annotation isKindOfClass:[MAPointAnnotation class]]) {
+        static NSString *pointReuseIndetifier = @"pointReuseIndetifier";
+        MAPinAnnotationView *annotationView = (MAPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:pointReuseIndetifier];
+        if (annotationView == nil) {
+            annotationView = [[MAPinAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:pointReuseIndetifier];
+        }
+        annotationView.canShowCallout = YES;
+        annotationView.animatesDrop = YES;
+        annotationView.draggable = NO;
+        UIButton *selectBtu = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        [selectBtu setTitle:[[annotation.title componentsSeparatedByString:@"\n"] lastObject] forState:UIControlStateNormal];
+        [selectBtu addTarget:self action:@selector(selectPointAction:) forControlEvents:UIControlEventTouchUpInside];
+        annotationView.rightCalloutAccessoryView = selectBtu;
+        annotationView.pinColor = [self.dataArr indexOfObject:annotation]%3;
+        return annotationView;
+    }
+    return nil;
+}
+/** 点击事件 */
+- (void)selectPointAction:(UIButton *)sender{
+    NSArray *tmpArr = [sender.currentTitle componentsSeparatedByString:@","];
+    if ([[tmpArr lastObject] integerValue] == 1 || [[tmpArr lastObject] integerValue] == 3 || [[tmpArr lastObject] integerValue] == 4 || [[tmpArr lastObject] integerValue] == 5 || [[tmpArr lastObject] integerValue] == 6 || [[tmpArr lastObject] integerValue] == 13) {
+        KGAgencyDetailVC *vc = [[KGAgencyDetailVC alloc]init];
+        vc.sendID = [NSString stringWithFormat:@"%@",[tmpArr firstObject]];
+        [self presentViewController:[[UINavigationController alloc]initWithRootViewController:vc] animated:YES completion:nil];
+    }else{
+        KGInstitutionMoviesDetailVC *vc = [[KGInstitutionMoviesDetailVC alloc]init];
+        vc.sendID = [NSString stringWithFormat:@"%@",[tmpArr firstObject]];
+        [self presentViewController:[[UINavigationController alloc]initWithRootViewController:vc] animated:YES completion:nil];
+    }
 }
 
 /*
