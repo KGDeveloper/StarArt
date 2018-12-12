@@ -53,6 +53,10 @@
 @property (nonatomic,strong) MBProgressHUD *hud;
 /** 数据源 */
 @property (nonatomic,strong) NSMutableArray *dataArr;
+/** 二级区域id */
+@property (nonatomic,copy) NSString *secondStr;
+/** 类型ID */
+@property (nonatomic,copy) NSString *classStr;
 
 @end
 
@@ -69,12 +73,14 @@
     
     self.view.backgroundColor = KGWhiteColor;
     self.oneArr = @[@{@"city":@"北京",@"id":@"1"},@{@"city":@"上海",@"id":@"13"},@{@"city":@"广州",@"id":@"28"},@{@"city":@"深圳",@"id":@"36"},@{@"city":@"天津",@"id":@"43"},@{@"city":@"成都",@"id":@"65"},@{@"city":@"西安",@"id":@"54"}];
-    self.typeArr = @[@{@"name":@"美术",@"id":@"1"},@{@"name":@"音乐",@"id":@"2"},@{@"name":@"书店",@"id":@"3"},@{@"name":@"设计",@"id":@"4"},@{@"name":@"戏剧",@"id":@"5"},@{@"name":@"摄影",@"id":@"6"},@{@"name":@"美食",@"id":@"7"},@{@"name":@"咖啡",@"id":@"8"},@{@"name":@"茗茶",@"id":@"9"},@{@"name":@"糕点面包",@"id":@"10"},@{@"name":@"集成店",@"id":@"11"},@{@"name":@"电影",@"id":@"12"},@{@"name":@"剧院",@"id":@"13"}];
+    self.typeArr = @[@{@"name":@"美术",@"id":@"1"},@{@"name":@"音乐",@"id":@"2"},@{@"name":@"书店",@"id":@"3"},@{@"name":@"设计",@"id":@"4"},@{@"name":@"戏剧",@"id":@"5"},@{@"name":@"摄影",@"id":@"6"},@{@"name":@"剧院",@"id":@"13"}];
     self.cityListArr = [NSMutableArray array];
     /** 初始赋值 */
     self.oneListCellRow = 0;
     self.twoListCellRow = 0;
     self.threeListCellRow = 0;
+    self.secondStr = @"";
+    self.classStr = @"";
     self.dataArr = [NSMutableArray array];
     
     [self requestData];
@@ -146,7 +152,7 @@
 - (void)setUpMapView{
     self.mapView = [[MAMapView alloc]initWithFrame:self.view.bounds];
     self.mapView.zoomLevel = 17;
-    self.mapView.minZoomLevel = 15;
+    self.mapView.minZoomLevel = 12;
     self.mapView.maxZoomLevel = 19;
     self.mapView.rotateCameraEnabled = NO;
     self.mapView.showsUserLocation = YES;
@@ -247,6 +253,14 @@
 }
 /** 确定点击事件 */
 - (void)shureAction:(UIButton *)sender{
+    if ([self.secondStr isEqualToString:@""]) {
+        [[KGHUD showMessage:@"请选择筛选区域"] hideAnimated:YES afterDelay:1];
+        return;
+    }
+    if ([self.classStr isEqualToString:@""]) {
+        [[KGHUD showMessage:@"请选择筛选类型"] hideAnimated:YES afterDelay:1];
+        return;
+    }
     self.screenView.hidden = YES;
 }
 /** 左侧筛选左边栏 */
@@ -362,12 +376,17 @@
         NSDictionary *dic = self.oneArr[indexPath.row];
         self.cityListArr = [NSMutableArray array];
         [self requestCityProperidDataWithType:dic[@"id"]];
+        self.secondStr = @"";
     }else if (tableView == self.onlyListView){
         self.threeListCellRow = indexPath.row;
         [self.onlyListView reloadData];
+        NSDictionary *dic = self.typeArr[indexPath.row];
+        self.classStr = [NSString stringWithFormat:@"%@",dic[@"id"]];
     }else{
         self.twoListCellRow = indexPath.row;
         [self.rightListView reloadData];
+        NSDictionary *dic = self.cityListArr[indexPath.row];
+        self.secondStr = [NSString stringWithFormat:@"%@",dic[@"id"]];
     }
 }
 /** 请求二级城市 */

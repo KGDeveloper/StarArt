@@ -69,7 +69,7 @@
             break;
             
         case 2:
-            
+            [self.consumptionVC addScreenViewToSupView:self.tabBarController.view topViewHeight:KGRectNavAndStatusHight];
             break;
         default:
             break;

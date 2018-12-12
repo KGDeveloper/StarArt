@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface KGNearConsumptionVC : KGBaseViewController
+/** 添加到主窗体上 */
+- (void)addScreenViewToSupView:(UIView *)fatherView topViewHeight:(CGFloat)topHeight;
 
 @end
 
