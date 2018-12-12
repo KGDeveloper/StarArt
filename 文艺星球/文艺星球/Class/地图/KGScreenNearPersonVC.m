@@ -26,6 +26,25 @@
 @property (weak, nonatomic) IBOutlet UILabel *lvxingLab;
 @property (weak, nonatomic) IBOutlet UILabel *ktvLab;
 
+/** 边距 */
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *qiuxieLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *wenshenLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *erciyuanLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *dianjingLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sheyingLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *ktvLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *xijuLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *shuochangLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *chongwuLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *jixianLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *jianshenLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *gaizhuangcheLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lianaiLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *dianyingLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bengdiLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lvxingLeft;
+
+
 @end
 
 @implementation KGScreenNearPersonVC
@@ -44,6 +63,27 @@
     /** 导航栏标题 */
     self.title = @"筛选";
     
+    [self changeSpance];
+}
+/** 修改间距 */
+- (void)changeSpance{
+    CGFloat width = (KGScreenWidth - 200)/5;
+    self.qiuxieLeft.constant = width;
+    self.wenshenLeft.constant = width;
+    self.erciyuanLeft.constant = width;
+    self.dianjingLeft.constant = width;
+    self.sheyingLeft.constant = width;
+    self.ktvLeft.constant = width;
+    self.xijuLeft.constant = width;
+    self.shuochangLeft.constant = width;
+    self.chongwuLeft.constant = width;
+    self.jixianLeft.constant = width;
+    self.jianshenLeft.constant = width;
+    self.gaizhuangcheLeft.constant = width;
+    self.lianaiLeft.constant = width;
+    self.dianyingLeft.constant = width;
+    self.bengdiLeft.constant = width;
+    self.lvxingLeft.constant = width;
 }
 /** 导航栏左侧点击事件 */
 - (void)leftNavAction{

@@ -56,17 +56,19 @@
         if ([result[@"status"] integerValue] == 200) {
             NSDictionary *dic = result[@"data"];
             NSArray *tmp = dic[@"list"];
-            if (tmp.count > 0 ) {
-                [weakSelf.dataArr addObjectsFromArray:tmp];
-                NSDictionary *dic = [weakSelf.dataArr firstObject];
-                [weakSelf.backHeaderImage sd_setImageWithURL:[NSURL URLWithString:dic[@"userPortraitUri"]]];
-                [weakSelf.headerImage sd_setImageWithURL:[NSURL URLWithString:dic[@"userPortraitUri"]]];
-                weakSelf.nameLab.text = dic[@"userName"];
-                weakSelf.signaturlLab.text = dic[@"personalitySignature"];
+            if (![tmp isKindOfClass:[NSNull class]]) {
+                if (tmp.count > 0 ) {
+                    [weakSelf.dataArr addObjectsFromArray:tmp];
+                    NSDictionary *dic = [weakSelf.dataArr firstObject];
+                    [weakSelf.backHeaderImage sd_setImageWithURL:[NSURL URLWithString:dic[@"userPortraitUri"]]];
+                    [weakSelf.headerImage sd_setImageWithURL:[NSURL URLWithString:dic[@"userPortraitUri"]]];
+                    weakSelf.nameLab.text = dic[@"userName"];
+                    weakSelf.signaturlLab.text = dic[@"personalitySignature"];
+                }
             }
         }
         [weakSelf.listView.mj_header endRefreshing];
-        [weakSelf.listView.mj_footer beginRefreshing];
+        [weakSelf.listView.mj_footer endRefreshing];
         [weakSelf.listView reloadData];
     } fail:^(NSError * _Nonnull error) {
         [hud hideAnimated:YES];
@@ -128,7 +130,7 @@
     [hedaerView addSubview:self.headerImage];
     /** 昵称 */
     self.nameLab = [[UILabel alloc]initWithFrame:CGRectMake(0, self.headerImage.frame.origin.y + 70, KGScreenWidth, 14)];
-    self.nameLab.text = @"啊哈哈哈";
+    self.nameLab.text = @"";
     self.nameLab.textColor = KGWhiteColor;
     self.nameLab.font = KGFontSHRegular(14);
     self.nameLab.textAlignment = NSTextAlignmentCenter;

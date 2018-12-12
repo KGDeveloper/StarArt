@@ -2074,7 +2074,7 @@
 					"-framework",
 					"\"SDWebImage\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ArtPlane.com.LiteraryStar;
+				PRODUCT_BUNDLE_IDENTIFIER = ArtPlane.com.WYXQ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/**";
@@ -2113,7 +2113,7 @@
 					"-framework",
 					"\"SDWebImage\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ArtPlane.com.LiteraryStar;
+				PRODUCT_BUNDLE_IDENTIFIER = ArtPlane.com.WYXQ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(PODS_ROOT)/**";

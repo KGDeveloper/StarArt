@@ -27,6 +27,7 @@
 @property (nonatomic,strong) UITextField *passTF;
 /** 提示图片 */
 @property (nonatomic,strong) KGAlertView *alertView;
+@property (nonatomic,strong) UIView *guideView;
 
 
 @end
@@ -38,6 +39,43 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"WYXQGUIDE"]) {
+        [self setGuide];
+        [[NSUserDefaults standardUserDefaults] setObject:@"WYXQGUIDE" forKey:@"WYXQGUIDE"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }else{
+        [self setLoginUI];
+    }
+}
+/** 引导页 */
+- (void)setGuide{
+    self.guideView = [[UIView alloc]initWithFrame:self.view.bounds];
+    self.guideView.backgroundColor = KGWhiteColor;
+    [self.view addSubview:self.guideView];
+    
+    UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:self.guideView.bounds];
+    scrollView.contentSize = CGSizeMake(KGScreenWidth*3, KGScreenHeight);
+    scrollView.showsVerticalScrollIndicator = NO;
+    scrollView.showsHorizontalScrollIndicator = NO;
+    scrollView.bounces = NO;
+    scrollView.pagingEnabled = YES;
+    [self.guideView addSubview:scrollView];
+    
+    for (int i = 0; i < 3; i++) {
+        UIImageView *imageview = [[UIImageView alloc]initWithFrame:CGRectMake(KGScreenWidth*i, 0, KGScreenWidth, KGScreenHeight)];
+        imageview.image = [UIImage imageNamed:[NSString stringWithFormat:@"yindaoye%d",i+1]];
+        imageview.userInteractionEnabled = YES;
+        [scrollView addSubview:imageview];
+        
+        if (i == 2) {
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(loadUI:)];
+            [imageview addGestureRecognizer:tap];
+        }
+    }
+}
+/** 点击事件 */
+- (void)loadUI:(UITapGestureRecognizer *)tap{
+    [self.guideView removeFromSuperview];
     [self setLoginUI];
 }
 /** 登录页面 */

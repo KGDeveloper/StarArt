@@ -54,7 +54,9 @@
 /** 数据源 */
 @property (nonatomic,strong) NSMutableArray *dataArr;
 /** 二级区域id */
-@property (nonatomic,copy) NSString *secondStr;
+@property (nonatomic,copy) NSString *sencedStr;
+@property (nonatomic,copy) NSString *latStr;
+@property (nonatomic,copy) NSString *longStr;
 /** 类型ID */
 @property (nonatomic,copy) NSString *classStr;
 
@@ -66,8 +68,15 @@
     [super viewWillAppear:animated];
     /** 导航栏标题颜色 */
     [self changeNavBackColor:KGWhiteColor controller:self];
+    
+    if (self.mapView) {
+        [self requestData];
+    }
 }
-
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.hud hideAnimated:YES];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -79,7 +88,9 @@
     self.oneListCellRow = 0;
     self.twoListCellRow = 0;
     self.threeListCellRow = 0;
-    self.secondStr = @"";
+    self.longStr = @"";
+    self.latStr = @"";
+    self.sencedStr = @"";
     self.classStr = @"";
     self.dataArr = [NSMutableArray array];
     
@@ -89,7 +100,6 @@
 }
 /** 请求数据 */
 - (void)requestData{
-    self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     __weak typeof(self) weakSelf = self;
     __block NSString *cityId = nil;
     [[KGRequest shareInstance] userLocationCity:^(NSString * _Nonnull city) {
@@ -122,6 +132,7 @@
 }
 - (void)requestDataWithCity:(NSString *)cityId location:(CLLocationCoordinate2D)location{
     __weak typeof(self) weakSelf = self;
+    self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [KGRequest postWithUrl:FindAllMerchant parameters:@{@"longitude":@(location.longitude),@"latitude":@(location.latitude)} succ:^(id  _Nonnull result) {
         [weakSelf.hud hideAnimated:YES];
         if ([result[@"status"] integerValue] == 200) {
@@ -140,6 +151,9 @@
 - (void)mapViewAddOverLay{
     for (int i = 0; i < self.dataArr.count; i++) {
         NSDictionary *dic = self.dataArr[i];
+        if (i == 0) {
+            self.mapView.centerCoordinate = CLLocationCoordinate2DMake([dic[@"latitude"] doubleValue], [dic[@"longitude"] doubleValue]);
+        }
         MAPointAnnotation *point = [[MAPointAnnotation alloc]init];
         point.coordinate = CLLocationCoordinate2DMake([dic[@"latitude"] doubleValue], [dic[@"longitude"] doubleValue]);
         point.title = [NSString stringWithFormat:@"%@\n%@,%@",dic[@"username"],dic[@"id"],dic[@"type"]];
@@ -151,8 +165,8 @@
 /** 添加地图 */
 - (void)setUpMapView{
     self.mapView = [[MAMapView alloc]initWithFrame:self.view.bounds];
-    self.mapView.zoomLevel = 17;
-    self.mapView.minZoomLevel = 12;
+    self.mapView.zoomLevel = 14;
+    self.mapView.minZoomLevel = 5;
     self.mapView.maxZoomLevel = 19;
     self.mapView.rotateCameraEnabled = NO;
     self.mapView.showsUserLocation = YES;
@@ -253,7 +267,7 @@
 }
 /** 确定点击事件 */
 - (void)shureAction:(UIButton *)sender{
-    if ([self.secondStr isEqualToString:@""]) {
+    if ([self.sencedStr isEqualToString:@""]) {
         [[KGHUD showMessage:@"请选择筛选区域"] hideAnimated:YES afterDelay:1];
         return;
     }
@@ -262,6 +276,11 @@
         return;
     }
     self.screenView.hidden = YES;
+    self.dataArr = [NSMutableArray array];
+    [self.mapView removeOverlays:self.mapView.overlays];
+    [self.mapView removeAnnotations:self.mapView.annotations];
+    [self.mapView reloadMap];
+    [self requestScreenData];
 }
 /** 左侧筛选左边栏 */
 - (UITableView *)leftListView{
@@ -376,7 +395,7 @@
         NSDictionary *dic = self.oneArr[indexPath.row];
         self.cityListArr = [NSMutableArray array];
         [self requestCityProperidDataWithType:dic[@"id"]];
-        self.secondStr = @"";
+        self.sencedStr = @"";
     }else if (tableView == self.onlyListView){
         self.threeListCellRow = indexPath.row;
         [self.onlyListView reloadData];
@@ -386,7 +405,9 @@
         self.twoListCellRow = indexPath.row;
         [self.rightListView reloadData];
         NSDictionary *dic = self.cityListArr[indexPath.row];
-        self.secondStr = [NSString stringWithFormat:@"%@",dic[@"id"]];
+        self.sencedStr = [NSString stringWithFormat:@"%@",dic[@"id"]];
+        self.latStr = [NSString stringWithFormat:@"%@",dic[@"latitude"]];
+        self.longStr = [NSString stringWithFormat:@"%@",dic[@"longitude"]];
     }
 }
 /** 请求二级城市 */
@@ -441,6 +462,26 @@
         vc.sendID = [NSString stringWithFormat:@"%@",[tmpArr firstObject]];
         [self presentViewController:[[UINavigationController alloc]initWithRootViewController:vc] animated:YES completion:nil];
     }
+}
+/** 请求数据 */
+- (void)requestScreenData{
+    self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:FindTypeAllMerchant parameters:@{@"longitude":@([self.longStr doubleValue]),@"latitude":@([self.latStr doubleValue]),@"id":self.sencedStr,@"type":self.classStr} succ:^(id  _Nonnull result) {
+        [weakSelf.hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            NSArray *tmp = dic[@"list"];
+            if (tmp.count > 0) {
+                [weakSelf.dataArr addObjectsFromArray:tmp];
+                [weakSelf mapViewAddOverLay];
+            }
+        }
+        [weakSelf.mapView reloadMap];
+    } fail:^(NSError * _Nonnull error) {
+        [weakSelf.hud hideAnimated:YES];
+        [weakSelf.mapView reloadMap];
+    }];
 }
 
 /*

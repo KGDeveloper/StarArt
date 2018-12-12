@@ -9,9 +9,9 @@
 #ifndef KGRequestHeader_h
 #define KGRequestHeader_h
 /** 线上 */
-//#define POSTURL @"http://iartplanet.com"
+#define POSTURL @"http://iartplanet.com"
 /** zhai */
-#define POSTURL @"http://192.168.1.119"
+//#define POSTURL @"http://192.168.1.119"
 /** zhang */
 //#define POSTURL @"http://192.168.1.6"
 /** 登录发送验证码 */
@@ -159,7 +159,12 @@
 
 /** 文化场所首页 */
 #define FindAllMerchant [POSTURL stringByAppendingString:@"/api/merchants/findAllMerchant"]
-
+/** 文化场所筛选 */
+#define FindTypeAllMerchant [POSTURL stringByAppendingString:@"/api/merchants/findTypeAllMerchant"]
+/** 文艺消费首页 */
+#define FindAllConsumeMerchant [POSTURL stringByAppendingString:@"/api/consumption/findAllConsumeMerchant"]
+/** 文艺消费筛选 */
+#define FindTypeConsumeMerchant [POSTURL stringByAppendingString:@"/api/consumption/findTypeConsumeMerchant"]
 
 
 #endif /* KGRequestHeader_h */

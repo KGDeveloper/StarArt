@@ -18,22 +18,38 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KGScreenNearPersonVC">
             <connections>
                 <outlet property="bengdiLab" destination="YRv-jv-Lz5" id="QNj-lp-tkr"/>
+                <outlet property="bengdiLeft" destination="Zo1-VM-Aal" id="VWa-8n-pdK"/>
                 <outlet property="chongwuLab" destination="YVC-5L-ltY" id="eOf-da-9z3"/>
+                <outlet property="chongwuLeft" destination="JMc-pG-JGZ" id="g6c-13-E8i"/>
                 <outlet property="dianjingLab" destination="kXg-g7-UTi" id="Smk-LR-EPc"/>
+                <outlet property="dianjingLeft" destination="cKy-9L-U2c" id="hu2-lI-4j1"/>
                 <outlet property="dianyingLab" destination="HJQ-Yg-T3R" id="gx9-bp-Rbm"/>
+                <outlet property="dianyingLeft" destination="HdT-ac-67m" id="hfO-S0-bLz"/>
                 <outlet property="erciyuanLab" destination="3hv-d8-iSu" id="R7x-VC-LBV"/>
+                <outlet property="erciyuanLeft" destination="ig4-Mr-Y64" id="AJ0-fS-4IU"/>
                 <outlet property="gaizhuangcheLab" destination="a64-7i-RDp" id="6uP-1d-nbQ"/>
+                <outlet property="gaizhuangcheLeft" destination="RUC-cJ-AfY" id="xIa-64-NzW"/>
                 <outlet property="jianshenLab" destination="YcK-pP-upB" id="YbI-ol-AR6"/>
+                <outlet property="jianshenLeft" destination="npt-8c-UmM" id="GLc-yx-dsW"/>
                 <outlet property="jixianLab" destination="uji-w1-IMs" id="ffC-AR-fKu"/>
+                <outlet property="jixianLeft" destination="unn-9n-NSR" id="TvT-Ez-fo6"/>
                 <outlet property="ktvLab" destination="fC1-dv-Zju" id="FoV-pr-pL3"/>
+                <outlet property="ktvLeft" destination="Usx-Np-wzV" id="G5u-eo-SsS"/>
                 <outlet property="lianaiLab" destination="dc0-Nh-xSm" id="byQ-XB-3DK"/>
+                <outlet property="lianaiLeft" destination="aj4-s1-sd7" id="Vg1-9d-kky"/>
                 <outlet property="lvxingLab" destination="53X-Y9-e1n" id="1WF-BC-m7E"/>
+                <outlet property="lvxingLeft" destination="E9a-4x-hxM" id="4u4-dU-Amr"/>
                 <outlet property="qiuxieLab" destination="r0Y-cS-K2V" id="CBM-H0-bng"/>
+                <outlet property="qiuxieLeft" destination="Yve-NW-jeW" id="cCx-YN-lNG"/>
                 <outlet property="sheyingLab" destination="Qry-0B-sS2" id="zFA-rr-hU3"/>
+                <outlet property="sheyingLeft" destination="179-6f-TQR" id="lxm-50-43V"/>
                 <outlet property="shuochangLab" destination="A3K-K8-6Ar" id="EPH-mo-BKo"/>
+                <outlet property="shuochangLeft" destination="tD2-90-KxU" id="quM-dv-R8e"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="wenshenLab" destination="8ck-OZ-gVy" id="xTg-HT-4M6"/>
+                <outlet property="wenshenLeft" destination="bk8-c6-k9T" id="2wK-Tg-NWR"/>
                 <outlet property="xijuLab" destination="OgC-vk-SHj" id="dyr-IJ-IY7"/>
+                <outlet property="xijuLeft" destination="lMd-2G-NN6" id="MT3-pH-jfw"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

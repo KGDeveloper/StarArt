@@ -17,31 +17,28 @@ window.onload = function () {
     var token =  getToken();
 
     var  params = {
-        "tokenCode": token,
+        
         "searchType": 1,
         "longitude": 40.222012,
-        "distance": 1000,
-        "similarity": 90,
-        "ageMax": 40,
-        "ageMin": 5,
+        "longitude":116.248283,
+        "ids":[1,2,3],
+        "similarity": 20,
+        "pageSize":20,
+        "pageIndex":1,
         "sex": 1,
-        "query": {
-            "page": 1,
-            "rows": 20
-        },
-        "myLabelIds": [2]
     }
 
     $.ajax({
         headers:{
             "Content-type":"application/json",
             "User-Agent":"wyxqIOS",
+           "Authorization":"Bearer"+" "+token,
         },
-        url:"http://192.168.1.119/api/user/list",
+        url:"http://iartplanet.com/api/user/list",
         type:"post",
         data:JSON.stringify(params),
         success:function (data) {
-            upData = data.data;
+            upData = data.data.list;
             initData(upData);
            /* 设置卡片内容 */
            $('.popBox .zzz .dis-name> h3').text($('.gif2').attr("data-dis"));
@@ -62,7 +59,7 @@ window.onload = function () {
         for(var i = 0; i < string1.length; i++){
             if(string1[i].similarity == max){
                 number1 = string1[i];
-                data2 = '<div class="gif2 step1 current" data-num=" '+number1.similarity+' " data-id = " '+ number1.id +' "  data-dis = " '+number1.username+' "><img src="img/'+ random(1,12) +'.png" alt=""></div>';
+                data2 = '<div class="gif2 step1 current" data-num=" '+number1.similarity+' " data-id = " '+ number1.userId +' "  data-dis = " '+number1.username+' "><img src="img/'+ random(1,12) +'.png" alt=""></div>';
             }
             // data +=  '<span class="img'+ random(1,16) +'"   "><img src="img/('+ random(4,12) +').png" alt=""></span>';
         }
