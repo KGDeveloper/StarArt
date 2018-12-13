@@ -70,7 +70,6 @@
     self.pageIndex = 1;
     self.dataArr = [NSMutableArray array];
     
-    [self requestTopData];
     [self requestData];
     [self setNavCenterView];
     [self setUpListView];
@@ -99,6 +98,7 @@
             cityId = @"1";
         }
         [weakSelf requestWithCity:cityId];
+        [weakSelf requestTopData:cityId];
     }];
 }
 /** 请求 */
@@ -122,9 +122,9 @@
     }];
 }
 /** 请求5条顶部 */
-- (void)requestTopData{
+- (void)requestTopData:(NSString *)cityId{
     __weak typeof(self) weakSelf = self;
-    [KGRequest postWithUrl:SelectExhibitionListFives parameters:@{} succ:^(id  _Nonnull result) {
+    [KGRequest postWithUrl:SelectExhibitionListFives parameters:@{@"typeID":self.typeID,@"cityID":cityId} succ:^(id  _Nonnull result) {
         if ([result[@"status"] integerValue] == 200) {
             NSDictionary *dic = result[@"data"];
             weakSelf.topScrollArr = dic[@"list"];
@@ -410,6 +410,7 @@
 /** 顶部5条数据 */
 - (void)setTopFiveScrollImage{
     if (self.topScrollArr.count > 0) {
+        [self.topScrollView removeAllSubviews];
         for (int i = 0; i < self.topScrollArr.count; i++) {
             NSDictionary *dic = self.topScrollArr[i];
             UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(KGScreenWidth*i, 0, KGScreenWidth, KGScreenWidth/3*2)];

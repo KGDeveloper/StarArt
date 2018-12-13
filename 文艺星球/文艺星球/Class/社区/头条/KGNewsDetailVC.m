@@ -245,7 +245,7 @@
             if (dic[@"img"]) {
                 NSString *lastObjStr = [[dic[@"img"] componentsSeparatedByString:@"#"] lastObject];
                 NSArray *tmp = [lastObjStr componentsSeparatedByString:@"|"];
-                if (tmp.count > 0) {
+                if (tmp.count == 2) {
                     NSInteger widthStr = [[[lastObjStr componentsSeparatedByString:@"|"] lastObject] integerValue];
                     NSInteger heightStr = [[[lastObjStr componentsSeparatedByString:@"|"] firstObject] integerValue];
                     return (KGScreenWidth - 30)/widthStr*heightStr + 30;

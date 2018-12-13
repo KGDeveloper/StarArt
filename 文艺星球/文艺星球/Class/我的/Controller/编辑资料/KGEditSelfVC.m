@@ -144,7 +144,7 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
         dispatch_queue_t queue = dispatch_queue_create("上传图片", DISPATCH_QUEUE_SERIAL);
         dispatch_sync(queue, ^{
             [[KGRequest shareInstance] uploadImageToQiniuWithFile:[[KGRequest shareInstance] getImagePath:self.rightImage.image] result:^(NSString * _Nonnull strPath) {
-                [weakSelf.userDic setObject:strPath forKey:@"portraitUri"];
+                [weakSelf.userDic setObject:strPath forKey:@"dynamicImage3"];
                 weakSelf.thiredUpdate = YES;
                 [weakSelf changeUserInfo];
             }];
@@ -155,7 +155,7 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
         dispatch_queue_t queue = dispatch_queue_create("上传图片", DISPATCH_QUEUE_SERIAL);
         dispatch_sync(queue, ^{
             [[KGRequest shareInstance] uploadImageToQiniuWithFile:[[KGRequest shareInstance] getImagePath:self.headerBtu.currentImage] result:^(NSString * _Nonnull strPath) {
-                [weakSelf.userDic setObject:strPath forKey:@"dynamicImage1"];
+                [weakSelf.userDic setObject:strPath forKey:@"portraitUri"];
                 weakSelf.fouthUpdate = YES;
                 [weakSelf changeUserInfo];
             }];
@@ -513,6 +513,7 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
         weakSelf.myLabelsArr = [NSMutableSet set];
         [weakSelf.myLabelsArr addObjectsFromArray:chooseArr];
         [weakSelf addTitle:chooseArr];
+        [weakSelf addLabelToViewWithArr:chooseArr];
     };
     [self pushHideenTabbarViewController:vc animted:YES];
 }
@@ -535,6 +536,7 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
 }
 /** 加载标签 */
 - (void)addLabelToViewWithArr:(NSArray *)arr{
+    [self.chooseLabelView removeAllSubviews];
     CGFloat width = 15;
     CGFloat height = 0;
     for (int i = 0; i < arr.count; i++) {
@@ -564,8 +566,6 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
 // MARK: --设置页面数据--
 /** 设置页面参数 */
 - (void)changeViewModel:(NSDictionary *)dic{
-    /** 设置图片 */
-    [self downLoadImageWithURL:@{@"url":dic[@"portraitUri"],@"type":@"Header"}];
     if (![dic[@"dynamicImage1"] isKindOfClass:[NSNull class]]) {
         [self downLoadImageWithURL:@{@"url":dic[@"dynamicImage1"],@"type":@"Left"}];
     }
@@ -598,7 +598,10 @@ typedef NS_ENUM(NSInteger,ChoosePhotoPoisition) {
     NSArray *labelsArr = dic[@"mylabels"];
     if (labelsArr.count > 0) {
         self.myLabelsArr = [NSMutableSet setWithArray:labelsArr];
+        [self addLabelToViewWithArr:[self.myLabelsArr allObjects]];
     }
+    /** 设置图片 */
+    [self downLoadImageWithURL:@{@"url":dic[@"portraitUri"],@"type":@"Header"}];
 }
 /** 异步请求网络图片 */
 - (void)downLoadImageWithURL:(NSDictionary *)dic{

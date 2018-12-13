@@ -43,7 +43,7 @@
 }
 /** 点击事件 */
 - (void)leftNavAction{
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 /** 导航栏右侧设置 */
 - (void)setRightBtu{

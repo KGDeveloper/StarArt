@@ -148,31 +148,38 @@
     }else{
         self.professionalLab.text = @"未知";
     }
-    if ([userInfo[@"sex"] integerValue] == 0) {
-        self.compatibilityBtu.backgroundColor = KGWomanColor;
-        [self.compatibilityBtu setImage:[UIImage imageNamed:@"xingbienv"] forState:UIControlStateNormal];
-    }else if ([userInfo[@"sex"] integerValue] == 1){
-        self.compatibilityBtu.backgroundColor = KGManColor;
-        [self.compatibilityBtu setImage:[UIImage imageNamed:@"xingbienan"] forState:UIControlStateNormal];
+    if (![userInfo[@"sex"] isKindOfClass:[NSNull class]]) {
+        if ([userInfo[@"sex"] integerValue] == 0) {
+            self.compatibilityBtu.backgroundColor = KGWomanColor;
+            [self.compatibilityBtu setImage:[UIImage imageNamed:@"xingbienv"] forState:UIControlStateNormal];
+        }else if ([userInfo[@"sex"] integerValue] == 1){
+            self.compatibilityBtu.backgroundColor = KGManColor;
+            [self.compatibilityBtu setImage:[UIImage imageNamed:@"xingbienan"] forState:UIControlStateNormal];
+        }else{
+            self.compatibilityBtu.backgroundColor = KGManColor;
+            [self.compatibilityBtu setImage:[UIImage imageNamed:@"xingbiebaomi"] forState:UIControlStateNormal];
+        }
     }else{
         self.compatibilityBtu.backgroundColor = KGManColor;
         [self.compatibilityBtu setImage:[UIImage imageNamed:@"xingbiebaomi"] forState:UIControlStateNormal];
     }
+    
     [self.compatibilityBtu setTitle:userInfo[@"match"] forState:UIControlStateNormal];
     
-    NSArray *labelArr = [userInfo[@"labelName"] componentsSeparatedByString:@","];
-    CGFloat width = 0;
-    if (labelArr.count > 3) {
-        for (int i = 0; i < 3; i++) {
-            width += [labelArr[i] boundingRectWithSize:CGSizeMake(KGScreenWidth, 25) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontSHRegular(13)} context:nil].size.width + 45;
+    if (![userInfo[@"labelName"] isKindOfClass:[NSNull class]]) {
+        NSArray *labelArr = [userInfo[@"labelName"] componentsSeparatedByString:@","];
+        CGFloat width = 0;
+        if (labelArr.count > 3) {
+            for (int i = 0; i < 3; i++) {
+                width += [labelArr[i] boundingRectWithSize:CGSizeMake(KGScreenWidth, 25) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontSHRegular(13)} context:nil].size.width + 45;
+            }
+        }else{
+            for (int i = 0; i < labelArr.count; i++) {
+                width += [labelArr[i] boundingRectWithSize:CGSizeMake(KGScreenWidth, 25) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontSHRegular(13)} context:nil].size.width + 45;
+            }
         }
-    }else{
-        for (int i = 0; i < labelArr.count; i++) {
-            width += [labelArr[i] boundingRectWithSize:CGSizeMake(KGScreenWidth, 25) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:KGFontSHRegular(13)} context:nil].size.width + 45;
-        }
+        [self setLabelWithWidth:width arr:labelArr];
     }
-    [self setLabelWithWidth:width arr:labelArr];
-    
 }
 /** 创建标签 */
 - (void)setLabelWithWidth:(CGFloat)width arr:(NSArray *)tmpArr{

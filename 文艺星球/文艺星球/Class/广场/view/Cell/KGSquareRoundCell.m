@@ -153,7 +153,7 @@
 - (CGFloat)rowHeightWithDictionary:(NSDictionary *)dic{
     NSString *contentStr = dic[@"content"];
     NSArray *endArr = [contentStr componentsSeparatedByString:@"@"];
-    return 130+endArr.count*23+230;
+    return 160+endArr.count*23+230;
 }
 /** 创建label */
 - (void)setLabelWithArr:(NSArray *)arr{

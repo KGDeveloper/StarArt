@@ -193,8 +193,6 @@
     myLab.textColor = KGBlackColor;
     myLab.font = KGFontSHBold(13);
     [self.scrollView addSubview:myLab];
-    
-    [self setLabel];
 }
 /** 聊天 */
 - (void)chatAction{
@@ -217,17 +215,18 @@
     [self pushHideenTabbarViewController:vc animted:YES];
 }
 /** 创建标签 */
-- (void)setLabel{
+- (void)setLabelWithArr:(NSArray *)arr{
     CGFloat width = 15;
     CGFloat height = KGScreenHeight + 430;
-    for (int i = 0; i < 15; i++) {
+    for (int i = 0; i < arr.count; i++) {
+        NSDictionary *dic = arr[i];
         UILabel *tmp = [[UILabel alloc]initWithFrame:CGRectMake(width, height, 65, 20)];
         tmp.backgroundColor = KGBlueColor;
         tmp.textColor = KGWhiteColor;
         tmp.layer.cornerRadius = 10;
         tmp.layer.masksToBounds = YES;
         tmp.textAlignment = NSTextAlignmentCenter;
-        tmp.text = @"哈哈哈";
+        tmp.text = dic[@"name"];
         tmp.font = KGFontSHRegular(12);
         [self.scrollView addSubview:tmp];
         if ((i + 1)%4 == 0) {
@@ -247,7 +246,115 @@
 }
 /** 修改页面 */
 - (void)changeUIWithDictionary:(NSDictionary *)dic{
-    
+    if (![dic[@"hometown"] isKindOfClass:[NSNull class]]) {
+        self.hometownLab.text = dic[@"hometown"];
+    }else{
+        self.hometownLab.text = @"未知";
+    }
+    if (![dic[@"industry"] isKindOfClass:[NSNull class]]) {
+        self.industryLab.text = dic[@"industry"];
+    }else{
+        self.industryLab.text = @"未知";
+    }
+    if (![dic[@"school"] isKindOfClass:[NSNull class]]) {
+        self.schoolLab.text = dic[@"school"];
+    }else{
+        self.schoolLab.text = @"";
+    }
+    NSArray *tmp = dic[@"mylabels"];
+    if (![tmp isKindOfClass:[NSNull class]] && tmp.count > 0) {
+        [self setLabelWithArr:tmp];
+    }
+    [self createScrollViewWithDic:dic];
+}
+/** 创建滚动图 */
+- (void)createScrollViewWithDic:(NSDictionary *)dic{
+    if (![dic[@"dynamicImage1"] isKindOfClass:[NSNull class]]) {
+        UIImageView *imageOne = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, KGScreenHeight)];
+        [imageOne sd_setImageWithURL:[NSURL URLWithString:dic[@"dynamicImage1"]]];
+        imageOne.contentMode = UIViewContentModeScaleAspectFill;
+        imageOne.layer.masksToBounds = YES;
+        [self.topScrollView addSubview:imageOne];
+    }
+    if (![dic[@"dynamicImage2"] isKindOfClass:[NSNull class]]) {
+        UIImageView *imageOne = [[UIImageView alloc]initWithFrame:CGRectMake(KGScreenWidth, 0, KGScreenWidth, KGScreenHeight)];
+        [imageOne sd_setImageWithURL:[NSURL URLWithString:dic[@"dynamicImage2"]]];
+        imageOne.contentMode = UIViewContentModeScaleAspectFill;
+        imageOne.layer.masksToBounds = YES;
+        [self.topScrollView addSubview:imageOne];
+    }
+    if (![dic[@"dynamicImage3"] isKindOfClass:[NSNull class]]) {
+        UIImageView *imageOne = [[UIImageView alloc]initWithFrame:CGRectMake(KGScreenWidth*2, 0, KGScreenWidth, KGScreenHeight)];
+        [imageOne sd_setImageWithURL:[NSURL URLWithString:dic[@"dynamicImage3"]]];
+        imageOne.contentMode = UIViewContentModeScaleAspectFill;
+        imageOne.layer.masksToBounds = YES;
+        [self.topScrollView addSubview:imageOne];
+    }
+}
+/** 请求动态 */
+- (void)requestQueryData{
+    __weak typeof(self) weakSelf = self;
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    [KGRequest postWithUrl:ListMessage parameters:@{@"pageSize":@"20",@"pageIndex":@"1",@"uid":self.sendID} succ:^(id  _Nonnull result) {
+        [hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            NSArray *tmp = dic[@"list"];
+            if (![tmp isKindOfClass:[NSNull class]]) {
+                if (tmp.count > 0 ) {
+                    [weakSelf changeWithArr:tmp];
+                }
+            }else{
+                weakSelf.leftImage.image = [UIImage imageNamed:@"kongyemian"];
+                weakSelf.centerImage.hidden = YES;
+                weakSelf.rightImage.hidden = YES;
+            }
+        }
+    } fail:^(NSError * _Nonnull error) {
+        [hud hideAnimated:YES];
+    }];
+}
+/** 添加动态 */
+- (void)changeWithArr:(NSArray *)arr{
+    if (arr.count >= 3) {
+        for (int i = 0; i < 3; i++) {
+            NSDictionary *dic = arr[i];
+            if (i == 0) {
+                NSArray *tmp = dic[@"imgs"];
+                NSDictionary *imageDic = [tmp firstObject];
+                [self.leftImage sd_setImageWithURL:[NSURL URLWithString:imageDic[@"imageUrl"]]];
+            }else if (i == 1){
+                NSArray *tmp = dic[@"imgs"];
+                NSDictionary *imageDic = [tmp firstObject];
+                [self.centerImage sd_setImageWithURL:[NSURL URLWithString:imageDic[@"imageUrl"]]];
+            }else{
+                NSArray *tmp = dic[@"imgs"];
+                NSDictionary *imageDic = [tmp firstObject];
+                [self.rightImage sd_setImageWithURL:[NSURL URLWithString:imageDic[@"imageUrl"]]];
+            }
+        }
+    }else if (arr.count ==2){
+        for (int i = 0; i < 2; i++) {
+            NSDictionary *dic = arr[i];
+            if (i == 0) {
+                NSArray *tmp = dic[@"imgs"];
+                NSDictionary *imageDic = [tmp firstObject];
+                [self.leftImage sd_setImageWithURL:[NSURL URLWithString:imageDic[@"imageUrl"]]];
+            }else{
+                NSArray *tmp = dic[@"imgs"];
+                NSDictionary *imageDic = [tmp firstObject];
+                [self.centerImage sd_setImageWithURL:[NSURL URLWithString:imageDic[@"imageUrl"]]];
+            }
+            self.rightImage.hidden = YES;
+        }
+    }else{
+        NSDictionary *dic = [arr firstObject];
+        NSArray *tmpArr = dic[@"imgs"];
+        NSDictionary *imageDic = [tmpArr firstObject];
+        [self.leftImage sd_setImageWithURL:[NSURL URLWithString:imageDic[@"imageUrl"]]];
+        self.centerImage.hidden = YES;
+        self.rightImage.hidden = YES;
+    }
 }
 
 /*

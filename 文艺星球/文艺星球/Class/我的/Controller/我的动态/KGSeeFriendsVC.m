@@ -45,7 +45,21 @@
     self.page = 1;
     
     [self requestData];
+    [self requestUserHeader];
     [self setUpListView];
+}
+/** 查看个人头像 */
+- (void)requestUserHeader{
+    __weak typeof(self) weakSelf = self;
+    [KGRequest postWithUrl:[RequestUserInfo stringByAppendingString:[NSString stringWithFormat:@"/%@",self.sendID]] parameters:@{} succ:^(id  _Nonnull result) {
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            [weakSelf.backHeaderImage sd_setImageWithURL:[NSURL URLWithString:dic[@"portraitUri"]]];
+            [weakSelf.headerImage sd_setImageWithURL:[NSURL URLWithString:dic[@"portraitUri"]]];
+        }
+    } fail:^(NSError * _Nonnull error) {
+        
+    }];
 }
 /** 查看动态 */
 - (void)requestData{

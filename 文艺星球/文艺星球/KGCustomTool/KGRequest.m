@@ -254,6 +254,8 @@
     [_manager requestLocationWithReGeocode:YES completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
         if (error) {
             tmpLocation = CLLocationCoordinate2DMake(39.987094,116.491390);
+            yourLocation(tmpLocation);
+            return;
         }
         tmpLocation = location.coordinate;
         yourLocation(tmpLocation);
@@ -269,6 +271,7 @@
     [_manager requestLocationWithReGeocode:YES completionBlock:^(CLLocation *location, AMapLocationReGeocode *regeocode, NSError *error) {
         if (error) {
             userCity = @"北京市";
+            city(userCity);
             return;
         }
         userCity = regeocode.city;

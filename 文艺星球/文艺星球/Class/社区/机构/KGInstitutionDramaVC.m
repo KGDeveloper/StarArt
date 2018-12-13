@@ -195,7 +195,7 @@ DZNEmptyDataSetDelegate
 /** 请求 */
 - (void)requestDataWithCity:(NSString *)cityId{
     __weak typeof(self) weakSelf = self;
-    [KGRequest postWithUrl:SelectShowListFives parameters:@{@"cityID":cityId} succ:^(id  _Nonnull result) {
+    [KGRequest postWithUrl:SelectShowListFives parameters:@{@"cityID":cityId,@"typeID":@""} succ:^(id  _Nonnull result) {
         if ([result[@"status"] integerValue] == 200) {
             NSDictionary *dic = result[@"data"];
             weakSelf.hotDramArr = dic[@"list"];

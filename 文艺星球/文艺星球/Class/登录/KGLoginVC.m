@@ -216,9 +216,9 @@
         [KGRequest postWithUrl:Login parameters:@{@"telephone":self.phoneTF.text,@"msgAuthCode":self.passTF.text} succ:^(id  _Nonnull result) {
             if ([result[@"status"] integerValue] == 200) {
                 NSDictionary *dic = result[@"data"];
+                [KGUserInfo saveUserInfoWithDictionary:dic[@"user"]];
                 [[NSUserDefaults standardUserDefaults] setObject:dic[@"token"] forKey:@"token"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
-                [KGUserInfo saveUserInfoWithDictionary:dic[@"user"]];
                 NSDictionary *tmpDic = dic[@"user"];
                 if ([tmpDic[@"isRegiste"] integerValue] == 0) {
                     KGRegisterVC *registerVC = [[KGRegisterVC alloc]initWithNibName:@"KGRegisterVC" bundle:nil];

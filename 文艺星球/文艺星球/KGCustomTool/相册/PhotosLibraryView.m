@@ -67,6 +67,7 @@
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
     /** 获取相册图片，添加到展示视图 */
     __weak typeof(self) mySelf = self;
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self animated:YES];
     for (PHAsset *asset in assets) {
         [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(screenSize.width * scale, screenSize.height * scale) contentMode:PHImageContentModeAspectFit options:opion resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
             PhotosLibraryViewModel *model = [PhotosLibraryViewModel new];
@@ -75,6 +76,7 @@
             /** 更新视图必须在主线程 */
             dispatch_async(dispatch_get_main_queue(), ^{
                 [mySelf.photoList reloadData];
+                [hud hideAnimated:YES];
             });
         }];
     }

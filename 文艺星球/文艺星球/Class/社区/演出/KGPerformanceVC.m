@@ -109,7 +109,7 @@
 /** 请求 */
 - (void)requestWithCity:(NSString *)cityId{
     __weak typeof(self) weakSelf = self;
-    [KGRequest postWithUrl:SelectShowListFives parameters:@{@"cityID":cityId} succ:^(id  _Nonnull result) {
+    [KGRequest postWithUrl:SelectShowListFives parameters:@{@"cityID":cityId,@"typeID":self.typeID} succ:^(id  _Nonnull result) {
         if ([result[@"status"] integerValue] == 200) {
             NSDictionary *dic = result[@"data"];
             weakSelf.topScrollArr = dic[@"list"];
@@ -337,8 +337,8 @@
 }
 /** 音乐点击事件 */
 - (void)rightAction{
-    [self.leftBtu setTitleColor:KGBlueColor forState:UIControlStateNormal];
-    [self.rightBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
+    [self.leftBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
+    [self.rightBtu setTitleColor:KGBlueColor forState:UIControlStateNormal];
     [UIView animateWithDuration:0.2 animations:^{
         self.line.center = CGPointMake(KGScreenWidth/2 + 55, 49);
     }];
@@ -394,6 +394,7 @@
 /** 顶部5条数据 */
 - (void)setTopFiveScrollImage{
     if (self.topScrollArr.count > 0) {
+        [self.topScrollView removeAllSubviews];
         for (int i = 0; i < self.topScrollArr.count; i++) {
             NSDictionary *dic = self.topScrollArr[i];
             UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(KGScreenWidth*i, 0, KGScreenWidth, KGScreenWidth/3*2)];

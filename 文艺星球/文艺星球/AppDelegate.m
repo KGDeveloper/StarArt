@@ -55,29 +55,32 @@
         }];
     }
 }
-- (void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion{
-    if ([userId isEqualToString:[KGUserInfo shareInstance].userToken]) {
+- (void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *userInfo))completion{
+    if ([userId isEqualToString:[KGUserInfo shareInstance].userId]) {
+        [[RCIM sharedRCIM] clearUserInfoCache];
         RCUserInfo *userInfo = [[RCUserInfo alloc]init];
         userInfo.userId = userId;
         userInfo.name = [KGUserInfo shareInstance].userName;
         userInfo.portraitUri = [KGUserInfo shareInstance].userPortrait;
         return completion(userInfo);
     }else{
-        [KGRequest postWithUrl:[RequestUserInfo stringByAppendingString:[NSString stringWithFormat:@"/%@",[KGUserInfo shareInstance].userId]] parameters:@{} succ:^(id  _Nonnull result) {
-            if ([result[@"status"] integerValue] == 200) {
-                NSDictionary *dic = result[@"data"];
-                RCUserInfo *userInfo = [[RCUserInfo alloc]init];
-                userInfo.userId = userId;
-                userInfo.name = dic[@"username"];
-                userInfo.portraitUri = dic[@"portraitUri"];
-                [[RCIM sharedRCIM] refreshUserInfoCache:userInfo withUserId:userId];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshMessageUI" object:nil];
-            }
-        } fail:^(NSError * _Nonnull error) {
-            
-        }];
-        RCUserInfo *info = [[RCIM sharedRCIM] getUserInfoCache:userId];
-        return completion(info);
+        if (![userId isEqualToString:@" undefined "]) {
+            [KGRequest postWithUrl:[RequestUserInfo stringByAppendingString:[NSString stringWithFormat:@"/%ld",[userId integerValue]]] parameters:@{} succ:^(id  _Nonnull result) {
+                if ([result[@"status"] integerValue] == 200) {
+                    NSDictionary *dic = result[@"data"];
+                    RCUserInfo *userInfo = [[RCUserInfo alloc]init];
+                    userInfo.userId = userId;
+                    userInfo.name = dic[@"username"];
+                    userInfo.portraitUri = dic[@"portraitUri"];
+                    [[RCIM sharedRCIM] refreshUserInfoCache:userInfo withUserId:userId];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"RefreshMessageUI" object:nil];
+                }
+            } fail:^(NSError * _Nonnull error) {
+                
+            }];
+            RCUserInfo *info = [[RCIM sharedRCIM] getUserInfoCache:userId];
+            return completion(info);
+        }
     }
 }
 - (void)getGroupInfoWithGroupId:(NSString *)groupId completion:(void (^)(RCGroup *groupInfo))completion{

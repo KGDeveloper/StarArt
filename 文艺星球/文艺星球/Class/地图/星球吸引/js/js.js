@@ -114,7 +114,7 @@ window.onload = function () {
                 'transform': 'rotate(12deg)'
             });
         }
-        if(nearby3<=120 && nearby3>=95 && nums>=90){ //满足匹配度高达90%出现闪电
+        if(nearby3<=120 && nearby3>=95 && nums>=1){ //满足匹配度高达90%出现闪电
 
             $('.lightning').css('display','block');
             setTimeout(function () {

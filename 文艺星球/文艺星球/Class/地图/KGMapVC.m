@@ -13,7 +13,7 @@
 #import <JavaScriptCore/JavaScriptCore.h>
 #import "KGLockUserInfoVC.h"
 #import "KGScreenNearPersonVC.h"
-#import "KGSeeFriendsVC.h"
+#import "KGLockUserInfoVC.h"
 
 @interface KGMapVC ()<CLLocationManagerDelegate,UIWebViewDelegate>
 
@@ -199,7 +199,7 @@
     };
     _jsContext[@"chatWithUserID"] = ^(NSString *uid,NSString *username) {
         dispatch_sync(dispatch_get_main_queue(), ^{
-            KGSeeFriendsVC *vc = [[KGSeeFriendsVC alloc]init];
+            KGLockUserInfoVC *vc = [[KGLockUserInfoVC alloc]init];
             vc.sendID = uid;
             [weakSelf pushHideenTabbarViewController:vc animted:YES];
         });

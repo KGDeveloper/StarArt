@@ -271,21 +271,17 @@
 }
 /** 删除已选择 */
 - (void)deleteChoose:(UIButton *)sender{
-    [self.titleArr removeObject:@{@"name":sender.currentTitle,@"id":[NSString stringWithFormat:@"%ld",(long)sender.tag]}];
-    [self.chooseBack removeAllSubviews];
-    NSArray *tmp = [self.titleArr allObjects];
-    [self setChooseViewSubViews:tmp toView:self.chooseBack];
-    [self.view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj isKindOfClass:[UIButton class]]) {
-            UIButton *tmp = obj;
-            if (tmp.tag == sender.tag) {
-                [tmp setTitleColor:KGGrayColor forState:UIControlStateNormal];
-                tmp.layer.borderColor = KGGrayColor.CGColor;
-                tmp.backgroundColor = KGWhiteColor;
-                *stop = YES;
-            }
+    __weak typeof(self) weakSelf = self;
+    [self.titleArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, BOOL * _Nonnull stop) {
+        NSDictionary *dic = obj;
+        if ([dic[@"id"] integerValue] == sender.tag) {
+            [weakSelf.titleArr removeObject:obj];
+            *stop = YES;
         }
     }];
+    [self.chooseBack removeAllSubviews];
+    NSArray *tmpArr = [self.titleArr allObjects];
+    [self setChooseViewSubViews:tmpArr toView:self.chooseBack];
     [self.view setNeedsLayout];
     [self changeChooseBtuTitile];
 }
