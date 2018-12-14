@@ -57,6 +57,7 @@
     manager.securityPolicy = security;
     /** 编码序列化 */
     AFJSONRequestSerializer *requestSerialzer = [AFJSONRequestSerializer serializer];
+    requestSerialzer.timeoutInterval = 15;
     [requestSerialzer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [requestSerialzer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     if ([KGUserInfo shareInstance].userToken) {

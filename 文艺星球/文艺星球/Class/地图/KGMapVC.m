@@ -122,9 +122,10 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.line.centerX = self.leftBtu.centerX;
     }];
-    [self.instatutionVC.view removeFromSuperview];
-    [self.consumptionVC.view removeFromSuperview];
-    self.selectIndex = 0;
+    if (self.selectIndex != 0) {
+        [self.instatutionVC.view removeFromSuperview];
+        [self.consumptionVC.view removeFromSuperview];
+    }
 }
 /** 中间按钮 */
 - (void)centerAction:(UIButton *)leftBtu{
@@ -134,8 +135,11 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.line.centerX = self.centerBtu.centerX;
     }];
+    if (self.selectIndex == 2) {
+        [self.consumptionVC.view removeFromSuperview];
+    }
     [self.view addSubview:self.instatutionVC.view];
-    [self.consumptionVC.view removeFromSuperview];
+    
     self.selectIndex = 1;
 }
 /** 右侧按钮 */
@@ -146,8 +150,10 @@
     [UIView animateWithDuration:0.2 animations:^{
         self.line.centerX = self.rightBtu.centerX;
     }];
+    if (self.selectIndex == 1) {
+        [self.instatutionVC.view removeFromSuperview];
+    }
     [self.view addSubview:self.consumptionVC.view];
-    [self.instatutionVC.view removeFromSuperview];
     self.selectIndex = 2;
 }
 /** 文化场所 */
@@ -169,11 +175,13 @@
 /** 选择城市 */
 - (KGSelectLeftNavChooseCityView *)chooseCityView{
     if (!_chooseCityView) {
-        _chooseCityView = [[KGSelectLeftNavChooseCityView alloc]initWithFrame:CGRectMake(0, KGRectNavAndStatusHight, 100, 350)];
+        _chooseCityView = [[KGSelectLeftNavChooseCityView alloc]initWithFrame:CGRectMake(0, KGRectNavAndStatusHight, KGScreenWidth, 350)];
         __weak typeof(self) weakSelf = self;
         _chooseCityView.chooseResult = ^(NSString * _Nonnull result, NSString * _Nonnull cityId) {
             [weakSelf.leftNavItem setTitle:result forState:UIControlStateNormal];
             weakSelf.chooseCityID = cityId;
+            [weakSelf.instatutionVC requestCityDataWithCityType:result];
+            [weakSelf.consumptionVC requestCityDataWithCityType:result];
         };
         [self.navigationController.view addSubview:_chooseCityView];
     }

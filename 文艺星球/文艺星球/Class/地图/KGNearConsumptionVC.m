@@ -68,10 +68,7 @@
     [super viewWillAppear:animated];
     /** 导航栏标题颜色 */
     [self changeNavBackColor:KGWhiteColor controller:self];
-    
-    if (self.mapView) {
-        [self requestData];
-    }
+   
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -478,6 +475,52 @@
         [weakSelf.mapView reloadMap];
     }];
 }
+- (void)requestCityDataWithCityType:(NSString *)city{
+    NSString *cityId = nil;
+    CLLocationCoordinate2D location;
+    if ([city isEqualToString:@"北京市"]) {
+        location = CLLocationCoordinate2DMake(39.55, 116.24);
+        cityId = @"1";
+    }else if ([city isEqualToString:@"天津市"]){
+        location = CLLocationCoordinate2DMake(39.02, 117.12);
+        cityId = @"43";
+    }else if ([city isEqualToString:@"西安市"]){
+        location = CLLocationCoordinate2DMake(34.17, 108.57);
+        cityId = @"54";
+    }else if ([city isEqualToString:@"广州市"]){
+        location = CLLocationCoordinate2DMake(23.08, 113.14);
+        cityId = @"28";
+    }else if ([city isEqualToString:@"成都市"]){
+        location = CLLocationCoordinate2DMake(30.40, 104.04);
+        cityId = @"65";
+    }else if ([city isEqualToString:@"上海市"]){
+        location = CLLocationCoordinate2DMake(31.24916171, 121.487899486);
+        cityId = @"13";
+    }else if ([city isEqualToString:@"深圳市"]){
+        location = CLLocationCoordinate2DMake(22.5460535462, 114.025973657);
+        cityId = @"36";
+    }else{
+        location = CLLocationCoordinate2DMake(39.55, 116.24);
+        cityId = @"1";
+    }
+    __weak typeof(self) weakSelf = self;
+    self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [KGRequest postWithUrl:FindAllConsumeMerchant parameters:@{@"longitude":@(location.longitude),@"latitude":@(location.latitude)} succ:^(id  _Nonnull result) {
+        [weakSelf.hud hideAnimated:YES];
+        if ([result[@"status"] integerValue] == 200) {
+            NSDictionary *dic = result[@"data"];
+            NSArray *tmp = dic[@"list"];
+            if (tmp.count > 0) {
+                [weakSelf.dataArr addObjectsFromArray:tmp];
+                [weakSelf mapViewAddOverLay];
+            }
+        }
+    } fail:^(NSError * _Nonnull error) {
+        [weakSelf.hud hideAnimated:YES];
+    }];
+}
+
+
 
 /*
 #pragma mark - Navigation
