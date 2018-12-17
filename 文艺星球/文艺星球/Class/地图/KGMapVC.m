@@ -180,8 +180,10 @@
         _chooseCityView.chooseResult = ^(NSString * _Nonnull result, NSString * _Nonnull cityId) {
             [weakSelf.leftNavItem setTitle:result forState:UIControlStateNormal];
             weakSelf.chooseCityID = cityId;
-            [weakSelf.instatutionVC requestCityDataWithCityType:result];
-            [weakSelf.consumptionVC requestCityDataWithCityType:result];
+            if (weakSelf.selectIndex != 0) {
+                [weakSelf.instatutionVC requestCityDataWithCityType:result];
+                [weakSelf.consumptionVC requestCityDataWithCityType:result];
+            }
         };
         [self.navigationController.view addSubview:_chooseCityView];
     }

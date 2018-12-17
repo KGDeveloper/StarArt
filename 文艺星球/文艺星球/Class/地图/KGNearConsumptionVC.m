@@ -185,9 +185,9 @@
     self.typeClassBtu.frame = CGRectMake(KGScreenWidth/2 + 30,topHeight - 30, 70, 30);
     self.shureBtu.frame = CGRectMake(KGScreenWidth - 55,topHeight - 30, 40, 30);
     self.line.frame = CGRectMake(self.allCtiyBtu.centerX - 15,topHeight - 2, 30, 2);
-    self.leftListView.frame = CGRectMake(0, topHeight, KGScreenWidth/2, KGScreenHeight - topHeight);
-    self.rightListView.frame = CGRectMake(KGScreenWidth/2, topHeight, KGScreenWidth/2, KGScreenHeight - topHeight);
-    self.onlyListView.frame = CGRectMake(0, topHeight, KGScreenWidth, KGScreenHeight - topHeight);
+    self.leftListView.frame = CGRectMake(0, topHeight, KGScreenWidth/2, 350);
+    self.rightListView.frame = CGRectMake(KGScreenWidth/2, topHeight, KGScreenWidth/2,350);
+    self.onlyListView.frame = CGRectMake(0, topHeight, KGScreenWidth, 350);
     self.mapView.frame = CGRectMake(0, topHeight, KGScreenWidth, KGScreenHeight - topHeight - KGRectTabbarHeight);
     self.onlyListView.hidden = YES;
     self.leftListView.hidden = NO;
@@ -283,7 +283,7 @@
 /** 左侧筛选左边栏 */
 - (UITableView *)leftListView{
     if (!_leftListView) {
-        _leftListView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth/2+2, self.view.frame.size.height)];
+        _leftListView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth/2+2, 350)];
         _leftListView.delegate = self;
         _leftListView.dataSource = self;
         _leftListView.backgroundColor = [UIColor clearColor];
@@ -300,7 +300,7 @@
 /** 左侧筛选右边栏 */
 - (UITableView *)rightListView{
     if (!_rightListView) {
-        _rightListView = [[UITableView alloc]initWithFrame:CGRectMake(KGScreenWidth/2, 0, KGScreenWidth/2, self.view.frame.size.height)];
+        _rightListView = [[UITableView alloc]initWithFrame:CGRectMake(KGScreenWidth/2, 0, KGScreenWidth/2, 350)];
         _rightListView.delegate = self;
         _rightListView.dataSource = self;
         _rightListView.backgroundColor = [UIColor clearColor];
@@ -317,7 +317,7 @@
 /** 左侧筛选右边栏 */
 - (UITableView *)onlyListView{
     if (!_onlyListView) {
-        _onlyListView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, self.view.frame.size.height)];
+        _onlyListView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, 350)];
         _onlyListView.delegate = self;
         _onlyListView.dataSource = self;
         _onlyListView.backgroundColor = [UIColor clearColor];

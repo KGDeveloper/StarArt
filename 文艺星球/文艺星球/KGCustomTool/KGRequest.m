@@ -64,6 +64,7 @@
         [requestSerialzer setValue:[NSString stringWithFormat:@"Bearer %@",[KGUserInfo shareInstance].userToken] forHTTPHeaderField:@"Authorization"];
     }
     manager.requestSerializer = requestSerialzer;
+    manager.requestSerializer.timeoutInterval = 15;
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain", nil];
     return manager;
 }

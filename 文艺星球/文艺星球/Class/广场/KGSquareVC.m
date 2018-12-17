@@ -61,7 +61,7 @@
 - (void)requestData{
     __weak typeof(self) weakSelf = self;
     __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    [KGRequest postWithUrl:ReleaseFriendsListMessage parameters:@{@"pageSize":@"20",@"pageIndex":[NSString stringWithFormat:@"%ld",(long)self.page],@"uid":[KGUserInfo shareInstance].userId} succ:^(id  _Nonnull result) {
+    [KGRequest postWithUrl:ReleaseFriendsListMessage parameters:@{@"pageSize":@"20",@"pageIndex":[NSString stringWithFormat:@"%ld",(long)self.page]} succ:^(id  _Nonnull result) {
         if ([result[@"status"] integerValue] == 200) {
             NSDictionary *dic = result[@"data"];
             NSArray *tmp = dic[@"list"];

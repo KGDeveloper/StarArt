@@ -184,9 +184,9 @@
     self.typeClassBtu.frame = CGRectMake(KGScreenWidth/2 + 30,topHeight - 30, 70, 30);
     self.shureBtu.frame = CGRectMake(KGScreenWidth - 55,topHeight - 30, 40, 30);
     self.line.frame = CGRectMake(self.allCtiyBtu.centerX - 15,topHeight - 2, 30, 2);
-    self.leftListView.frame = CGRectMake(0, topHeight, KGScreenWidth/2, KGScreenHeight - topHeight);
-    self.rightListView.frame = CGRectMake(KGScreenWidth/2, topHeight, KGScreenWidth/2, KGScreenHeight - topHeight);
-    self.onlyListView.frame = CGRectMake(0, topHeight, KGScreenWidth, KGScreenHeight - topHeight);
+    self.leftListView.frame = CGRectMake(0, topHeight, KGScreenWidth/2, 350);
+    self.rightListView.frame = CGRectMake(KGScreenWidth/2, topHeight, KGScreenWidth/2, 350);
+    self.onlyListView.frame = CGRectMake(0, topHeight, KGScreenWidth, 350);
     self.mapView.frame = CGRectMake(0, topHeight, KGScreenWidth, KGScreenHeight - topHeight - KGRectTabbarHeight);
     self.onlyListView.hidden = YES;
     self.leftListView.hidden = NO;
