@@ -194,6 +194,7 @@
 		5A81D945217F14FB009B7517 /* KGRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A81D943217F14FB009B7517 /* KGRegisterVC.m */; };
 		5A81D946217F14FB009B7517 /* KGRegisterVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A81D944217F14FB009B7517 /* KGRegisterVC.xib */; };
 		5A81D94A217F1F45009B7517 /* KGBirthdayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A81D949217F1F45009B7517 /* KGBirthdayView.m */; };
+		5A87DDAB21C9E3E2008FEE3F /* Pods_文艺星球.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A87DDAA21C9E3E2008FEE3F /* Pods_文艺星球.framework */; };
 		5A8A922A21C211B300C61729 /* KGFriendsSystomNoticeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A8A922921C211B300C61729 /* KGFriendsSystomNoticeVC.m */; };
 		5A8A922E21C2140B00C61729 /* KGFriendsSystomNoticeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A8A922C21C2140B00C61729 /* KGFriendsSystomNoticeCell.m */; };
 		5A8A922F21C2140B00C61729 /* KGFriendsSystomNoticeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A8A922D21C2140B00C61729 /* KGFriendsSystomNoticeCell.xib */; };
@@ -574,6 +575,7 @@
 		5A81D944217F14FB009B7517 /* KGRegisterVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KGRegisterVC.xib; sourceTree = "<group>"; };
 		5A81D948217F1F45009B7517 /* KGBirthdayView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGBirthdayView.h; sourceTree = "<group>"; };
 		5A81D949217F1F45009B7517 /* KGBirthdayView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGBirthdayView.m; sourceTree = "<group>"; };
+		5A87DDAA21C9E3E2008FEE3F /* Pods_文艺星球.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = "Pods_文艺星球.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A8A922821C211B300C61729 /* KGFriendsSystomNoticeVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGFriendsSystomNoticeVC.h; sourceTree = "<group>"; };
 		5A8A922921C211B300C61729 /* KGFriendsSystomNoticeVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KGFriendsSystomNoticeVC.m; sourceTree = "<group>"; };
 		5A8A922B21C2140B00C61729 /* KGFriendsSystomNoticeCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KGFriendsSystomNoticeCell.h; sourceTree = "<group>"; };
@@ -679,6 +681,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A87DDAB21C9E3E2008FEE3F /* Pods_文艺星球.framework in Frameworks */,
 				5A3089EC21A536F1007D08F3 /* SafariServices.framework in Frameworks */,
 				5A3089EA21A536EA007D08F3 /* Photos.framework in Frameworks */,
 				5AD6634B217EE84D00A54847 /* UIKit.framework in Frameworks */,
@@ -717,6 +720,7 @@
 		0BA90A8F48DF9F245A06D6A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5A87DDAA21C9E3E2008FEE3F /* Pods_文艺星球.framework */,
 				5A3089EB21A536F1007D08F3 /* SafariServices.framework */,
 				5A3089E921A536EA007D08F3 /* Photos.framework */,
 				5A3089E721A536CA007D08F3 /* OpenGLES.framework */,
@@ -1711,12 +1715,10 @@
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/DZNEmptyDataSet/DZNEmptyDataSet.framework",
 				"${BUILT_PRODUCTS_DIR}/HappyDNS/HappyDNS.framework",
-				"${BUILT_PRODUCTS_DIR}/IQKeyboardManager/IQKeyboardManager.framework",
 				"${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework",
 				"${BUILT_PRODUCTS_DIR}/Qiniu/Qiniu.framework",
 				"${BUILT_PRODUCTS_DIR}/SDAutoLayout/SDAutoLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/XHWebImageAutoSize/XHWebImageAutoSize.framework",
 				"${BUILT_PRODUCTS_DIR}/YYKit/YYKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -1724,12 +1726,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DZNEmptyDataSet.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HappyDNS.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManager.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJRefresh.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Qiniu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDAutoLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XHWebImageAutoSize.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YYKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2063,7 +2063,7 @@
 			baseConfigurationReference = 3F634D71E78A2CA014864263 /* Pods-文艺星球.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5Q96NM8J95;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2082,8 +2082,6 @@
 					"\"AFNetworking\"",
 					"-framework",
 					"\"DZNEmptyDataSet\"",
-					"-framework",
-					"\"IQKeyboardManager\"",
 					"-framework",
 					"\"MJRefresh\"",
 					"-framework",
@@ -2103,7 +2101,7 @@
 			baseConfigurationReference = 4428EAE3FEDAF43CBC67972E /* Pods-文艺星球.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5Q96NM8J95;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2122,8 +2120,6 @@
 					"\"AFNetworking\"",
 					"-framework",
 					"\"DZNEmptyDataSet\"",
-					"-framework",
-					"\"IQKeyboardManager\"",
 					"-framework",
 					"\"MJRefresh\"",
 					"-framework",

@@ -9,9 +9,9 @@
 #ifndef KGRequestHeader_h
 #define KGRequestHeader_h
 /** 线上 */
-//#define POSTURL @"http://iartplanet.com"
+#define POSTURL @"http://iartplanet.com"
 /** zhai */
-#define POSTURL @"http://192.168.1.119"
+//#define POSTURL @"http://192.168.1.119"
 /** zhang */
 //#define POSTURL @"http://192.168.1.6"
 /** 登录发送验证码 */

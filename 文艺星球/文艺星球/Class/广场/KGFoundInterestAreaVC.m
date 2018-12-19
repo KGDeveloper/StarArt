@@ -79,10 +79,12 @@
     weakSelf.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [KGRequest postWithUrl:FindAllGoodPlace parameters:@{@"pageIndex":@(self.page),@"type":@(self.leftPage),@"condition":@(self.rightPage),@"latitude":[NSNumber numberWithDouble:location.latitude],@"longitude":[NSNumber numberWithDouble:location.longitude]} succ:^(id  _Nonnull result) {
         if ([result[@"status"] integerValue] == 200) {
-            NSDictionary *dic = result[@"data"];
-            NSArray *tmp = dic[@"list"];
-            if (tmp.count > 0) {
-                [weakSelf.dataArr addObjectsFromArray:tmp];
+            if (![result[@"data"] isKindOfClass:[NSNull class]]) {
+                NSDictionary *dic = result[@"data"];
+                NSArray *tmp = dic[@"list"];
+                if (tmp.count > 0) {
+                    [weakSelf.dataArr addObjectsFromArray:tmp];
+                }
             }
         }
         [weakSelf.listView.mj_header endRefreshing];
@@ -269,34 +271,34 @@
     }
 }
 - (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
-    return [UIImage imageNamed:@"404"];
+    return [UIImage imageNamed:@"kongyemian"];
 }
-- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
-    NSString *text = @"可能因为网络原因加载失败，请点击刷新";
-    
-    NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
-    paragraph.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraph.alignment = NSTextAlignmentCenter;
-    
-    NSDictionary *attributes = @{
-                                 NSFontAttributeName:[UIFont systemFontOfSize:14.0f],
-                                 NSForegroundColorAttributeName:[UIColor lightGrayColor],
-                                 NSParagraphStyleAttributeName:paragraph
-                                 };
-    
-    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
-}
-- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
-    // 设置按钮标题
-    NSString *buttonTitle = @"重新加载";
-    NSDictionary *attributes = @{
-                                 NSFontAttributeName:[UIFont boldSystemFontOfSize:14.0f],NSForegroundColorAttributeName:KGBlueColor
-                                 };
-    return [[NSAttributedString alloc] initWithString:buttonTitle attributes:attributes];
-}
-- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
-    [self.listView.mj_header beginRefreshing];
-}
+//- (NSAttributedString *)descriptionForEmptyDataSet:(UIScrollView *)scrollView {
+//    NSString *text = @"可能因为网络原因加载失败，请点击刷新";
+//
+//    NSMutableParagraphStyle *paragraph = [NSMutableParagraphStyle new];
+//    paragraph.lineBreakMode = NSLineBreakByWordWrapping;
+//    paragraph.alignment = NSTextAlignmentCenter;
+//
+//    NSDictionary *attributes = @{
+//                                 NSFontAttributeName:[UIFont systemFontOfSize:14.0f],
+//                                 NSForegroundColorAttributeName:[UIColor lightGrayColor],
+//                                 NSParagraphStyleAttributeName:paragraph
+//                                 };
+//
+//    return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+//}
+//- (NSAttributedString *)buttonTitleForEmptyDataSet:(UIScrollView *)scrollView forState:(UIControlState)state {
+//    // 设置按钮标题
+//    NSString *buttonTitle = @"重新加载";
+//    NSDictionary *attributes = @{
+//                                 NSFontAttributeName:[UIFont boldSystemFontOfSize:14.0f],NSForegroundColorAttributeName:KGBlueColor
+//                                 };
+//    return [[NSAttributedString alloc] initWithString:buttonTitle attributes:attributes];
+//}
+//- (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
+//    [self.listView.mj_header beginRefreshing];
+//}
 
 
 /*

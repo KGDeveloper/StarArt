@@ -144,11 +144,11 @@
 - (UIView *)setUpTopScrollView{
     UIView *topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, KGScreenHeight)];
     /** 轮播图 */
-    self.topScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, KGScreenWidth/75*47)];
+    self.topScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, KGScreenWidth/750*700)];
     self.topScrollView.delegate = self;
     self.topScrollView.backgroundColor = KGLineColor;
-    self.topScrollView.contentSize = CGSizeMake(KGScreenWidth, KGScreenWidth/75*47);
-    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, KGScreenWidth/75*47)];
+    self.topScrollView.contentSize = CGSizeMake(KGScreenWidth, KGScreenWidth/750*700);
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, KGScreenWidth, KGScreenWidth/750*700)];
     [imageView sd_setImageWithURL:[NSURL URLWithString:[[self.detailDic[@"image"] componentsSeparatedByString:@"#"]firstObject]]];
     imageView.contentMode = UIViewContentModeScaleAspectFill;
     imageView.layer.masksToBounds = YES;
@@ -159,7 +159,7 @@
     self.topScrollView.showsHorizontalScrollIndicator = NO;
     [topView addSubview:self.topScrollView];
     /** 页码 */
-    self.pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(15, KGScreenWidth/75*47 - 22, KGScreenWidth, 7)];
+    self.pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(15, KGScreenWidth/750*700 - 22, KGScreenWidth, 7)];
     self.pageControl.numberOfPages = 3;
     self.pageControl.currentPage = 0;
     self.pageControl.currentPageIndicatorTintColor = KGBlueColor;
@@ -168,36 +168,36 @@
     /** 标签 */
     NSArray *imageArr = @[[UIImage imageNamed:@"定位"],[UIImage imageNamed:@"电话"],[UIImage imageNamed:@"时间"]];
     for (int i = 0; i < 3; i++) {
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, KGScreenWidth/75*47 + 15 + 30*i, 15, 15)];
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, KGScreenWidth/750*700 + 15 + 30*i, 15, 15)];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         imageView.image = imageArr[i];
         [topView addSubview:imageView];
     }
     /** 地址 */
-    self.addressLab = [[UILabel alloc]initWithFrame:CGRectMake(45, KGScreenWidth/75*47 + 15, KGScreenWidth - 60, 15)];
+    self.addressLab = [[UILabel alloc]initWithFrame:CGRectMake(45, KGScreenWidth/750*700 + 15, KGScreenWidth - 60, 15)];
     self.addressLab.text = self.detailDic[@"address"];
     self.addressLab.textColor = [UIColor blackColor];
     self.addressLab.font = KGFontSHRegular(14);
     [topView addSubview:self.addressLab];
     /** 电话 */
-    self.telPhoneLab = [[UILabel alloc]initWithFrame:CGRectMake(45, KGScreenWidth/75*47 + 45, KGScreenWidth - 60, 15)];
+    self.telPhoneLab = [[UILabel alloc]initWithFrame:CGRectMake(45, KGScreenWidth/750*700 + 45, KGScreenWidth - 60, 15)];
     self.telPhoneLab.text = self.detailDic[@"telphone"];
     self.telPhoneLab.textColor = [UIColor blackColor];
     self.telPhoneLab.font = KGFontSHRegular(14);
     [topView addSubview:self.telPhoneLab];
     /** 时间 */
-    self.timeLab = [[UILabel alloc]initWithFrame:CGRectMake(45, KGScreenWidth/75*47 + 75, KGScreenWidth - 60, 15)];
+    self.timeLab = [[UILabel alloc]initWithFrame:CGRectMake(45, KGScreenWidth/750*700 + 75, KGScreenWidth - 60, 15)];
     self.timeLab.text = self.detailDic[@"potime"];
     self.timeLab.textColor = [UIColor blackColor];
     self.timeLab.font = KGFontSHRegular(14);
     [topView addSubview:self.timeLab];
     /** 直线 */
-    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, KGScreenWidth/75*47 + 105, KGScreenWidth, 10)];
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, KGScreenWidth/750*700 + 105, KGScreenWidth, 10)];
     line.backgroundColor = KGLineColor;
     [topView addSubview:line];
     /** 左侧按钮 */
     self.leftBtu = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.leftBtu.frame = CGRectMake(0, KGScreenWidth/75*47 + 115, KGScreenWidth/2, 50);
+    self.leftBtu.frame = CGRectMake(0, KGScreenWidth/750*700 + 115, KGScreenWidth/2, 50);
     [self.leftBtu setTitle:@"机构信息" forState:UIControlStateNormal];
     [self.leftBtu setTitleColor:KGBlueColor forState:UIControlStateNormal];
     self.leftBtu.titleLabel.font = KGFontSHRegular(15);
@@ -205,11 +205,11 @@
     [topView addSubview:self.leftBtu];
     /** 右侧按钮 */
     self.rightBtu = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.rightBtu.frame = CGRectMake(KGScreenWidth/2, KGScreenWidth/75*47 + 115, KGScreenWidth/2, 50);
+    self.rightBtu.frame = CGRectMake(KGScreenWidth/2, KGScreenWidth/750*700 + 115, KGScreenWidth/2, 50);
     if (self.detailDic[@"relatedList"]) {
         NSArray *tmp = self.detailDic[@"relatedList"];
         if (tmp.count > 0) {
-            [self.rightBtu setTitle:[NSString stringWithFormat:@"相关(%ld)",tmp.count] forState:UIControlStateNormal];
+            [self.rightBtu setTitle:[NSString stringWithFormat:@"相关(%lu)",(unsigned long)tmp.count] forState:UIControlStateNormal];
         }else{
             [self.rightBtu setTitle:@"相关(暂无)" forState:UIControlStateNormal];
         }
@@ -221,7 +221,7 @@
     [self.rightBtu addTarget:self action:@selector(rightAction:) forControlEvents:UIControlEventTouchUpInside];
     [topView addSubview:self.rightBtu];
     /** 直线 */
-    UIView *lowline = [[UIView alloc]initWithFrame:CGRectMake(0, KGScreenWidth/75*47 + 154, KGScreenWidth, 1)];
+    UIView *lowline = [[UIView alloc]initWithFrame:CGRectMake(0, KGScreenWidth/750*700 + 154, KGScreenWidth, 1)];
     lowline.backgroundColor = KGLineColor;
     [topView addSubview:lowline];
     NSString *detailStr = nil;
@@ -236,7 +236,7 @@
         detailStr = @"暂无";
     }
     NSMutableAttributedString *attributeString = [self setAttributeWithString:detailStr];
-    self.detailLab = [[UILabel alloc]initWithFrame:CGRectMake(15, KGScreenWidth/75*47 + 170, KGScreenWidth - 30, [attributeString boundingRectWithSize:CGSizeMake(KGScreenWidth - 30, 200) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height)];
+    self.detailLab = [[UILabel alloc]initWithFrame:CGRectMake(15, KGScreenWidth/750*700 + 170, KGScreenWidth - 30, [attributeString boundingRectWithSize:CGSizeMake(KGScreenWidth - 30, 200) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height)];
     self.detailLab.attributedText = attributeString;
     self.detailLab.numberOfLines = 0;
     self.detailLab.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -245,7 +245,7 @@
     self.detailLab.textAlignment = NSTextAlignmentLeft;
     [topView addSubview:self.detailLab];
     /** 右侧展览 */
-    self.rightListView = [[UITableView alloc]initWithFrame:CGRectMake(0,KGScreenWidth/75*47 + 170, KGScreenWidth, 200)];
+    self.rightListView = [[UITableView alloc]initWithFrame:CGRectMake(0,KGScreenWidth/750*700 + 170, KGScreenWidth, 200)];
     self.rightListView.hidden = YES;
     self.rightListView.delegate = self;
     self.rightListView.dataSource = self;
@@ -256,16 +256,16 @@
     [topView addSubview:self.rightListView];
     [self.rightListView registerNib:[UINib nibWithNibName:@"KGAgencyDetailListViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"KGAgencyDetailListViewCell"];
     /** 直线 */
-    UIView *labline = [[UIView alloc]initWithFrame:CGRectMake(0, KGScreenWidth/75*47 + 370, KGScreenWidth, 10)];
+    UIView *labline = [[UIView alloc]initWithFrame:CGRectMake(0, KGScreenWidth/750*700 + 370, KGScreenWidth, 10)];
     labline.backgroundColor = KGLineColor;
     [topView addSubview:labline];
     /** 相关图片 */
-    self.imageCountLab = [[UILabel alloc]initWithFrame:CGRectMake(15, KGScreenWidth/75*47 + 380, KGScreenWidth - 30, 50)];
+    self.imageCountLab = [[UILabel alloc]initWithFrame:CGRectMake(15, KGScreenWidth/750*700 + 380, KGScreenWidth - 30, 50)];
     self.imageCountLab.textColor = KGBlackColor;
     if (self.detailDic[@"mimages"]) {
         NSArray *tmp = self.detailDic[@"mimages"];
         if (tmp.count > 0) {
-            self.imageCountLab.text = [NSString stringWithFormat:@"相关图片（%ld）",tmp.count];
+            self.imageCountLab.text = [NSString stringWithFormat:@"相关图片（%lu）",(unsigned long)tmp.count];
         }else{
             self.imageCountLab.text = @"相关图片（0）";
         }
@@ -275,7 +275,7 @@
     self.imageCountLab.font = KGFontSHBold(15);
     [topView addSubview:self.imageCountLab];
     /** 图片 */
-    self.aboutScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(15, KGScreenWidth/75*47 + 430, KGScreenWidth - 30, 75)];
+    self.aboutScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(15, KGScreenWidth/750*700 + 430, KGScreenWidth - 30, 75)];
     self.aboutScrollView.bounces = NO;
     self.aboutScrollView.pagingEnabled = YES;
     self.aboutScrollView.showsVerticalScrollIndicator = NO;
@@ -283,18 +283,18 @@
     [topView addSubview:self.aboutScrollView];
     [self setImageView];
     /** 直线 */
-    UIView *iamgeLine = [[UIView alloc]initWithFrame:CGRectMake(0, KGScreenWidth/75*47 + 525, KGScreenWidth, 10)];
+    UIView *iamgeLine = [[UIView alloc]initWithFrame:CGRectMake(0, KGScreenWidth/750*700 + 525, KGScreenWidth, 10)];
     iamgeLine.backgroundColor = KGLineColor;
     [topView addSubview:iamgeLine];
     /** 全部评价 */
-    self.commentCountLab = [[UILabel alloc]initWithFrame:CGRectMake(15, KGScreenWidth/75*47 + 535, 120, 50)];
+    self.commentCountLab = [[UILabel alloc]initWithFrame:CGRectMake(15, KGScreenWidth/750*700 + 535, 120, 50)];
     self.commentCountLab.textColor = KGBlackColor;
     self.commentCountLab.text = @"全部评论";
     self.commentCountLab.font = KGFontSHBold(15);
     [topView addSubview:self.commentCountLab];
     
     UIButton *scroeBtu = [UIButton buttonWithType:UIButtonTypeCustom];
-    scroeBtu.frame = CGRectMake(KGScreenWidth - 95,KGScreenWidth/75*47 + 555,80, 20);
+    scroeBtu.frame = CGRectMake(KGScreenWidth - 95,KGScreenWidth/750*700 + 555,80, 20);
     [scroeBtu setTitle:@"我要评分" forState:UIControlStateNormal];
     scroeBtu.titleLabel.font = KGFontSHRegular(12);
     [scroeBtu setTitleColor:KGBlackColor forState:UIControlStateNormal];
@@ -305,7 +305,7 @@
     [scroeBtu addTarget:self action:@selector(addCommentAction) forControlEvents:UIControlEventTouchUpInside];
     [topView addSubview:scroeBtu];
     
-    topView.frame = CGRectMake(0, 0, KGScreenWidth, KGScreenWidth/75*47 + 585);
+    topView.frame = CGRectMake(0, 0, KGScreenWidth, KGScreenWidth/750*700 + 585);
     return topView;
 }
 /** 添加评论 */

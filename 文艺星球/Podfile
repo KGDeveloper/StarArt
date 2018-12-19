@@ -3,7 +3,6 @@
 
 target '文艺星球' do
   
-pod 'IQKeyboardManager'
 pod 'AFNetworking'
 pod 'SDAutoLayout'
 pod 'SDWebImage'
@@ -13,7 +12,6 @@ pod 'YYKit'
 pod 'AMapSearch'
 pod 'AMapLocation'
 pod 'AMapNavi'
-pod 'XHWebImageAutoSize'
 pod 'RongCloudIM/IMLib'
 pod 'RongCloudIM/IMKit' 
 pod 'Qiniu'

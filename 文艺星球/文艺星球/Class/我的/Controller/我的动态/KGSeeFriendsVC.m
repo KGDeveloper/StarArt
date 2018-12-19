@@ -25,6 +25,7 @@
 @property (nonatomic,strong) UILabel *signaturlLab;
 @property (nonatomic,strong) NSMutableArray *dataArr;
 @property (nonatomic,assign) NSInteger page;
+@property (nonatomic,strong) PhotosLibraryView *photoLibary;
 
 @end
 
@@ -51,10 +52,10 @@
 /** 查看个人头像 */
 - (void)requestUserHeader{
     __weak typeof(self) weakSelf = self;
-    [KGRequest postWithUrl:[RequestUserInfo stringByAppendingString:[NSString stringWithFormat:@"/%@",self.sendID]] parameters:@{} succ:^(id  _Nonnull result) {
+    [KGRequest postWithUrl:[RequestUserInfo stringByAppendingString:[NSString stringWithFormat:@"/%@",@([self.sendID integerValue])]] parameters:@{} succ:^(id  _Nonnull result) {
         if ([result[@"status"] integerValue] == 200) {
             NSDictionary *dic = result[@"data"];
-            [weakSelf.backHeaderImage sd_setImageWithURL:[NSURL URLWithString:dic[@"portraitUri"]]];
+            [weakSelf.backHeaderImage sd_setImageWithURL:[NSURL URLWithString:dic[@"coverImage"]]];
             [weakSelf.headerImage sd_setImageWithURL:[NSURL URLWithString:dic[@"portraitUri"]]];
         }
     } fail:^(NSError * _Nonnull error) {
@@ -132,6 +133,9 @@
     self.backHeaderImage.contentMode = UIViewContentModeScaleAspectFill;
     self.backHeaderImage.layer.masksToBounds = YES;
     self.backHeaderImage.backgroundColor = KGGrayColor;
+    self.backHeaderImage.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(chooseBackImage)];
+    [self.backHeaderImage addGestureRecognizer:tap];
     [hedaerView addSubview:self.backHeaderImage];
     /** 头像 */
     self.headerImage = [[UIImageView alloc]initWithFrame:CGRectMake(KGScreenWidth/2 - 30, hedaerView.bounds.size.height - 140, 60, 60)];
@@ -157,6 +161,43 @@
     self.signaturlLab.textAlignment = NSTextAlignmentCenter;
     [hedaerView addSubview:self.signaturlLab];
     return hedaerView;
+}
+/** 修改背景 */
+- (void)chooseBackImage{
+    if ([self.sendID integerValue] == [[KGUserInfo shareInstance].userId integerValue]) {
+        self.photoLibary.hidden = NO;
+    }
+}
+/** 选择照片 */
+- (PhotosLibraryView *)photoLibary{
+    if (!_photoLibary) {
+        _photoLibary = [[PhotosLibraryView alloc]initWithFrame:CGRectMake(0,0, KGScreenWidth, KGScreenHeight)];
+        _photoLibary.maxCount = 1;
+        __weak typeof(self) weakSelf = self;
+        _photoLibary.chooseImageFromPhotoLibary = ^(NSArray<UIImage *> *imageArr) {
+            [weakSelf changeBackImageWithImage:[imageArr firstObject]];
+            weakSelf.backHeaderImage.image = [imageArr firstObject];
+        };
+        [self.navigationController.view insertSubview:_photoLibary atIndex:99];
+    }
+    return _photoLibary;
+}
+/** 修改背景 */
+- (void)changeBackImageWithImage:(UIImage *)image{
+    __block MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    [[KGRequest shareInstance] uploadImageToQiniuWithFile:[[KGRequest shareInstance] getImagePath:image] result:^(NSString * _Nonnull strPath) {
+        [KGRequest postWithUrl:UpdateUserInfo parameters:@{@"coverImage":strPath,@"portraitUri":[KGUserInfo shareInstance].userPortrait} succ:^(id  _Nonnull result) {
+            [hud hideAnimated:YES];
+            if ([result[@"status"] integerValue] == 200) {
+                [[KGHUD showMessage:@"修改成功"] hideAnimated:YES afterDelay:1];
+            }else{
+                [[KGHUD showMessage:@"请求出错，请重试！"] hideAnimated:YES afterDelay:1];
+            }
+        } fail:^(NSError * _Nonnull error) {
+            [hud hideAnimated:YES];
+            [[KGHUD showMessage:@"请求出错，请重试！"] hideAnimated:YES afterDelay:1];
+        }];
+    }];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataArr.count;

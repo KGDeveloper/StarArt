@@ -29,6 +29,7 @@
     [self.window makeKeyAndVisible];
     [self registGeodo];
     [self registRongIM];
+    sleep(3);
     return YES;
 }
 /** 注册高德地图 */
@@ -65,7 +66,7 @@
         return completion(userInfo);
     }else{
         if (![userId isEqualToString:@" undefined "]) {
-            [KGRequest postWithUrl:[RequestUserInfo stringByAppendingString:[NSString stringWithFormat:@"/%ld",[userId integerValue]]] parameters:@{} succ:^(id  _Nonnull result) {
+            [KGRequest postWithUrl:[RequestUserInfo stringByAppendingString:[NSString stringWithFormat:@"/%ld",(long)[userId integerValue]]] parameters:@{} succ:^(id  _Nonnull result) {
                 if ([result[@"status"] integerValue] == 200) {
                     NSDictionary *dic = result[@"data"];
                     RCUserInfo *userInfo = [[RCUserInfo alloc]init];

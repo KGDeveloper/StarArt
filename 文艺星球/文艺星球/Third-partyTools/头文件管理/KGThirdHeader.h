@@ -14,13 +14,11 @@
 #import <MJRefresh/MJRefresh.h>
 #import <SDAutoLayout/SDAutoLayout.h>
 #import "DZNEmptyDataSet-umbrella.h"
-#import "IQKeyboardManager.h"
 #import "UIImageView+WebCache.h"
 #import <AMapFoundationKit/AMapFoundationKit.h>
 #import <AMapSearchKit/AMapSearchKit.h>
 #import <AMapLocationKit/AMapLocationKit.h>
 #import <MAMapKit/MAMapKit.h>
-#import "XHWebImageAutoSize.h"
 #import <RongIMKit/RongIMKit.h>
 
 /** 自定义部分 */
